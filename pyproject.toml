@@ -1,0 +1,142 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "orcadolittle"
+version = "0.1.0"
+description = "OrcaDolittle — A Doctor Dolittle stack for killer whale communication: perceive, generate, select, anticipate."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+authors = [
+    { name = "Danielle Lesin", email = "ladyfaye1998@users.noreply.github.com" },
+]
+keywords = [
+    "bioacoustics",
+    "cetaceans",
+    "killer-whale",
+    "orca",
+    "interspecies-communication",
+    "doctor-dolittle",
+    "self-supervised-learning",
+    "foundation-models",
+    "contextual-bandit",
+    "playback-experiments",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Education",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+    "Topic :: Multimedia :: Sound/Audio :: Analysis",
+    "Typing :: Typed",
+]
+dependencies = [
+    "torch>=2.2",
+    "torchaudio>=2.2",
+    "transformers>=4.40",
+    "huggingface-hub>=0.23",
+    "numpy>=1.24",
+    "scipy>=1.11",
+    "scikit-learn>=1.3",
+    "soundfile>=0.12",
+    "librosa>=0.10",
+    "click>=8.1",
+    "rich>=13.0",
+    "pydantic>=2.0",
+    "matplotlib>=3.7",
+    "tqdm>=4.66",
+]
+
+[project.optional-dependencies]
+web = [
+    "gradio>=5.0",
+    "plotly>=5.18",
+]
+benchmarks = [
+    "datasets>=2.16",
+    "pandas>=2.1",
+]
+streaming = [
+    "boto3>=1.34",
+    "aiortc>=1.6",
+]
+dev = [
+    "pytest>=7.4",
+    "pytest-cov>=4.1",
+    "ruff>=0.4",
+    "mypy>=1.8",
+    "pre-commit>=3.6",
+]
+all = ["orcadolittle[web,benchmarks,streaming,dev]"]
+
+[project.scripts]
+orcadolittle = "orcadolittle.cli.main:cli"
+
+[project.urls]
+Homepage = "https://github.com/ladyFaye1998/OrcaDolittle"
+Documentation = "https://github.com/ladyFaye1998/OrcaDolittle/tree/main/docs"
+Repository = "https://github.com/ladyFaye1998/OrcaDolittle"
+Issues = "https://github.com/ladyFaye1998/OrcaDolittle/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["orcadolittle"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "ANN", "B", "SIM", "RUF"]
+ignore = [
+    "ANN401",
+    "RUF001", "RUF002", "RUF003",
+    "N806", "N803", "N812",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["ANN001", "ANN202"]
+"web/*" = ["ANN001", "ANN202"]
+"examples/*" = ["E402"]
+"notebooks/*" = ["E402", "ANN"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["orcadolittle"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+warn_return_any = false
+warn_unused_configs = true
+disallow_untyped_calls = false
+disallow_untyped_decorators = false
+
+[[tool.mypy.overrides]]
+module = [
+    "torch.*",
+    "torchaudio.*",
+    "transformers.*",
+    "librosa.*",
+    "soundfile.*",
+    "sklearn.*",
+    "scipy.*",
+    "matplotlib.*",
+    "plotly.*",
+    "gradio.*",
+    "boto3.*",
+    "huggingface_hub.*",
+]
+ignore_missing_imports = true
+follow_imports = "skip"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v --tb=short"

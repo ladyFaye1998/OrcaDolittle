@@ -1,0 +1,85 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+*.egg
+dist/
+build/
+.eggs/
+
+# --- Virtual Environments ---
+.venv/
+venv/
+env/
+
+# --- IDE ---
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# --- Testing & Coverage ---
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# --- Jupyter ---
+.ipynb_checkpoints/
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Model Weights ---
+*.pt
+*.pth
+*.onnx
+*.safetensors
+checkpoints/
+
+# Allow small reference taxonomy/metadata files shipped with the package
+!orcadolittle/models/weights/ecotype_head.pt
+!orcadolittle/models/weights/calltype_head.pt
+!orcadolittle/models/weights/taxonomy.json
+
+# --- Audio & Data ---
+data/raw/
+data/processed/
+data/cache/
+*.wav
+*.flac
+*.mp3
+*.ogg
+*.opus
+!examples/*.wav
+!tests/fixtures/*.wav
+
+# Allow tiny demo clips
+!assets/demo/*.wav
+
+# --- Generated outputs ---
+output/
+runs/
+logs/
+wandb/
+mlruns/
+
+# --- Secrets ---
+.env
+*.key
+*.token
+kaggle.json
+huggingface_token
+.hf_token
+
+# --- Temp / Working files ---
+COMMIT_MSG.tmp
+*_scratch.py
+_artsleuth_*
+_staad_*
