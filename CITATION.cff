@@ -1,43 +1,16 @@
 cff-version: 1.2.0
-message: "If OrcaDolittle contributes to your research, please cite it as below."
-type: software
-title: "OrcaDolittle: A Doctor Dolittle Stack for Killer Whale Communication"
-authors:
-  - family-names: "Lesin"
-    given-names: "Danielle"
-    orcid: ""
-    affiliation: "Georgia Institute of Technology"
-version: 0.1.0
-date-released: 2026-05-17
-url: "https://github.com/ladyFaye1998/OrcaDolittle"
-repository-code: "https://github.com/ladyFaye1998/OrcaDolittle"
-license: MIT
-keywords:
-  - bioacoustics
-  - cetaceans
-  - killer-whales
-  - orca
-  - interspecies-communication
-  - doctor-dolittle
-  - playback-experiments
-  - self-supervised-learning
-  - contextual-bandit
-  - foundation-models
+message: >
+  This repository is a private planning workspace and is not intended to be
+  cited as a software artefact. If you have arrived here from a published
+  paper or submission, please cite that work directly, not this repository.
+title: OrcaDolittle — planning workspace
 abstract: >
-  OrcaDolittle is a four-component AI stack — perceive, generate, select,
-  anticipate — for closed-loop dialogue with killer whales (Orcinus orca).
-  Built end-to-end on existing public bioacoustic data (DCLDE 2026,
-  OrcaSound) and validated offline against two decades of published
-  killer-whale playback experiments, it ships as a deployable Docker
-  container so that field teams can attempt interactive communication
-  without rebuilding the modelling stack.
-preferred-citation:
-  type: software
-  authors:
-    - family-names: "Lesin"
-      given-names: "Danielle"
-      affiliation: "Georgia Institute of Technology"
-  title: "OrcaDolittle: A Doctor Dolittle Stack for Killer Whale Communication"
-  year: 2026
-  url: "https://github.com/ladyFaye1998/OrcaDolittle"
-  license: MIT
+  Private working notes for a possible Coller-Dolittle Prize 2026-2027
+  submission focused on killer whales (Orcinus orca). The repository contains
+  literature notes, data-provenance notes, and an execution plan only; it does
+  not contain a model, a completed analysis, or a working demo.
+authors:
+  - family-names: Lesin
+    given-names: Danielle
+type: software
+license: MIT

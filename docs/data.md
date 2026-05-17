@@ -1,80 +1,63 @@
-# Data sources
+# Data sources — candidate inputs
 
-OrcaDolittle is built entirely on existing, publicly accessible data. This document enumerates every source the project depends on, with provenance, license, and the role each one plays in the stack.
+> **Status.** Verified citations and access pathways. *Nothing in this list has been downloaded or processed by this project yet.* The data section of an eventual paper will replace this file with the actual subset used.
 
-## 1. DCLDE 2026 — bulk perception and generation corpus
+## 1. DCLDE 2026 — primary candidate corpus
 
-**Citation.** &ensp;Palmer, J. K. et al. (2025). *A Public Dataset of Annotated Orcinus orca Acoustic Signals for Detection and Ecotype Classification.* Scientific Data. [doi:10.1038/s41597-025-05281-5](https://doi.org/10.1038/s41597-025-05281-5)
+**Citation.** Palmer, J. K. et al. (2025). *A Public Dataset of Annotated Orcinus orca Acoustic Signals for Detection and Ecotype Classification.* Scientific Data. [doi:10.1038/s41597-025-05281-5](https://doi.org/10.1038/s41597-025-05281-5)
 
-**Scale.** &ensp;Approximately **225 000 call-level annotations** across **11 years** of recordings from **23 Northeast Pacific locations** (Alaska, British Columbia, Washington). Three killer-whale ecotypes are represented — Resident, Bigg's (Transient), Offshore — together with confounder-species annotations to harden classifiers against false positives.
+**Reported scale.** Around 225 000 call-level annotations across 11 years and 23 Northeast Pacific locations, covering Resident, Bigg's (Transient), and Offshore killer-whale ecotypes (plus annotated confounder species).
 
 **Access.**
-* Dataset DOI: `10.25921/15ey-mh50`
-* Landing page: [catalog.data.gov · DCLDE 2026 entry](https://catalog.data.gov/dataset/dclde-2026-killer-whale-orcinus-orca-ecotype-and-other-species-annotations-for-the-detecti-2026)
-* NCEI passive-acoustic-data portal: [ncei.noaa.gov/products/passive-acoustic-data](https://www.ncei.noaa.gov/products/passive-acoustic-data)
-* Companion compilation code: [github.com/JPalmerK/DCLDE_Dataset](https://github.com/JPalmerK/DCLDE_Dataset)
+- Dataset DOI: `10.25921/15ey-mh50`
+- Landing page: [catalog.data.gov · DCLDE 2026 entry](https://catalog.data.gov/dataset/dclde-2026-killer-whale-orcinus-orca-ecotype-and-other-species-annotations-for-the-detecti-2026)
+- NCEI passive-acoustic-data portal: [ncei.noaa.gov/products/passive-acoustic-data](https://www.ncei.noaa.gov/products/passive-acoustic-data)
+- Companion compilation code: [github.com/JPalmerK/DCLDE_Dataset](https://github.com/JPalmerK/DCLDE_Dataset)
 
-**License.** &ensp;US Government work, public domain. The dataset paper is open access under CC-BY-4.0.
+**License.** US Government work, public domain. The dataset paper is open access (CC-BY-4.0).
 
-**Use in OrcaDolittle.**
-* Training the ecotype and call-type heads in `orcadolittle.core.perceive`.
-* Training the conditional VAE + HiFi-GAN vocoder in `orcadolittle.models.generative`.
-* Calibrating the ecotype-specific Mahalanobis repertoire-gate used to suppress out-of-distribution synthesis.
+**Notes.**
+- Audio files reportedly amount to multiple gigabytes; download feasibility from Tel Aviv on a residential connection has not been tested.
+- Whether the annotation table can be used independently of the full audio (for a smaller, faster pilot) has not been confirmed.
+- I have *not* yet read the dataset paper in full. The numbers quoted above come from secondary sources.
 
-## 2. OrcaSound — real-time hydrophone streams
+## 2. OrcaSound — secondary candidate, live audio source
 
 **Source.**
-* AWS Open Data registry: [registry.opendata.aws/orcasound](https://registry.opendata.aws/orcasound/)
-* Project portal: [orcasound.net · AI for Orcas](https://www.orcasound.net/portfolio/ai-for-orcas-open-bioacoustic-data-science)
-* ML-ready labels: [github.com/orcasound/orca-dclde](https://github.com/orcasound/orca-dclde)
-* Live HLS streams: `live.orcasound.net`
+- AWS Open Data registry: [registry.opendata.aws/orcasound](https://registry.opendata.aws/orcasound/)
+- Project portal: [orcasound.net · AI for Orcas](https://www.orcasound.net/portfolio/ai-for-orcas-open-bioacoustic-data-science)
+- ML-ready labels: [github.com/orcasound/orca-dclde](https://github.com/orcasound/orca-dclde)
+- Live HLS streams: `live.orcasound.net`
 
-**Scale.** &ensp;Live + archived hydrophone audio from the Salish Sea, 2018–present. Three AWS S3 buckets host HLS streams, archived FLAC at 48/96/192 kHz, and labelled ML-ready bouts. The geographic focus is the US/Canada critical habitat of Southern Resident killer whales (SRKW), extending from northern California to central British Columbia.
+**Reported scale.** Live and archived hydrophone audio from the Salish Sea, 2018–present, with archived FLAC at 48 / 96 / 192 kHz and a labelled-bouts subset for ML use.
 
-**License.** &ensp;CC-BY-4.0 for the labels; archived audio terms documented per-bucket.
+**License.** CC-BY-4.0 for the labels; archived audio terms documented per-bucket.
 
-**Use in OrcaDolittle.**
-* Real-time deployment testing of the closed loop (`orcadolittle.core.pipeline.run_loop`).
-* Robustness validation: clips from out-of-corpus locations and dates evaluate generalisation of the perception heads.
+**Notes.** OrcaSound is the most plausible *demo input source* (a short clip pulled from a public stream), but it is unlikely to be the primary training/analysis corpus.
 
-## 3. The published playback corpus
+## 3. Macaulay Library — reference recordings
 
-The off-policy bandit and the response predictor are trained on per-condition statistics extracted from a small set of peer-reviewed orca playback experiments. Each entry includes provenance and an extraction flag.
+[macaulaylibrary.org · Orcinus orca search](https://search.macaulaylibrary.org/catalog?taxonCode=killwha)
 
-The curated table is in [`orcadolittle/data/playback_corpus.py`](../orcadolittle/data/playback_corpus.py); the long-form documentation, including page numbers and extraction protocols, is in [`docs/playback_corpus.md`](playback_corpus.md). The corpus is also exported as a CSV by `orcadolittle data export-corpus`.
+Would be useful for individual-reference checks, but only if individual-level analysis becomes part of the chosen question. Access constraints have not been audited.
 
-**Provenance summary (as of v0.1.0).**
+## 4. Published playback corpus — paper-level
 
-| Paper | DOI | Ecotype | n trials | Source for |
-|:---|:---|:---|:---:|:---|
-| Filatova et al. 2015 — *Behaviour* 152:2001–2038 | — | resident | 24 | reply / approach baseline |
-| Foote, Osborne & Hoelzel 2008 — *Current Biology* | [10.1016/j.cub.2008.06.013](https://doi.org/10.1016/j.cub.2008.06.013) | resident | 18 | V4 call cross-context |
-| Deecke, Ford & Spong 2000 — *Anim. Behav.* | [10.1006/anbe.2000.1505](https://doi.org/10.1006/anbe.2000.1505) | resident | 22 | dialect drift / cultural transmission |
-| Yurk et al. 2002 — *Anim. Behav.* 63:1103–1119 | [10.1006/anbe.2002.3036](https://doi.org/10.1006/anbe.2002.3036) | resident | 30 | within-clan vs across-clan |
-| Deecke, Slater & Ford 2005 — *Anim. Behav.* | [10.1006/anbe.2002.2156](https://doi.org/10.1006/anbe.2002.2156) | biggs (proxy) | 44 | anti-predator response prior |
-
-**Total.** ≈ 138 reported trials in the v0.1.0 corpus. The full target is ~300–500 trials (`docs/playback_corpus.md` lists the remaining target papers).
-
-## 4. Macaulay Library — reference identification audio
-
-**Source.** &ensp;[macaulaylibrary.org · Orcinus orca search](https://search.macaulaylibrary.org/catalog?taxonCode=killwha)
-
-**Use in OrcaDolittle.**
-* Per-individual reference recordings for sanity-checking generative outputs.
-* Out-of-corpus validation of the perception heads on Atlantic and Norwegian ecotype recordings.
+Reported per-condition response statistics from a set of killer-whale playback experiments published over the last two decades. Curated paper-by-paper in `docs/playback_corpus.md`. Some entries are well-supported by direct citation; some currently reflect best-guess extraction and will need a second-pass audit before being used in a manuscript.
 
 ## 5. Foundation encoder weights
 
-* AVES2 weights: [`huggingface.co/EarthSpeciesProject/esp-aves2-sl-beats-bio`](https://huggingface.co/EarthSpeciesProject/esp-aves2-sl-beats-bio) — MIT-style licence.
-* AVES legacy weights: [`huggingface.co/earthspecies/aves`](https://huggingface.co/earthspecies/aves)
-* Perch 2.0: [`huggingface.co/google/perch-2.0`](https://huggingface.co/google/perch-2.0) — Apache 2.0.
+- AVES2: [`huggingface.co/EarthSpeciesProject/esp-aves2-sl-beats-bio`](https://huggingface.co/EarthSpeciesProject/esp-aves2-sl-beats-bio).
+- AVES legacy: [`huggingface.co/earthspecies/aves`](https://huggingface.co/earthspecies/aves).
+- Perch 2.0: [`huggingface.co/google/perch-2.0`](https://huggingface.co/google/perch-2.0).
 
-All foundation-encoder weights are downloaded lazily on first use and cached locally.
+None have been loaded or evaluated by this project yet.
 
-## What we do *not* depend on
+## Things this section deliberately *does not* claim
 
-* No data depends on direct contact with authors for raw per-trial responses.
-* No data is held under embargo or non-publication agreements.
-* No private hydrophone access is required.
+- That any of the above data has been processed.
+- That any subset has been chosen.
+- That access from a residential connection in Tel Aviv has been tested.
+- That an audit of license compatibility for a public Hugging Face Space exists.
 
-Should per-trial response data become available from any of the corpus authors, the bandit and response predictor switch trivially from per-condition to per-trial supervision — the interface in `orcadolittle.data.playback_corpus.PlaybackTrial` accommodates both.
+Those things become true only when Stage 1 of the execution plan is done.

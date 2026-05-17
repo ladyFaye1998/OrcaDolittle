@@ -1,139 +1,60 @@
-# The published playback corpus — provenance
+# Playback corpus — extraction notes (provisional)
 
-This document maintains paper-by-paper extraction notes for every entry in `orcadolittle/data/playback_corpus.py`. The goal is auditability: a reviewer should be able to open the cited paper, find the table or figure named here, and confirm the extracted response statistic.
+> **Status.** Provisional extraction notes for a curated re-analysis corpus that *would be assembled* if Stage 0 of the execution plan selects question C (off-policy playback-response). Each entry currently reflects best-effort initial extraction. Every numeric value below carries a second-pass-audit dependency before it can appear in a manuscript.
 
-Each entry follows the same template:
+Inclusion criteria a real corpus would have to meet:
 
-* **Citation** — full reference.
-* **Stimulus** — what was broadcast.
-* **Trial count** — number of independent trials.
-* **Source** — page, table, or figure from which the response statistic was extracted.
-* **Statistic type** — per-trial, per-condition mean, frequency, or proportion.
-* **Flags** — extraction caveats (e.g. cross-species prior, per-condition-only, dialect-drift).
-* **Confidence tier** — `high`, `medium`, or `low` based on extraction transparency.
+1. Peer-reviewed publication.
+2. Conspecific (or close cross-species) playback to killer whales.
+3. Per-condition response statistics reported in the paper, supplementary material, or recoverable from figures.
+4. Acoustic stimulus described in enough detail to be reconstructable from a public corpus (DCLDE 2026, OrcaSound) by call type.
 
----
+## Provisional entries
 
-## filatova_2015
+These are starting points, not finished extractions. Trial counts and proportions below should be treated as approximate until each paper has been read in full and the extraction has been double-checked.
 
-**Citation.** Filatova, O. A., Samarra, F. I. P., Deecke, V. B., Ford, J. K. B., Miller, P. J. O. & Yurk, H. (2015). Cultural evolution of killer whale calls. *Behaviour*, 152, 2001–2038.
+### filatova_2015
 
-**Stimulus.** Conspecific call sequences from Kamchatka pods, broadcast to free-ranging fish-eating residents in Avacha Gulf. Pulsed-call structure described in §2.3.
+- **Citation.** Filatova, O. A., Samarra, F. I. P., Deecke, V. B., Ford, J. K. B., Miller, P. J. O. & Yurk, H. (2015). Cultural evolution of killer whale calls. *Behaviour*, 152, 2001–2038.
+- **Initial reading.** Kamchatkan resident playback experiments described in Methods §2.3; some response statistics reported in Table 3 of the paper.
+- **Extraction status.** **Not yet performed.** A separate second-pass audit by direct re-reading is required before any numbers from this paper appear in a downstream artefact.
 
-**Trial count.** 24 trials over the 2009–2011 field seasons.
+### foote_2008
 
-**Source.** Table 3, page 2024.
+- **Citation.** Foote, A. D., Osborne, R. W. & Hoelzel, A. R. (2008). Temporal and contextual patterns of killer whale (*Orcinus orca*) call type production. *Current Biology*. [doi:10.1016/j.cub.2008.06.013](https://doi.org/10.1016/j.cub.2008.06.013)
+- **Initial reading.** V4 excitement call broadcast to Southern Residents. Response proportions visible in Figure 2.
+- **Extraction status.** **Not yet performed.**
 
-**Statistic type.** Per-condition mean response frequencies; per-trial counts not published.
+### deecke_2000
 
-**Flags.** `per_condition_only`, `kamchatka_residents`.
+- **Citation.** Deecke, V. B., Ford, J. K. B. & Spong, P. (2000). Dialect change in resident killer whales: implications for vocal learning and cultural transmission. *Animal Behaviour*, 60, 629–638. [doi:10.1006/anbe.2000.1505](https://doi.org/10.1006/anbe.2000.1505)
+- **Initial reading.** Multi-generation playback test of dialect drift.
+- **Extraction status.** **Not yet performed.**
 
-**Confidence tier.** `medium` — clean extraction, no per-trial uncertainty available.
+### yurk_2002
 
-**Notes.** Authors group responses as "vocal reply", "approach", "no detectable change", and "departure". We map "departure" → `avoid`. The aggregated proportions in `orcadolittle.data.playback_corpus.PLAYBACK_CORPUS` reflect this remapping.
+- **Citation.** Yurk, H., Barrett-Lennard, L., Ford, J. K. B. & Matkin, C. O. (2002). Cultural transmission within maternal lineages: vocal clans in resident killer whales in southern Alaska. *Animal Behaviour*, 63, 1103–1119. [doi:10.1006/anbe.2002.3036](https://doi.org/10.1006/anbe.2002.3036)
+- **Initial reading.** Within-clan vs across-clan playbacks in Alaska Residents.
+- **Extraction status.** **Not yet performed.**
 
----
+### deecke_2005
 
-## foote_2008
+- **Citation.** Deecke, V. B., Slater, P. J. B. & Ford, J. K. B. (2005). Selective habituation shapes acoustic predator recognition in harbour seals. *Animal Behaviour*. [doi:10.1006/anbe.2002.2156](https://doi.org/10.1006/anbe.2002.2156)
+- **Note.** Listener is harbour seals, not orcas. Would only be relevant as a cross-species transfer prior, and only if the methodology section explicitly justifies the bridge. Otherwise should be excluded.
 
-**Citation.** Foote, A. D., Osborne, R. W. & Hoelzel, A. R. (2008). Temporal and contextual patterns of killer whale (*Orcinus orca*) call type production. *Current Biology*. [doi:10.1016/j.cub.2008.06.013](https://doi.org/10.1016/j.cub.2008.06.013)
+## Honest caveats
 
-**Stimulus.** The V4 *excitement* call type, broadcast to Southern Resident pods during foraging and social bouts. Source recordings drawn from the same population.
+- I have not yet completed a single full audit of any paper in this list. The "initial reading" lines above reflect what is *likely* available in each paper based on second-hand summary, not direct extraction.
+- Several papers I have not yet been able to access in full; whether Georgia Tech library access covers them, and whether the supplementary material is sufficient where the main text is paywalled, is an open question for Stage 1.
+- The four-way response taxonomy (reply / approach / avoid / no response) is a working scheme. Each paper uses slightly different terminology; the mapping has to be done paper-by-paper and footnoted in the manuscript.
+- The total trial count across the corpus will be small — likely in the hundreds, not the thousands. Whether that supports a learned predictor at all is a Stage 2 feasibility question.
 
-**Trial count.** 18 trials.
+## Papers I would still need to read
 
-**Source.** Figure 2 and supplementary table S2.
+- Riesch, Ford & Thomsen 2008 — *Discrete calls of killer whales in the Northeast Pacific.* J. Acoust. Soc. Am.
+- Miller et al. 2004 — *Call repertoires of killer whales.* Anim. Behav.
+- Filatova et al. 2018 — *Function of biphonic calls.* Sci. Rep.
+- Selbmann et al. 2023+ — Icelandic acoustic-response studies (verify availability).
+- Samarra et al. 2010+ — Icelandic playback series.
 
-**Statistic type.** Per-condition proportions; counts visible in Figure 2.
-
-**Flags.** `v4_call`, `southern_residents`.
-
-**Confidence tier.** `medium`.
-
-**Notes.** Foote et al. characterise V4 as a context-specific excitement call. We treat the *socialising* context responses as the primary signal; the foraging context is recorded separately and used as a cross-context comparison.
-
----
-
-## deecke_2000
-
-**Citation.** Deecke, V. B., Ford, J. K. B. & Spong, P. (2000). Dialect change in resident killer whales: implications for vocal learning and cultural transmission. *Animal Behaviour*, 60, 629–638. [doi:10.1006/anbe.2000.1505](https://doi.org/10.1006/anbe.2000.1505)
-
-**Stimulus.** Conspecific N04 calls broadcast across generations of Northern Resident matrilines to test cultural transmission of dialect drift.
-
-**Trial count.** 22 trials.
-
-**Source.** Methods §2.4, Tables 2 and 3.
-
-**Statistic type.** Per-condition frequencies converted to proportions.
-
-**Flags.** `dialect_drift`, `multi_generation`.
-
-**Confidence tier.** `medium`.
-
----
-
-## yurk_2002
-
-**Citation.** Yurk, H., Barrett-Lennard, L., Ford, J. K. B. & Matkin, C. O. (2002). Cultural transmission within maternal lineages: vocal clans in resident killer whales in southern Alaska. *Animal Behaviour*, 63, 1103–1119. [doi:10.1006/anbe.2002.3036](https://doi.org/10.1006/anbe.2002.3036)
-
-**Stimulus.** Within-clan versus across-clan call playbacks to Alaska Resident matrilines.
-
-**Trial count.** 30 within-clan trials (across-clan tabulated separately).
-
-**Source.** Table 2, pages 1112–1113.
-
-**Statistic type.** Per-condition proportions of detected responses.
-
-**Flags.** `alaska_residents`, `vocal_clans`.
-
-**Confidence tier.** `medium`.
-
-**Notes.** The across-clan trials show systematically lower reply rates and are useful for the bandit's policy contrast. They are tracked separately in a v0.2 extension.
-
----
-
-## deecke_2005
-
-**Citation.** Deecke, V. B., Slater, P. J. B. & Ford, J. K. B. (2005). Selective habituation shapes acoustic predator recognition in harbour seals. *Animal Behaviour*. [doi:10.1006/anbe.2002.2156](https://doi.org/10.1006/anbe.2002.2156)
-
-**Stimulus.** Transient killer-whale calls broadcast to harbour seals — used in OrcaDolittle as a *cross-species prior* for the Bigg's-listener response distribution, not as direct evidence of orca-to-orca response.
-
-**Trial count.** 44 trials.
-
-**Source.** Results Table 1.
-
-**Statistic type.** Per-condition response proportions.
-
-**Flags.** `cross_species_prior`, `anti_predator_response`.
-
-**Confidence tier.** `low` for direct Bigg's modelling; `high` for the indirect prior shape (strong avoidance signal).
-
-**Notes.** This entry is included **for transfer-prior purposes only**. The response predictor uses it as a regularisation prior for Bigg's listeners and never as a direct training target; this is annotated in the manuscript supplement.
-
----
-
-## Target papers for v0.2 inclusion
-
-The following papers contain extractable playback data and are queued for inclusion in the next minor release. Each one is checked against the inclusion criteria in `orcadolittle/data/playback_corpus.py`.
-
-* **Riesch, Ford & Thomsen 2008** — *Discrete calls of killer whales in the Northeast Pacific.* J. Acoust. Soc. Am.
-* **Miller et al. 2004** — *Call repertoires of killer whales.* Anim. Behav.
-* **Filatova et al. 2018** — *Function of biphonic calls.* Sci. Rep. [doi:10.1038/s41598-018-19938-2](https://doi.org/10.1038/s41598-018-19938-2)
-* **Selbmann et al. 2023** — *Acoustic responses of Icelandic killer whales to herring schools.* (verify availability)
-* **Samarra et al. 2010+** — Icelandic playback series.
-
-Inclusion is gated on (i) sufficient stimulus description to reconstruct from DCLDE 2026 by call type, and (ii) per-condition response proportions reported in the manuscript or supplementary material.
-
----
-
-## Extraction protocol
-
-For every paper, the extraction procedure is:
-
-1. Identify the stimulus class — conspecific, cross-clan, cross-ecotype, or cross-species.
-2. Locate the trial count and response category counts in tables or figures.
-3. Map the paper's response taxonomy onto the four-way scheme (`reply` · `approach` · `avoid` · `no_response`).
-4. Convert frequencies to proportions; normalise to sum 1.
-5. Record the page/table/figure citation and any caveats as `flags`.
-
-A second-pass review is performed by re-reading the paper after a 24-hour gap; mismatches between the two passes are resolved by direct quotation from the source.
+None of these have been accessed yet.
