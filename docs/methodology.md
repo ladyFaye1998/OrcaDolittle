@@ -1,56 +1,50 @@
-# Methodology — draft notes
+<!-- Citation rule .cursor/rules/citations.mdc applies: every numerical or factual claim points to a key in OrcaDolittle/paper/refs.bib. -->
 
-> **Status.** Draft notes, not a methodological commitment. Subject to substantial revision when an actual scientific question is committed (see `EXECUTION_PLAN.md`). Treat everything here as *possible* approaches, not as *chosen* ones.
+# Methodology
 
-This document sketches what an end-to-end methodology *might* look like if one of the candidate questions on the shortlist were pursued. It is not a description of work performed.
+> **Status.** **Locked 2026-05-18 (rev 3).** This file is now a short pointer; the authoritative methodology specification is `ai_architecture.md`. Earlier "draft, subject to substantial revision" framing has been retired now that the dataset substrate (DCLDE 2026 [@palmer2025dclde]), the model stack (frozen encoder + four heads, see `ai_architecture.md`), and the criterion-mapping are all committed. Substantive methodological changes are tracked in `ai_architecture.md` and in the `## Decision log` of `dataset_plan.md`.
 
-## Working assumptions (any of which may turn out to be wrong)
+---
 
-1. The species is *Orcinus orca*. This may still pivot to a pinniped if data access or scientific scope turn out to favour it.
-2. The primary corpus is DCLDE 2026 (Palmer et al. 2025). Substitutability with OrcaSound or Macaulay Library is still being assessed.
-3. A frozen self-supervised audio foundation model is preferable to training one from scratch, for compute reasons. The plausible candidates are AVES2 and Perch 2.0; neither has been tested for this purpose yet.
-4. A single defensible figure is preferable to a complicated multi-component system that does not produce one.
+## One-paragraph summary
 
-## Candidate components
+We use the open DCLDE 2026 killer-whale corpus [@palmer2025dclde; @palmer2025dclde_data] as the sole acoustic substrate, the NatureLM-audio [@robinson2024naturelm] foundation encoder as the primary frozen feature extractor (with AVES2 [@hagiwara2023aves; @chen2022beats] as a comparator), and four downstream analysis heads &mdash; linear / MLP probes, UMAP+HDBSCAN unsupervised clustering [@sainburg2020; @mcinnes2018umap; @mcinnes2017hdbscan], a Transformer language model over per-encounter call-ID sequences [@vaswani2017attention; @devlin2019bert] (porting [@sharma2024]'s sperm-whale methodology), and an embedding-distance regression onto per-trial response statistics from the published killer-whale playback corpus [@bowers2018; @cure2026; @filatova2011]. The behavioural-context labels for the criterion-2 layer are joined from the published ethology literature [@ford1989; @foote2008; @filatova2015; @riesch2008; @yurk2002]. Every reported effect is validated against shuffled-permutation baselines (n_perm = 10,000).
 
-If the question chosen is the *context-recovery* one on the Stage 0 shortlist, the components would be approximately:
+For the head-by-head architecture diagram and compute budget, see **`ai_architecture.md`**.
+For the per-week operational plan and risk tree, see **`dataset_plan.md`**.
+For the per-criterion checklist and the Yovel-Rechavi three-obstacles addressing, see **`prize_criteria_mapping.md`**.
 
-### A. Encoder
-A frozen self-supervised audio encoder, used purely as a feature extractor. No fine-tuning unless a clear empirical reason emerges. Likely candidates:
+---
 
-- AVES2 (`EarthSpeciesProject/esp-aves2-sl-beats-bio`).
-- Perch 2.0 (`google/perch-2.0`).
+## What was previously here (and why it changed)
 
-Both are public; neither has been validated for orca embedding quality in this project yet.
+Earlier revisions of this file framed every methodological choice as "candidate" or "subject to revision". That hedging was correct when the dataset was unselected and the species was uncommitted. Now that:
 
-### B. Annotation join
-Map each DCLDE 2026 clip to (ecotype, call type, location). Then, separately, map each call type to a behavioural context using the call-type → context table sourced from the published ethology literature (`docs/playback_corpus.md` for provenance).
+1. The species + dataset are locked (orca + DCLDE 2026, after retiring common dolphin per [@lehnhoff2025scirep]; see `dataset_plan.md` decision log),
+2. The encoder choice is locked (NatureLM-audio + AVES2 comparator [@robinson2024naturelm; @hagiwara2023aves]),
+3. The four downstream heads are named and mapped to specific prize criteria [@yovel2023doctor],
 
-### C. Embedding-space analysis
-Either UMAP / t-SNE for visualisation, or a clustering metric (silhouette, NMI against context labels) for quantification — depending on whether the question is *demonstration* or *prediction*.
+the methodology is a concrete specification, not a sketch. `ai_architecture.md` is that specification.
 
-### D. Figure
-Whatever the manuscript needs. Best guess: a 2-D projection of the embeddings, coloured by inferred context, with marginal histograms.
+This shorter `methodology.md` exists for two reasons: (a) the manuscript template still expects a `methodology.md` cross-reference, and (b) future readers may search "methodology" before "architecture".
 
-## Components I am explicitly *not* committing to
+---
 
-- A conditional generative head.
-- A closed-loop selection policy.
-- A response predictor trained on the playback corpus.
-- Any kind of "Docker-deployable" packaging.
+## Reproducibility
 
-These appeared in earlier drafts of this repository and were premature. They may re-enter the methodology *if* a downstream stage of work produces clear evidence that they are needed.
+- Deterministic seeds (default seed 0, reported numbers average over seeds 0&ndash;4).
+- All figures regeneratable from a single script.
+- All data downloaded from public sources at known versions: DCLDE 2026 via [@palmer2025dclde_data]; NatureLM-audio weights via [@robinson2024naturelm]; AVES2 weights via [@hagiwara2023aves].
+- Trackio [@trackio2025] for run logging.
+- Code repository tagged at submission time; data DOI minted on Zenodo [@zenodo].
 
-## What this method has to clear before it is real
+---
 
-- A pilot result on a small subset that produces *one* figure I am willing to defend.
-- An honest comparison with what already exists in the literature (Bergler 2019 for detection, Palmer 2025 for ecotype classification, the dialect-clustering literature for embedding analyses).
-- A limitations section that pre-empts the obvious attacks (small playback corpus, inferred-not-annotated context labels, ecotype imbalance).
+## Cross-references
 
-## Reproducibility expectations (when the work happens)
-
-- Deterministic seeds everywhere.
-- All figures regeneratable from a single script or notebook.
-- All data downloaded from public sources at known versions.
-
-None of these expectations have been operationalised yet. They will be when Stage 2 begins.
+- `ai_architecture.md` &mdash; locked four-head model stack, compute envelope, locked hyperparameters, claim paragraph, honest-limits list.
+- `dataset_plan.md` &mdash; dataset selection, week-by-week plan, risk tree, decision log.
+- `prize_criteria_mapping.md` &mdash; per-criterion checklist.
+- `playback_corpus.md` &mdash; per-paper extraction notes for head H4.
+- `OrcaDolittle/paper/refs.bib` &mdash; bibliography source of truth.
+- `.cursor/rules/citations.mdc` &mdash; folder-wide citation rule.

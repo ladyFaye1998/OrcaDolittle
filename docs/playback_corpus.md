@@ -1,6 +1,8 @@
-# Playback corpus — extraction notes (provisional)
+<!-- Citation rule .cursor/rules/citations.mdc applies: every numerical or factual claim points to a key in OrcaDolittle/paper/refs.bib. -->
 
-> **Status.** Provisional extraction notes for a curated re-analysis corpus that *would be assembled* if Stage 0 of the execution plan selects question C (off-policy playback-response). Each entry currently reflects best-effort initial extraction. Every numeric value below carries a second-pass-audit dependency before it can appear in a manuscript.
+# Playback corpus — extraction notes
+
+> **Status.** **Active.** Curated re-analysis corpus for head **H4** in `ai_architecture.md` (criterion-3 evidence layer per [@yovel2023doctor]). Each entry currently reflects best-effort initial extraction. Every numeric value below carries a second-pass-audit dependency (Week 5–8 of `dataset_plan.md`) before it can appear in the manuscript.
 
 Inclusion criteria a real corpus would have to meet:
 
@@ -13,34 +15,53 @@ Inclusion criteria a real corpus would have to meet:
 
 These are starting points, not finished extractions. Trial counts and proportions below should be treated as approximate until each paper has been read in full and the extraction has been double-checked.
 
-### filatova_2015
+### bowers_2018  &mdash; primary criterion-3 source
 
-- **Citation.** Filatova, O. A., Samarra, F. I. P., Deecke, V. B., Ford, J. K. B., Miller, P. J. O. & Yurk, H. (2015). Cultural evolution of killer whale calls. *Behaviour*, 152, 2001–2038.
-- **Initial reading.** Kamchatkan resident playback experiments described in Methods §2.3; some response statistics reported in Table 3 of the paper.
-- **Extraction status.** **Not yet performed.** A separate second-pass audit by direct re-reading is required before any numbers from this paper appear in a downstream artefact.
+- **Citation.** [@bowers2018].
+- **Initial reading.** Orca call categories broadcast to pilot whales and Risso's dolphins, with DTAG-quantified per-trial response statistics. Cross-species playback &mdash; an *external* validation of orca call meaning rather than within-orca.
+- **Extraction status.** **Not yet performed.** VERIFY whether per-trial supplementary tables are provided.
 
-### foote_2008
+### cure_2026  &mdash; primary criterion-3 source
 
-- **Citation.** Foote, A. D., Osborne, R. W. & Hoelzel, A. R. (2008). Temporal and contextual patterns of killer whale (*Orcinus orca*) call type production. *Current Biology*. [doi:10.1016/j.cub.2008.06.013](https://doi.org/10.1016/j.cub.2008.06.013)
-- **Initial reading.** V4 excitement call broadcast to Southern Residents. Response proportions visible in Figure 2.
+- **Citation.** [@cure2026].
+- **Initial reading.** 15 playback trials on 8 tagged orcas. Aversive responses to pilot-whale sounds, multi-sensor-tag-quantified.
+- **Extraction status.** **Not yet performed.** VERIFY full author list and exact per-trial response statistics from the publisher landing page.
+
+### filatova_2011  &mdash; primary criterion-3 source
+
+- **Citation.** [@filatova2011]. (Companion playback paper to the call-corpus paper of the same group; VERIFY which Filatova et al. paper is the playback paper, since several exist.)
+- **Initial reading.** Kamchatka resident playback experiments. Within-clan vs across-clan response contrasts.
 - **Extraction status.** **Not yet performed.**
 
-### deecke_2000
+### filatova_2015  &mdash; criterion-2 join source (not primary criterion-3)
 
-- **Citation.** Deecke, V. B., Ford, J. K. B. & Spong, P. (2000). Dialect change in resident killer whales: implications for vocal learning and cultural transmission. *Animal Behaviour*, 60, 629–638. [doi:10.1006/anbe.2000.1505](https://doi.org/10.1006/anbe.2000.1505)
-- **Initial reading.** Multi-generation playback test of dialect drift.
-- **Extraction status.** **Not yet performed.**
+- **Citation.** [@filatova2015].
+- **Initial reading.** Cultural-evolution-of-calls paper. Used primarily as a behavioural-context join source for head H1 / H2, not as a playback corpus.
+- **Extraction status.** **Not yet performed** as a playback source.
 
-### yurk_2002
+### foote_2008  &mdash; criterion-2 join source
 
-- **Citation.** Yurk, H., Barrett-Lennard, L., Ford, J. K. B. & Matkin, C. O. (2002). Cultural transmission within maternal lineages: vocal clans in resident killer whales in southern Alaska. *Animal Behaviour*, 63, 1103–1119. [doi:10.1006/anbe.2002.3036](https://doi.org/10.1006/anbe.2002.3036)
+- **Citation.** [@foote2008].
+- **Correction note (2026-05-18).** Earlier draft of this file cited this paper as *Current Biology* with DOI `10.1016/j.cub.2008.06.013`. That was an inherited error &mdash; the paper is in *Ethology* (doi `10.1111/j.1439-0310.2008.01496.x`). Verified via the deep-research audit; the *Current Biology* DOI does not resolve to this paper. Correction propagated to `paper/refs.bib` (key `foote2008`).
+- **Initial reading.** V4 excitement call broadcast to Southern Residents. Response proportions visible in Figure 2. This is the classic behavioural-context-of-call-type paper [@foote2008] cited by the H1 / H2 behavioural-context join.
+- **Extraction status.** **Not yet performed** for response statistics; the call-type-to-context table extraction is Stage 2 of `EXECUTION_PLAN.md`.
+
+### deecke_2000  &mdash; supporting context
+
+- **Citation.** [@deecke2000].
+- **Initial reading.** Multi-generation playback test of dialect drift in resident killer whales.
+- **Extraction status.** **Not yet performed.** Likely a supporting reference rather than primary criterion-3 evidence.
+
+### yurk_2002  &mdash; supporting context
+
+- **Citation.** [@yurk2002].
 - **Initial reading.** Within-clan vs across-clan playbacks in Alaska Residents.
 - **Extraction status.** **Not yet performed.**
 
-### deecke_2005
+### deecke_2005  &mdash; excluded except as transfer-prior
 
-- **Citation.** Deecke, V. B., Slater, P. J. B. & Ford, J. K. B. (2005). Selective habituation shapes acoustic predator recognition in harbour seals. *Animal Behaviour*. [doi:10.1006/anbe.2002.2156](https://doi.org/10.1006/anbe.2002.2156)
-- **Note.** Listener is harbour seals, not orcas. Would only be relevant as a cross-species transfer prior, and only if the methodology section explicitly justifies the bridge. Otherwise should be excluded.
+- **Citation.** [@deecke2005].
+- **Note.** Listener is harbour seals, not orcas. Will only be relevant as a cross-species transfer prior, and only if the methodology section explicitly justifies the bridge per [@yovel2023doctor]'s umwelt obstacle. Otherwise excluded from the criterion-3 corpus.
 
 ## Honest caveats
 
@@ -51,10 +72,10 @@ These are starting points, not finished extractions. Trial counts and proportion
 
 ## Papers I would still need to read
 
-- Riesch, Ford & Thomsen 2008 — *Discrete calls of killer whales in the Northeast Pacific.* J. Acoust. Soc. Am.
-- Miller et al. 2004 — *Call repertoires of killer whales.* Anim. Behav.
-- Filatova et al. 2018 — *Function of biphonic calls.* Sci. Rep.
-- Selbmann et al. 2023+ — Icelandic acoustic-response studies (verify availability).
-- Samarra et al. 2010+ — Icelandic playback series.
+- [@riesch2008]
+- [@miller2004repertoires] (VERIFY title and exact relevance)
+- [@filatova2018biphonic]
+- [@selbmann2023] (VERIFY journal + year)
+- [@samarra2010] (VERIFY which Samarra paper is the playback one)
 
-None of these have been accessed yet.
+None of these have been accessed in full yet. All five are entered in `paper/refs.bib` with `VERIFY` notes.

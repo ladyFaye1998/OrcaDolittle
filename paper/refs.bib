@@ -1,6 +1,25 @@
+% =====================================================================
+% OrcaDolittle / Coller-Dolittle Prize 2026-27 submission
+% Master bibliography. Single source of truth for citations across this
+% repository. Pointed at by .cursor/rules/citations.mdc (folder-wide
+% citation rule).
+%
+% Conventions:
+%   - One entry per cited source, with a stable BibTeX key.
+%   - Every numerical or factual claim in a markdown doc cites a key
+%     here using inline `[@key]` (Pandoc/Quarto style).
+%   - Entries marked `note = {VERIFY}` need a primary-source check
+%     before they appear in the submission paper.
+%   - Last updated 2026-05-18 (post DCLDE-2026-lock + AI-architecture-lock).
+% =====================================================================
+
+% ---------------------------------------------------------------------
+% 1. Killer whale acoustic ethology  (the call-type-to-context layer)
+% ---------------------------------------------------------------------
+
 @article{ford1989,
   author  = {Ford, J. K. B.},
-  title   = {Acoustic behaviour of resident killer whales ({O}rcinus orca) off Vancouver Island, British Columbia},
+  title   = {Acoustic behaviour of resident killer whales ({O}rcinus orca) off {V}ancouver {I}sland, {B}ritish {C}olumbia},
   journal = {Canadian Journal of Zoology},
   volume  = {67},
   pages   = {727--745},
@@ -34,14 +53,41 @@
   journal = {Animal Behaviour},
   year    = {2005},
   doi     = {10.1006/anbe.2002.2156},
+  note    = {Cross-species playback (orca calls -> harbour seals). Use only as transfer-prior, never as in-species evidence.},
 }
 
 @article{foote2008,
   author  = {Foote, A. D. and Osborne, R. W. and Hoelzel, A. R.},
   title   = {Temporal and contextual patterns of killer whale ({O}rcinus orca) call type production},
-  journal = {Current Biology},
+  journal = {Ethology},
+  volume  = {114},
+  pages   = {599--606},
   year    = {2008},
-  doi     = {10.1016/j.cub.2008.06.013},
+  doi     = {10.1111/j.1439-0310.2008.01496.x},
+  note    = {Correct journal is Ethology, NOT Current Biology. Earlier drafts inherited a wrong cite.},
+}
+
+@article{riesch2008,
+  author  = {Riesch, R. and Ford, J. K. B. and Thomsen, F.},
+  title   = {Whistle sequences in wild killer whales ({O}rcinus orca)},
+  journal = {Journal of the Acoustical Society of America},
+  volume  = {124},
+  number  = {3},
+  pages   = {1822--1829},
+  year    = {2008},
+  doi     = {10.1121/1.2956467},
+  note    = {Companion discrete-call paper is Riesch et al. 2006; verify which paper supplies the call-type-to-context table cited in playback_corpus.md.},
+}
+
+@article{filatova2011,
+  author  = {Filatova, O. A. and Deecke, V. B. and Ford, J. K. B. and Matkin, C. O. and Barrett-Lennard, L. G. and Guzeev, M. A. and Burdin, A. M. and Hoyt, E.},
+  title   = {Call diversity in the {N}orth {P}acific killer whale populations: implications for dialect evolution and population history},
+  journal = {Animal Behaviour},
+  volume  = {83},
+  pages   = {595--603},
+  year    = {2012},
+  doi     = {10.1016/j.anbehav.2011.12.013},
+  note    = {Kamchatka resident call corpus. Companion playback paper exists separately; verify when reading.},
 }
 
 @article{filatova2015,
@@ -51,10 +97,11 @@
   volume  = {152},
   pages   = {2001--2038},
   year    = {2015},
+  doi     = {10.1163/1568539X-00003317},
 }
 
-@article{filatova2018,
-  author  = {Filatova, O. A. and others},
+@article{filatova2018biphonic,
+  author  = {Filatova, O. A. and Miller, P. J. O. and Yurk, H. and Samarra, F. I. P. and Hoyt, E. and Ford, J. K. B. and Matkin, C. O. and Barrett-Lennard, L. G.},
   title   = {The function of biphonic calls in killer whales},
   journal = {Scientific Reports},
   volume  = {8},
@@ -66,55 +113,137 @@
 @article{riesch2012,
   author  = {Riesch, R. and Barrett-Lennard, L. G. and Ellis, G. M. and Ford, J. K. B. and Deecke, V. B.},
   title   = {Cultural traditions and the evolution of reproductive isolation: ecological speciation in killer whales?},
-  journal = {Biological Reviews},
+  journal = {Biological Journal of the Linnean Society},
   year    = {2012},
-  doi     = {10.1111/j.1469-185X.2012.00237.x},
+  doi     = {10.1111/j.1095-8312.2012.01872.x},
+  note    = {Some sources index as Biological Reviews; verify against publisher page.},
 }
 
-@article{bergler2019,
-  author  = {Bergler, C. and Schr{\"o}ter, H. and Cheng, R. X. and Barth, V. and Weber, M. and N{\"o}th, E. and Hofer, H. and Maier, A.},
-  title   = {{ORCA-SPOT}: An automatic killer whale sound detection toolkit using deep learning},
-  journal = {Scientific Reports},
-  volume  = {9},
-  pages   = {10997},
-  year    = {2019},
-  doi     = {10.1038/s41598-019-47335-w},
+@article{miller2004repertoires,
+  author  = {Miller, P. J. O. and Shapiro, A. D. and Tyack, P. L. and Solow, A. R.},
+  title   = {Call-type matching in vocal exchanges of free-ranging resident killer whales, {O}rcinus orca},
+  journal = {Animal Behaviour},
+  volume  = {67},
+  pages   = {1099--1107},
+  year    = {2004},
+  doi     = {10.1016/j.anbehav.2003.06.017},
+  note    = {VERIFY title against original; sometimes referenced as "Call repertoires of killer whales".},
 }
+
+@article{wieland2010,
+  author  = {Wieland, M. and Jones, A. and Renn, S. C. P.},
+  title   = {Changing durations of southern resident killer whale ({O}rcinus orca) discrete calls between two periods spanning 28 yr},
+  journal = {Marine Mammal Science},
+  volume  = {26},
+  pages   = {195--201},
+  year    = {2010},
+  doi     = {10.1111/j.1748-7692.2009.00351.x},
+  note    = {Early embedding-style clustering of orca discrete calls. VERIFY which Wieland paper is the right one to cite for cluster-baseline.},
+}
+
+@article{bowers2018,
+  author  = {Bowers, M. T. and Friedlaender, A. S. and Janik, V. M. and Nowacek, D. P. and Quick, N. J. and Southall, B. L. and Read, A. J.},
+  title   = {Selective reactions to different killer whale call categories in two delphinid species},
+  journal = {Journal of Experimental Biology},
+  volume  = {221},
+  pages   = {jeb162479},
+  year    = {2018},
+  doi     = {10.1242/jeb.162479},
+  note    = {Cross-species playback (orca calls broadcast to pilots and Risso's, DTAG-quantified responses). Criterion-3 evidence source. VERIFY per-trial supplementary tables.},
+}
+
+@article{cure2026,
+  author  = {Cur{\'e}, C. and others},
+  title   = {Aversive behavioural responses of free-ranging killer whales to pilot whale sounds quantified by multi-sensor biologging tags},
+  journal = {Scientific Reports},
+  year    = {2026},
+  doi     = {10.1038/s41598-026-35574-7},
+  note    = {15 playback trials on 8 tagged orcas. Criterion-3 evidence source. VERIFY full author list and exact title from publisher landing page.},
+}
+
+@article{samarra2010,
+  author  = {Samarra, F. I. P. and Deecke, V. B. and Vinding, K. and Rasmussen, M. H. and Swift, R. J. and Miller, P. J. O.},
+  title   = {Killer whales ({O}rcinus orca) produce ultrasonic whistles},
+  journal = {Journal of the Acoustical Society of America},
+  volume  = {128},
+  pages   = {EL205--EL210},
+  year    = {2010},
+  doi     = {10.1121/1.3462235},
+  note    = {Icelandic killer whale recordings; not a playback paper per se. Verify which Samarra paper is the playback paper before citing it as criterion-3 evidence.},
+}
+
+@article{selbmann2023,
+  author  = {Selbmann, A. and Deecke, V. B. and Filatova, O. A. and Fedutin, I. D. and Miller, P. J. O. and Simon, M. and Bowles, A. E. and Esteban, R. and Curtin, B. and Samarra, F. I. P.},
+  title   = {Killer whale acoustic patterns associated with foraging and social activity in {I}celand},
+  year    = {2023},
+  note    = {VERIFY journal and year; multiple Selbmann papers exist. Used in cetacean_datasets_audit.md for Icelandic call catalogue.},
+}
+
+% ---------------------------------------------------------------------
+% 2. Datasets (primary substrate + auxiliaries)
+% ---------------------------------------------------------------------
 
 @article{palmer2025dclde,
-  author  = {Palmer, J. K. and others},
+  author  = {Palmer, J. K. and Wood, M. and Solsona-Berga, A. and Klinck, H. and others},
   title   = {A public dataset of annotated {O}rcinus orca acoustic signals for detection and ecotype classification},
   journal = {Scientific Data},
   year    = {2025},
   doi     = {10.1038/s41597-025-05281-5},
+  note    = {DCLDE 2026 corpus. 225{,}000+ bounding-box annotations, 23 sites, 1.6 TB, 9 yr. Dataset DOI 10.25921/15ey-mh50. VERIFY full author list.},
 }
 
-@article{hagiwara2023aves,
-  author  = {Hagiwara, M.},
-  title   = {{AVES}: animal vocalization encoder based on self-supervision},
-  journal = {arXiv preprint},
-  year    = {2023},
-  url     = {https://arxiv.org/abs/2210.14493},
+@misc{palmer2025dclde_data,
+  author       = {Palmer, J. K. and others},
+  title        = {{DCLDE 2026}: killer whale ({O}rcinus orca) ecotype and other species annotations},
+  year         = {2025},
+  publisher    = {{NOAA} National Centers for Environmental Information},
+  doi          = {10.25921/15ey-mh50},
+  url          = {https://catalog.data.gov/dataset/dclde-2026-killer-whale-orcinus-orca-ecotype-and-other-species-annotations-for-the-detecti-2026},
+  note         = {Companion data record to palmer2025dclde. US Government public domain.},
 }
 
-@misc{hamer2025perch,
-  author  = {Hamer, J. and others},
-  title   = {Perch 2.0: the bittern lesson for bioacoustics},
+@article{lehnhoff2025essd,
+  author  = {Lehnhoff, L. and Glotin, H. and Chaillou, R. and Dram{\'e}, F. and Cazau, D. and Mouchel-Vichard, M. and Rongi{\`e}re, A. and Spitz, J.},
+  title   = {High-resolution acoustic recordings of wild free-ranging short-beaked common dolphins for etho-acoustical and repertoire studies},
+  journal = {Earth System Science Data},
+  volume  = {17},
+  pages   = {4495},
   year    = {2025},
-  howpublished = {Google Research},
-  url     = {https://research.google/pubs/perch-20-the-bittern-lesson-for-bioacoustics/},
+  doi     = {10.5194/essd-17-4495-2025},
+  note    = {DOLPHINFREE data paper. Zenodo dataset doi 10.5281/zenodo.14637674, CC-BY-4.0, 39.9 GB.},
 }
 
-@article{hsu2021hubert,
-  author  = {Hsu, W.-N. and others},
-  title   = {{HuBERT}: self-supervised speech representation learning by masked prediction of hidden units},
-  journal = {arXiv preprint},
-  year    = {2021},
-  url     = {https://arxiv.org/abs/2106.07447},
+@article{lehnhoff2025scirep,
+  author  = {Lehnhoff, L. and Glotin, H. and others},
+  title   = {Whistles characterisation using artificial intelligence reveals responses of short-beaked common dolphins to a bio-inspired acoustic mitigation device for fishing nets},
+  journal = {Scientific Reports},
+  year    = {2025},
+  doi     = {10.1038/s41598-025-24256-5},
+  note    = {The Coller-targeted AI paper on DOLPHINFREE, published Nov 2025 by the data owners. Reason we pivoted off the common-dolphin lane. VERIFY full author list.},
 }
 
-@article{sharma2024sperm,
-  author  = {Sharma, P. and others},
+@article{sayigh2025nsw,
+  author  = {Sayigh, L. S. and Jensen, F. H. and McHugh, K. and Casoli, M. and Lemercier, L. and Tyack, P. L. and Wells, R. S. and Janik, V. M.},
+  title   = {First evidence for widespread sharing of stereotyped non-signature whistle types by wild dolphins},
+  journal = {bioRxiv},
+  year    = {2025},
+  doi     = {10.1101/2025.04.21.647658},
+  note    = {Inaugural 2025 Coller-Dolittle winner. Criterion benchmark for the 2026-27 submission.},
+}
+
+@article{sayigh2022sdwd,
+  author  = {Sayigh, L. S. and Wells, R. S. and Janik, V. M. and others},
+  title   = {The {S}arasota {D}olphin {W}histle {D}atabase: a unique long-term resource for understanding dolphin communication},
+  journal = {Frontiers in Marine Science},
+  volume  = {9},
+  pages   = {923046},
+  year    = {2022},
+  doi     = {10.3389/fmars.2022.923046},
+  note    = {Underlying corpus for sayigh2025nsw. Request-only audio.},
+}
+
+@article{sharma2024,
+  author  = {Sharma, P. and Gero, S. and Payne, R. and Gruber, D. F. and Rus, D. and Torralba, A. and Andreas, J.},
   title   = {Contextual and combinatorial structure in sperm whale vocalisations},
   journal = {Nature Communications},
   volume  = {15},
@@ -122,6 +251,156 @@
   year    = {2024},
   doi     = {10.1038/s41467-024-47221-8},
 }
+
+@inproceedings{paradise2025wham,
+  author    = {Paradise, O. and Muralikrishnan, P. and Chen, L. and Flores Garcia, H. and Pardo, B. and Diamant, R. and Gruber, D. F. and Gero, S. and Goldwasser, S.},
+  title     = {{WhAM}: towards a translative model of sperm whale vocalization},
+  booktitle = {Advances in Neural Information Processing Systems 39 ({N}eur{IPS} 2025)},
+  year      = {2025},
+  url       = {https://arxiv.org/abs/2512.02206},
+  note      = {DSWP HuggingFace audio release at huggingface.co/datasets/orrp/DSWP (1,501 codas, CC-BY-4.0).},
+}
+
+@article{bermant2019,
+  author  = {Bermant, P. C. and Bronstein, M. M. and Wood, R. J. and Gero, S. and Gruber, D. F.},
+  title   = {Deep machine learning techniques for the detection and classification of sperm whale bioacoustics},
+  journal = {Scientific Reports},
+  volume  = {9},
+  pages   = {12588},
+  year    = {2019},
+  doi     = {10.1038/s41598-019-48909-4},
+}
+
+@article{visser2017pilot,
+  author  = {Visser, F. and Miller, P. J. O. and Antunes, R. N. and Oudejans, M. G. and Mackenzie, M. L. and Aoki, K. and Lam, F.-P. A. and Kvadsheim, P. H. and Huisman, J. and Tyack, P. L.},
+  title   = {Vocal foragers and silent crowds: context-dependent vocal variation in {N}ortheast {A}tlantic long-finned pilot whales},
+  journal = {Behavioral Ecology and Sociobiology},
+  year    = {2017},
+  doi     = {10.1007/s00265-017-2397-y},
+  note    = {Cross-cetacean foraging-vs-silent contextual baseline. Dryad doi 10.5061/dryad.6rj64.},
+}
+
+@article{allen2021humpback,
+  author  = {Allen, A. N. and Harvey, M. and Harrell, L. and others},
+  title   = {A convolutional neural network for automated detection of humpback whale song},
+  journal = {Frontiers in Marine Science},
+  year    = {2021},
+  note    = {187{,}000+ h NOAA PAM corpus, 14 yr, 13 N{P}ac sites. Largest annotated cetacean PAM corpus. VERIFY exact citation.},
+}
+
+@article{stafford2018bowhead,
+  author  = {Stafford, K. M. and Lydersen, C. and Wiig, {\O}. and Kovacs, K. M.},
+  title   = {Extreme diversity in the songs of {S}pitsbergen's bowhead whales},
+  journal = {Biology Letters},
+  year    = {2018},
+  doi     = {10.1098/rsbl.2018.0056},
+}
+
+@misc{orcasound,
+  author       = {{Orcasound Cooperative}},
+  title        = {{O}rcasound: open-source hydrophone network and labelled-bouts archive},
+  year         = {2018--present},
+  url          = {https://registry.opendata.aws/orcasound/},
+  note         = {Best demo input source. CC-BY-NC-SA-4.0 on labelled subsets.},
+}
+
+% ---------------------------------------------------------------------
+% 3. Audio foundation models  (the frozen-encoder layer)
+% ---------------------------------------------------------------------
+
+@article{hagiwara2023aves,
+  author  = {Hagiwara, M.},
+  title   = {{AVES}: animal vocalization encoder based on self-supervision},
+  journal = {ICASSP},
+  year    = {2023},
+  url     = {https://arxiv.org/abs/2210.14493},
+  note    = {HuBERT-style self-supervised encoder for animal sounds. AVES2 = BEATs-backbone successor (huggingface.co/EarthSpeciesProject/esp-aves2-sl-beats-bio).},
+}
+
+@misc{hamer2025perch,
+  author       = {Hamer, J. and others},
+  title        = {Perch 2.0: the bittern lesson for bioacoustics},
+  year         = {2025},
+  howpublished = {Google Research},
+  url          = {https://research.google/pubs/perch-20-the-bittern-lesson-for-bioacoustics/},
+  note         = {Multi-taxa pretrained bioacoustic encoder; reportedly competitive on marine transfer despite minimal marine pretraining.},
+}
+
+@article{robinson2024naturelm,
+  author  = {Robinson, D. and Miron, M. and Hagiwara, M. and Pietquin, O. and {Earth Species Project}},
+  title   = {{NatureLM-audio}: an audio language foundation model for bioacoustics},
+  journal = {arXiv preprint},
+  year    = {2024},
+  url     = {https://arxiv.org/abs/2411.07186},
+  note    = {Audio language model with cetacean coverage. Candidate primary frozen encoder. VERIFY arXiv ID.},
+}
+
+@article{chen2022beats,
+  author  = {Chen, S. and Wu, Y. and Wang, C. and Liu, S. and Tompkins, D. and Chen, Z. and Wei, F.},
+  title   = {{BEATs}: audio pre-training with acoustic tokenizers},
+  journal = {arXiv preprint},
+  year    = {2022},
+  url     = {https://arxiv.org/abs/2212.09058},
+  note    = {Backbone underlying AVES2. Cite if AVES2 is used as the encoder.},
+}
+
+@article{hsu2021hubert,
+  author  = {Hsu, W.-N. and Bolte, B. and Tsai, Y.-H. H. and Lakhotia, K. and Salakhutdinov, R. and Mohamed, A.},
+  title   = {{HuBERT}: self-supervised speech representation learning by masked prediction of hidden units},
+  journal = {arXiv preprint},
+  year    = {2021},
+  url     = {https://arxiv.org/abs/2106.07447},
+  note    = {Speech-domain ancestor of AVES.},
+}
+
+@article{bergler2019orcaspot,
+  author  = {Bergler, C. and Schr{\"o}ter, H. and Cheng, R. X. and Barth, V. and Weber, M. and N{\"o}th, E. and Hofer, H. and Maier, A.},
+  title   = {{ORCA-SPOT}: an automatic killer whale sound detection toolkit using deep learning},
+  journal = {Scientific Reports},
+  volume  = {9},
+  pages   = {10997},
+  year    = {2019},
+  doi     = {10.1038/s41598-019-47335-w},
+}
+
+% ---------------------------------------------------------------------
+% 4. Vocal-repertoire and embedding-analysis methodology
+% ---------------------------------------------------------------------
+
+@article{sainburg2020,
+  author  = {Sainburg, T. and Thielk, M. and Gentner, T. Q.},
+  title   = {Finding, visualizing, and quantifying latent structure across diverse animal vocal repertoires},
+  journal = {PLOS Computational Biology},
+  volume  = {16},
+  number  = {10},
+  pages   = {e1008228},
+  year    = {2020},
+  doi     = {10.1371/journal.pcbi.1008228},
+  note    = {UMAP + HDBSCAN repertoire-discovery framework. Methodological precedent for embedding-space cluster analysis.},
+}
+
+@article{mcinnes2018umap,
+  author  = {McInnes, L. and Healy, J. and Melville, J.},
+  title   = {{UMAP}: uniform manifold approximation and projection for dimension reduction},
+  journal = {arXiv preprint},
+  year    = {2018},
+  url     = {https://arxiv.org/abs/1802.03426},
+}
+
+@article{mcinnes2017hdbscan,
+  author  = {McInnes, L. and Healy, J. and Astels, S.},
+  title   = {{hdbscan}: hierarchical density based clustering},
+  journal = {Journal of Open Source Software},
+  volume  = {2},
+  number  = {11},
+  pages   = {205},
+  year    = {2017},
+  doi     = {10.21105/joss.00205},
+}
+
+% ---------------------------------------------------------------------
+% 5. Prize framing and interspecies-communication theory
+% ---------------------------------------------------------------------
 
 @article{yovel2023doctor,
   author  = {Yovel, Y. and Rechavi, O.},
@@ -131,4 +410,116 @@
   pages   = {R1126--R1131},
   year    = {2023},
   doi     = {10.1016/j.cub.2023.06.071},
+  note    = {Defines criteria refinement and three obstacles (umwelt, evaluation, spurious correlations / Wittgenstein boundary). Primary lens for the entire submission.},
+}
+
+@book{wittgenstein1953,
+  author    = {Wittgenstein, L.},
+  title     = {Philosophical Investigations},
+  publisher = {Basil Blackwell},
+  year      = {1953},
+  note      = {Source of the "if a lion could speak, we could not understand him" boundary referenced by Yovel \& Rechavi 2023.},
+}
+
+@book{kershenbaum2024whyanimalstalk,
+  author    = {Kershenbaum, A.},
+  title     = {Why Animals Talk: The New Science of Animal Communication},
+  publisher = {Penguin Press},
+  year      = {2024},
+  note      = {Panel member's popular book; sets the tone for the 2-minute video.},
+}
+
+% ---------------------------------------------------------------------
+% 6. Comparable Coller-Dolittle finalist / winning entries (read targets)
+% ---------------------------------------------------------------------
+
+@article{prat2016bat,
+  author  = {Prat, Y. and Taub, M. and Yovel, Y.},
+  title   = {Everyday bat vocalizations contain information about emitter, addressee, context, and behavior},
+  journal = {Scientific Reports},
+  volume  = {6},
+  pages   = {39419},
+  year    = {2016},
+  doi     = {10.1038/srep39419},
+  note    = {Yovel lab Egyptian fruit bat dataset cited in PLAN.md as a Coller-relevant exemplar.},
+}
+
+@article{crockford2025,
+  author  = {Crockford, C. and others},
+  title   = {Compositional vocal communication in wild chimpanzees},
+  year    = {2025},
+  note    = {2025-26 finalist (chimps, France / C{\^o}te d'Ivoire). VERIFY exact citation when read.},
+}
+
+@article{berthet2025bonobo,
+  author  = {Berthet, M. and Surbeck, M. and Townsend, S. W.},
+  title   = {Compositionality in bonobo vocal communication},
+  year    = {2025},
+  note    = {2025-26 finalist (bonobos). VERIFY exact citation.},
+}
+
+@article{mathevon2025mouse,
+  author  = {Mathevon, N. and others},
+  title   = {Wild house mouse ultrasonic vocalisations across social contexts},
+  year    = {2025},
+  note    = {2025-26 finalist (wild mice). VERIFY exact citation.},
+}
+
+@article{elie2025zebrafinch,
+  author  = {Elie, J. E. and others},
+  title   = {Zebra finch vocal communication: context, social calls, and learning},
+  year    = {2025},
+  note    = {2025-26 finalist (zebra finches). VERIFY exact citation.},
+}
+
+% ---------------------------------------------------------------------
+% 7. Sequence modelling and language-model methodology  (the sequence-LM head)
+% ---------------------------------------------------------------------
+
+@article{vaswani2017attention,
+  author  = {Vaswani, A. and Shazeer, N. and Parmar, N. and Uszkoreit, J. and Jones, L. and Gomez, A. N. and Kaiser, L. and Polosukhin, I.},
+  title   = {Attention is all you need},
+  journal = {NeurIPS},
+  year    = {2017},
+  url     = {https://arxiv.org/abs/1706.03762},
+}
+
+@article{devlin2019bert,
+  author  = {Devlin, J. and Chang, M.-W. and Lee, K. and Toutanova, K.},
+  title   = {{BERT}: pre-training of deep bidirectional transformers for language understanding},
+  journal = {NAACL},
+  year    = {2019},
+  url     = {https://arxiv.org/abs/1810.04805},
+  note    = {Masked-language-model precedent for the per-encounter call-sequence head.},
+}
+
+@article{sainburg2019animal,
+  author  = {Sainburg, T. and Theilman, B. and Thielk, M. and Gentner, T. Q.},
+  title   = {Parallels in the sequential organization of birdsong and human speech},
+  journal = {Nature Communications},
+  volume  = {10},
+  pages   = {3636},
+  year    = {2019},
+  doi     = {10.1038/s41467-019-11605-y},
+  note    = {Sequence-statistical precedent for call-sequence modelling. Useful comparator for the Transformer-LM-over-call-IDs head.},
+}
+
+% ---------------------------------------------------------------------
+% 8. Standing data-repository infrastructure cited in the manuscript
+% ---------------------------------------------------------------------
+
+@misc{trackio2025,
+  author = {{Hugging Face}},
+  title  = {Trackio: experiment tracking for {ML} training},
+  year   = {2025},
+  url    = {https://huggingface.co/spaces/Trackio},
+  note   = {Logging layer for the run-tracking section of the methods.},
+}
+
+@misc{zenodo,
+  author = {{CERN / OpenAIRE}},
+  title  = {Zenodo: open-science data and software repository},
+  year   = {2025},
+  url    = {https://zenodo.org/},
+  note   = {Used for the derived-data DOI mint of the submission.},
 }

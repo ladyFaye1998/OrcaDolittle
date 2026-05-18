@@ -1,83 +1,88 @@
+<!-- Citation rule .cursor/rules/citations.mdc applies: every numerical or factual claim points to a key in OrcaDolittle/paper/refs.bib. -->
+
 # Execution plan
 
-The honest critical path from "nothing exists" to "a Coller-Dolittle Prize submission".
+> **Status.** **Locked 2026-05-18 (rev 3).** Stage 0 ("choose the scientific question") is closed. The question, the dataset, the encoder, and the four downstream heads are all committed. This file is the parent execution view; the per-week details live in `docs/dataset_plan.md` and the per-head methodology lives in `docs/ai_architecture.md`. The earlier "stages 0&ndash;7, nothing started" framing has been retired.
 
-> **Status.** Pre-work. None of the steps below have begun. Time estimates are best-effort and likely to slip.
+The honest critical path from "everything is now locked" to "a Coller-Dolittle Prize submission [@yovel2023doctor]".
 
 ---
 
-## Stage 0 — Choose the scientific question (1 week)
+## Locked decisions (read first)
 
-The single biggest open question. The current shortlist:
+| Decision | Value | Source |
+|---|---|---|
+| Focal species | *Orcinus orca* (killer whale) | `docs/dataset_plan.md` |
+| Primary acoustic corpus | DCLDE 2026 [@palmer2025dclde; @palmer2025dclde_data] | `docs/dataset_plan.md` |
+| Behavioural-context join layer | Ford / Foote / Filatova / Riesch / Yurk [@ford1989; @foote2008; @filatova2015; @riesch2008; @yurk2002] | `docs/dataset_plan.md` |
+| Playback-response evidence layer | Bowers / Cur&eacute; / Filatova [@bowers2018; @cure2026; @filatova2011] | `docs/playback_corpus.md` |
+| Frozen encoder (primary) | NatureLM-audio [@robinson2024naturelm] | `docs/ai_architecture.md` |
+| Frozen encoder (comparator) | AVES2 [@hagiwara2023aves; @chen2022beats] | `docs/ai_architecture.md` |
+| Downstream heads | H1 probes / H2 clusters / H3 sequence-LM / H4 playback predictor | `docs/ai_architecture.md` |
+| Statistical-validation regime | shuffled-permutation baselines (n_perm = 10,000) | `docs/ai_architecture.md` |
+| Submission deliverables | 5-page PDF + 2-min video + public-data link | `PLAN.md` + `RUBRIC.html` |
 
-1. **Context recovery.** Can a frozen audio foundation model (Perch 2.0 / AVES2) recover the published behavioural-context labels for killer-whale call types from DCLDE 2026, without any orca-specific training? Demo: an interactive 2-D embedding map of orca calls coloured by inferred context, with audio playback.
-2. **Dialect geography.** Quantify how Resident orca dialects drift across the 23 NE Pacific locations in DCLDE 2026 using foundation-model embeddings. Demo: a map of the Pacific Northwest with per-location call centroids and audio examples.
-3. **Off-policy playback-response model.** Predict the response distribution to a candidate stimulus, trained off-policy on the published killer-whale playback corpus. Demo: audio in, predicted response out, with counterfactual controls.
+Anything not on this table is open. Anything on this table requires a `## Decision log` entry to change.
 
-**Exit criterion for Stage 0.** A single one-line question is committed in writing, along with the single figure it has to produce.
+---
 
-## Stage 1 — Data feasibility (1–2 weeks)
+## Stage gates (post-lock)
 
-- Confirm I can actually access DCLDE 2026 audio (not just annotations) on my hardware or via HF Jobs.
-- Pull a small, hand-chosen subset (a few hundred clips across ecotypes) and verify the annotations open cleanly.
-- Run AVES2 or Perch 2.0 inference on that subset and check that embeddings look reasonable.
-- Confirm OrcaSound archive access for the demo input source.
+### Stage 1 &mdash; data + tooling feasibility (Weeks 1&ndash;2)
 
-**Exit criterion.** A one-page note documenting which datasets, at what scale, can be pulled and processed within my actual constraints (Tel Aviv, remote, GPU access TBD).
+- [ ] Pull DCLDE 2026 `Annotations.csv` from the NCEI / Google Cloud Storage mirror [@palmer2025dclde_data]. Confirm schema.
+- [ ] Pull 1&ndash;3 GB representative call subset across the three ecotypes [@palmer2025dclde].
+- [ ] Install NatureLM-audio [@robinson2024naturelm] + AVES2 [@hagiwara2023aves] on the 4090. Run inference on the subset.
+- [ ] Set up Trackio [@trackio2025] logging.
+- [ ] Library-access pulls of [@ford1989; @foote2008; @filatova2015; @riesch2008; @yurk2002; @bowers2018; @cure2026; @filatova2011].
+- [ ] Email `CollerDolittleAward@gmail.com` for the 2026-27 cycle deadline.
 
-## Stage 2 — Pilot analysis (2–3 weeks)
+**Exit criterion.** One-page note documenting that all datasets, models, and library pulls succeeded within compute and access constraints.
 
-- Implement the Stage 0 question end-to-end on the Stage 1 subset.
-- Produce *one* draft figure. Just one.
-- Show it to two people whose taste I trust (TBD) and decide whether to scale.
+### Stage 2 &mdash; behavioural-context join table (Weeks 3&ndash;4)
 
-**Exit criterion.** A figure that, if reproduced at full scale, would be defensible in a five-page paper.
+- [ ] Hand-code the `call_type -> behavioural_context` CSV from [@ford1989; @foote2008; @filatova2015]. One row per (population, call type, primary behavioural context, citation key).
+- [ ] Cross-validate the join against a second-pass reading of each source paper.
+- [ ] Reproduce one known result &mdash; e.g. the V4 excitement call -> foraging mapping in Southern Residents [@foote2008] &mdash; using the joined table + DCLDE embeddings as a sanity check.
 
-## Stage 3 — Full-scale analysis (3–4 weeks)
+**Exit criterion.** A versioned `data/join_tables/call_type_to_context.csv` whose every row is traceable to a `[@bibkey]`.
 
-- Scale the pilot to the full DCLDE 2026 corpus or to whatever subset the pilot showed is needed.
-- Re-run all numbers with deterministic seeds and a single reproducibility script.
-- Generate the figures the manuscript will use.
+### Stage 3 &mdash; the four heads (Weeks 5&ndash;8)
 
-**Exit criterion.** A `figures/` directory with the final, publication-quality images.
+Each head from `docs/ai_architecture.md` becomes one analysis:
 
-## Stage 4 — Demo (1–2 weeks)
+- [ ] **H1 &mdash; linear / MLP probes.** Train on embedding -> (ecotype, vocal category, joined behavioural context). Report cross-validated accuracy + per-class confusion vs. permutation-test baseline.
+- [ ] **H2 &mdash; unsupervised clustering** [@sainburg2020; @mcinnes2018umap; @mcinnes2017hdbscan]. Recover the literature call-type catalogue [@ford1989; @foote2008] above shuffled baseline.
+- [ ] **H3 &mdash; sequence LM** [@vaswani2017attention; @devlin2019bert]. 30M-param Transformer MLM on per-encounter call-ID streams. Report MLM loss vs. shuffled-sequence baseline. Direct port of [@sharma2024]'s sperm-whale methodology.
+- [ ] **H4 &mdash; playback-response prediction.** Re-extract per-trial response statistics from [@bowers2018; @cure2026; @filatova2011] supplementary tables. Regress embedding distance + cluster identity on response amplitude.
 
-The smallest possible thing the jury can interact with. Choices:
+**Exit criterion.** A `figures/` directory with the headline figure for each of H1&ndash;H4, each accompanied by a permutation-test p-value.
 
-- A single-page static site with embedded audio clips, spectrograms, and the headline figure.
-- A small Gradio Space — *one* interaction (upload a clip, get an inference), nothing more.
-- A short, well-edited video with on-screen captions.
+### Stage 4 &mdash; preprint + reproducibility (Weeks 9&ndash;12)
 
-**The two-minute video itself can satisfy this requirement.** A separate web demo is optional, not required.
+- [ ] Draft a full-length preprint (Methods, Results, Discussion). Limitations section first-class, no shorter than half a page, addressing the five honest limits in `ai_architecture.md`.
+- [ ] Post to bioRxiv.
+- [ ] Public release: GitHub repo (MIT), Zenodo data deposit [@zenodo] (derived data + join table + analysis code; raw audio links back to DCLDE [@palmer2025dclde_data]). README + one-command pipeline. DOIs minted.
+- [ ] One outside-reader pass.
 
-**Exit criterion.** A URL the prize jury can click.
+**Exit criterion.** A bioRxiv DOI + a Zenodo DOI + a tagged GitHub release.
 
-## Stage 5 — Manuscript (2 weeks)
+### Stage 5 &mdash; 5-page submission + video (Weeks 13&ndash;14)
 
-- Five pages, including figures.
-- Structure: Abstract · Background · Method · Results · Discussion · Limitations.
-- Limitations section first-class — no shorter than half a page.
-- All cocky language stripped on the first pass and re-stripped on the second.
+- [ ] Compress the preprint to Coller's 5-page / font 11 / 1.5-spacing format.
+- [ ] Record 2-minute public-facing video per `RUBRIC.html` &sect;6 checklist. Pitched at the [@kershenbaum2024whyanimalstalk] audience, not the technical reviewer.
+- [ ] Finalise public data repository.
 
-**Exit criterion.** A submission-ready PDF in `paper/manuscript.pdf`.
+**Exit criterion.** A submission-ready PDF in `paper/manuscript.pdf` and an MP4 within the prize's length / size limits.
 
-## Stage 6 — Two-minute video (1 week)
+### Stage 6 &mdash; sanity check + submit (Weeks 15&ndash;16)
 
-- Single voice-over, four-act script.
-- Real audio of real orca calls.
-- One animation of the headline figure.
-- Subtitles burned in.
+- [ ] Re-read the official prize criteria. Verify each criterion is addressed in the manuscript and the video, not just in a planning document.
+- [ ] Have a non-author read the manuscript cold and tell me what they thought it claimed; compare to what I think it claims. Birch-style epistemic-honesty pass.
+- [ ] Disable every cocky phrase in the paper and the video on a final pass.
+- [ ] Submit to `CollerDolittleAward@gmail.com`: PDF + video + public-data link.
 
-**Exit criterion.** An MP4 file under the prize's length and size limits.
-
-## Stage 7 — Sanity check before submission (1 week)
-
-- Re-read the official prize criteria. Verify each one is addressed in the manuscript and the video, not just in a planning document.
-- Have a non-author read the manuscript cold and tell me what they thought it claimed; compare to what I think it claims.
-- Disable every cocky phrase in the paper and the video on a final pass.
-
-**Exit criterion.** Submission.
+**Exit criterion.** Submission email sent, with all three attachments and the public-data DOI.
 
 ---
 
@@ -86,17 +91,20 @@ The smallest possible thing the jury can interact with. Choices:
 - I am not building a Python framework around this analysis.
 - I am not packaging a Docker container.
 - I am not writing a Gradio app with five tabs.
-- I am not training a model that is more ambitious than what fits inside the available compute envelope.
-- I am not promising any of the above in the manuscript.
+- I am not training a model that is more ambitious than what fits inside the available compute envelope (see `docs/ai_architecture.md`).
+- I am not pretraining a foundation encoder &mdash; [@robinson2024naturelm; @hagiwara2023aves] already exist and are used frozen.
+- I am not running new field recordings or new playback trials.
+- I am not re-analysing the Lehnhoff common-dolphin data [@lehnhoff2025essd; @lehnhoff2025scirep] &mdash; that lane is closed (see `docs/dataset_plan.md` decision log).
 
-## Open risks (named, not solved)
+## Open risks (named, not solved; full tree lives in `docs/dataset_plan.md`)
 
-- **Compute access.** Whether I can actually run the analysis on the data scale that the eventual paper needs, given my hardware and the cost of HF Jobs. Stage 1 is partly a budget audit.
-- **Data quality.** Whether DCLDE 2026's annotations are clean enough to support the chosen question without manual re-annotation.
-- **Replication risk.** Whether a finding from one ecotype generalises to others, or whether the paper has to scope itself narrowly to a single population.
-- **Novelty risk.** Whether the chosen question turns out to overlap too much with an existing publication. Stage 2's sanity-check conversation has to include "has anyone already done this".
-- **Single-author timeline.** Stages 0 through 7 sum to roughly 12 calendar weeks. The submission deadline must allow this.
+- **Compute access.** Whether the 4090 + PACE-ICE backup is sufficient for the four-head stack. Mitigated by the compute-envelope table in `docs/ai_architecture.md`.
+- **Data quality.** Whether DCLDE 2026's annotations [@palmer2025dclde] are clean enough at the per-provider level (matriline + catalogue call type labels live there, not in the unified CSV).
+- **Playback-response statistic recoverability.** Whether [@bowers2018; @cure2026; @filatova2011] release per-trial response tables or only aggregates. Risk B in `docs/dataset_plan.md` describes the fallback.
+- **Novelty risk.** Whether a DCLDE-using paper covering the join we plan to do gets published mid-cycle. Risk D in `docs/dataset_plan.md` describes the pivot.
+- **Single-author timeline.** Stages 1&ndash;6 sum to ~15&ndash;16 weeks. The submission deadline must allow this. Risk E in `docs/dataset_plan.md`.
+- **Encoder pretraining-data leakage.** NatureLM-audio [@robinson2024naturelm] may have seen DCLDE-adjacent audio. Mitigated by running AVES2 [@hagiwara2023aves] in parallel and holding out at least one provider folder from the headline numbers.
 
 ## What to do next, today
 
-Read `docs/literature_review.md` and pick the Stage 0 question. Then close this file and start Stage 1.
+Open `docs/dataset_plan.md`, work through Week 1 checkboxes (data pull + encoder install + library-access pulls + the email to the prize coordinator). Then open `docs/ai_architecture.md` and run a Hello-World inference of NatureLM-audio [@robinson2024naturelm] on a single DCLDE 2026 clip [@palmer2025dclde].

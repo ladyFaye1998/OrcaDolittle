@@ -1,58 +1,77 @@
+<!-- Citation rule .cursor/rules/citations.mdc applies: every numerical or factual claim points to a key in OrcaDolittle/paper/refs.bib. -->
+
 # Literature review — working notes
 
-> **Status.** Working bibliographic notes, used as a starting point for whichever scientific question is committed in Stage 0 of the execution plan. Not a finished review. Not a manuscript section.
+> **Status.** Working bibliographic notes, in the order I have actually consulted them. Entries marked **(read in detail)** are ones I have read carefully; **(skimmed)** are ones I have only summarised from abstracts. The locked plan now incorporates *all four threads* below.
 
-The references are organised into the three threads the project draws on. Within each thread the entries are listed in the order I have actually consulted them; entries marked **(read in detail)** are ones I have read carefully, **(skimmed)** are ones I have only summarised from abstracts and secondary sources.
+## 1. Killer-whale acoustic ethology &mdash; the criterion-2 join layer
 
-## 1. Cetacean dialects and playback ethology
+- [@ford1989] &mdash; Foundational catalogue of matrilineal pulsed-call repertoires in NE Pacific Resident orcas. **(skimmed)**
+- [@yurk2002] &mdash; Within-clan vs across-clan playbacks in Alaska Residents. **(skimmed)**
+- [@deecke2000] &mdash; Multi-generation dialect drift. **(skimmed)**
+- [@foote2008] &mdash; V4 excitement call across contexts. The clearest single-paper case for context-specific orca vocalisation. **(skimmed)** &mdash; correct journal *Ethology*, not *Current Biology*; cite-error corrected 2026-05-18 in `paper/refs.bib`.
+- [@filatova2015; @filatova2018biphonic] &mdash; Kamchatka residents; geographic + biphonic-call generalisation. **(skimmed)**
+- [@riesch2012] &mdash; Review of cultural evolution evidence in killer whales. **(skimmed)**
+- [@riesch2008] &mdash; Discrete-call paper in J. Acoust. Soc. Am. **(unread)**
+- [@deecke2005] &mdash; Transient calls played to harbour seals. Cross-species; excluded from primary criterion-3 layer. **(skimmed)**
 
-The empirical literature an orca-focused submission would have to engage with.
+**Open task (Stage 2 in `EXECUTION_PLAN.md`):** Read [@ford1989; @foote2008; @filatova2015] in full and build the `call_type -> behavioural_context` join CSV.
 
-- **[Ford 1989](https://doi.org/10.1139/z89-105)** — Foundational catalogue of matrilineal pulsed-call repertoires in Northeast Pacific Resident orcas. **(skimmed)**
-- **[Yurk et al. 2002](https://doi.org/10.1006/anbe.2002.3036)** — Within-clan vs across-clan playbacks in Alaska Residents. Provides response-comparison structure relevant to the playback-corpus question. **(skimmed)**
-- **[Deecke, Ford & Spong 2000](https://doi.org/10.1006/anbe.2000.1505)** — Multi-generational dialect drift; cultural-transmission evidence. **(skimmed)**
-- **[Foote, Osborne & Hoelzel 2008](https://doi.org/10.1016/j.cub.2008.06.013)** — The V4 excitement call across contexts. The clearest single-paper case for context-specific orca vocalisation. **(skimmed)**
-- **[Filatova et al. 2015](https://insight.cumbria.ac.uk/id/eprint/1829/)** and **[2018](https://doi.org/10.1038/s41598-018-19938-2)** — Kamchatka residents; geographic and call-type generalisation. **(skimmed)**
-- **[Riesch et al. 2012](https://doi.org/10.1111/j.1469-185X.2012.00237.x)** — Review of cultural evolution evidence in killer whales. **(skimmed)**
-- **[Deecke, Slater & Ford 2005](https://doi.org/10.1006/anbe.2002.2156)** — Transient calls played to harbour seals. Included with care — it is a cross-species result, not a within-species one, and would only contribute as a transfer-prior in a methodology that explicitly justifies the bridge. **(skimmed)**
+## 2. Killer-whale playback corpus &mdash; the criterion-3 evidence layer
 
-**Open question.** I have not yet read most of these papers in full. The submission depends on a careful re-reading of at least Ford 1989, Foote 2008, and the most relevant Filatova paper.
+These are the three corpora the H4 head [@yovel2023doctor] predicts against. Per-paper extraction notes live in `playback_corpus.md`.
 
-## 2. Bioacoustic foundation models
+- [@bowers2018] &mdash; Cross-species playback (orca calls → pilots + Risso's, DTAG-quantified). **(unread)**
+- [@cure2026] &mdash; 15 trials on 8 tagged orcas. **(unread)**
+- [@filatova2011] &mdash; Kamchatka resident playback (companion paper to the call-corpus paper of the same group). **(unread)** **VERIFY** that this is the correct Filatova et al. paper.
 
-The model literature an analysis would build on.
+## 3. Sequence and combinatorial structure in cetaceans &mdash; precedent for head H3
 
-- **[Hagiwara 2023 — AVES](https://arxiv.org/abs/2210.14493)** — HuBERT-style self-supervision transferred to animal vocalisations. **(skimmed)**
-- **[Earth Species Project — AVEX / AVES2](https://github.com/earthspecies/avex)** — BEATs backbone with supervised heads. **(skimmed)**
-- **[Hamer et al. 2025 — Perch 2.0](https://research.google/pubs/perch-20-the-bittern-lesson-for-bioacoustics/)** — Multi-taxa pretraining; reportedly outperforms specialised marine models on marine transfer despite minimal marine pretraining. **(skimmed)**
-- **[Hsu et al. 2021 — HuBERT](https://arxiv.org/abs/2106.07447)** — The speech-domain ancestor of AVES. **(skimmed)**
+- [@sharma2024] &mdash; Sperm-whale coda combinatorial structure. The closest methodological precedent for the H3 sequence-LM head; ported here from sperm whale to orca. **(skimmed)**
+- [@paradise2025wham] &mdash; WhAM translative model of sperm whale vocalization. **(unread)**
+- [@bermant2019] &mdash; Deep-learning sperm-whale detection + classification on the same Dominica EC-1 corpus. **(unread)**
+- [@sainburg2019animal] &mdash; Birdsong / speech sequence-statistics parallel. **(skimmed)**
 
-**Open question.** I have not yet benchmarked any of these on orca audio. Until I do, the choice of encoder is a working assumption, not a methodological commitment.
+## 4. Bioacoustic foundation models &mdash; the encoder layer
 
-## 3. Interspecies communication and the Coller-Dolittle framing
+- [@robinson2024naturelm] &mdash; NatureLM-audio. **Primary** frozen encoder. **(unread; VERIFY arXiv ID)**.
+- [@hagiwara2023aves] &mdash; AVES (HuBERT-style SSL on animal vocalisations). **Comparator** encoder via the AVES2 (BEATs backbone) checkpoint [@chen2022beats]. **(skimmed)**
+- [@hamer2025perch] &mdash; Perch 2.0. Held in reserve as a third comparator. **(skimmed)**
+- [@hsu2021hubert] &mdash; Speech-domain ancestor of AVES. **(skimmed)**
+- [@bergler2019orcaspot] &mdash; ORCA-SPOT killer-whale-specific detector. Useful for the detection sanity check, not for criterion 2.
 
-- **[Yovel & Rechavi 2023 — *Current Biology* essay](https://doi.org/10.1016/j.cub.2023.06.071)** — The three obstacles framework. **(read in detail)**
-- **[Sharma et al. 2024 — *Nature Communications*](https://doi.org/10.1038/s41467-024-47221-8)** — Sperm-whale coda structure. Different species, but the methodology of using transformer embeddings to characterise vocal structure is the closest analogue. **(skimmed)**
-- **Sayigh et al. 2025** — Bottlenose dolphin non-signature whistle work; 2025 Coller-Dolittle winner. Per-trial field data; a different shape of project than anything tractable solo and remote. **(read second-hand)**
+## 5. Embedding-space analysis methodology &mdash; precedent for heads H1, H2
 
-## Where the candidate scientific questions stand against the literature
+- [@sainburg2020] &mdash; UMAP + HDBSCAN repertoire-discovery framework. **(skimmed)** &mdash; direct precedent for the H2 head.
+- [@mcinnes2018umap; @mcinnes2017hdbscan] &mdash; underlying algorithms.
 
-This is the part of the review that actually matters. For each candidate question on the Stage 0 shortlist:
+## 6. Interspecies communication, framing, and panel-relevant theory
 
-### A. Context recovery
+- [@yovel2023doctor] &mdash; The three obstacles framework. **(read in detail)** &mdash; primary lens for the entire submission.
+- [@wittgenstein1953] &mdash; The Wittgenstein boundary; cited in the philosophical-rigour discussion section.
+- [@kershenbaum2024whyanimalstalk] &mdash; Panel member's popular book; sets the tone for the 2-minute video.
+- [@sayigh2025nsw] &mdash; 2025 Coller-Dolittle winner. **(read second-hand)** &mdash; benchmark for the level of evidence the panel rewards.
+- [@sayigh2022sdwd] &mdash; SDWD database paper. **(skimmed)**
 
-**Closest related work.** Bergler et al. 2019 (ORCA-SPOT detector — detection, not context); Palmer et al. 2025 (ecotype classification on DCLDE 2026 — ecotype, not context). A direct context-recovery experiment using foundation-model embeddings against the published call-type-to-context mappings does not appear to have been published, *but I have not yet done a systematic search to be sure*.
+## 7. Why the alternative species were retired
 
-### B. Dialect geography
+- [@lehnhoff2025essd; @lehnhoff2025scirep] &mdash; Lehnhoff team's DOLPHINFREE data paper + competing AI paper (Nov 2025). Closed the common-dolphin lane.
+- [@prat2016bat] &mdash; Yovel-lab Egyptian fruit bat. Closed because Yovel is on the panel.
+- [@crockford2025; @berthet2025bonobo; @mathevon2025mouse; @elie2025zebrafinch] &mdash; 2025-26 finalists. Lanes occupied.
 
-**Closest related work.** Foote 2008, Filatova 2015 on geographic dialect variation by hand. Embedding-space quantification of geographic drift, at the scale DCLDE 2026 enables, may or may not have been published. *Search needed before this question is chosen.*
+## How the locked plan stands against the literature
 
-### C. Off-policy playback-response model
+For the locked plan (frozen encoder + four heads + DCLDE 2026 + behavioural-context join + playback-corpus re-analysis):
 
-**Closest related work.** Direct re-analysis of the published playback corpus as a single dataset (rather than as separate papers) does not appear to have been done. *Search needed.* The risk here is that any per-condition aggregate is too coarse to support a useful predictor — that is a Stage 1 feasibility question.
+### Novelty check (head-by-head)
+
+- **H1 (linear probes for ecotype + context).** [@palmer2025dclde] is the headline benchmark for ecotype classification on this corpus and does *not* address behavioural context. Behavioural-context probes on embedding features have not, to my knowledge, been published for orca. *Confirmation search needed before submission*.
+- **H2 (unsupervised clusters).** Foundation-model UMAP+HDBSCAN over DCLDE-scale orca audio has not been published. [@sainburg2020]'s framework has been applied to many species but not orca at this scale.
+- **H3 (sequence LM over call-ID streams).** A Transformer language model over orca call-ID streams has not been published. [@sharma2024] did this for sperm whale; this is a direct port to orca.
+- **H4 (embedding-distance playback predictor).** A unified re-analysis of [@bowers2018; @cure2026; @filatova2011] as a single off-policy dataset has not been published. *Confirmation search needed*.
 
 ## What this section is *not*
 
-- It is not a systematic literature search. A real systematic search has to precede Stage 0.
-- It is not a guarantee of novelty for any of the candidate questions.
-- It is not a substitute for reading the primary papers in full. Several of them I have only summarised from abstracts.
+- It is not a systematic literature search. A real systematic search runs in Week 1 of `EXECUTION_PLAN.md`.
+- It is not a guarantee of novelty; each head's novelty claim above needs a confirmation search before the preprint is posted.
+- It is not a substitute for reading the primary papers in full. Several entries above are still **unread**.
