@@ -1,8 +1,14 @@
+<p align="center">
+  <img src="assets/banner.png" alt="OrcaDolittle — killer-whale acoustics + frozen foundation-model embeddings + published-playback re-analysis" width="100%" />
+</p>
+
+<h1 align="center">OrcaDolittle</h1>
+
+<p align="center">
+  <em>Coller-Dolittle Prize 2026-27 submission workspace &mdash; killer whales (<i>Orcinus orca</i>), DCLDE 2026, frozen audio foundation models, published-playback re-analysis.</em>
+</p>
+
 <!-- Citation rule .cursor/rules/citations.mdc applies: every numerical or factual claim points to a key in OrcaDolittle/paper/refs.bib. -->
-
-![OrcaDolittle &mdash; killer-whale acoustics + frozen foundation-model embeddings + published-playback re-analysis](assets/banner.png)
-
-# OrcaDolittle &mdash; Coller-Dolittle Prize 2026-27 submission workspace
 
 <sub>Single-author working repository for a Coller-Dolittle Prize submission [@yovel2023doctor] focused on killer whales (*Orcinus orca*). Author: Danielle Lesin (Georgia Institute of Technology, College of Computing). Status as of 2026-05-18: scientific question + dataset + AI architecture + criterion mapping are **locked**; analysis has not begun.</sub>
 
