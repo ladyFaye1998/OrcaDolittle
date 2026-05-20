@@ -69,6 +69,7 @@ runs/
 logs/
 wandb/
 mlruns/
+h3_pilot_*.json
 
 # --- Secrets ---
 .env
