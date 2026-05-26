@@ -52,6 +52,8 @@ checkpoints/
 data/raw/
 data/processed/
 data/cache/
+data/dclde/Annotations.csv
+data/dclde/sample_audio/
 *.wav
 *.flac
 *.mp3
@@ -77,6 +79,9 @@ mlruns/
 kaggle.json
 huggingface_token
 .hf_token
+
+# --- Papers (copyrighted, download locally) ---
+papers/*.pdf
 
 # --- Temp / Working files ---
 COMMIT_MSG.tmp
