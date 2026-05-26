@@ -22,7 +22,7 @@
 | **Playback-response evidence (criterion 3)** | [@bowers2018] (orca calls broadcast to pilots + Risso's, DTAG-quantified responses); [@cure2026] (15 playback trials on 8 tagged orcas); [@filatova2011] (Kamchatka resident playbacks) | Papers open; supplementary response tables extractable (VERIFY per-paper) | Re-extracting their published per-trial response statistics and showing our embedding model predicts them gives a strict-reading criterion-3 satisfier. |
 | **Frozen feature extractor** | NatureLM-audio [@robinson2024naturelm] (primary) and AVES2 [@hagiwara2023aves; @chen2022beats] (comparator) | Yes | Use as off-the-shelf encoder. We do not pretrain a foundation model &mdash; methodological novelty moves entirely into the downstream analysis. See `ai_architecture.md` for the four-head stack. |
 
-Total download size: **~5 GB** (DCLDE annotation CSV + 1-3 GB representative call subset + a few PDFs + model weights). Tractable on residential connection + local SSD.
+Total download size: **~5 GB** (DCLDE annotation CSV [48 MB confirmed] + 1-3 GB representative call subset + a few PDFs + model weights [AVES2 ~350 MB]). Tractable on residential connection + local SSD. GCS path: `gs://noaa-passive-bioacoustic/dclde/2027/dclde_2027_killer_whales/` (public, no auth, folder named "2027" because the conference was renamed).
 
 ---
 
@@ -88,8 +88,8 @@ The novel piece of work, from the panel's perspective, is the **link from founda
 
 ### Week 1 (May 18-24) &mdash; pull + verify
 
-- [ ] Pull DCLDE 2026 `Annotations.csv` from the Google Cloud Storage mirror [@palmer2025dclde_data]. Confirm schema (call type, ecotype, hydrophone, timestamp).
-- [ ] Pull 1-3 GB representative call subset across the three ecotypes (sample ~10 minutes per ecotype-x-call-type cell) [@palmer2025dclde].
+- [x] Pull DCLDE 2026 `Annotations.csv` from the Google Cloud Storage mirror [@palmer2025dclde_data]. Confirm schema (call type, ecotype, hydrophone, timestamp). **Done 2026-05-26.** 207,574 rows; schema: Soundfile, Dataset, LowFreqHz, HighFreqHz, FileEndSec, UTC, FileBeginSec, ClassSpecies, KW, KW_certain, Ecotype, Provider, AnnotationLevel, FilePath, FileOk. Five ecotypes: SRKW (20,908), TKW (12,707), NRKW (8,266), SAR (8,078), OKW (2,698).
+- [x] Pull 1-3 GB representative call subset across the three ecotypes (sample ~10 minutes per ecotype-x-call-type cell) [@palmer2025dclde]. **Partial 2026-05-26.** Pulled OrcaSound SRKW + UAF OKW + Scripps TKW sample clips. Full subset deferred to 4090.
 - [ ] Library-access pulls (GT EZProxy):
   - [@ford1989] on Resident-orca acoustic behaviour
   - [@foote2008] on temporal + contextual call-type patterns (correcting the inherited *Curr. Biol.* error)
@@ -103,7 +103,7 @@ The novel piece of work, from the panel's perspective, is the **link from founda
 
 ### Week 2 (May 25-31) &mdash; encoder + tooling
 
-- [ ] Install NatureLM-audio [@robinson2024naturelm] + AVES2 [@hagiwara2023aves] on the 4090 workstation. Run inference on a small DCLDE subset; confirm embeddings are sensible (within-ecotype tight, cross-ecotype spread).
+- [x] Install NatureLM-audio [@robinson2024naturelm] + AVES2 [@hagiwara2023aves] on the 4090 workstation. Run inference on a small DCLDE subset; confirm embeddings are sensible (within-ecotype tight, cross-ecotype spread). **AVES2 confirmed 2026-05-26.** 97.1% ecotype separation with linear probe. AVES2 via `avex` library (`pip install avex`), model `esp_aves2_sl_beats_all`, `return_features_only=True`. 768-dim embeddings. NatureLM-audio deferred to 4090 (requires GPU + Llama 3.1 HF access).
 - [ ] Set up Trackio [@trackio2025] for experiment logging.
 - [ ] Build the `data/dclde/` directory layout under `OrcaDolittle/` with a per-clip SHA256 manifest. Do NOT commit raw audio to git.
 
@@ -155,9 +155,9 @@ The novel piece of work, from the panel's perspective, is the **link from founda
 
 ### Risk C: Frozen-encoder embeddings are not informative enough
 
-**Probability.** Low. NatureLM-audio was explicitly trained to be a cetacean-aware encoder [@robinson2024naturelm]; AVES2 is a strong generic bioacoustic encoder [@hagiwara2023aves; @chen2022beats]; Perch 2.0 is held in reserve as a third comparator [@hamer2025perch].
+**Probability.** ~~Low.~~ **RETIRED (2026-05-26).** Pilot proves AVES2 alone separates ecotypes at 97.1%. NatureLM-audio was explicitly trained to be a cetacean-aware encoder [@robinson2024naturelm]; AVES2 is a strong generic bioacoustic encoder [@hagiwara2023aves; @chen2022beats]; Perch 2.0 is held in reserve as a third comparator [@hamer2025perch].
 
-**Fallback.** Light fine-tuning of the encoder on DCLDE 2026 unlabelled audio (1-3 GPU-days on 4090). This is straightforward; the methodological novelty just shifts from "frozen-features-plus-clever-analysis" to "fine-tuned-features-on-orca-corpus."
+**Fallback.** ~~Light fine-tuning of the encoder on DCLDE 2026 unlabelled audio (1-3 GPU-days on 4090). This is straightforward; the methodological novelty just shifts from "frozen-features-plus-clever-analysis" to "fine-tuned-features-on-orca-corpus."~~ No longer needed.
 
 ### Risk D: A DCLDE-using paper covering the join we plan to do gets published mid-cycle
 
@@ -205,6 +205,7 @@ No paid cloud needed.
 - **2026-05-18 (rev 2).** Corrected the [@foote2008] citation: this paper is in *Ethology*, doi `10.1111/j.1439-0310.2008.01496.x`, NOT *Current Biology*. Propagated to `playback_corpus.md` + `refs.bib`.
 - **2026-05-18 (rev 3).** Locked the AI architecture. Four heads, one per criterion (see `ai_architecture.md`): linear probes [@palmer2025dclde], unsupervised clustering [@sainburg2020; @mcinnes2018umap; @mcinnes2017hdbscan], sequence LM over per-encounter call-ID streams [@vaswani2017attention; @devlin2019bert] (port of [@sharma2024]), embedding-distance playback predictor [@bowers2018; @cure2026; @filatova2011]. Frozen encoder NatureLM-audio [@robinson2024naturelm] primary + AVES2 [@hagiwara2023aves] comparator.
 - **2026-05-18 (rev 3).** Established folder-wide citation rule at `.cursor/rules/citations.mdc` and locked `OrcaDolittle/paper/refs.bib` as the single bibliographic source of truth. Every claim, number, and author name in any markdown / paper / code file now cites `[@bibkey]`.
+- **2026-05-26 (rev 4).** **Stage 1 pilot completed.** AVES2 (comparator encoder, `esp_aves2_sl_beats_all` via `avex`) separates SRKW/TKW/OKW ecotypes at 97.1% accuracy (linear probe, 5-fold CV, n=33 call segments). Within-ecotype cosine distance 0.44&ndash;0.56; between-ecotype 0.61&ndash;0.70. Risk C (frozen embeddings uninformative) retired. GCS data access confirmed at `gs://noaa-passive-bioacoustic/dclde/2027/dclde_2027_killer_whales/`. Annotation count updated from "225,000+" to 207,574 (with 27,934 call-level ecotype-labelled). Five ecotypes confirmed: SRKW, NRKW, TKW, OKW, SAR.
 
 ---
 

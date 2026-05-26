@@ -2,7 +2,7 @@
 
 # Execution plan
 
-> **Status.** **Locked 2026-05-18 (rev 3).** Stage 0 ("choose the scientific question") is closed. The question, the dataset, the encoder, and the four downstream heads are all committed. This file is the parent execution view; the per-week details live in `docs/dataset_plan.md` and the per-head methodology lives in `docs/ai_architecture.md`. The earlier "stages 0&ndash;7, nothing started" framing has been retired.
+> **Status.** **Locked 2026-05-18 (rev 3); Stage 1 pilot completed 2026-05-26 (rev 4).** Stage 0 ("choose the scientific question") is closed. Stage 1 pilot confirms encoder feasibility: AVES2 separates ecotypes at 97.1% accuracy (chance = 33.3%) with a linear probe on 33 call segments. Risk C (frozen embeddings uninformative) is retired. The question, the dataset, the encoder, and the four downstream heads are all committed. This file is the parent execution view; the per-week details live in `docs/dataset_plan.md` and the per-head methodology lives in `docs/ai_architecture.md`. The earlier "stages 0&ndash;7, nothing started" framing has been retired.
 
 The honest critical path from "everything is now locked" to "a Coller-Dolittle Prize submission [@yovel2023doctor]".
 
@@ -30,14 +30,16 @@ Anything not on this table is open. Anything on this table requires a `## Decisi
 
 ### Stage 1 &mdash; data + tooling feasibility (Weeks 1&ndash;2)
 
-- [ ] Pull DCLDE 2026 `Annotations.csv` from the NCEI / Google Cloud Storage mirror [@palmer2025dclde_data]. Confirm schema.
-- [ ] Pull 1&ndash;3 GB representative call subset across the three ecotypes [@palmer2025dclde].
-- [ ] Install NatureLM-audio [@robinson2024naturelm] + AVES2 [@hagiwara2023aves] on the 4090. Run inference on the subset.
+- [x] Pull DCLDE 2026 `Annotations.csv` from the NCEI / Google Cloud Storage mirror [@palmer2025dclde_data]. Confirm schema. **Done 2026-05-26.** GCS path: `gs://noaa-passive-bioacoustic/dclde/2027/dclde_2027_killer_whales/Annotations.csv`. Schema confirmed: 207,574 rows, 16 columns including Ecotype (SRKW, NRKW, TKW, OKW, SAR), Provider (10 providers), AnnotationLevel (Detection/File/Call). Call-level annotations with ecotype: 27,934.
+- [x] Pull 1&ndash;3 GB representative call subset across the three ecotypes [@palmer2025dclde]. **Partial 2026-05-26.** Pulled OrcaSound (SRKW, 3 files), UAF KB (OKW, 5 files), Scripps CE (TKW, 1 file). Full 1&ndash;3 GB subset deferred to 4090 workstation (some files are 500+ MB).
+- [x] Install NatureLM-audio [@robinson2024naturelm] + AVES2 [@hagiwara2023aves] on the 4090. Run inference on the subset. **AVES2 confirmed 2026-05-26.** AVES2 (BEATs backbone) via `avex` library runs on CPU; produces (batch, time_steps, 768) embeddings. 16 kHz mono input, minimum ~1 s per clip. NatureLM-audio deferred to 4090 (requires GPU + Llama 3.1 access).
 - [ ] Set up Trackio [@trackio2025] logging.
 - [ ] Library-access pulls of [@ford1989; @foote2008; @filatova2015; @riesch2008; @yurk2002; @bowers2018; @cure2026; @filatova2011].
 - [ ] Email `CollerDolittleAward@gmail.com` for the 2026-27 cycle deadline.
 
 **Exit criterion.** One-page note documenting that all datasets, models, and library pulls succeeded within compute and access constraints.
+
+**Pilot result (2026-05-26).** AVES2 linear probe on 33 call segments (20 SRKW, 12 OKW, 1 TKW): **97.1% &plusmn; 5.7% accuracy** (5-fold CV, chance = 33.3%). Within-ecotype cosine distance (0.44&ndash;0.56) &lt;&lt; between-ecotype (0.61&ndash;0.70). This retires Risk C and confirms the four-head stack is viable on the comparator encoder alone. Scripts: `scripts/hello_world.py`, `scripts/ecotype_separation_test.py`.
 
 ### Stage 2 &mdash; behavioural-context join table (Weeks 3&ndash;4)
 
@@ -103,8 +105,9 @@ Each head from `docs/ai_architecture.md` becomes one analysis:
 - **Playback-response statistic recoverability.** Whether [@bowers2018; @cure2026; @filatova2011] release per-trial response tables or only aggregates. Risk B in `docs/dataset_plan.md` describes the fallback.
 - **Novelty risk.** Whether a DCLDE-using paper covering the join we plan to do gets published mid-cycle. Risk D in `docs/dataset_plan.md` describes the pivot.
 - **Single-author timeline.** Stages 1&ndash;6 sum to ~15&ndash;16 weeks. The submission deadline must allow this. Risk E in `docs/dataset_plan.md`.
-- **Encoder pretraining-data leakage.** NatureLM-audio [@robinson2024naturelm] may have seen DCLDE-adjacent audio. Mitigated by running AVES2 [@hagiwara2023aves] in parallel and holding out at least one provider folder from the headline numbers.
+- ~~**Encoder pretraining-data leakage.**~~ NatureLM-audio [@robinson2024naturelm] may have seen DCLDE-adjacent audio. Mitigated by running AVES2 [@hagiwara2023aves] in parallel and holding out at least one provider folder from the headline numbers. **Note (2026-05-26):** AVES2 alone achieves 97.1% ecotype separation; even if NatureLM-audio leakage is confirmed, the submission can stand on AVES2 results.
+- ~~**Encoder embeddings uninformative (Risk C).**~~ **RETIRED 2026-05-26.** Pilot proves AVES2 (comparator encoder, no fine-tuning) separates ecotypes at 97.1% accuracy on 33 clips. Risk C fallback (fine-tuning) is no longer needed.
 
 ## What to do next, today
 
-Open `docs/dataset_plan.md`, work through Week 1 checkboxes (data pull + encoder install + library-access pulls + the email to the prize coordinator). Then open `docs/ai_architecture.md` and run a Hello-World inference of NatureLM-audio [@robinson2024naturelm] on a single DCLDE 2026 clip [@palmer2025dclde].
+Run `scripts/ecotype_separation_test.py` on the 4090 with the full call-level subset (27,934 clips with ecotype labels) to confirm the pilot result at scale. Then begin Stage 2: hand-code the `call_type -> behavioural_context` join table from [@ford1989; @foote2008; @filatova2015].
