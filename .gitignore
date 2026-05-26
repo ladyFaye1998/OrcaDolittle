@@ -80,6 +80,9 @@ kaggle.json
 huggingface_token
 .hf_token
 
+# --- Papers (copyrighted, download locally) ---
+papers/*.pdf
+
 # --- Temp / Working files ---
 COMMIT_MSG.tmp
 *_scratch.py
