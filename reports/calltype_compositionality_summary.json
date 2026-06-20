@@ -1,0 +1,198 @@
+{
+  "analysis": "calltype_compositionality_beyond_first_order",
+  "label_source": "DCLDE per-provider annotations (call_type)",
+  "null": "first-order Markov surrogates (preserve unigram+bigram stats; bias cancels)",
+  "n_surrogate": 1000,
+  "subsets": [
+    {
+      "label": "NRKW N-calls @ dfo_crp",
+      "status": "completed",
+      "k_call_types": 31,
+      "n_calls": 5273,
+      "n_recordings": 142,
+      "entropy_h1_unigram_bits": 3.4509,
+      "cond_entropy_h2_first_order_bits": 0.5962,
+      "cond_entropy_h3_second_order_bits": 0.5883,
+      "second_order_reduction_delta_bits": 0.0078,
+      "markov_surrogate_delta_mean": 0.0343,
+      "markov_surrogate_delta_std": 0.0055,
+      "delta_pvalue_vs_markov_global": 1.0,
+      "perrec_surrogate_delta_mean": 0.0587,
+      "perrec_surrogate_delta_std": 0.0077,
+      "delta_pvalue_vs_markov_perrecording": 1.0,
+      "heldout_trigram_ce_bits": 0.899,
+      "heldout_bigram_ce_bits": 1.0461,
+      "heldout_gain_beyond_first_order_bits_per_token": 0.1471,
+      "n_surrogate": 1000,
+      "top_motifs_3gram": [
+        {
+          "motif": "N16->N16->N01ii",
+          "observed": 8,
+          "expected_first_order": 4.72,
+          "z": 1.22,
+          "n_recordings_present": 5
+        },
+        {
+          "motif": "N16->N01ii->N01ii",
+          "observed": 8,
+          "expected_first_order": 4.77,
+          "z": 1.19,
+          "n_recordings_present": 5
+        },
+        {
+          "motif": "N24ii->N24i->N24i",
+          "observed": 8,
+          "expected_first_order": 5.58,
+          "z": 1.02,
+          "n_recordings_present": 7
+        },
+        {
+          "motif": "N16->N16->N16",
+          "observed": 111,
+          "expected_first_order": 75.86,
+          "z": 0.92,
+          "n_recordings_present": 8
+        },
+        {
+          "motif": "N01ii->N01ii->N01ii",
+          "observed": 99,
+          "expected_first_order": 64.86,
+          "z": 0.91,
+          "n_recordings_present": 6
+        },
+        {
+          "motif": "N24i->N24i->N23i",
+          "observed": 11,
+          "expected_first_order": 8.32,
+          "z": 0.91,
+          "n_recordings_present": 9
+        },
+        {
+          "motif": "N24i->N24i->N24ii",
+          "observed": 8,
+          "expected_first_order": 5.94,
+          "z": 0.85,
+          "n_recordings_present": 7
+        },
+        {
+          "motif": "N23i->N28->N28",
+          "observed": 15,
+          "expected_first_order": 12.55,
+          "z": 0.66,
+          "n_recordings_present": 11
+        },
+        {
+          "motif": "N28->N28->N23i",
+          "observed": 12,
+          "expected_first_order": 9.86,
+          "z": 0.64,
+          "n_recordings_present": 7
+        },
+        {
+          "motif": "N18->N18->N18",
+          "observed": 74,
+          "expected_first_order": 50.93,
+          "z": 0.63,
+          "n_recordings_present": 4
+        }
+      ],
+      "structure_beyond_first_order": false
+    },
+    {
+      "label": "SRKW S-calls @ vfpa",
+      "status": "completed",
+      "k_call_types": 19,
+      "n_calls": 1553,
+      "n_recordings": 28,
+      "entropy_h1_unigram_bits": 3.5188,
+      "cond_entropy_h2_first_order_bits": 2.231,
+      "cond_entropy_h3_second_order_bits": 1.5862,
+      "second_order_reduction_delta_bits": 0.6448,
+      "markov_surrogate_delta_mean": 0.3733,
+      "markov_surrogate_delta_std": 0.0237,
+      "delta_pvalue_vs_markov_global": 0.000999000999000999,
+      "perrec_surrogate_delta_mean": 0.5458,
+      "perrec_surrogate_delta_std": 0.034,
+      "delta_pvalue_vs_markov_perrecording": 0.001998001998001998,
+      "heldout_trigram_ce_bits": 2.5839,
+      "heldout_bigram_ce_bits": 2.6757,
+      "heldout_gain_beyond_first_order_bits_per_token": 0.0919,
+      "n_surrogate": 1000,
+      "top_motifs_3gram": [
+        {
+          "motif": "S01->S04->S01",
+          "observed": 13,
+          "expected_first_order": 1.87,
+          "z": 7.95,
+          "n_recordings_present": 5
+        },
+        {
+          "motif": "S36->S10->S36",
+          "observed": 11,
+          "expected_first_order": 3.02,
+          "z": 4.27,
+          "n_recordings_present": 5
+        },
+        {
+          "motif": "S01->S44->S01",
+          "observed": 11,
+          "expected_first_order": 3.92,
+          "z": 3.53,
+          "n_recordings_present": 3
+        },
+        {
+          "motif": "S01->S10->S01",
+          "observed": 13,
+          "expected_first_order": 6.22,
+          "z": 2.73,
+          "n_recordings_present": 6
+        },
+        {
+          "motif": "S10->S36->S36",
+          "observed": 9,
+          "expected_first_order": 5.56,
+          "z": 1.47,
+          "n_recordings_present": 4
+        },
+        {
+          "motif": "S36->S36->S10",
+          "observed": 12,
+          "expected_first_order": 8.01,
+          "z": 1.42,
+          "n_recordings_present": 5
+        },
+        {
+          "motif": "S01->S01->S01 & S01",
+          "observed": 9,
+          "expected_first_order": 5.82,
+          "z": 1.24,
+          "n_recordings_present": 5
+        },
+        {
+          "motif": "S44->S44->S44",
+          "observed": 34,
+          "expected_first_order": 24.87,
+          "z": 1.24,
+          "n_recordings_present": 4
+        },
+        {
+          "motif": "S36->S19->S36",
+          "observed": 9,
+          "expected_first_order": 5.76,
+          "z": 1.2,
+          "n_recordings_present": 1
+        },
+        {
+          "motif": "S04->S04->S04",
+          "observed": 142,
+          "expected_first_order": 113.66,
+          "z": 1.18,
+          "n_recordings_present": 6
+        }
+      ],
+      "structure_beyond_first_order": true
+    }
+  ],
+  "figure": "figures/calltype_compositionality.png",
+  "boundary": "Structure beyond first order is a stronger combinatorial prerequisite than the first-order result, tested against first-order Markov surrogates so it is not a re-detection of pairwise structure. It is NOT semantic compositionality (A+B meaning more than A,B), which needs meaning/context labels and is out of scope. Motifs are CANDIDATE phrases, not words."
+}
