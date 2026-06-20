@@ -1,0 +1,72 @@
+{
+  "analysis": "calltype_distributional_semantics",
+  "method": "PPMI co-occurrence vectors from validated call-type sequences (site held constant) vs. independent published-ethogram behavioural-context vectors; Mantel test with a label-permutation null.",
+  "distributional_source": "DCLDE per-provider annotations (call_type sequences)",
+  "context_source": "published field ethograms (call_type_to_context.csv) [@ford1989; @foote2008; @riesch2008; @yurk2002]",
+  "window": 2,
+  "n_perm": 2000,
+  "min_type_count": 10,
+  "subsets": [
+    {
+      "label": "NRKW N-calls @ dfo_crp",
+      "status": "completed",
+      "population": "NRKW",
+      "window": 2,
+      "n_perm": 2000,
+      "n_distributional_types": 22,
+      "n_shared_context_types": 6,
+      "shared_types": [
+        "N11",
+        "N3",
+        "N4",
+        "N5",
+        "N7",
+        "N9"
+      ],
+      "context_features": [
+        "foraging",
+        "large_aggregation",
+        "low_arousal",
+        "multi_pod",
+        "resting",
+        "socializing",
+        "travelling"
+      ],
+      "mantel_r_distribution_vs_context": -0.3947,
+      "mantel_pvalue": 0.8875562218890555,
+      "n_pairs": 15,
+      "distribution_vs_context_positive": false
+    },
+    {
+      "label": "SRKW S-calls @ vfpa",
+      "status": "completed",
+      "population": "SRKW",
+      "window": 2,
+      "n_perm": 2000,
+      "n_distributional_types": 15,
+      "n_shared_context_types": 8,
+      "shared_types": [
+        "S1",
+        "S16",
+        "S17",
+        "S19",
+        "S2",
+        "S4",
+        "S42",
+        "S44"
+      ],
+      "context_features": [
+        "foraging",
+        "multi_pod_affiliation",
+        "single_pod",
+        "single_pod_identity",
+        "travelling"
+      ],
+      "mantel_r_distribution_vs_context": 0.3258,
+      "mantel_pvalue": 0.04247876061969016,
+      "n_pairs": 28,
+      "distribution_vs_context_positive": true
+    }
+  ],
+  "boundary": "Tests the distributional hypothesis (similar sequential company -> similar behavioural context) NON-CIRCULARLY: distribution from sequence only, context from independent ethograms only. A positive Mantel r is a structure<->context ASSOCIATION, NOT referential meaning. Context labels are human-projected (umwelt caveat) and coarse (type-level, not per-utterance), and the shared-type sample is small; reported honestly whichever way it comes out."
+}
