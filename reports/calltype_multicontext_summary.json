@@ -1,0 +1,97 @@
+{
+  "analysis": "catalogue_calltype_multicontext_breadth",
+  "criterion": "C2 / versatility (communication in MORE THAN ONE context), catalogue / named-unit level",
+  "context_axis": "canonical killer-whale BEHAVIOURAL contexts (activity + social), NOT identity signalling",
+  "context_label_source": "published field ethograms (NOT embeddings): ford1989, foote2008, riesch2008, yurk2002",
+  "populations": [
+    "NRKW",
+    "SRKW"
+  ],
+  "contexts_covered": [
+    "foraging",
+    "travelling",
+    "resting",
+    "socializing",
+    "greeting_excitement",
+    "aggregation"
+  ],
+  "n_contexts_covered": 6,
+  "n_call_types": 16,
+  "per_context_type_counts": {
+    "foraging": 8,
+    "travelling": 5,
+    "resting": 1,
+    "socializing": 4,
+    "greeting_excitement": 1,
+    "aggregation": 3
+  },
+  "n_single_context_types": 10,
+  "n_multi_context_types": 6,
+  "specialization_index": 0.625,
+  "mean_contexts_per_type": 1.375,
+  "nonuniformity_chisquare": 9.636,
+  "nonuniformity_chisquare_p": 0.08621930377080927,
+  "type_context_map": {
+    "NRKW N3": [
+      "resting"
+    ],
+    "NRKW N2": [
+      "foraging",
+      "greeting_excitement"
+    ],
+    "NRKW N11": [
+      "aggregation"
+    ],
+    "NRKW N4": [
+      "foraging",
+      "travelling"
+    ],
+    "NRKW N7": [
+      "foraging",
+      "socializing"
+    ],
+    "NRKW N8": [
+      "foraging",
+      "socializing"
+    ],
+    "NRKW N9": [
+      "foraging"
+    ],
+    "NRKW N5": [
+      "foraging",
+      "socializing"
+    ],
+    "NRKW whistles_W1-W6": [
+      "socializing"
+    ],
+    "SRKW S1": [
+      "foraging"
+    ],
+    "SRKW S2": [
+      "travelling"
+    ],
+    "SRKW S44": [
+      "travelling"
+    ],
+    "SRKW S42": [
+      "travelling"
+    ],
+    "SRKW S2iii": [
+      "aggregation"
+    ],
+    "SRKW two_voiced_calls": [
+      "aggregation"
+    ],
+    "SRKW whistles_SW1-SW4": [
+      "foraging",
+      "travelling"
+    ]
+  },
+  "figure": "figures/calltype_multicontext.png",
+  "caveats": [
+    "Context labels come from published field ethograms, NOT from our embeddings (non-circular); this maps documented behavioural use of the recovered units and complements the H5 embedding decode.",
+    "Behavioural-context axis only: identity-signalling associations (single-pod / clan-identity / inter-clan) are excluded because they encode caller identity, not behavioural context.",
+    "Establishes context-specific PRODUCTION across more than one behavioural context at the named-unit level; NOT a claim of meaning.",
+    "Small n (catalogue types with a documented behavioural context); the chi-square is descriptive support, and Ford 1989 notes no call type is correlated exclusively with one behaviour - this is differential specialization, not deterministic mapping."
+  ]
+}

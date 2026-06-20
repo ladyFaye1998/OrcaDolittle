@@ -1,5 +1,5 @@
 {
-  "generated_utc": "2026-06-15T11:55:53Z",
+  "generated_utc": "2026-06-20T12:40:00Z",
   "artifact": "data/embeddings/aves2_full_labeled.npz",
   "regeneration_commands": {
     "freeze": "python scripts/freeze_corpus.py --embeddings data/embeddings/aves2_full_labeled.npz --output reports/corpus_freeze.json",
@@ -40,7 +40,7 @@
     "figures/calltype_sequence.png": "e6831261d55cf064d2675c1d636292cd2b373537eb534f7290db6d30016d2406",
     "reports/corpus_freeze.json": "a560347dcb0670c70bc59645900423870418315c713227cb7185f02f55d69f98",
     "reports/label_audit.json": "d9256a3f83778b9d43cafdb042a9c7c5e4221259acc2540c0d67387aea89c1b9",
-    "reports/results_summary.json": "efa69f927167fc09ce4868de5b347c6b78abe6d11137b10495f2109c3e474e63",
+    "reports/results_summary.json": "6c3d9da2291616c6d66991b879575743c9f204c8b2188bd27375bf0a57a76af4",
     "reports/calltype_model_summary.json": "fde9badf25f3560e8502e6ec639aefd8a0895c8d66d3e03ee46ce8e1b6d88d2e",
     "reports/calltype_model_full_summary.json": "42cef5d6c608e294c37c1952234461bb2e1545b2b84ead6db9d4b1003e56cba3",
     "reports/calltype_sequence_summary.json": "05c539d7d94a224515dc276fe32a6fb0d66ee57331c0b8c22cbb613f6c682b2b",
@@ -49,5 +49,5 @@
     "data/join_tables/call_type_manifest.csv": "d0f2d400d4b67e58094db15322159630e722b7d34a028277f1a815decbb55c55"
   },
   "missing": [],
-  "note": "Local re-run manifest for the published figures/metrics. reports/artifact_hashes.json records the original Colab run provenance."
+  "note": "Local re-run manifest for the published figures/metrics. reports/results_summary.json was extended with the H7 (compositionality), H8 (site-invariance), and multi-context catalogue heads and re-hashed on 2026-06-20; the embedding artifact and core H1-H4/sequence/call-type figures are unchanged. reports/artifact_hashes.json records the original Colab run provenance."
 }
