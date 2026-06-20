@@ -4,11 +4,13 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>OrcaDolittle — site-controlled killer-whale call decoding</title>
-<meta name="description" content="A reproducible, non-invasive pipeline that decodes killer-whale call structure and behavioural context from public recordings — built to hand to a field team for in-situ playbacks." />
-<meta property="og:title" content="OrcaDolittle — decoding killer-whale calls, honestly" />
-<meta property="og:description" content="Site-controlled, reproducible orca bioacoustics. Explore the results, try Talk Orca, and collaborate on the field playback that comes next." />
+<meta name="description" content="A reproducible, non-invasive pipeline that decodes killer-whale call structure and behavioural context from public recordings — built for permitted in-situ playback studies." />
+<meta property="og:title" content="OrcaDolittle — site-controlled killer-whale call decoding" />
+<meta property="og:description" content="Site-controlled, reproducible orca bioacoustics. Explore the results, try Talk Orca, and evaluate the field playback protocol that comes next." />
 <meta property="og:image" content="assets/hero_orca.png" />
 <meta property="og:type" content="website" />
+<link rel="icon" type="image/svg+xml" href="favicon.svg" />
+<link rel="apple-touch-icon" href="favicon.svg" />
 <style>
 :root{
   --bg:#05080c; --bg2:#0a1018; --panel:#0e1620; --panel2:#121d2a;
@@ -45,8 +47,8 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:6
 @media(max-width:760px){.navlinks{display:none}}
 /* hero */
 .hero{min-height:92vh;display:flex;align-items:center;padding-top:40px;overflow:hidden}
-.hero .bg{position:absolute;inset:0;z-index:-2;background:url('assets/hero_orca.png') center/cover no-repeat}
-.hero .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(5,8,12,.94) 0%,rgba(5,8,12,.7) 45%,rgba(5,8,12,.25) 100%),linear-gradient(0deg,var(--bg),transparent 40%)}
+.hero .bgvid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-3}
+.hero .bg{position:absolute;inset:0;z-index:-2;background:linear-gradient(90deg,rgba(5,8,12,.92) 0%,rgba(5,8,12,.62) 45%,rgba(5,8,12,.22) 100%),linear-gradient(0deg,var(--bg),transparent 42%)}
 .hero h1{font-size:clamp(38px,6.5vw,76px);font-weight:850}
 .hero .sub{font-size:clamp(17px,2.3vw,22px);color:var(--dim);max-width:620px;margin:18px 0 10px}
 .badge{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:var(--teal);background:rgba(57,224,200,.08);border:1px solid rgba(57,224,200,.3);padding:7px 14px;border-radius:99px;margin-bottom:26px;font-weight:600}
@@ -76,19 +78,15 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:6
 #talk{background:radial-gradient(1200px 600px at 80% -10%,rgba(11,110,140,.25),transparent),var(--bg2)}
 .disclaimer{display:flex;gap:12px;align-items:flex-start;background:rgba(255,180,84,.07);border:1px solid rgba(255,180,84,.32);border-radius:var(--radius-sm);padding:16px 18px;margin:24px 0;font-size:14px;color:#f4dcae}
 .disclaimer b{color:var(--warn)}
+.basis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:-10px 0 24px}
+.basis div{border:1px solid rgba(76,201,255,.22);background:rgba(76,201,255,.055);border-radius:10px;padding:12px 13px;color:var(--dim);font-size:12.5px;line-height:1.35}
+.basis b{display:block;color:var(--cyan);font-size:11px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px}
+@media(max-width:760px){.basis{grid-template-columns:1fr}}
 .talkgrid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:10px}
 @media(max-width:880px){.talkgrid{grid-template-columns:1fr}}
-.opts{display:flex;flex-direction:column;gap:10px}
-.opt{text-align:left;padding:14px 16px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--panel);color:var(--text);cursor:pointer;transition:.15s;font-family:inherit}
-.opt:hover{border-color:var(--teal)}
-.opt.active{border-color:var(--teal);background:rgba(57,224,200,.08)}
-.opt .t{font-weight:700;font-size:15px}
-.opt .d{font-size:12.5px;color:var(--faint);margin-top:3px}
 .viz{background:#04080d;border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;display:flex;flex-direction:column}
-#spec{width:100%;height:200px;border-radius:8px;background:#02060a;display:block}
 .readout{margin-top:14px;font-size:13.5px;color:var(--dim);min-height:74px}
 .readout .lab{color:var(--teal);font-weight:700}
-.playrow{display:flex;gap:10px;align-items:center;margin-top:14px}
 /* field */
 #field{background:linear-gradient(180deg,var(--bg),var(--bg2))}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:30px}
@@ -114,6 +112,130 @@ footer{padding:50px 22px;border-top:1px solid var(--border);color:var(--faint);f
 footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
 .reveal{opacity:0;transform:translateY(24px);transition:.7s cubic-bezier(.2,.7,.2,1)}
 .reveal.in{opacity:1;transform:none}
+/* talk orca composer + stage */
+.composer{display:flex;flex-direction:column;gap:14px}
+.intentpanel{border:1px solid var(--border);background:linear-gradient(180deg,rgba(18,29,42,.94),rgba(7,13,20,.96));border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.intenttop{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap}
+.intenttitle{font-size:12px;color:var(--teal);font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.modebar{display:flex;gap:6px;flex-wrap:wrap}
+.modebtn{border:1px solid var(--border2);background:#07101a;color:var(--dim);border-radius:8px;padding:7px 10px;font-family:inherit;font-size:12px;font-weight:800;cursor:pointer}
+.modebtn.active{background:rgba(57,224,200,.12);border-color:var(--teal);color:var(--teal)}
+.fieldrow{display:grid;grid-template-columns:1.4fr .9fr .9fr;gap:10px}
+.fieldrow label{display:flex;flex-direction:column;gap:5px;font-size:11px;color:var(--faint);font-weight:800;letter-spacing:.05em;text-transform:uppercase}
+.fieldrow input,.fieldrow select{width:100%;border:1px solid var(--border2);background:#050b12;color:var(--text);border-radius:8px;padding:10px 11px;font:14px var(--sans)}
+.fieldrow.compact{grid-template-columns:1fr 1fr}
+.slidergrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.slidergrid label{display:flex;flex-direction:column;gap:6px;font-size:11px;color:var(--faint);font-weight:800;letter-spacing:.05em;text-transform:uppercase}
+.slidergrid input{accent-color:var(--teal);width:100%}
+.slidergrid span{font-size:11px;color:var(--dim);font-weight:600;letter-spacing:0;text-transform:none}
+.templates{display:flex;flex-wrap:wrap;gap:8px}
+.template{border:1px solid rgba(255,180,84,.28);background:rgba(255,180,84,.08);color:#f4dcae;border-radius:8px;padding:8px 10px;font:700 12px var(--sans);cursor:pointer}
+.template:hover{border-color:var(--warn)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:10px 14px;border-radius:12px;border:1px solid var(--border2);background:var(--panel);color:var(--text);cursor:pointer;font-size:13.5px;font-weight:700;font-family:inherit;transition:.15s;text-align:left}
+.chip.synthetic{border-color:rgba(76,201,255,.28);background:rgba(76,201,255,.065)}
+.chip:hover{border-color:var(--teal);transform:translateY(-1px)}
+.chip:active{transform:scale(.97)}
+.chip small{display:block;color:var(--faint);font-weight:400;font-size:11px;margin-top:2px;font-style:italic}
+.tray{min-height:56px;border:1px dashed var(--border2);border-radius:12px;padding:10px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:rgba(2,6,10,.35)}
+.trayhint{color:var(--faint);font-size:13px}
+.token{padding:7px 11px;border-radius:8px;background:rgba(57,224,200,.12);border:1px solid rgba(57,224,200,.4);color:var(--teal);font-size:13px;font-weight:800;font-family:var(--mono);cursor:pointer}
+.token:hover{background:rgba(255,107,107,.12);border-color:rgba(255,107,107,.55);color:#ffd0d0}
+.phrasebar{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.phrasebar .btn{padding:10px 16px;border-radius:10px}
+.stage{position:relative;height:240px;border-radius:12px;overflow:hidden;background:#02060a url('assets/callwave.png') left center/cover no-repeat;border:1px solid var(--border);transition:box-shadow .3s}
+.stage::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(2,6,10,.12),rgba(2,6,10,.55))}
+.stage.talking{box-shadow:inset 0 0 90px rgba(57,224,200,.45)}
+.rings{position:absolute;left:15%;top:52%;z-index:2}
+.rings span{position:absolute;width:14px;height:14px;border-radius:50%;border:2px solid var(--teal);opacity:0;transform:translate(-50%,-50%)}
+.stage.talking .rings span{animation:ring 1.2s ease-out infinite}
+.stage.talking .rings span:nth-child(2){animation-delay:.3s}
+.stage.talking .rings span:nth-child(3){animation-delay:.6s}
+.stage.talking .rings span:nth-child(4){animation-delay:.9s}
+@keyframes ring{0%{opacity:.85;width:14px;height:14px}100%{opacity:0;width:260px;height:260px}}
+.nowcall{position:absolute;right:14px;bottom:10px;z-index:3;font-family:var(--mono);font-weight:800;font-size:22px;color:var(--teal);text-shadow:0 0 18px rgba(57,224,200,.7)}
+.stagehud{position:absolute;left:14px;right:14px;top:12px;z-index:3;display:flex;justify-content:space-between;gap:10px;align-items:flex-start;color:var(--dim);font-size:12px}
+.stagehud b{color:var(--text)}
+#spec{margin-top:12px;width:100%;height:140px;border-radius:8px;background:#02060a;display:block}
+.analogy{margin-top:2px;font-size:15px;color:var(--text);background:rgba(76,201,255,.06);border:1px solid rgba(76,201,255,.22);border-radius:10px;padding:12px 14px;font-style:italic;line-height:1.5}
+.analogy:empty{display:none;padding:0;border:0}
+.alab{font-style:normal;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--cyan);font-weight:700;display:block;margin-bottom:5px}
+.timeline{margin-top:12px;display:flex;gap:6px;min-height:34px}
+.tick{height:34px;min-width:34px;flex:1;border-radius:7px;border:1px solid var(--border);background:linear-gradient(90deg,rgba(57,224,200,.16),rgba(255,180,84,.12));display:flex;align-items:center;justify-content:center;font:800 11px var(--mono);color:var(--text);position:relative;overflow:hidden}
+.tick.active{border-color:var(--teal);box-shadow:0 0 18px rgba(57,224,200,.28)}
+.meters{margin-top:12px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.meter{border:1px solid var(--border);border-radius:8px;padding:9px;background:rgba(18,29,42,.7)}
+.meter .mt{font-size:10px;color:var(--faint);text-transform:uppercase;letter-spacing:.07em;font-weight:800}
+.meter .mn{font-size:20px;line-height:1.1;font-weight:850;color:var(--teal);font-variant-numeric:tabular-nums}
+.meter .md{font-size:11px;color:var(--dim);line-height:1.25}
+.labdeck{margin-top:24px;border:1px solid var(--border);border-radius:12px;background:linear-gradient(180deg,rgba(14,22,32,.96),rgba(5,10,16,.98));padding:18px}
+.labhead{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;flex-wrap:wrap;margin-bottom:16px}
+.labhead h3{font-size:18px;margin:0;color:var(--text)}
+.labhead p{margin:5px 0 0;color:var(--dim);font-size:13px;max-width:720px}
+.labactions{display:flex;gap:8px;flex-wrap:wrap}
+.labactions .btn{padding:9px 13px;border-radius:9px;font-size:12.5px}
+.labgrid{display:grid;grid-template-columns:1.05fr 1fr;gap:14px}
+.labcard{border:1px solid var(--border);border-radius:10px;background:rgba(7,13,20,.72);padding:14px;min-width:0}
+.labcard h4{margin:0 0 10px;font-size:13px;color:var(--cyan);text-transform:uppercase;letter-spacing:.07em}
+.treatment{display:grid;grid-template-columns:88px 1fr auto;gap:10px;align-items:center;border-bottom:1px solid rgba(42,61,80,.55);padding:9px 0}
+.treatment:last-child{border-bottom:0}
+.tag{display:inline-flex;justify-content:center;align-items:center;border:1px solid rgba(57,224,200,.35);background:rgba(57,224,200,.08);border-radius:7px;color:var(--teal);font:800 11px var(--mono);padding:5px 7px;white-space:nowrap}
+.treatment .td{font-size:12.5px;color:var(--dim);line-height:1.35}
+.treatment .td b{color:var(--text)}
+.pill{border:1px solid var(--border2);border-radius:99px;padding:5px 8px;color:var(--dim);font-size:11px;white-space:nowrap}
+.evidence{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.ev{border:1px solid rgba(76,201,255,.18);border-radius:8px;background:rgba(76,201,255,.045);padding:10px}
+.ev .en{font-size:20px;color:var(--teal);font-weight:850;font-variant-numeric:tabular-nums}
+.ev .et{font-size:11px;color:var(--faint);text-transform:uppercase;letter-spacing:.06em;font-weight:800}
+.ev .ed{font-size:11.5px;color:var(--dim);line-height:1.3;margin-top:3px}
+.protocolControls{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.protocolControls label{display:flex;flex-direction:column;gap:5px;font-size:11px;color:var(--faint);font-weight:800;text-transform:uppercase;letter-spacing:.05em}
+.protocolControls input,.protocolControls select{border:1px solid var(--border2);background:#050b12;color:var(--text);border-radius:8px;padding:9px 10px;font:13px var(--sans);width:100%}
+.checks{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.checks label{display:flex;align-items:center;gap:7px;color:var(--dim);font-size:12px}
+.checks input{accent-color:var(--teal)}
+.planbox{margin-top:10px;min-height:170px;border:1px solid var(--border);background:#03070c;color:var(--text);border-radius:8px;padding:11px;font:12px/1.45 var(--mono);white-space:pre-wrap;overflow:auto}
+.minihelp{margin:0 0 10px;color:var(--dim);font-size:12.5px;line-height:1.35}
+.exportdetails{border:1px solid var(--border);border-radius:8px;background:#03070c;overflow:hidden}
+.exportdetails summary{cursor:pointer;padding:10px 11px;color:var(--teal);font:800 12px var(--sans);list-style:none}
+.exportdetails summary::-webkit-details-marker{display:none}
+.exportdetails summary::after{content:"+";float:right;color:var(--dim)}
+.exportdetails[open] summary::after{content:"-"}
+.exportdetails .planbox{margin:0;border:0;border-top:1px solid var(--border);border-radius:0;min-height:0;max-height:150px}
+.runmeta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:9px;color:var(--dim);font-size:12px}
+.runmeta span{border:1px solid rgba(76,201,255,.2);background:rgba(76,201,255,.05);border-radius:99px;padding:5px 8px}
+.runsheet{display:grid;gap:6px;max-height:276px;overflow:auto;padding-right:2px}
+.trialrow{display:grid;grid-template-columns:44px 92px 1fr;gap:8px;align-items:center;border:1px solid rgba(42,61,80,.55);border-radius:8px;background:rgba(3,7,12,.55);padding:8px}
+.trialid{font:850 12px var(--mono);color:var(--teal)}
+.trialtreatment{font:800 11px var(--mono);color:var(--text)}
+.trialflags{font-size:11.5px;color:var(--dim);line-height:1.3}
+.gates{display:grid;gap:8px}
+.gate{display:flex;gap:8px;align-items:flex-start;color:var(--dim);font-size:12.5px;line-height:1.35}
+.gate b{color:var(--text)}
+.dotok{width:9px;height:9px;border-radius:50%;background:var(--teal);box-shadow:0 0 10px rgba(57,224,200,.6);margin-top:5px;flex:0 0 auto}
+.gate.warn .dotok{background:var(--warn);box-shadow:0 0 10px rgba(255,180,84,.45)}
+.uploadrow{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.uploadrow input{max-width:100%;color:var(--dim);font-size:12px}
+.uploadviz{height:84px;border:1px solid var(--border);border-radius:8px;background:#02060a;margin-top:10px;position:relative;overflow:hidden}
+.uploadviz::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(57,224,200,.12) 0 2px,transparent 2px 14px),linear-gradient(180deg,transparent,rgba(76,201,255,.10));opacity:.5}
+.uploadviz canvas{position:absolute;inset:0;width:100%;height:100%;z-index:1}
+.uploadnote{font-size:12px;color:var(--dim);line-height:1.35;margin-top:8px}
+@media(max-width:980px){.labgrid{grid-template-columns:1fr}.treatment{grid-template-columns:72px 1fr}.treatment .pill{grid-column:2}.evidence,.protocolControls,.checks,.trialrow{grid-template-columns:1fr}.trialid,.trialtreatment{font-size:12px}}
+@media(max-width:760px){.fieldrow,.fieldrow.compact,.slidergrid,.meters{grid-template-columns:1fr}.stage{height:210px}}
+.dbtabs{display:flex;gap:8px;margin:22px 0 16px;flex-wrap:wrap}
+.dbtab{padding:9px 15px;border-radius:99px;border:1px solid var(--border2);background:var(--panel);color:var(--dim);cursor:pointer;font-family:inherit;font-size:13.5px;font-weight:700}
+.dbtab.active{border-color:var(--teal);color:var(--teal);background:rgba(57,224,200,.08)}
+.bars{display:flex;flex-direction:column;gap:12px;max-width:780px}
+.bar .lbl{font-size:13px;color:var(--dim);margin-bottom:5px}
+.bar .track{height:28px;background:var(--panel2);border:1px solid var(--border);border-radius:7px;overflow:hidden}
+.bar .fill{height:100%;background:linear-gradient(90deg,var(--deep),var(--cyan));display:flex;align-items:center;padding-left:11px;color:#04121a;font-weight:800;font-size:12.5px;white-space:nowrap;transition:width .7s cubic-bezier(.2,.7,.2,1)}
+.dbnote{font-size:12.5px;color:var(--faint);margin-top:14px}
+.dblinks{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:30px}
+.dblink{display:block;background:var(--panel);border:1px solid var(--border);border-radius:var(--radius-sm);padding:18px;transition:.18s}
+.dblink:hover{border-color:var(--teal);transform:translateY(-2px);text-decoration:none}
+.dblink .t{font-weight:800;color:var(--text);font-size:14.5px}
+.dblink .d{font-size:12.5px;color:var(--faint);margin-top:5px}
+.dblink .go{color:var(--cyan);font-size:12px;margin-top:8px;display:inline-block}
 </style>
 </head>
 <body>
@@ -124,17 +246,18 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
     <a href="#gallery">Results</a>
     <a href="#talk">Talk&nbsp;Orca</a>
     <a href="#field">For scientists</a>
+    <a href="#explore">Data</a>
     <a href="#refs">References</a>
   </div>
-  <a class="btn primary" href="#field">Collaborate</a>
+  <a class="btn primary" href="#field">Field use</a>
 </div></nav>
-<header class="hero"><div class="bg"></div><div class="wrap">
-  <span class="badge">● Non-invasive · public data · reproducible · no overclaiming</span>
-  <h1>We taught a machine to <span class="grad">listen to orcas</span> — and to admit what it can't hear.</h1>
-  <p class="sub">A reproducible, fully non-invasive pipeline that decodes killer-whale (<em>Orcinus orca</em>) call structure and behavioural context from public recordings — with the recording-site confound measured, not hidden. Built to hand to a field team for the experiment that comes next.</p>
+<header class="hero"><video class="bgvid" autoplay muted loop playsinline poster="assets/hero_orca_16x9_reference.png"><source src="assets/hero_orca_veo_multi_loop.mp4" type="video/mp4" /></video><div class="bg"></div><div class="wrap">
+  <span class="badge">● Non-invasive · public data · fully reproducible · field-ready</span>
+  <h1>Site-controlled <span class="grad">killer-whale call decoding</span>.</h1>
+  <p class="sub">A reproducible, fully non-invasive pipeline for killer-whale (<em>Orcinus orca</em>) call structure, behavioural context, and playback-response analysis from public recordings.</p>
   <div class="cta">
     <a class="btn primary" href="#talk">▶ Try “Talk Orca”</a>
-    <a class="btn" href="#work">See what we found</a>
+    <a class="btn" href="#work">See the findings</a>
     <a class="btn" href="https://github.com/ladyFaye1998/OrcaDolittle" target="_blank" rel="noopener">View the code ↗</a>
   </div>
 </div></header>
@@ -143,19 +266,19 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
   <div class="stat"><div class="n" data-to="0.968" data-dec="3">0</div><div class="l">within-site call-type accuracy (18 NRKW types)</div></div>
   <div class="stat"><div class="n" data-to="0.770" data-dec="3">0</div><div class="l">behaviour decoded from calls (individual held out)</div></div>
   <div class="stat"><div class="n" data-pre="p=" data-to="0.002" data-dec="3">0</div><div class="l">whales reply to same-pod, not different-pod playback</div></div>
-  <div class="stat"><div class="n" data-to="0">0</div><div class="l">claims of “translation” or “meaning”</div></div>
+  <div class="stat"><div class="n" data-to="0.83" data-dec="2">0</div><div class="l">call-type identity transferred to an unseen recording site</div></div>
 </div>
 <section id="work"><div class="wrap">
-  <div class="eyebrow reveal">What we actually did</div>
+  <div class="eyebrow reveal">What was tested</div>
   <h2 class="reveal">Six findings, every number reproducible from public data.</h2>
   <p class="lead reveal">One frozen audio foundation model (AVES2) runs unchanged across every analysis; the contribution is the <b>rigour around it</b> — measuring the recording-site shortcut that fools naive probes, and reporting only what survives explicit null baselines.</p>
   <div class="cards">
-    <div class="card reveal"><div class="k">The trap</div><h3>Most of the “97% accuracy” was the microphone</h3><div class="num">0.948</div><p>A frozen model “decodes ecotype” at 0.91 pooled — but hold out a whole recording site and it collapses to 0.23 (chance 0.25), while the <b>site itself</b> decodes at 0.948. So we measured the confound instead of hiding it.</p><div class="cite">Stowell 2022 · Ghani 2023 · Palmer et al. 2025</div></div>
+    <div class="card reveal"><div class="k">The trap</div><h3>Most of the “97% accuracy” was the microphone</h3><div class="num">0.948</div><p>A frozen model “decodes ecotype” at 0.91 pooled — but hold out a whole recording site and it collapses to 0.23 (chance 0.25), while the <b>site itself</b> decodes at 0.948. The confound is measured instead of hidden.</p><div class="cite">Stowell 2022 · Ghani 2023 · Palmer et al. 2025</div></div>
     <div class="card reveal"><div class="k">Real biology</div><h3>Ecotype is decodable once the site is held constant</h3><div class="num">0.889–0.973</div><p>Within each of five fixed recording sites the embeddings still separate ecotypes — the hydrophone never changes, so that signal has to be the whale.</p><div class="cite">Hagiwara 2023 (AVES) · Chen et al. 2022</div></div>
     <div class="card reveal"><div class="k">Units that travel</div><h3>Named call types transfer across sites</h3><div class="num">0.71 / 0.97</div><p>Catalogue call types are recovered within a site (14 SRKW types 0.71; 18 NRKW types 0.97) and — unlike ecotype — <b>transfer to an independent site</b> (0.64; 0.83 on unambiguous types): the control ecotype failed.</p><div class="cite">Ford 1989 · Filatova et al. 2015</div></div>
-    <div class="card reveal"><div class="k">More than one context</div><h3>Calls predict what the whale is doing</h3><div class="num">0.770</div><p>On animal-borne tags, communicative calls decode movement-defined context (foraging vs not 0.77; three-way 0.58) with <b>every individual held out</b>, and specific call types occur in specific contexts (V=0.40). Not louder, not more frequent — we checked.</p><div class="cite">Holt, Tennessen et al. 2024 · Wilson et al. 2006</div></div>
+    <div class="card reveal"><div class="k">More than one context</div><h3>Calls predict what the whale is doing</h3><div class="num">0.770</div><p>On animal-borne tags, communicative calls decode movement-defined context (foraging vs not 0.77; three-way 0.58) with <b>every individual held out</b>, and specific call types occur in specific contexts (V=0.40). Controls rule out call rate and loudness as the explanation.</p><div class="cite">Holt, Tennessen et al. 2024 · Wilson et al. 2006</div></div>
     <div class="card reveal"><div class="k">Structure</div><h3>Sequence structure, and — in SRKW — beyond first order</h3><div class="num">+0.645 bits</div><p>Calls don’t come at random: one call predicts the next, and Southern-Resident sequences carry information a first-order model can’t explain (candidate phrase S01→S04→S01). A prerequisite for combinatorial coding — not meaning.</p><div class="cite">Sharma et al. 2024 · Berthet et al. 2025 · Girard-Buttoz et al. 2025</div></div>
-    <div class="card reveal"><div class="k">A measured response</div><h3>Wild whales answer same-pod calls, ignore strangers</h3><div class="num">p = 0.002</div><p>Re-analysing a published playback: free-ranging whales replied to same-pod broadcasts (6/6) and stayed silent to different-pod ones (0/6), naive animals — and our model recovers the dialect call types that drive it (purity 0.439 vs 0.05 null). The experiment is prior work; the response tracks <b>dialect, not content</b>.</p><div class="cite">Filatova et al. 2011 · FEROP catalogue · Miller et al. 2004</div></div>
+    <div class="card reveal"><div class="k">A measured response</div><h3>Wild whales answer same-pod calls, ignore strangers</h3><div class="num">p = 0.002</div><p>Re-analysis of a published playback: free-ranging whales replied to same-pod broadcasts (6/6) and stayed silent to different-pod ones (0/6), naive animals — and the model recovers the dialect call types that drive it (purity 0.439 vs 0.05 null). The experiment is prior work; the response tracks <b>dialect, not content</b>.</p><div class="cite">Filatova et al. 2011 · FEROP catalogue · Miller et al. 2004</div></div>
   </div>
 </div></section>
 <section id="gallery"><div class="wrap">
@@ -167,7 +290,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
     <div class="shot reveal"><img src="assets/figures/calltype_model_full.png" alt="Call-type model"><div class="cap"><b>Call types transfer across sites.</b> Within-site 0.71 (SRKW) / 0.97 (NRKW); a VFPA-trained classifier scores 0.64 on an independent site (0.83 unambiguous).</div></div>
     <div class="shot reveal"><img src="assets/figures/context_decode.png" alt="DTAG context decode"><div class="cap"><b>Behaviour from calls.</b> Communicative calls predict movement-defined foraging context at 0.77, leave-individual-out; the label uses depth/acceleration only.</div></div>
     <div class="shot reveal"><img src="assets/figures/calltype_context.png" alt="Call-type by context"><div class="cap"><b>Context-specific production.</b> Specific call types occur in specific contexts (Cramér's V = 0.40 vs a within-individual null of 0.08).</div></div>
-    <div class="shot reveal"><img src="assets/figures/calltype_compositionality.png" alt="Compositionality"><div class="cap"><b>Beyond first order (SRKW).</b> The 2-back call adds information a first-order model can't explain (Δ = 0.645 bits); null in NRKW, reported honestly.</div></div>
+    <div class="shot reveal"><img src="assets/figures/calltype_compositionality.png" alt="Compositionality"><div class="cap"><b>Beyond first order (SRKW).</b> The 2-back call adds information a first-order model can't explain (Δ = 0.645 bits); NRKW is null.</div></div>
     <div class="shot reveal"><img src="assets/figures/calltype_distributional_semantics.png" alt="Distributional semantics"><div class="cap"><b>Structure ↔ context.</b> SRKW call types with similar sequential company share independent ethogram context (Mantel r = 0.33, p = 0.042); NRKW null. The distributional hypothesis tested, not assumed.</div></div>
     <div class="shot reveal"><img src="assets/figures/attribution_controls.png" alt="Negative controls"><div class="cap"><b>Not a probe artifact.</b> The decode (0.98) sits far above matched-noise (0.54), feature-shuffle (0.50) and label-permutation (0.50) controls.</div></div>
     <div class="shot reveal"><img src="assets/figures/playback_response.png" alt="Playback response"><div class="cap"><b>Receiver response (re-analysis).</b> Same-pod 6/6 vs different-pod 0/6 (Fisher p = 0.002), naive animals. Prior published experiment; response tracks dialect, not content.</div></div>
@@ -175,34 +298,199 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
 </div></section>
 <section id="talk"><div class="wrap">
   <div class="eyebrow reveal">Talk Orca · interactive demo</div>
-  <h2 class="reveal">Hear the call types — and what we honestly can (and can’t) say about them.</h2>
-  <p class="lead reveal">Pick a documented call type or context. We synthesise an illustrative pulsed call, render its live spectrogram, and tell you exactly what our analysis found for calls like it.</p>
+  <h2 class="reveal">Turn a human situation into an <span class="grad">orca-like call sequence</span>.</h2>
+  <p class="lead reveal">Type or pick a plain-English context, let the demo assemble a K-call phrase, then hear it as reusable real recordings, a synthetic orca-like sketch, or both. The human text is a clear analogy for the viewer; the scientific boundary stays explicit.</p>
   <div class="disclaimer reveal">
-    <span>⚠️</span>
-    <div><b>Illustrative only — this is not a translator.</b> These sounds are <b>audio synthesis, not real orca recordings</b>, and selecting a label does <b>not</b> mean an orca understands a human message. The demo simply lets you hear the kinds of calls we study and shows the decodable structure/context our model found in <em>real</em> recordings. No claim of meaning or two-way communication is made.</div>
+    <span>⚠</span>
+    <div><b>Research-backed, not a translator.</b> The call units are real FEROP Kamchatka K-call types tied to the published playback re-analysis; the context controls come from call-type/context and receiver-response evidence. The plain-English sentence is a human-facing scaffold, not a validated orca meaning. Whether a wild orca treats any sequence as content is exactly what controlled field playbacks must test. <a href="#field">Take the tool into the field →</a></div>
+  </div>
+  <div class="basis reveal">
+    <div><b>Validated substrate</b> Real K-call recordings are reused as named stimulus units, not invented labels.</div>
+    <div><b>Evidence base</b> Call type structure, behavioural-context decodability, and same-pod playback response frame the demo.</div>
+    <div><b>Illustrative layer</b> The louder synthetic track is an orca-like sonification so humans can hear the intended contour clearly.</div>
   </div>
   <div class="talkgrid">
-    <div class="opts reveal">
-      <button class="opt active" data-call="S1" data-name="Pod-identity call (SRKW, J pod)" data-context="foraging &amp; pod identity" data-cite="Ford 1989; Foote et al. 2008" data-fa="1500" data-fb="900" data-pulse="600" data-dur="1.2" data-bi="1"><div class="t">S1 · Pod-identity call</div><div class="d">Southern Resident J pod — stable for 27+ years</div></button>
-      <button class="opt" data-call="N4" data-name="Foraging call (NRKW, A pods)" data-context="foraging" data-cite="Ford 1989" data-fa="1100" data-fb="1320" data-pulse="820" data-dur="1.0" data-bi="0"><div class="t">N4 · Foraging call</div><div class="d">Most common call during foraging in A pods</div></button>
-      <button class="opt" data-call="S2" data-name="Travelling call (SRKW)" data-context="travelling" data-cite="Ford 1989" data-fa="1650" data-fb="720" data-pulse="430" data-dur="1.6" data-bi="0"><div class="t">S2 · Travelling call</div><div class="d">Becomes dominant during directed travel</div></button>
-      <button class="opt" data-call="contact" data-name="Contact / keep-together series" data-context="group cohesion" data-cite="Ford 1989; Miller et al. 2004" data-fa="1200" data-fb="1200" data-pulse="700" data-dur="1.1" data-bi="0" data-burst="1"><div class="t">Contact series</div><div class="d">Repeated short pulses — staying together</div></button>
-      <button class="opt" data-call="N2" data-name="Excitement / greeting call" data-context="excitement / pod meeting" data-cite="Ford 1989" data-fa="1400" data-fb="2100" data-pulse="920" data-dur="0.7" data-bi="1"><div class="t">N2 · Excitement call</div><div class="d">Higher &amp; shorter during pod meetings</div></button>
-    </div>
-    <div class="viz reveal">
-      <canvas id="spec" width="560" height="200"></canvas>
-      <div class="playrow">
-        <button class="btn primary" id="play">▶ Play call</button>
-        <span id="status" style="font-size:13px;color:var(--faint)">Tap a call, then play</span>
+    <div class="reveal"><div class="composer">
+      <div class="intentpanel">
+        <div class="intenttop">
+          <div>
+            <div class="intenttitle">Human context</div>
+            <div style="font-size:13px;color:var(--dim)">Build the phrase from intent first; edit the call tokens after.</div>
+          </div>
+          <div class="modebar" id="modebar" aria-label="Playback mode">
+            <button class="modebtn" data-mode="recordings">Real clips</button>
+            <button class="modebtn" data-mode="synthetic">Synthetic</button>
+            <button class="modebtn active" data-mode="hybrid">Hybrid</button>
+          </div>
+        </div>
+        <div class="fieldrow">
+          <label>Human line
+            <input id="humanText" maxlength="90" value="I am here. Come feed with us." />
+          </label>
+          <label>Observed context
+            <select id="activity">
+              <option value="foraging">Foraging</option>
+              <option value="travelling">Travelling</option>
+              <option value="contact">Keep together</option>
+              <option value="social">Social greeting</option>
+              <option value="unknown">Unknown</option>
+            </select>
+          </label>
+          <label>Receiver frame
+            <select id="receiver">
+              <option value="same-pod">Same pod</option>
+              <option value="nearby">Nearby group</option>
+              <option value="distant">Distant group</option>
+              <option value="field-test">Field-test target</option>
+            </select>
+          </label>
+        </div>
+        <div class="fieldrow compact">
+          <label>Signal style
+            <select id="phraseStyle">
+              <option value="balanced">Balanced</option>
+              <option value="contact">Contact call</option>
+              <option value="forage">Foraging call</option>
+              <option value="travel">Travel cue</option>
+              <option value="reply">Call-back / reply</option>
+              <option value="social">Social greeting</option>
+              <option value="scan">Inspection / scan</option>
+            </select>
+          </label>
+          <label>Tone
+            <select id="tone">
+              <option value="gentle">Gentle</option>
+              <option value="curious">Curious</option>
+              <option value="bright">Bright</option>
+              <option value="distant">Distant</option>
+            </select>
+          </label>
+        </div>
+        <div class="slidergrid">
+          <label>Energy <input id="energy" type="range" min="0" max="100" value="34" /><span id="energyLabel">Calm</span></label>
+          <label>Spacing <input id="spacing" type="range" min="0" max="100" value="56" /><span id="spacingLabel">Natural gaps</span></label>
+          <label>Water echo <input id="echoMix" type="range" min="0" max="100" value="38" /><span id="echoLabel">Soft water</span></label>
+        </div>
+        <div class="templates" id="templates">
+          <button class="template" data-template="presence">"I'm here"</button>
+          <button class="template" data-template="food">"Food here"</button>
+          <button class="template" data-template="move">"Move together"</button>
+          <button class="template" data-template="close">"Stay close"</button>
+          <button class="template" data-template="greet">"Good to be together"</button>
+          <button class="template" data-template="reply">"Answer me"</button>
+          <button class="template" data-template="scan">"Check nearby"</button>
+        </div>
       </div>
+      <div class="chips" id="chips">
+        <button class="chip" data-call="k1">K1 · contact anchor<small>research K-call</small></button>
+        <button class="chip" data-call="k3">K3 · foraging pulse<small>research K-call</small></button>
+        <button class="chip" data-call="k5">K5 · travel cue<small>research K-call</small></button>
+        <button class="chip" data-call="k7">K7 · cohesion call<small>research K-call</small></button>
+        <button class="chip" data-call="k12">K12 · social burst<small>research K-call</small></button>
+        <button class="chip synthetic" data-call="v_soft">Soft arc<small>gentle synthetic variant</small></button>
+        <button class="chip synthetic" data-call="v_reply">Reply sweep<small>call-back variant</small></button>
+        <button class="chip synthetic" data-call="v_feed">Feed chirp<small>foraging variant</small></button>
+        <button class="chip synthetic" data-call="v_travel">Long glide<small>travel variant</small></button>
+        <button class="chip synthetic" data-call="v_social">Bright trill<small>social variant</small></button>
+        <button class="chip synthetic" data-call="v_echo">Distant echo<small>soft far-call variant</small></button>
+        <button class="chip synthetic" data-call="v_close">Close pulse<small>cohesion variant</small></button>
+        <button class="chip synthetic" data-call="v_reunion">Reunion trill<small>soft social variant</small></button>
+        <button class="chip synthetic" data-call="v_scan">Scan ripple<small>inspection variant</small></button>
+      </div>
+      <div class="tray" id="tray"><span class="trayhint">Tap calls above to build a phrase…</span></div>
+      <div class="phrasebar">
+        <button class="btn" id="build">Build from context</button>
+        <button class="btn primary" id="speak" onclick="document.getElementById('status').textContent='Preparing phrase…';setTimeout(function(){var s=document.getElementById('status');if(!s||s.textContent!=='Preparing phrase…')return;var st=document.getElementById('stage'),n=document.getElementById('nowcall'),ticks=[].slice.call(document.querySelectorAll('.tick')),tokens=[].slice.call(document.querySelectorAll('.token')),mode=(document.getElementById('modeLabel')||{}).textContent||'Hybrid',spacing=+(document.getElementById('spacing')||{value:56}).value,energy=+(document.getElementById('energy')||{value:34}).value,gap=620+spacing*6,rate=.94+energy*.0016,wantSynth=/Synthetic|Hybrid/.test(mode),wantReal=/Real|Hybrid/.test(mode),play=function(src,vol){try{var a=new Audio(src);a.volume=vol;a.playbackRate=rate;a.play().catch(function(){})}catch(e){}};if(st)st.classList.add('talking');s.textContent='Fallback playback — softer orca layer';tokens.forEach(function(tok,i){setTimeout(function(){var id=tok.dataset.call,real=tok.dataset.real;if(n)n.textContent=tok.textContent.trim();ticks.forEach(function(t,j){t.classList.toggle('active',i===j)});if(wantReal&&real)play('assets/calls/'+real+'.wav',wantSynth ? 0.20 : 0.82);if(wantSynth&&id)play('assets/calls/synth_'+id+'.wav',0.82)},i*gap)});setTimeout(function(){if(st)st.classList.remove('talking');if(n)n.textContent='';ticks.forEach(function(t){t.classList.remove('active')});s.textContent='Done — edit, reuse, or speak again'},Math.max(1,tokens.length)*gap+650)},120)">▶ Speak phrase</button>
+        <button class="btn" id="reuse">Reuse last</button>
+        <button class="btn" id="clear">Clear</button>
+        <span id="status" style="font-size:13px;color:var(--faint)">Add calls, then Speak</span>
+      </div>
+      <div class="analogy" id="analogy"></div>
       <div class="readout" id="readout"></div>
+    </div></div>
+    <div class="viz reveal">
+      <div class="stage" id="stage" aria-label="orca vocalising">
+        <div class="stagehud"><span id="modeLabel"><b>Hybrid</b></span><span id="phraseLabel">K1 · K3 · K7</span></div>
+        <div class="rings" id="rings"><span></span><span></span><span></span><span></span></div>
+        <div class="nowcall" id="nowcall"></div>
+      </div>
+      <canvas id="spec" width="560" height="140"></canvas>
+      <div class="timeline" id="timeline"></div>
+      <div class="meters" id="meters"></div>
+    </div>
+  </div>
+  <div class="labdeck reveal" id="fieldLab">
+    <div class="labhead">
+      <div>
+        <h3>Field Playback Lab</h3>
+        <p>Build a playback-ready stimulus set, inspect the evidence attached to it, and draft a conservative field protocol with controls, response windows, and stop rules.</p>
+      </div>
+      <div class="labactions">
+        <button class="btn primary" id="draftPlan">Draft field plan</button>
+        <button class="btn" id="copyPlan">Copy plan</button>
+        <button class="btn" id="downloadPlan">Download JSON</button>
+      </div>
+    </div>
+    <div class="labgrid">
+      <div class="labcard">
+        <h4>Stimulus set</h4>
+        <div id="stimulusSet"></div>
+      </div>
+      <div class="labcard">
+        <h4>Evidence stack</h4>
+        <div class="evidence" id="evidenceStack"></div>
+      </div>
+      <div class="labcard">
+        <h4>Protocol builder</h4>
+        <div class="protocolControls">
+          <label>Trials per condition <input id="trialCount" type="number" min="3" max="24" value="6" /></label>
+          <label>Washout minutes <input id="washoutMin" type="number" min="5" max="90" value="20" /></label>
+          <label>Baseline window <select id="baselineWindow"><option value="5">5 min pre</option><option value="10">10 min pre</option><option value="15">15 min pre</option></select></label>
+          <label>Response window <select id="responseWindow"><option value="2">2 min post</option><option value="5" selected>5 min post</option><option value="10">10 min post</option></select></label>
+          <label>Session label <input id="sessionLabel" maxlength="36" value="season-01-group-A" /></label>
+          <label>Random seed <input id="randomSeed" maxlength="24" value="OD-FIELD-01" /></label>
+        </div>
+        <div class="checks">
+          <label><input id="matchedNoise" type="checkbox" checked /> matched-noise control</label>
+          <label><input id="diffPod" type="checkbox" checked /> different-pod control</label>
+          <label><input id="blindObservers" type="checkbox" checked /> observer-blinded scoring</label>
+          <label><input id="stopRules" type="checkbox" checked /> disturbance stop rules</label>
+        </div>
+        <div class="planbox" id="protocolPlan"></div>
+      </div>
+      <div class="labcard">
+        <h4>Randomized run sheet</h4>
+        <div class="runmeta" id="runMeta"></div>
+        <div class="runsheet" id="runSheet"></div>
+      </div>
+      <div class="labcard">
+        <h4>Field gates</h4>
+        <div class="gates" id="gateList"></div>
+      </div>
+      <div class="labcard">
+        <h4>Upload/listen mode</h4>
+        <div class="uploadrow">
+          <input id="uploadClip" type="file" accept="audio/*" />
+          <button class="btn" id="scoreUpload">Preview clip</button>
+        </div>
+        <div class="uploadviz" id="uploadViz"><canvas id="uploadCanvas" width="520" height="84"></canvas></div>
+        <div class="uploadnote" id="uploadNote">Optional browser-only preview for a candidate field clip. It can summarize file metadata here; model scoring still belongs in the reproducible pipeline.</div>
+      </div>
+      <div class="labcard exportcard">
+        <h4>Export</h4>
+        <p class="minihelp">Use Download JSON for the full randomized plan. Preview only when needed.</p>
+        <details class="exportdetails">
+          <summary>Preview JSON</summary>
+          <div class="planbox" id="exportPreview"></div>
+        </details>
+      </div>
     </div>
   </div>
 </div></section>
 <section id="field"><div class="wrap">
   <div class="eyebrow reveal">For field scientists</div>
-  <h2 class="reveal">Let’s run the experiment an archive <span class="grad">cannot</span>.</h2>
-  <p class="lead reveal">Archival recordings can characterise call structure and its confounds, and we’ve done that rigorously. What they can’t do — even in principle — is measure how a whale <b>responds to a signal deliberately broadcast to it</b>. That needs a controlled in-situ playback with a permitted field group. If that’s you, we’ve already built the analysis half.</p>
+  <h2 class="reveal">The experiment an archive <span class="grad">cannot</span> run.</h2>
+  <p class="lead reveal">Archival recordings can characterise call structure and its confounds. What an archive cannot do — even in principle — is measure how a whale <b>responds to a signal deliberately broadcast to it</b>. That needs a controlled in-situ playback with a permitted field collaborator. The analysis half is already built.</p>
   <div class="two">
     <div class="panel reveal"><h3>What this project brings</h3><ul>
       <li>A frozen-embedding pipeline for killer-whale calls with hash-frozen artifacts and per-head metrics.</li>
@@ -219,39 +507,63 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
   </div>
   <div class="two" style="margin-top:18px">
     <div class="panel reveal"><h3>Run the tool yourself</h3>
-      <p style="color:var(--dim);font-size:14.5px;margin:0 0 12px">Everything is open and reproducible. Clone it, point it at the public DCLDE data, and regenerate every number:</p>
+      <p style="color:var(--dim);font-size:14.5px;margin:0 0 12px">Clone it, install the analysis extras, run the tests, and reproduce the playback-response statistic from the committed trial table:</p>
       <pre style="background:#04080d;border:1px solid var(--border);border-radius:10px;padding:14px;overflow:auto;font-family:var(--mono);font-size:12.5px;color:var(--teal);margin:0"><code>git clone https://github.com/ladyFaye1998/OrcaDolittle
-cd OrcaDolittle &amp;&amp; pip install -e ".[dev,analysis]"
-python scripts/run_h4_confound.py --embeddings data/embeddings/aves2_full_labeled.npz</code></pre>
+cd OrcaDolittle
+python -m pip install -e ".[dev,analysis]"
+python -m pytest -q
+python scripts/run_playback_response_stats.py</code></pre>
     </div>
     <div class="panel reveal" style="display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:14px">
       <h3 style="margin:0">Reach out</h3>
-      <p style="color:var(--dim);font-size:14.5px;margin:0">Field group, biologging team, or resident-orca acoustic-ecology lab? Let’s talk feasibility for your season.</p>
+      <p style="color:var(--dim);font-size:14.5px;margin:0">For permitted playback or biologging studies, include the study population, permit status, season timing, and response measures.</p>
       <div style="display:flex;gap:12px;flex-wrap:wrap">
-        <a class="btn primary" href="mailto:REPLACE_WITH_YOUR_EMAIL?subject=OrcaDolittle%20playback%20collaboration">✉ Email the team</a>
-        <a class="btn" href="https://github.com/ladyFaye1998/OrcaDolittle/issues/new" target="_blank" rel="noopener">Open a collaboration issue ↗</a>
+        <a class="btn primary" href="mailto:REPLACE_WITH_YOUR_EMAIL?subject=OrcaDolittle%20field%20feasibility">✉ Reach out</a>
+        <a class="btn" href="https://github.com/ladyFaye1998/OrcaDolittle/issues/new" target="_blank" rel="noopener">Open GitHub issue ↗</a>
       </div>
     </div>
   </div>
 </div></section>
 <section id="claim"><div class="wrap">
-  <div class="eyebrow reveal">Where we draw the line</div>
-  <h2 class="reveal">Honesty is the method, not the disclaimer.</h2>
+  <div class="eyebrow reveal">Claim boundary</div>
+  <h2 class="reveal">What has been shown — and what the field test can decide.</h2>
   <div class="claimgrid">
-    <div class="do reveal"><h3>✓ What we claim</h3><ul>
+    <div class="do reveal"><h3>✓ What the analysis shows today</h3><ul>
       <li>Killer-whale call structure is decodable from frozen embeddings <b>once the recording site is controlled</b>.</li>
-      <li>Validated catalogue call types are recoverable and <b>transfer across sites</b>.</li>
+      <li>Validated catalogue call types are recoverable and <b>transfer across recording sites</b>.</li>
       <li>Calls carry information about <b>more than one behavioural context</b>, with the individual held out.</li>
-      <li>Call sequences are non-random, and in Southern Residents show structure <b>beyond first order</b>.</li>
-      <li>Wild whales produce a <b>measurable, dialect-selective response</b> to broadcast conspecific calls (by re-analysis of a published experiment).</li>
+      <li>Call sequences are non-random — and in Southern Residents show structure <b>beyond first order</b>.</li>
+      <li>Wild whales already give a <b>measurable, dialect-selective response</b> to broadcast conspecific calls (re-analysis of a published playback).</li>
     </ul></div>
-    <div class="dont reveal"><h3>✗ What we do not claim</h3><ul>
-      <li>That we can <b>translate</b> orca calls or that any call has a known “meaning”.</li>
-      <li>That the playback response is governed by call <b>content</b> rather than <b>dialect membership</b>.</li>
-      <li>That decoded structure equals language, syntax-with-semantics, or thought.</li>
-      <li>That we ran a new field experiment — the response result is a re-analysis of prior published work.</li>
-      <li>Two-way or interactive communication. That remains future work — the reason this page exists.</li>
+    <div class="do reveal" style="border-color:rgba(76,201,255,.3);background:rgba(76,201,255,.05)"><h3 style="color:var(--cyan)">→ What it’s built to be tested for, in the field</h3><ul>
+      <li>That broadcasting these call types elicits <b>context-appropriate responses</b> in wild orcas.</li>
+      <li>That a receiver responds to a call’s <b>content</b>, not only to whose voice (dialect) it is.</li>
+      <li>That the decoder <b>generalises to your study population</b> and recording conditions.</li>
+      <li>That, step by step, this becomes genuine <b>two-way, interactive communication</b>.</li>
+      <li><em>These are predictions the tool makes testable — designed to be understood, not yet confirmed in the field.</em></li>
     </ul></div>
+  </div>
+</div></section>
+<section id="explore"><div class="wrap">
+  <div class="eyebrow reveal">Explore the data</div>
+  <h2 class="reveal">It’s all public. Poke around — then go get it.</h2>
+  <p class="lead reveal">A quick look at what’s inside the corpus, right here on the page. The full recordings live in open repositories (linked below) — nothing is private or upon-request.</p>
+  <div class="reveal">
+    <div class="dbtabs">
+      <button class="dbtab active" data-db="ecotype">By ecotype</button>
+      <button class="dbtab" data-db="calltype">By call type</button>
+      <button class="dbtab" data-db="provider">By recording site</button>
+    </div>
+    <div id="dbtitle" style="font-size:13px;color:var(--teal);font-weight:700;margin-bottom:12px"></div>
+    <div class="bars" id="dbbars"></div>
+    <div class="dbnote" id="dbnote"></div>
+  </div>
+  <div class="dblinks">
+    <a class="dblink reveal" href="https://doi.org/10.1038/s41597-025-05281-5" target="_blank" rel="noopener"><div class="t">DCLDE 2026 killer-whale corpus</div><div class="d">27,934 annotated calls · 8 providers · 4 ecotypes. Dataset descriptor (NOAA/NCEI + GCS mirror).</div><span class="go">Open dataset ↗</span></a>
+    <a class="dblink reveal" href="https://doi.org/10.5281/zenodo.13308835" target="_blank" rel="noopener"><div class="t">DTAG behavioural archive</div><div class="d">Animal-borne tag movement + audio (Holt, Tennessen et al.). Zenodo, CC-BY.</div><span class="go">Zenodo DOI ↗</span></a>
+    <a class="dblink reveal" href="https://doi.org/10.1111/j.1748-7692.2010.00433.x" target="_blank" rel="noopener"><div class="t">FEROP playback + K-call catalogue</div><div class="d">The Kamchatka calls in this demo, and the conspecific playback re-analysed here (Filatova et al. 2011).</div><span class="go">Source paper ↗</span></a>
+    <a class="dblink reveal" href="https://www.orcasound.net" target="_blank" rel="noopener"><div class="t">Orcasound open hydrophones</div><div class="d">Live + archived Salish Sea recordings — open community data.</div><span class="go">Open data ↗</span></a>
+    <a class="dblink reveal" href="https://github.com/ladyFaye1998/OrcaDolittle" target="_blank" rel="noopener"><div class="t">Code + derived artifacts</div><div class="d">Frozen embeddings, metrics, figures, and one-command reproduction — MIT licensed.</div><span class="go">GitHub ↗</span></a>
   </div>
 </div></section>
 <section id="refs"><div class="wrap">
@@ -286,7 +598,7 @@ python scripts/run_h4_confound.py --embeddings data/embeddings/aves2_full_labele
   </div>
 </div></section>
 <footer><div class="wrap">
-  <div>OrcaDolittle · killer-whale bioacoustics, decoded honestly.<br/><span style="color:var(--faint)">Non-invasive · public data · MIT-licensed code · no claim of translation or meaning.</span></div>
+  <div>OrcaDolittle · killer-whale bioacoustics.<br/><span style="color:var(--faint)">Non-invasive · public data · MIT-licensed code · built for the field test that comes next.</span></div>
   <div style="text-align:right">
     <a href="https://github.com/ladyFaye1998/OrcaDolittle" target="_blank" rel="noopener">GitHub repository ↗</a><br/>
     <span style="color:var(--faint)">Danielle Lesin · Georgia Institute of Technology</span>
@@ -308,64 +620,519 @@ function animateCounter(el){
 const cio=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){animateCounter(e.target);cio.unobserve(e.target);}});},{threshold:0.6});
 document.querySelectorAll('.stat .n').forEach(el=>cio.observe(el));
 
-// ---- Talk Orca: synth + live spectrogram ----
-let ac=null, analyser=null, freqData=null, rafId=null;
+// ---- Talk Orca: context builder + reusable recordings + synthetic sketch ----
+let ac=null, bus=null, analyser=null, wetGain=null, delayNode=null, freqData=null, rafId=null, buffers={}, activeNodes=[], playRun=0, mode='hybrid';
+const CLIPS={k1:'assets/calls/k1.wav',k3:'assets/calls/k3.wav',k5:'assets/calls/k5.wav',k7:'assets/calls/k7.wav',k12:'assets/calls/k12.wav'};
+const SYNTH_CLIPS={k1:'assets/calls/synth_k1.wav',k3:'assets/calls/synth_k3.wav',k5:'assets/calls/synth_k5.wav',k7:'assets/calls/synth_k7.wav',k12:'assets/calls/synth_k12.wav',v_soft:'assets/calls/synth_v_soft.wav',v_reply:'assets/calls/synth_v_reply.wav',v_feed:'assets/calls/synth_v_feed.wav',v_travel:'assets/calls/synth_v_travel.wav',v_social:'assets/calls/synth_v_social.wav',v_echo:'assets/calls/synth_v_echo.wav',v_close:'assets/calls/synth_v_close.wav',v_reunion:'assets/calls/synth_v_reunion.wav',v_scan:'assets/calls/synth_v_scan.wav'};
+const CALLS={
+  k1:{call:'k1',real:'k1',name:'Kamchatkan call type K1',role:'contact anchor',human:'I am here.',ctx:'contact',cite:'FEROP catalogue; Filatova 2011',dur:1.20,evidence:90,validated:true},
+  k3:{call:'k3',real:'k3',name:'Kamchatkan call type K3',role:'foraging pulse',human:'There is food here.',ctx:'foraging',cite:'FEROP catalogue; Filatova 2011',dur:1.05,evidence:88,validated:true},
+  k5:{call:'k5',real:'k5',name:'Kamchatkan call type K5',role:'travel cue',human:'Move together.',ctx:'travelling',cite:'FEROP catalogue; Filatova 2011',dur:1.38,evidence:86,validated:true},
+  k7:{call:'k7',real:'k7',name:'Kamchatkan call type K7',role:'cohesion call',human:'Stay close.',ctx:'contact',cite:'FEROP catalogue; Filatova 2011',dur:1.15,evidence:88,validated:true},
+  k12:{call:'k12',real:'k12',name:'Kamchatkan call type K12',role:'social burst',human:'Good to be together.',ctx:'social',cite:'FEROP catalogue; Filatova 2011',dur:.96,evidence:84,validated:true},
+  v_soft:{call:'v_soft',real:'k1',name:'Soft arc synthetic variant',role:'gentle contact contour',human:'I am here, calmly.',ctx:'contact',cite:'synthetic contour derived from K-call interface',dur:1.10,evidence:64,validated:false},
+  v_reply:{call:'v_reply',real:'k7',name:'Reply sweep synthetic variant',role:'call-back contour',human:'I hear you.',ctx:'contact',cite:'synthetic contour derived from K-call interface',dur:1.26,evidence:64,validated:false},
+  v_feed:{call:'v_feed',real:'k3',name:'Feed chirp synthetic variant',role:'foraging contour',human:'Food is here.',ctx:'foraging',cite:'synthetic contour derived from K-call interface',dur:1.02,evidence:64,validated:false},
+  v_travel:{call:'v_travel',real:'k5',name:'Long glide synthetic variant',role:'travel contour',human:'Move with me.',ctx:'travelling',cite:'synthetic contour derived from K-call interface',dur:1.44,evidence:64,validated:false},
+  v_social:{call:'v_social',real:'k12',name:'Bright trill synthetic variant',role:'social contour',human:'Good to be together.',ctx:'social',cite:'synthetic contour derived from K-call interface',dur:.92,evidence:64,validated:false},
+  v_echo:{call:'v_echo',real:'k1',name:'Distant echo synthetic variant',role:'soft far-call contour',human:'I am over here.',ctx:'contact',cite:'synthetic contour derived from K-call interface',dur:1.32,evidence:64,validated:false},
+  v_close:{call:'v_close',real:'k7',name:'Close pulse synthetic variant',role:'cohesion contour',human:'Stay close, calmly.',ctx:'contact',cite:'synthetic contour derived from K-call interface',dur:1.08,evidence:62,validated:false},
+  v_reunion:{call:'v_reunion',real:'k12',name:'Reunion trill synthetic variant',role:'soft social contour',human:'Together again.',ctx:'social',cite:'synthetic contour derived from K-call interface',dur:1.24,evidence:62,validated:false},
+  v_scan:{call:'v_scan',real:'k5',name:'Scan ripple synthetic variant',role:'inspection contour',human:'Checking who is nearby.',ctx:'unknown',cite:'synthetic contour derived from K-call interface',dur:.96,evidence:60,validated:false}
+};
+const TEMPLATES={
+  presence:{text:'I am here.',activity:'contact',receiver:'same-pod',style:'contact',tone:'gentle',energy:28,spacing:64,echo:42,phrase:['v_soft','k1','v_reply']},
+  food:{text:'I am here. Come feed with us.',activity:'foraging',receiver:'same-pod',style:'forage',tone:'curious',energy:42,spacing:54,echo:34,phrase:['k1','v_feed','k3','k7']},
+  move:{text:'Let us move together.',activity:'travelling',receiver:'nearby',style:'travel',tone:'gentle',energy:36,spacing:58,echo:36,phrase:['v_soft','v_travel','k5']},
+  close:{text:'Stay close to me.',activity:'contact',receiver:'nearby',style:'contact',tone:'gentle',energy:32,spacing:68,echo:40,phrase:['v_close','k7','v_reply','v_soft']},
+  greet:{text:'Good to be together.',activity:'social',receiver:'same-pod',style:'social',tone:'bright',energy:46,spacing:48,echo:30,phrase:['v_reunion','v_social','k12','v_reply']},
+  reply:{text:'Answer me if you are nearby.',activity:'contact',receiver:'nearby',style:'reply',tone:'distant',energy:30,spacing:72,echo:64,phrase:['v_echo','v_reply','k7']},
+  scan:{text:'Check who is nearby before moving.',activity:'unknown',receiver:'nearby',style:'scan',tone:'curious',energy:30,spacing:62,echo:44,phrase:['v_scan','v_echo','v_travel','k5']}
+};
 const canvas=document.getElementById('spec'), cx=canvas.getContext('2d');
-function sizeCanvas(){const r=canvas.getBoundingClientRect();canvas.width=Math.max(300,Math.floor(r.width));canvas.height=200;clearSpec();}
+const stage=document.getElementById('stage'), statusEl=document.getElementById('status'),
+      readout=document.getElementById('readout'), tray=document.getElementById('tray'),
+      nowcall=document.getElementById('nowcall'), analogy=document.getElementById('analogy'),
+      humanText=document.getElementById('humanText'), activityEl=document.getElementById('activity'),
+      receiverEl=document.getElementById('receiver'), styleEl=document.getElementById('phraseStyle'),
+      toneEl=document.getElementById('tone'), energyEl=document.getElementById('energy'),
+      spacingEl=document.getElementById('spacing'), echoEl=document.getElementById('echoMix'),
+      energyLabel=document.getElementById('energyLabel'), spacingLabel=document.getElementById('spacingLabel'),
+      echoLabel=document.getElementById('echoLabel'),
+      modeLabel=document.getElementById('modeLabel'), phraseLabel=document.getElementById('phraseLabel'),
+      timeline=document.getElementById('timeline'), meters=document.getElementById('meters'),
+      stimulusSet=document.getElementById('stimulusSet'), evidenceStack=document.getElementById('evidenceStack'),
+      protocolPlan=document.getElementById('protocolPlan'), exportPreview=document.getElementById('exportPreview'),
+      gateList=document.getElementById('gateList'), runSheet=document.getElementById('runSheet'),
+      runMeta=document.getElementById('runMeta'), trialCount=document.getElementById('trialCount'),
+      washoutMin=document.getElementById('washoutMin'), baselineWindow=document.getElementById('baselineWindow'),
+      responseWindow=document.getElementById('responseWindow'), matchedNoise=document.getElementById('matchedNoise'),
+      diffPod=document.getElementById('diffPod'), blindObservers=document.getElementById('blindObservers'),
+      stopRules=document.getElementById('stopRules'), sessionLabel=document.getElementById('sessionLabel'),
+      randomSeed=document.getElementById('randomSeed'), uploadClip=document.getElementById('uploadClip'),
+      uploadNote=document.getElementById('uploadNote'), uploadViz=document.getElementById('uploadViz'),
+      uploadCanvas=document.getElementById('uploadCanvas');
+let phrase=TEMPLATES.food.phrase.map(k=>CALLS[k]);
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+function clamp(n,min,max){return Math.max(min,Math.min(max,n));}
 function clearSpec(){cx.fillStyle='#02060a';cx.fillRect(0,0,canvas.width,canvas.height);}
-function color(v){const r=Math.round(20+Math.pow(v,1.5)*120);const g=Math.round(30+v*210);const b=Math.round(70+(1-v)*120+v*70);return 'rgb('+r+','+Math.min(255,g)+','+Math.min(255,b)+')';}
+function sizeCanvas(){const r=canvas.getBoundingClientRect();canvas.width=Math.max(280,Math.floor(r.width));canvas.height=140;clearSpec();}
+function color(v){const r=Math.round(25+Math.pow(v,1.35)*150),g=Math.round(42+v*205),b=Math.round(70+(1-v)*105+v*75);return 'rgb('+Math.min(255,r)+','+Math.min(255,g)+','+Math.min(255,b)+')';}
 window.addEventListener('resize',sizeCanvas); sizeCanvas();
 
-const opts=document.querySelectorAll('.opt');
-let current=document.querySelector('.opt.active');
-const readout=document.getElementById('readout'), statusEl=document.getElementById('status');
-function setReadout(o){
-  readout.innerHTML='<span class="lab">'+o.dataset.call+' — '+o.dataset.name+'.</span> Documented context: <b>'+o.dataset.context+'</b> ('+o.dataset.cite+'). In our analysis, call types like this are decodable within a recording site at 0.71–0.97 balanced accuracy, and a caller&rsquo;s behavioural context is decodable from its calls at 0.77 with the individual held out — see Results. <em>Illustrative synthesis; not a real recording, and not a translation.</em>';
+function scorePhrase(){
+  const target=activityEl.value, energy=+energyEl.value, has=phrase.some(p=>p.ctx===target);
+  const evidence=phrase.length?Math.round(phrase.reduce((a,p)=>a+p.evidence,0)/phrase.length):0;
+  const fit=Math.min(99,Math.round((has?62:35)+Math.min(25,phrase.length*6)+(styleEl.value==='balanced'?4:8)));
+  const field=Math.min(98,Math.round((mode==='synthetic'?50:72)+(receiverEl.value==='field-test'?12:5)+(energy<55?6:0)));
+  return {fit,evidence,field};
 }
-setReadout(current);
-opts.forEach(o=>o.addEventListener('click',()=>{opts.forEach(x=>x.classList.remove('active'));o.classList.add('active');current=o;setReadout(o);statusEl.textContent='Ready — press play';}));
+function updateControlLabels(){
+  const energy=+energyEl.value, spacing=+spacingEl.value, echo=+echoEl.value;
+  energyLabel.textContent=energy<35?'Calm':energy<67?'Animated':'High energy';
+  spacingLabel.textContent=spacing<35?'Quick exchange':spacing<70?'Natural gaps':'Long call-back';
+  echoLabel.textContent=echo<35?'Dry/near':echo<70?'Soft water':'Distant water';
+}
+function renderMeters(){
+  const s=scorePhrase();
+  meters.innerHTML=[
+    ['Context fit',s.fit+'%','How well the chosen calls cover the selected human context.'],
+    ['Research trace',s.evidence+'%','K-call recordings and playback/context evidence stay attached to the phrase.'],
+    ['Field clarity',s.field+'%','Claim boundary, context, and playback purpose stay visible to a human reviewer.']
+  ].map(m=>'<div class="meter"><div class="mt">'+m[0]+'</div><div class="mn">'+m[1]+'</div><div class="md">'+m[2]+'</div></div>').join('');
+}
+function renderTimeline(active){
+  timeline.innerHTML=phrase.map((p,i)=>'<div class="tick '+(i===active?'active':'')+'">'+p.call.toUpperCase()+'</div>').join('');
+}
+function renderReadout(last){
+  const line=humanText.value.trim()||'A human-readable field context.';
+  const seq=phrase.map(p=>p.call.toUpperCase()).join(' → ')||'No calls selected';
+  const ctx=activityEl.options[activityEl.selectedIndex].text;
+  const tone=toneEl.options[toneEl.selectedIndex].text;
+  const style=styleEl.options[styleEl.selectedIndex].text;
+  const picked=last?'<span class="lab">'+esc(last.name)+' added.</span> ':'';
+  readout.innerHTML=picked+'<b>Human context:</b> '+esc(line)+'<br><b>Orca-like sequence:</b> '+esc(seq)+'<br><b>Performance controls:</b> '+esc(style)+' · '+esc(tone)+' · '+energyLabel.textContent+' · '+spacingLabel.textContent+' · '+echoLabel.textContent+'.<br><b>Research basis:</b> public FEROP K-call units anchor the phrase; the analyses support call-type structure, context decodability, and dialect-selective response. Synthetic variants are clearly marked contour sonifications. Meaning/content still requires controlled playback.';
+}
+function treatmentRows(){
+  const seq=phrase.map(p=>p.call.toUpperCase()).join(' -> ')||'No stimulus';
+  const anchors=[...new Set(phrase.map(p=>p.real).filter(Boolean))].map(k=>k.toUpperCase()).join(' / ')||'Select validated anchors';
+  const rows=[
+    ['TARGET',seq,'Built from selected context/style; hybrid audition only, not a field stimulus until calibrated.','test'],
+    ['SAME-POD','FEROP K-call anchors: '+anchors,'Positive conspecific-family condition from the dialect-response evidence frame.','control'],
+    ['SILENCE','No playback baseline','Pre/post comparison for spontaneous vocal and movement rates.','baseline']
+  ];
+  if(diffPod.checked)rows.splice(2,0,['DIFF-POD','Different-pod K-call sequence','Dialect-membership control matching the Filatova response contrast.','control']);
+  if(matchedNoise.checked)rows.splice(rows.length-1,0,['MATCHED','Matched envelope / noise control','Tests response to acoustic energy without call-type structure.','negative']);
+  return rows;
+}
+function hashSeed(str){
+  let h=2166136261;
+  for(let i=0;i<str.length;i++){h^=str.charCodeAt(i);h=Math.imul(h,16777619);}
+  return h>>>0;
+}
+function seededRandom(seed){
+  let s=seed||1;
+  return function(){s=(Math.imul(1664525,s)+1013904223)>>>0;return s/4294967296;};
+}
+function runSheetRows(){
+  const rows=[], treatments=treatmentRows(), trials=clamp(parseInt(trialCount.value||'6',10),3,24);
+  treatments.forEach(t=>{
+    for(let i=0;i<trials;i++)rows.push({
+      treatment:t[0],
+      stimulus:t[1],
+      replicate:i+1,
+      baseline:+baselineWindow.value,
+      response:+responseWindow.value,
+      washout:+washoutMin.value
+    });
+  });
+  const seed=hashSeed((sessionLabel.value||'session')+'|'+(randomSeed.value||'seed')+'|'+phrase.map(p=>p.call).join(','));
+  const rand=seededRandom(seed);
+  for(let i=rows.length-1;i>0;i--){const j=Math.floor(rand()*(i+1));[rows[i],rows[j]]=[rows[j],rows[i]];}
+  return rows.map((r,i)=>Object.assign({trial:i+1,trial_id:(sessionLabel.value||'session').replace(/[^a-z0-9-]+/gi,'-')+'-'+String(i+1).padStart(2,'0')},r));
+}
+function fieldGates(){
+  const synthetic=phrase.filter(p=>!p.validated).length;
+  return [
+    {ok:false,title:'Permits first',text:'No field broadcast without local approval, stand-off plan, and calibrated source level.'},
+    {ok:synthetic===0,title:'Stimulus status',text:synthetic?synthetic+' synthetic audition token'+(synthetic===1?'':'s')+' in current phrase; replace or approve before field use.':'All selected tokens are validated recording anchors.'},
+    {ok:diffPod.checked&&matchedNoise.checked,title:'Controls required',text:(diffPod.checked?'Dialect control included':'Add a dialect control')+'; '+(matchedNoise.checked?'matched-noise included':'add matched-noise control')+'.'},
+    {ok:blindObservers.checked,title:'Blinded scoring',text:blindObservers.checked?'Observer-blinded scoring enabled.':'Enable observer-blinded scoring before running trials.'},
+    {ok:stopRules.checked,title:'Stop rules',text:stopRules.checked?'Disturbance stop rules enabled.':'Enable disturbance stop rules before export.'}
+  ];
+}
+function planPayload(){
+  const seq=phrase.map(p=>p.call);
+  const gates=fieldGates();
+  return {
+    objective:'Content-controlled conspecific playback feasibility plan',
+    session:sessionLabel.value,
+    context:activityEl.value,
+    receiver:receiverEl.value,
+    style:styleEl.value,
+    tone:toneEl.value,
+    controls:{energy:+energyEl.value,spacing:+spacingEl.value,echo:+echoEl.value,mode},
+    phrase:seq,
+    real_k_call_anchors:[...new Set(phrase.map(p=>p.real).filter(Boolean))],
+    synthetic_variants:phrase.filter(p=>!p.validated).map(p=>p.call),
+    treatments:treatmentRows().map(r=>r[0]),
+    design:{
+      trials_per_condition:+trialCount.value,
+      baseline_minutes:+baselineWindow.value,
+      response_minutes:+responseWindow.value,
+      washout_minutes:+washoutMin.value,
+      blind_observers:blindObservers.checked,
+      disturbance_stop_rules:stopRules.checked,
+      randomization_seed:randomSeed.value
+    },
+    run_sheet:runSheetRows(),
+    field_gates:gates,
+    claim_boundary:'Tests receiver response to a broadcast signal; does not assert translation or known meaning.'
+  };
+}
+function fieldPlanText(){
+  const p=planPayload();
+  const treatments=treatmentRows().map(r=>'  - '+r[0]+': '+r[1]).join('\n');
+  const metrics=[
+    'vocal reply latency/count in response window',
+    'call-type matching against played anchors',
+    'heading/speed change from track or tag data',
+    'group cohesion / spread',
+    'behaviour-state annotation from blinded observer'
+  ].join('\n  - ');
+  const gates=[
+    'permit and local ethics approval before broadcast',
+    'source level calibrated below disturbance threshold',
+    'abort on avoidance, prolonged silence, calf-risk context, or vessel conflict',
+    'randomized condition order with washout',
+    'analysis pre-registered against matched controls'
+  ].join('\n  - ');
+  return 'ORCADOLITTLE FIELD PLAYBACK DRAFT\n'
+    +'Question: do receivers respond differently to the target call sequence than to dialect, noise, and silence controls?\n'
+    +'Session: '+(p.session||'session')+' | Context: '+p.context+' | Receiver: '+p.receiver+' | Mode: '+p.controls.mode+' | Phrase: '+p.phrase.map(x=>x.toUpperCase()).join(' -> ')+'\n\n'
+    +'Treatments:\n'+treatments+'\n\n'
+    +'Design: '+p.design.trials_per_condition+' trials/condition; '+p.design.baseline_minutes+' min baseline; '+p.design.response_minutes+' min response window; '+p.design.washout_minutes+' min washout.\n\n'
+    +'Randomized run sheet: '+p.run_sheet.length+' trials generated from seed "'+(p.design.randomization_seed||'seed')+'"; export JSON includes every trial ID, treatment, baseline, response, and washout value.\n\n'
+    +'Response metrics:\n  - '+metrics+'\n\n'
+    +'Field gates:\n  - '+gates+'\n\n'
+    +'Boundary: '+p.claim_boundary;
+}
+function updateLab(){
+  if(!stimulusSet)return;
+  stimulusSet.innerHTML=treatmentRows().map(r=>'<div class="treatment"><span class="tag">'+r[0]+'</span><div class="td"><b>'+esc(r[1])+'</b><br>'+esc(r[2])+'</div><span class="pill">'+esc(r[3])+'</span></div>').join('');
+  const s=scorePhrase(), validated=phrase.filter(p=>p.validated).length, synthetic=phrase.length-validated;
+  evidenceStack.innerHTML=[
+    ['0.770','DTAG context','Movement-defined behavioural context from calls, individual held out.'],
+    ['p=0.002','Playback response','Same-pod vs different-pod re-analysis; dialect, not content.'],
+    [validated+'/'+phrase.length,'Validated anchors','Real FEROP K-call units inside this phrase.'],
+    [s.fit+'%','Context fit','Interface score for selected context/style; not biological certainty.']
+  ].map(e=>'<div class="ev"><div class="en">'+e[0]+'</div><div class="et">'+e[1]+'</div><div class="ed">'+e[2]+'</div></div>').join('');
+  gateList.innerHTML=[
+    ...fieldGates().map(g=>[g.ok,g.title,g.text])
+  ].map(g=>'<div class="gate '+(g[0]?'':'warn')+'"><span class="dotok"></span><div><b>'+esc(g[1])+':</b> '+esc(g[2])+'</div></div>').join('');
+  const rows=runSheetRows(), preview=rows.slice(0,36);
+  runMeta.innerHTML='<span>'+rows.length+' trials</span><span>'+treatmentRows().length+' conditions</span><span>'+trialCount.value+' reps/condition</span><span>seed '+esc(randomSeed.value||'seed')+'</span>';
+  runSheet.innerHTML=preview.map(r=>'<div class="trialrow"><div class="trialid">'+esc(r.trial_id)+'</div><div class="trialtreatment">'+esc(r.treatment)+'</div><div class="trialflags">'+esc(r.baseline)+'m baseline · '+esc(r.response)+'m response · '+esc(r.washout)+'m washout<br>'+esc(r.stimulus)+'</div></div>').join('')+(rows.length>preview.length?'<div class="trialrow"><div class="trialid">+</div><div class="trialtreatment">MORE</div><div class="trialflags">'+(rows.length-preview.length)+' additional trials included in JSON export.</div></div>':'');
+  protocolPlan.textContent=fieldPlanText();
+  exportPreview.textContent=JSON.stringify(planPayload(),null,2);
+}
+function drawUploadEmpty(){
+  if(!uploadCanvas)return;
+  const ux=uploadCanvas.getContext('2d'), w=uploadCanvas.width, h=uploadCanvas.height;
+  ux.clearRect(0,0,w,h); ux.fillStyle='#02060a'; ux.fillRect(0,0,w,h);
+  ux.strokeStyle='rgba(76,201,255,.18)'; ux.lineWidth=1;
+  for(let x=0;x<w;x+=26){ux.beginPath();ux.moveTo(x,0);ux.lineTo(x,h);ux.stroke();}
+  ux.fillStyle='rgba(57,224,200,.7)'; ux.font='12px sans-serif'; ux.fillText('clip preview',12,22);
+}
+function drawUploadWaveform(buf){
+  const ux=uploadCanvas.getContext('2d'), rect=uploadViz.getBoundingClientRect();
+  uploadCanvas.width=Math.max(320,Math.floor(rect.width||520)); uploadCanvas.height=84;
+  const w=uploadCanvas.width,h=uploadCanvas.height,d=buf.getChannelData(0), step=Math.max(1,Math.floor(d.length/w));
+  ux.fillStyle='#02060a'; ux.fillRect(0,0,w,h);
+  ux.strokeStyle='rgba(76,201,255,.12)'; ux.lineWidth=1;
+  for(let x=0;x<w;x+=30){ux.beginPath();ux.moveTo(x,0);ux.lineTo(x,h);ux.stroke();}
+  ux.strokeStyle='rgba(57,224,200,.95)'; ux.lineWidth=2; ux.beginPath();
+  for(let x=0;x<w;x++){
+    let min=1,max=-1, start=x*step;
+    for(let i=0;i<step&&start+i<d.length;i++){const v=d[start+i]; if(v<min)min=v; if(v>max)max=v;}
+    const y1=(1-max)*h/2, y2=(1-min)*h/2;
+    ux.moveTo(x,y1); ux.lineTo(x,y2);
+  }
+  ux.stroke();
+  ux.fillStyle='rgba(255,180,84,.92)'; ux.font='12px sans-serif';
+  ux.fillText(buf.duration.toFixed(2)+'s · '+Math.round(buf.sampleRate/1000)+' kHz · '+buf.numberOfChannels+' ch',12,h-12);
+}
+async function previewUploadedClip(){
+  const f=uploadClip.files&&uploadClip.files[0];
+  if(!f){drawUploadEmpty(); uploadNote.textContent='Choose an audio file first. Browser preview does not run the AVES2 model.'; return;}
+  uploadNote.textContent='Decoding '+f.name+' locally in the browser…';
+  try{
+    const AudioCtor=window.AudioContext||window.webkitAudioContext;
+    if(!AudioCtor)throw new Error('AudioContext unavailable');
+    const ctx=ac||new AudioCtor(), ab=await f.arrayBuffer(), buf=await ctx.decodeAudioData(ab.slice(0));
+    drawUploadWaveform(buf);
+    const mb=(f.size/1048576).toFixed(2);
+    uploadNote.textContent='Loaded '+f.name+' ('+mb+' MB). Duration '+buf.duration.toFixed(2)+'s; '+Math.round(buf.sampleRate/1000)+' kHz; '+buf.numberOfChannels+' channel'+(buf.numberOfChannels===1?'':'s')+'. Validated scoring should run through scripts/run_playback_response.py or the frozen embedding pipeline.';
+    if(ctx!==ac&&ctx.close)ctx.close().catch(()=>{});
+  }catch(e){
+    uploadNote.textContent='Could not decode this clip in-browser. Keep it for the reproducible pipeline; supported browser formats vary by system.';
+  }
+}
+function renderTray(last){
+  if(!phrase.length){
+    tray.innerHTML='<span class="trayhint">Tap calls above or press Build from context…</span>';
+    analogy.innerHTML='';
+  }else{
+    tray.innerHTML=phrase.map((p,i)=>'<button class="token" data-idx="'+i+'" data-call="'+esc(p.call)+'" data-real="'+esc(p.real||'')+'" title="Remove '+p.call.toUpperCase()+'">'+p.call.toUpperCase()+'</button>').join('');
+    analogy.innerHTML='<span class="alab">Human-readable analogy, not a translation:</span>"'+esc(phrase.map(p=>p.human).join(' '))+'"';
+  }
+  phraseLabel.textContent=phrase.length?phrase.map(p=>p.call.toUpperCase()).join(' · '):'No phrase';
+  updateControlLabels(); renderTimeline(-1); renderMeters(); renderReadout(last); updateLab();
+}
+function setMode(next){
+  mode=next;
+  document.querySelectorAll('.modebtn').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));
+  modeLabel.innerHTML='<b>'+({recordings:'Real clips',synthetic:'Synthetic orca layer',hybrid:'Hybrid'}[mode])+'</b>';
+  renderMeters(); renderReadout();
+}
+function setTemplate(key){
+  const t=TEMPLATES[key]; if(!t)return;
+  humanText.value=t.text; activityEl.value=t.activity; receiverEl.value=t.receiver;
+  styleEl.value=t.style; toneEl.value=t.tone; energyEl.value=t.energy; spacingEl.value=t.spacing; echoEl.value=t.echo;
+  phrase=t.phrase.map(k=>CALLS[k]); renderTray();
+  statusEl.textContent='Template loaded: '+key;
+}
+function buildFromContext(){
+  const txt=humanText.value.toLowerCase(), act=activityEl.value, style=styleEl.value, tone=toneEl.value, energy=+energyEl.value;
+  let intent=style;
+  if(intent==='balanced'){
+    if(act==='foraging'||/food|feed|hunt|salmon/.test(txt))intent='forage';
+    else if(act==='travelling'||/move|go|travel|follow/.test(txt))intent='travel';
+    else if(act==='social'||/hello|together|greet|meet/.test(txt))intent='social';
+    else if(/answer|reply|hear|nearby/.test(txt))intent='reply';
+    else if(act==='unknown'||/check|scan|inspect|nearby|who/.test(txt))intent='scan';
+    else intent='contact';
+  }
+  const banks={
+    contact:['v_soft','v_close','k1','v_reply'],
+    forage:['v_soft','v_feed','k3','k7'],
+    travel:['v_soft','v_travel','k5'],
+    reply:['v_echo','v_reply','k7'],
+    social:['v_reunion','v_social','k12','v_reply'],
+    scan:['v_scan','v_echo','v_travel','k5']
+  };
+  let keys=(banks[intent]||banks.contact).slice();
+  if(tone==='curious')keys.splice(1,0,'v_reply');
+  if(tone==='bright'&&!keys.includes('v_social'))keys.push('v_social');
+  if(tone==='distant')keys=['v_echo'].concat(keys.filter(k=>k!=='v_echo'));
+  if(energy>72)keys.push(keys[keys.length-1]);
+  else if(energy<25&&keys.length>2)keys=keys.slice(0,2);
+  phrase=keys.map(k=>CALLS[k]); renderTray(); statusEl.textContent='Built from human context';
+}
+function savePhrase(){
+  try{localStorage.setItem('orcaDemoPhrase',JSON.stringify({text:humanText.value,activity:activityEl.value,receiver:receiverEl.value,style:styleEl.value,tone:toneEl.value,energy:energyEl.value,spacing:spacingEl.value,echo:echoEl.value,phrase:phrase.map(p=>p.call),mode}));}catch(e){}
+}
+function reusePhrase(){
+  try{
+    const saved=JSON.parse(localStorage.getItem('orcaDemoPhrase')||'null'); if(!saved)throw new Error('no saved phrase');
+    humanText.value=saved.text||humanText.value; activityEl.value=saved.activity||activityEl.value; receiverEl.value=saved.receiver||receiverEl.value;
+    styleEl.value=saved.style||styleEl.value; toneEl.value=saved.tone||toneEl.value;
+    energyEl.value=saved.energy||energyEl.value; spacingEl.value=saved.spacing||spacingEl.value; echoEl.value=saved.echo||echoEl.value;
+    phrase=(saved.phrase||[]).map(k=>CALLS[k]).filter(Boolean); setMode(saved.mode||mode); renderTray(); statusEl.textContent='Reused last phrase';
+  }catch(e){statusEl.textContent='No saved phrase yet';}
+}
+document.querySelectorAll('#chips .chip').forEach(b=>b.addEventListener('click',()=>{const c=CALLS[b.dataset.call];phrase.push(c);renderTray(c);statusEl.textContent=phrase.length+' call'+(phrase.length>1?'s':'')+' queued';}));
+tray.addEventListener('click',e=>{const b=e.target.closest('.token');if(!b)return;phrase.splice(+b.dataset.idx,1);renderTray();statusEl.textContent='Removed call';});
+document.querySelectorAll('.template').forEach(b=>b.addEventListener('click',()=>setTemplate(b.dataset.template)));
+document.querySelectorAll('.modebtn').forEach(b=>b.addEventListener('click',()=>setMode(b.dataset.mode)));
+[humanText,energyEl,spacingEl,echoEl].forEach(el=>el.addEventListener('input',()=>{updateControlLabels();renderMeters();renderReadout();}));
+[activityEl,receiverEl,styleEl,toneEl].forEach(el=>el.addEventListener('change',()=>{buildFromContext();}));
+document.getElementById('build').addEventListener('click',buildFromContext);
+document.getElementById('reuse').addEventListener('click',reusePhrase);
+document.getElementById('clear').addEventListener('click',()=>{phrase=[];renderTray();statusEl.textContent='Add calls, then Speak';});
+[trialCount,washoutMin,baselineWindow,responseWindow,matchedNoise,diffPod,blindObservers,stopRules,sessionLabel,randomSeed].forEach(el=>{
+  const ev=(el.type==='checkbox'||el.tagName==='SELECT')?'change':'input';
+  el.addEventListener(ev,updateLab);
+});
+document.getElementById('draftPlan').addEventListener('click',()=>{updateLab();statusEl.textContent='Field plan drafted below';});
+document.getElementById('copyPlan').addEventListener('click',async()=>{
+  updateLab();
+  try{await navigator.clipboard.writeText(protocolPlan.textContent);statusEl.textContent='Field plan copied';}
+  catch(e){statusEl.textContent='Copy blocked — the plan is still visible in Protocol builder';}
+});
+document.getElementById('downloadPlan').addEventListener('click',()=>{
+  updateLab();
+  const blob=new Blob([exportPreview.textContent],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='orcadolittle_playback_plan.json'; a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1000); statusEl.textContent='Downloaded field-plan JSON';
+});
+document.getElementById('scoreUpload').addEventListener('click',()=>{
+  previewUploadedClip();
+});
+uploadClip.addEventListener('change',previewUploadedClip);
+drawUploadEmpty();
 
+function ensureAudio(){
+  if(ac)return true;
+  const AudioCtor=window.AudioContext||window.webkitAudioContext;
+  if(!AudioCtor)return false;
+  ac=new AudioCtor();
+  bus=ac.createGain(); bus.gain.value=.95;
+  analyser=ac.createAnalyser(); analyser.fftSize=1024; freqData=new Uint8Array(analyser.frequencyBinCount);
+  delayNode=ac.createDelay(.4); delayNode.delayTime.value=.055;
+  wetGain=ac.createGain(); wetGain.gain.value=.10;
+  bus.connect(analyser); bus.connect(delayNode); delayNode.connect(wetGain); wetGain.connect(analyser); analyser.connect(ac.destination);
+  return true;
+}
+function playbackGap(){return .12+(+spacingEl.value/100)*.55;}
+function playbackRate(){
+  let rate=.94+(+energyEl.value/100)*.16;
+  if(toneEl.value==='bright')rate+=.05;
+  if(toneEl.value==='distant')rate-=.04;
+  return Math.max(.82,Math.min(1.18,rate));
+}
+function applyAudioControls(){
+  if(!wetGain||!delayNode)return;
+  const echo=+echoEl.value/100;
+  delayNode.delayTime.setTargetAtTime(.035+echo*.105,ac.currentTime,.02);
+  wetGain.gain.setTargetAtTime((toneEl.value==='distant'?0.16:0.07)+echo*.18,ac.currentTime,.02);
+}
+async function loadBuf(name,kind='real'){
+  const key=kind+':'+name;
+  if(buffers[key])return buffers[key];
+  const src=kind==='synth'?SYNTH_CLIPS[name]:CLIPS[name];
+  const r=await fetch(src); if(!r.ok)throw new Error('missing '+key);
+  const ab=await r.arrayBuffer(); buffers[key]=await ac.decodeAudioData(ab); return buffers[key];
+}
+function stopActive(){
+  playRun++; activeNodes.forEach(n=>{try{n.stop(0);}catch(e){try{n.pause();n.currentTime=0;}catch(e2){}}}); activeNodes=[];
+  if(rafId)cancelAnimationFrame(rafId); stage.classList.remove('talking'); nowcall.textContent='';
+}
 function drawColumn(){
   if(!analyser)return;
   analyser.getByteFrequencyData(freqData);
-  const w=canvas.width,h=canvas.height;
-  const img=cx.getImageData(2,0,w-2,h); cx.putImageData(img,0,0);
-  const bins=freqData.length, useBins=Math.floor(bins*0.30), x=w-2;
-  for(let i=0;i<useBins;i++){
-    const v=freqData[i]/255, y=h-(i/useBins)*h;
-    cx.fillStyle=v<0.05?'#02060a':color(v);
-    cx.fillRect(x,y-2,2,3);
-  }
+  const w=canvas.width,h=canvas.height,img=cx.getImageData(2,0,w-2,h); cx.putImageData(img,0,0);
+  const useBins=Math.floor(freqData.length*.34),x=w-2; cx.fillStyle='#02060a'; cx.fillRect(x,0,2,h);
+  for(let i=0;i<useBins;i++){const v=freqData[i]/255;if(v<.045)continue;const y=h-(i/useBins)*h;cx.fillStyle=color(v);cx.fillRect(x,y-2,2,3);}
   rafId=requestAnimationFrame(drawColumn);
 }
-
-function playCall(o){
-  if(!ac){ac=new (window.AudioContext||window.webkitAudioContext)();}
-  if(ac.state==='suspended')ac.resume();
-  const t0=ac.currentTime, dur=parseFloat(o.dataset.dur), fa=+o.dataset.fa, fb=+o.dataset.fb,
-        pulse=+o.dataset.pulse, bi=o.dataset.bi==='1', burst=o.dataset.burst==='1';
-  const master=ac.createGain(); master.gain.value=0.0001;
-  const bp=ac.createBiquadFilter(); bp.type='bandpass'; bp.frequency.value=2200; bp.Q.value=0.6;
-  analyser=ac.createAnalyser(); analyser.fftSize=1024; freqData=new Uint8Array(analyser.frequencyBinCount);
-  master.connect(bp); bp.connect(analyser); analyser.connect(ac.destination);
-  const carrier=ac.createOscillator(); carrier.type='sawtooth';
-  carrier.frequency.setValueAtTime(fa,t0); carrier.frequency.linearRampToValueAtTime(fb,t0+dur);
-  const cgain=ac.createGain(); cgain.gain.value=0.5;
-  const lfo=ac.createOscillator(); lfo.type='square'; lfo.frequency.value=pulse;
-  const lfoGain=ac.createGain(); lfoGain.gain.value=0.5;
-  lfo.connect(lfoGain); lfoGain.connect(cgain.gain);
-  carrier.connect(cgain); cgain.connect(master);
-  let over=null;
-  if(bi){over=ac.createOscillator();over.type='triangle';over.frequency.setValueAtTime(fa*1.9,t0);over.frequency.linearRampToValueAtTime(fb*2.05,t0+dur);const og=ac.createGain();og.gain.value=0.12;over.connect(og);og.connect(master);}
-  if(burst){let tt=t0;const n=5,seg=dur/n;for(let i=0;i<n;i++){master.gain.setValueAtTime(0.0001,tt);master.gain.exponentialRampToValueAtTime(0.55,tt+0.02);master.gain.exponentialRampToValueAtTime(0.0001,tt+seg*0.65);tt+=seg;}}
-  else{master.gain.setValueAtTime(0.0001,t0);master.gain.exponentialRampToValueAtTime(0.55,t0+0.025);master.gain.setValueAtTime(0.55,t0+dur-0.12);master.gain.exponentialRampToValueAtTime(0.0001,t0+dur);}
-  carrier.start(t0);lfo.start(t0);if(over)over.start(t0);
-  const stop=t0+dur+0.05; carrier.stop(stop);lfo.stop(stop);if(over)over.stop(stop);
-  if(rafId)cancelAnimationFrame(rafId); clearSpec(); drawColumn();
-  statusEl.textContent='Playing…';
-  setTimeout(()=>{if(rafId)cancelAnimationFrame(rafId);statusEl.textContent='Done — pick another call';},(dur+0.12)*1000);
+function makeNoise(seconds){
+  const len=Math.max(1,Math.floor(ac.sampleRate*seconds)), buf=ac.createBuffer(1,len,ac.sampleRate), d=buf.getChannelData(0);
+  for(let i=0;i<len;i++)d[i]=(Math.random()*2-1)*(1-i/len);
+  return buf;
 }
-document.getElementById('play').addEventListener('click',()=>playCall(current));
+function playSyntheticCall(p,t,level){
+  const out=ac.createGain(), env=ac.createGain(), filt=ac.createBiquadFilter();
+  out.gain.value=level; env.gain.setValueAtTime(.0001,t); env.gain.exponentialRampToValueAtTime(.62,t+.035); env.gain.setValueAtTime(.48,t+p.dur-.12); env.gain.exponentialRampToValueAtTime(.0001,t+p.dur);
+  filt.type='bandpass'; filt.frequency.value=2600; filt.Q.value=.75; out.connect(bus); env.connect(filt); filt.connect(out);
+  const osc=ac.createOscillator(), vib=ac.createOscillator(), vibGain=ac.createGain(), trem=ac.createOscillator(), tremGain=ac.createGain();
+  const fa=p.fa||1200, fb=p.fb||1800, pulse=p.pulse||80;
+  osc.type='sine'; osc.frequency.setValueAtTime(fa,t); osc.frequency.exponentialRampToValueAtTime(fb,t+p.dur);
+  vib.frequency.value=4.5+(+energyEl.value/40); vibGain.gain.value=24; vib.connect(vibGain); vibGain.connect(osc.frequency);
+  trem.type='sine'; trem.frequency.value=pulse; tremGain.gain.value=.12; trem.connect(tremGain); tremGain.connect(env.gain);
+  osc.connect(env); osc.start(t); osc.stop(t+p.dur+.05); vib.start(t); vib.stop(t+p.dur+.05); trem.start(t); trem.stop(t+p.dur+.05);
+  activeNodes.push(osc,vib,trem);
+  if(p.bi){const over=ac.createOscillator(), og=ac.createGain();over.type='triangle';over.frequency.setValueAtTime(p.fa*1.85,t);over.frequency.exponentialRampToValueAtTime(p.fb*1.95,t+p.dur);og.gain.value=.16;over.connect(og);og.connect(env);over.start(t);over.stop(t+p.dur+.05);activeNodes.push(over);}
+  const ns=ac.createBufferSource(), ng=ac.createGain(), nf=ac.createBiquadFilter(); ns.buffer=makeNoise(p.dur); ng.gain.value=.055; nf.type='highpass'; nf.frequency.value=900; ns.connect(nf); nf.connect(ng); ng.connect(out); ns.start(t); ns.stop(t+p.dur); activeNodes.push(ns);
+}
+function playBuffer(t,buf,level,rate){
+  const src=ac.createBufferSource(), g=ac.createGain(); src.buffer=buf; src.playbackRate.value=rate; g.gain.value=level; src.connect(g); g.connect(bus); src.start(t); activeNodes.push(src);
+  return buf.duration/rate;
+}
+function drawFallbackColumn(run){
+  if(run!==playRun)return;
+  const w=canvas.width,h=canvas.height,img=cx.getImageData(2,0,w-2,h); cx.putImageData(img,0,0);
+  const x=w-2, bands=34; cx.fillStyle='#02060a'; cx.fillRect(x,0,2,h);
+  for(let i=0;i<bands;i++){
+    const band=Math.sin(Date.now()/95+i*.7)*.5+.5, hit=Math.random()*.7+band*.35;
+    if(hit<.42)continue;
+    const y=h-(i/bands)*h, v=Math.min(1,hit);
+    cx.fillStyle=color(v); cx.fillRect(x,y-2,2,3);
+  }
+  rafId=requestAnimationFrame(()=>drawFallbackColumn(run));
+}
+function scheduleVisualRun(run,marks,total,label){
+  stage.classList.add('talking'); statusEl.textContent=label; clearSpec(); drawFallbackColumn(run);
+  marks.forEach(m=>setTimeout(()=>{if(run!==playRun)return;nowcall.textContent=m.call.toUpperCase();renderTimeline(m.i);},Math.max(0,m.t*1000)));
+  setTimeout(()=>{if(run!==playRun)return;stage.classList.remove('talking');nowcall.textContent='';renderTimeline(-1);if(rafId)cancelAnimationFrame(rafId);statusEl.textContent='Done — edit, reuse, or speak again';},total*1000+320);
+}
+function speakWithoutWebAudio(){
+  savePhrase();
+  const run=++playRun, gap=playbackGap(), rate=playbackRate(), marks=[]; let t=.1;
+  phrase.forEach((p,i)=>{
+    marks.push({i,t,call:p.call});
+    if(typeof Audio!=='undefined'){
+      if(mode!=='synthetic'&&CLIPS[p.real])playHtmlClip(CLIPS[p.real],mode==='hybrid' ? 0.20 : 0.82,t,run,rate);
+      if(mode!=='recordings')playHtmlClip(SYNTH_CLIPS[p.call],mode==='hybrid' ? 0.78 : 0.86,t,run,rate);
+    }
+    t+=(p.dur/rate)+gap;
+  });
+  const label=(mode==='synthetic')
+    ? 'Playing synthetic orca-like calls'
+    : 'Playing hybrid: real K-calls plus synthetic orca layer';
+  scheduleVisualRun(run,marks,t,label);
+}
+function playHtmlClip(src,volume,delay,run,rate){
+  setTimeout(()=>{
+    if(run!==playRun)return;
+    try{
+      const a=new Audio(src); a.volume=volume;
+      a.playbackRate=rate;
+      activeNodes.push({stop:()=>{a.pause();a.currentTime=0;}});
+      a.play().catch(()=>{});
+    }catch(e){}
+  },delay*1000);
+}
+async function speak(){
+  if(!phrase.length)buildFromContext();
+  if(!phrase.length){statusEl.textContent='Add at least one call first';return;}
+  stopActive();
+  if(!ensureAudio()){speakWithoutWebAudio();return;}
+  try{await ac.resume();}catch(e){}
+  statusEl.textContent=mode==='synthetic'?'Synthesizing orca-like phrase…':'Loading reusable call recordings…';
+  let realLoaded={}, synthLoaded={};
+  if(mode!=='synthetic'){
+    for(const p of phrase){try{realLoaded[p.real]=await loadBuf(p.real,'real');}catch(e){realLoaded[p.real]=null;}}
+    if(mode==='recordings'&&!Object.values(realLoaded).some(Boolean)){statusEl.textContent='Could not load the call audio';return;}
+  }
+  if(mode!=='recordings'){
+    for(const p of phrase){try{synthLoaded[p.call]=await loadBuf(p.call,'synth');}catch(e){synthLoaded[p.call]=null;}}
+  }
+  savePhrase();
+  applyAudioControls();
+  const run=++playRun, gap=playbackGap(), rate=playbackRate(), synthLevel=(mode==='hybrid'?0.74:0.84)+(+energyEl.value/100)*0.10, marks=[]; let t=ac.currentTime+.16;
+  phrase.forEach((p,i)=>{
+    let dur=p.dur/rate;
+    if(mode!=='synthetic'&&realLoaded[p.real])dur=Math.max(dur,playBuffer(t,realLoaded[p.real],mode==='hybrid' ? 0.20 : 0.86,rate));
+    if(mode!=='recordings'){
+      if(synthLoaded[p.call])dur=Math.max(dur,playBuffer(t,synthLoaded[p.call],synthLevel,rate));
+      else playSyntheticCall(p,t,mode==='hybrid' ? 0.46 : 0.78);
+    }
+    marks.push({i,t,call:p.call,dur}); t+=dur+gap;
+  });
+  const total=t-ac.currentTime; stage.classList.add('talking'); statusEl.textContent='Speaking '+({recordings:'real recordings',synthetic:'synthetic orca-like calls',hybrid:'hybrid real + synthetic phrase'}[mode])+'…';
+  clearSpec(); drawColumn();
+  marks.forEach(m=>setTimeout(()=>{if(run!==playRun)return;nowcall.textContent=m.call.toUpperCase();renderTimeline(m.i);},Math.max(0,(m.t-ac.currentTime)*1000)));
+  setTimeout(()=>{if(run!==playRun)return;stage.classList.remove('talking');nowcall.textContent='';renderTimeline(-1);if(rafId)cancelAnimationFrame(rafId);statusEl.textContent='Done — edit, reuse, or speak again';},total*1000+320);
+}
+document.getElementById('speak').addEventListener('click',e=>{e.preventDefault();speak();});
+setMode('hybrid'); renderTray();
+
+// ---- Explore the data ----
+const DB={
+ ecotype:{title:'Call-level segments by ecotype — 27,934 total',note:'Pooled counts; in analysis these are evaluated with the recording site held constant.',rows:[['Southern Resident (SRKW)',14240],['Salish / archival resident (SAR)',8078],['Bigg’s / transient (TKW)',4121],['Offshore (OKW)',1495]]},
+ calltype:{title:'Catalogue call types recovered (site-controlled)',note:'Ford/Filatova catalogue codes recovered from the per-provider annotations.',rows:[['NRKW N-call types @ DFO_CRP',18],['SRKW S-call types @ VFPA',14],['Shared S-types (cross-site transfer test)',5]]},
+ provider:{title:'Recording providers — the site confound control',note:'Ecotype is collinear with the provider, which is why every headline number holds the site constant.',rows:[['UAF_NGOS',10113],['JASCO_VFPA',6962],['SIO',2637],['JASCO_VFPA_ONC',1511],['ONC',803]]}
+};
+const dbTitle=document.getElementById('dbtitle'),dbBars=document.getElementById('dbbars'),dbNote=document.getElementById('dbnote');
+function renderDB(k){
+  const d=DB[k], mx=Math.max.apply(null,d.rows.map(r=>r[1]));
+  dbTitle.textContent=d.title;
+  dbBars.innerHTML=d.rows.map(r=>'<div class="bar"><div class="lbl">'+r[0]+'</div><div class="track"><div class="fill" style="width:'+(10+90*r[1]/mx)+'%">'+r[1].toLocaleString()+'</div></div></div>').join('');
+  dbNote.textContent=d.note+(k==='provider'?' Showing the five providers that recorded more than one ecotype.':'');
+}
+document.querySelectorAll('.dbtab').forEach(t=>t.addEventListener('click',()=>{document.querySelectorAll('.dbtab').forEach(x=>x.classList.remove('active'));t.classList.add('active');renderDB(t.dataset.db);}));
+renderDB('ecotype');
 </script>
 </body>
 </html>
