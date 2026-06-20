@@ -7,9 +7,9 @@
   "target_call_count": 27934,
   "missing_or_bad_shards": [],
   "failures": [],
-  "progress_jsonl": "/content/drive/MyDrive/OrcaAcoustics_full_dclde/20260529_072930/logs/encoding_progress.jsonl",
-  "progress_csv": "/content/drive/MyDrive/OrcaAcoustics_full_dclde/20260529_072930/logs/encoding_progress.csv",
-  "error_log_jsonl": "/content/drive/MyDrive/OrcaAcoustics_full_dclde/20260529_072930/logs/encoding_errors.jsonl",
-  "live_status_json": "/content/drive/MyDrive/OrcaAcoustics_full_dclde/20260529_072930/live_status.json",
+  "progress_jsonl": "/content/drive/MyDrive/OrcaDolittle_full_dclde/20260529_072930/logs/encoding_progress.jsonl",
+  "progress_csv": "/content/drive/MyDrive/OrcaDolittle_full_dclde/20260529_072930/logs/encoding_progress.csv",
+  "error_log_jsonl": "/content/drive/MyDrive/OrcaDolittle_full_dclde/20260529_072930/logs/encoding_errors.jsonl",
+  "live_status_json": "/content/drive/MyDrive/OrcaDolittle_full_dclde/20260529_072930/live_status.json",
   "updated_utc": "2026-05-29T08:36:49Z"
 }

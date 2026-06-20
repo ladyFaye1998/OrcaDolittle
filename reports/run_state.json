@@ -1,7 +1,7 @@
 {
   "run_id": "20260529_072930",
   "created_utc": "2026-05-29T07:29:31Z",
-  "repo_url": "https://github.com/ladyFaye1998/orca-acoustic-embeddings.git",
+  "repo_url": "https://github.com/ladyFaye1998/OrcaDolittle.git",
   "repo_head": "8fc2ab839ab4887f93af1a99cdc973fd90a17bca",
   "target_call_count": 27934,
   "target_sr": 16000,
@@ -25,14 +25,14 @@
     "h3_min_samples": 3,
     "h4_n_perm": 1000
   },
-  "drive_run_dir": "/content/drive/MyDrive/OrcaAcoustics_full_dclde/20260529_072930",
+  "drive_run_dir": "/content/drive/MyDrive/OrcaDolittle_full_dclde/20260529_072930",
   "logs": {
-    "run_events_jsonl": "/content/drive/MyDrive/OrcaAcoustics_full_dclde/20260529_072930/logs/run_events.jsonl",
-    "encoding_progress_jsonl": "/content/drive/MyDrive/OrcaAcoustics_full_dclde/20260529_072930/logs/encoding_progress.jsonl",
-    "encoding_progress_csv": "/content/drive/MyDrive/OrcaAcoustics_full_dclde/20260529_072930/logs/encoding_progress.csv",
-    "encoding_errors_jsonl": "/content/drive/MyDrive/OrcaAcoustics_full_dclde/20260529_072930/logs/encoding_errors.jsonl",
-    "live_status_json": "/content/drive/MyDrive/OrcaAcoustics_full_dclde/20260529_072930/live_status.json",
-    "environment_json": "/content/drive/MyDrive/OrcaAcoustics_full_dclde/20260529_072930/reports/environment_snapshot.json",
-    "artifact_hashes_json": "/content/drive/MyDrive/OrcaAcoustics_full_dclde/20260529_072930/reports/artifact_hashes.json"
+    "run_events_jsonl": "/content/drive/MyDrive/OrcaDolittle_full_dclde/20260529_072930/logs/run_events.jsonl",
+    "encoding_progress_jsonl": "/content/drive/MyDrive/OrcaDolittle_full_dclde/20260529_072930/logs/encoding_progress.jsonl",
+    "encoding_progress_csv": "/content/drive/MyDrive/OrcaDolittle_full_dclde/20260529_072930/logs/encoding_progress.csv",
+    "encoding_errors_jsonl": "/content/drive/MyDrive/OrcaDolittle_full_dclde/20260529_072930/logs/encoding_errors.jsonl",
+    "live_status_json": "/content/drive/MyDrive/OrcaDolittle_full_dclde/20260529_072930/live_status.json",
+    "environment_json": "/content/drive/MyDrive/OrcaDolittle_full_dclde/20260529_072930/reports/environment_snapshot.json",
+    "artifact_hashes_json": "/content/drive/MyDrive/OrcaDolittle_full_dclde/20260529_072930/reports/artifact_hashes.json"
   }
 }

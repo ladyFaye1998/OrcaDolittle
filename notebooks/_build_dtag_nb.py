@@ -63,10 +63,10 @@ else:
 try:
     from google.colab import drive
     drive.mount("/content/drive")
-    OUTDIR = "/content/drive/MyDrive/OrcaAcoustics_context"
+    OUTDIR = "/content/drive/MyDrive/OrcaDolittle_context"
 except Exception as e:
     print("Drive unavailable, using ephemeral /content:", e)
-    OUTDIR = "/content/OrcaAcoustics_context"
+    OUTDIR = "/content/OrcaDolittle_context"
 
 # Persistent sub-folders on Drive (survive crashes; pipeline resumes from these).
 DIRS = {k: os.path.join(OUTDIR, k) for k in
@@ -235,7 +235,7 @@ movement-defined context, and runs the leave-individual-out decode. Every stage 
 checkpointed to Drive, so a crash resumes rather than restarts.
 
 (If you ever decode `.dtg` elsewhere, you can also drop decoded `*.wav` into
-`MyDrive/OrcaAcoustics_context/wav/` or pre-cut `clips/` + `clips_manifest.json`, and the
+`MyDrive/OrcaDolittle_context/wav/` or pre-cut `clips/` + `clips_manifest.json`, and the
 next cell will pick them up.)
 """))
 

@@ -44,9 +44,9 @@ desktop.ini
 checkpoints/
 
 # Allow small reference taxonomy/metadata files shipped with the package
-!orca_acoustics/models/weights/ecotype_head.pt
-!orca_acoustics/models/weights/calltype_head.pt
-!orca_acoustics/models/weights/taxonomy.json
+!orcadolittle/models/weights/ecotype_head.pt
+!orcadolittle/models/weights/calltype_head.pt
+!orcadolittle/models/weights/taxonomy.json
 
 # --- Audio & Data ---
 data/raw/
