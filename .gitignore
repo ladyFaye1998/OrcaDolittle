@@ -65,6 +65,7 @@ data/dclde/sample_audio/
 
 # Allow tiny demo clips
 !assets/demo/*.wav
+!site/assets/calls/*.wav
 
 # --- Generated outputs ---
 output/
