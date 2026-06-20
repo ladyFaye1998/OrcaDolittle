@@ -48,7 +48,7 @@ The call-type-to-context table is a literature-backed statistical join, not a de
 ## Open Work
 
 1. Add automated schema validation for DCLDE annotations.
-2. Expand `data/join_tables/call_type_to_context.csv` with source-backed rows only.
+2. `data/join_tables/call_type_to_context.csv` extraction is **complete** from current sources (see its README); expand only if new source-backed rows appear.
 3. Add provider-aware metrics outputs to every downstream head.
 4. Record artifact hashes for each regenerated embedding matrix.
-5. Keep Wellard H5-H7 output wording limited to candidate context associations unless stronger observer logs or response data are added.
+5. Keep the **legacy Wellard context-head** output wording limited to candidate context associations; these are exploratory scaffolding, superseded for behavioural-context evidence by the DTAG H5 decode and the H6 playback re-analysis.
