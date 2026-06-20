@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>OrcaDolittle — site-controlled killer-whale call decoding</title>
+<meta name="description" content="A reproducible, non-invasive pipeline that decodes killer-whale call structure and behavioural context from public recordings — built to hand to a field team for in-situ playbacks." />
+<meta property="og:title" content="OrcaDolittle — decoding killer-whale calls, honestly" />
+<meta property="og:description" content="Site-controlled, reproducible orca bioacoustics. Explore the results, try Talk Orca, and collaborate on the field playback that comes next." />
+<meta property="og:image" content="assets/hero_orca.png" />
+<meta property="og:type" content="website" />
+<style>
+:root{
+  --bg:#05080c; --bg2:#0a1018; --panel:#0e1620; --panel2:#121d2a;
+  --border:#1d2a38; --border2:#2a3d50;
+  --text:#e9f2f7; --dim:#9fb2c2; --faint:#6b7f90;
+  --teal:#39e0c8; --cyan:#4cc9ff; --deep:#0b6e8c;
+  --warn:#ffb454; --bad:#ff6b6b; --good:#39e0c8;
+  --radius:16px; --radius-sm:10px;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,system-ui,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --maxw:1120px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:var(--cyan);text-decoration:none}
+a:hover{text-decoration:underline}
+h1,h2,h3{line-height:1.15;letter-spacing:-0.02em;margin:0 0 .5em}
+section{padding:96px 22px;position:relative}
+.wrap{max-width:var(--maxw);margin:0 auto}
+.eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);font-weight:700;margin-bottom:14px}
+.lead{font-size:clamp(16px,2vw,19px);color:var(--dim);max-width:760px}
+.grad{background:linear-gradient(100deg,var(--teal),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+/* nav */
+nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rgba(5,8,12,.72);border-bottom:1px solid var(--border)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.02em}
+.brand .dot{width:11px;height:11px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--cyan));box-shadow:0 0 16px var(--teal)}
+.navlinks{display:flex;gap:24px;font-size:14px;color:var(--dim)}
+.navlinks a{color:var(--dim)}.navlinks a:hover{color:var(--text);text-decoration:none}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:99px;font-weight:700;font-size:14px;border:1px solid var(--border2);cursor:pointer;transition:.18s;background:transparent;color:var(--text);font-family:inherit}
+.btn:hover{border-color:var(--teal);text-decoration:none;transform:translateY(-1px)}
+.btn.primary{background:linear-gradient(100deg,var(--teal),var(--cyan));color:#04121a;border:none;box-shadow:0 8px 30px rgba(57,224,200,.25)}
+@media(max-width:760px){.navlinks{display:none}}
+/* hero */
+.hero{min-height:92vh;display:flex;align-items:center;padding-top:40px;overflow:hidden}
+.hero .bg{position:absolute;inset:0;z-index:-2;background:url('assets/hero_orca.png') center/cover no-repeat}
+.hero .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(5,8,12,.94) 0%,rgba(5,8,12,.7) 45%,rgba(5,8,12,.25) 100%),linear-gradient(0deg,var(--bg),transparent 40%)}
+.hero h1{font-size:clamp(38px,6.5vw,76px);font-weight:850}
+.hero .sub{font-size:clamp(17px,2.3vw,22px);color:var(--dim);max-width:620px;margin:18px 0 10px}
+.badge{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:var(--teal);background:rgba(57,224,200,.08);border:1px solid rgba(57,224,200,.3);padding:7px 14px;border-radius:99px;margin-bottom:26px;font-weight:600}
+.cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:30px}
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;padding:0 22px;margin:-50px auto 0;max-width:var(--maxw);position:relative;z-index:5}
+.stat{background:linear-gradient(180deg,var(--panel),var(--bg2));border:1px solid var(--border);border-radius:var(--radius-sm);padding:20px 16px;text-align:center}
+.stat .n{font-size:clamp(22px,3vw,32px);font-weight:800;color:var(--teal);font-variant-numeric:tabular-nums}
+.stat .l{font-size:12px;color:var(--faint);margin-top:6px;line-height:1.3}
+@media(max-width:880px){.stats{grid-template-columns:repeat(2,1fr)}}
+/* cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px;margin-top:40px}
+.card{background:linear-gradient(180deg,var(--panel),var(--bg2));border:1px solid var(--border);border-radius:var(--radius);padding:26px;transition:.2s}
+.card:hover{border-color:var(--border2);transform:translateY(-3px)}
+.card .k{font-size:12px;color:var(--teal);font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+.card h3{font-size:19px;margin:10px 0}
+.card p{color:var(--dim);font-size:14.5px;margin:0}
+.card .num{font-size:30px;font-weight:800;margin:6px 0 4px;color:var(--text)}
+.cite{font-size:12px;color:var(--faint);margin-top:14px;font-family:var(--mono)}
+/* gallery */
+.gal{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px;margin-top:36px}
+.shot{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden}
+.shot img{width:100%;display:block;background:#fff}
+.shot .cap{padding:14px 16px;font-size:13px;color:var(--dim)}
+.shot .cap b{color:var(--text)}
+/* talk orca */
+#talk{background:radial-gradient(1200px 600px at 80% -10%,rgba(11,110,140,.25),transparent),var(--bg2)}
+.disclaimer{display:flex;gap:12px;align-items:flex-start;background:rgba(255,180,84,.07);border:1px solid rgba(255,180,84,.32);border-radius:var(--radius-sm);padding:16px 18px;margin:24px 0;font-size:14px;color:#f4dcae}
+.disclaimer b{color:var(--warn)}
+.talkgrid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:10px}
+@media(max-width:880px){.talkgrid{grid-template-columns:1fr}}
+.opts{display:flex;flex-direction:column;gap:10px}
+.opt{text-align:left;padding:14px 16px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--panel);color:var(--text);cursor:pointer;transition:.15s;font-family:inherit}
+.opt:hover{border-color:var(--teal)}
+.opt.active{border-color:var(--teal);background:rgba(57,224,200,.08)}
+.opt .t{font-weight:700;font-size:15px}
+.opt .d{font-size:12.5px;color:var(--faint);margin-top:3px}
+.viz{background:#04080d;border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;display:flex;flex-direction:column}
+#spec{width:100%;height:200px;border-radius:8px;background:#02060a;display:block}
+.readout{margin-top:14px;font-size:13.5px;color:var(--dim);min-height:74px}
+.readout .lab{color:var(--teal);font-weight:700}
+.playrow{display:flex;gap:10px;align-items:center;margin-top:14px}
+/* field */
+#field{background:linear-gradient(180deg,var(--bg),var(--bg2))}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:30px}
+@media(max-width:760px){.two{grid-template-columns:1fr}}
+.panel{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:26px}
+.panel h3{font-size:17px;color:var(--teal)}
+.panel ul{margin:10px 0 0;padding-left:18px;color:var(--dim);font-size:14.5px}
+.panel li{margin:7px 0}
+.claimgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:30px}
+@media(max-width:760px){.claimgrid{grid-template-columns:1fr}}
+.do,.dont{border-radius:var(--radius);padding:24px;border:1px solid var(--border)}
+.do{background:rgba(57,224,200,.05);border-color:rgba(57,224,200,.25)}
+.dont{background:rgba(255,107,107,.05);border-color:rgba(255,107,107,.25)}
+.do h3{color:var(--good)}.dont h3{color:var(--bad)}
+.do li,.dont li{margin:8px 0;font-size:14.5px;color:var(--dim)}
+/* refs */
+#refs{background:var(--bg2)}
+.refs{margin-top:24px;column-count:2;column-gap:36px}
+@media(max-width:760px){.refs{column-count:1}}
+.refs .r{font-size:12.5px;color:var(--dim);margin:0 0 14px;break-inside:avoid;line-height:1.5}
+.refs .r b{color:var(--text)}
+footer{padding:50px 22px;border-top:1px solid var(--border);color:var(--faint);font-size:13px}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.reveal{opacity:0;transform:translateY(24px);transition:.7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+<nav><div class="wrap">
+  <div class="brand"><span class="dot"></span> OrcaDolittle</div>
+  <div class="navlinks">
+    <a href="#work">The science</a>
+    <a href="#gallery">Results</a>
+    <a href="#talk">Talk&nbsp;Orca</a>
+    <a href="#field">For scientists</a>
+    <a href="#refs">References</a>
+  </div>
+  <a class="btn primary" href="#field">Collaborate</a>
+</div></nav>
+<header class="hero"><div class="bg"></div><div class="wrap">
+  <span class="badge">● Non-invasive · public data · reproducible · no overclaiming</span>
+  <h1>We taught a machine to <span class="grad">listen to orcas</span> — and to admit what it can't hear.</h1>
+  <p class="sub">A reproducible, fully non-invasive pipeline that decodes killer-whale (<em>Orcinus orca</em>) call structure and behavioural context from public recordings — with the recording-site confound measured, not hidden. Built to hand to a field team for the experiment that comes next.</p>
+  <div class="cta">
+    <a class="btn primary" href="#talk">▶ Try “Talk Orca”</a>
+    <a class="btn" href="#work">See what we found</a>
+    <a class="btn" href="https://github.com/ladyFaye1998/OrcaDolittle" target="_blank" rel="noopener">View the code ↗</a>
+  </div>
+</div></header>
+<div class="stats">
+  <div class="stat"><div class="n" data-to="27934">0</div><div class="l">public call-level segments encoded</div></div>
+  <div class="stat"><div class="n" data-to="0.968" data-dec="3">0</div><div class="l">within-site call-type accuracy (18 NRKW types)</div></div>
+  <div class="stat"><div class="n" data-to="0.770" data-dec="3">0</div><div class="l">behaviour decoded from calls (individual held out)</div></div>
+  <div class="stat"><div class="n" data-pre="p=" data-to="0.002" data-dec="3">0</div><div class="l">whales reply to same-pod, not different-pod playback</div></div>
+  <div class="stat"><div class="n" data-to="0">0</div><div class="l">claims of “translation” or “meaning”</div></div>
+</div>
+<section id="work"><div class="wrap">
+  <div class="eyebrow reveal">What we actually did</div>
+  <h2 class="reveal">Six findings, every number reproducible from public data.</h2>
+  <p class="lead reveal">One frozen audio foundation model (AVES2) runs unchanged across every analysis; the contribution is the <b>rigour around it</b> — measuring the recording-site shortcut that fools naive probes, and reporting only what survives explicit null baselines.</p>
+  <div class="cards">
+    <div class="card reveal"><div class="k">The trap</div><h3>Most of the “97% accuracy” was the microphone</h3><div class="num">0.948</div><p>A frozen model “decodes ecotype” at 0.91 pooled — but hold out a whole recording site and it collapses to 0.23 (chance 0.25), while the <b>site itself</b> decodes at 0.948. So we measured the confound instead of hiding it.</p><div class="cite">Stowell 2022 · Ghani 2023 · Palmer et al. 2025</div></div>
+    <div class="card reveal"><div class="k">Real biology</div><h3>Ecotype is decodable once the site is held constant</h3><div class="num">0.889–0.973</div><p>Within each of five fixed recording sites the embeddings still separate ecotypes — the hydrophone never changes, so that signal has to be the whale.</p><div class="cite">Hagiwara 2023 (AVES) · Chen et al. 2022</div></div>
+    <div class="card reveal"><div class="k">Units that travel</div><h3>Named call types transfer across sites</h3><div class="num">0.71 / 0.97</div><p>Catalogue call types are recovered within a site (14 SRKW types 0.71; 18 NRKW types 0.97) and — unlike ecotype — <b>transfer to an independent site</b> (0.64; 0.83 on unambiguous types): the control ecotype failed.</p><div class="cite">Ford 1989 · Filatova et al. 2015</div></div>
+    <div class="card reveal"><div class="k">More than one context</div><h3>Calls predict what the whale is doing</h3><div class="num">0.770</div><p>On animal-borne tags, communicative calls decode movement-defined context (foraging vs not 0.77; three-way 0.58) with <b>every individual held out</b>, and specific call types occur in specific contexts (V=0.40). Not louder, not more frequent — we checked.</p><div class="cite">Holt, Tennessen et al. 2024 · Wilson et al. 2006</div></div>
+    <div class="card reveal"><div class="k">Structure</div><h3>Sequence structure, and — in SRKW — beyond first order</h3><div class="num">+0.645 bits</div><p>Calls don’t come at random: one call predicts the next, and Southern-Resident sequences carry information a first-order model can’t explain (candidate phrase S01→S04→S01). A prerequisite for combinatorial coding — not meaning.</p><div class="cite">Sharma et al. 2024 · Berthet et al. 2025 · Girard-Buttoz et al. 2025</div></div>
+    <div class="card reveal"><div class="k">A measured response</div><h3>Wild whales answer same-pod calls, ignore strangers</h3><div class="num">p = 0.002</div><p>Re-analysing a published playback: free-ranging whales replied to same-pod broadcasts (6/6) and stayed silent to different-pod ones (0/6), naive animals — and our model recovers the dialect call types that drive it (purity 0.439 vs 0.05 null). The experiment is prior work; the response tracks <b>dialect, not content</b>.</p><div class="cite">Filatova et al. 2011 · FEROP catalogue · Miller et al. 2004</div></div>
+  </div>
+</div></section>
+<section id="gallery"><div class="wrap">
+  <div class="eyebrow reveal">Results at a glance</div>
+  <h2 class="reveal">Every panel regenerates from public data and open code.</h2>
+  <p class="lead reveal">Generated by the scripts in the repository; full metrics live in <code>reports/</code> and reproduction status in the environment manifest.</p>
+  <div class="gal">
+    <div class="shot reveal"><img src="assets/figures/h4_confound_aves2_full_labeled.png" alt="Site vs biology"><div class="cap"><b>Biology vs. site.</b> Provider decodes at 0.948; ecotype is decodable within each fixed site (0.889–0.973) but collapses cross-site (0.529) — real, but local.</div></div>
+    <div class="shot reveal"><img src="assets/figures/calltype_model_full.png" alt="Call-type model"><div class="cap"><b>Call types transfer across sites.</b> Within-site 0.71 (SRKW) / 0.97 (NRKW); a VFPA-trained classifier scores 0.64 on an independent site (0.83 unambiguous).</div></div>
+    <div class="shot reveal"><img src="assets/figures/context_decode.png" alt="DTAG context decode"><div class="cap"><b>Behaviour from calls.</b> Communicative calls predict movement-defined foraging context at 0.77, leave-individual-out; the label uses depth/acceleration only.</div></div>
+    <div class="shot reveal"><img src="assets/figures/calltype_context.png" alt="Call-type by context"><div class="cap"><b>Context-specific production.</b> Specific call types occur in specific contexts (Cramér's V = 0.40 vs a within-individual null of 0.08).</div></div>
+    <div class="shot reveal"><img src="assets/figures/calltype_compositionality.png" alt="Compositionality"><div class="cap"><b>Beyond first order (SRKW).</b> The 2-back call adds information a first-order model can't explain (Δ = 0.645 bits); null in NRKW, reported honestly.</div></div>
+    <div class="shot reveal"><img src="assets/figures/calltype_distributional_semantics.png" alt="Distributional semantics"><div class="cap"><b>Structure ↔ context.</b> SRKW call types with similar sequential company share independent ethogram context (Mantel r = 0.33, p = 0.042); NRKW null. The distributional hypothesis tested, not assumed.</div></div>
+    <div class="shot reveal"><img src="assets/figures/attribution_controls.png" alt="Negative controls"><div class="cap"><b>Not a probe artifact.</b> The decode (0.98) sits far above matched-noise (0.54), feature-shuffle (0.50) and label-permutation (0.50) controls.</div></div>
+    <div class="shot reveal"><img src="assets/figures/playback_response.png" alt="Playback response"><div class="cap"><b>Receiver response (re-analysis).</b> Same-pod 6/6 vs different-pod 0/6 (Fisher p = 0.002), naive animals. Prior published experiment; response tracks dialect, not content.</div></div>
+  </div>
+</div></section>
+<section id="talk"><div class="wrap">
+  <div class="eyebrow reveal">Talk Orca · interactive demo</div>
+  <h2 class="reveal">Hear the call types — and what we honestly can (and can’t) say about them.</h2>
+  <p class="lead reveal">Pick a documented call type or context. We synthesise an illustrative pulsed call, render its live spectrogram, and tell you exactly what our analysis found for calls like it.</p>
+  <div class="disclaimer reveal">
+    <span>⚠️</span>
+    <div><b>Illustrative only — this is not a translator.</b> These sounds are <b>audio synthesis, not real orca recordings</b>, and selecting a label does <b>not</b> mean an orca understands a human message. The demo simply lets you hear the kinds of calls we study and shows the decodable structure/context our model found in <em>real</em> recordings. No claim of meaning or two-way communication is made.</div>
+  </div>
+  <div class="talkgrid">
+    <div class="opts reveal">
+      <button class="opt active" data-call="S1" data-name="Pod-identity call (SRKW, J pod)" data-context="foraging &amp; pod identity" data-cite="Ford 1989; Foote et al. 2008" data-fa="1500" data-fb="900" data-pulse="600" data-dur="1.2" data-bi="1"><div class="t">S1 · Pod-identity call</div><div class="d">Southern Resident J pod — stable for 27+ years</div></button>
+      <button class="opt" data-call="N4" data-name="Foraging call (NRKW, A pods)" data-context="foraging" data-cite="Ford 1989" data-fa="1100" data-fb="1320" data-pulse="820" data-dur="1.0" data-bi="0"><div class="t">N4 · Foraging call</div><div class="d">Most common call during foraging in A pods</div></button>
+      <button class="opt" data-call="S2" data-name="Travelling call (SRKW)" data-context="travelling" data-cite="Ford 1989" data-fa="1650" data-fb="720" data-pulse="430" data-dur="1.6" data-bi="0"><div class="t">S2 · Travelling call</div><div class="d">Becomes dominant during directed travel</div></button>
+      <button class="opt" data-call="contact" data-name="Contact / keep-together series" data-context="group cohesion" data-cite="Ford 1989; Miller et al. 2004" data-fa="1200" data-fb="1200" data-pulse="700" data-dur="1.1" data-bi="0" data-burst="1"><div class="t">Contact series</div><div class="d">Repeated short pulses — staying together</div></button>
+      <button class="opt" data-call="N2" data-name="Excitement / greeting call" data-context="excitement / pod meeting" data-cite="Ford 1989" data-fa="1400" data-fb="2100" data-pulse="920" data-dur="0.7" data-bi="1"><div class="t">N2 · Excitement call</div><div class="d">Higher &amp; shorter during pod meetings</div></button>
+    </div>
+    <div class="viz reveal">
+      <canvas id="spec" width="560" height="200"></canvas>
+      <div class="playrow">
+        <button class="btn primary" id="play">▶ Play call</button>
+        <span id="status" style="font-size:13px;color:var(--faint)">Tap a call, then play</span>
+      </div>
+      <div class="readout" id="readout"></div>
+    </div>
+  </div>
+</div></section>
+<section id="field"><div class="wrap">
+  <div class="eyebrow reveal">For field scientists</div>
+  <h2 class="reveal">Let’s run the experiment an archive <span class="grad">cannot</span>.</h2>
+  <p class="lead reveal">Archival recordings can characterise call structure and its confounds, and we’ve done that rigorously. What they can’t do — even in principle — is measure how a whale <b>responds to a signal deliberately broadcast to it</b>. That needs a controlled in-situ playback with a permitted field group. If that’s you, we’ve already built the analysis half.</p>
+  <div class="two">
+    <div class="panel reveal"><h3>What this project brings</h3><ul>
+      <li>A frozen-embedding pipeline for killer-whale calls with hash-frozen artifacts and per-head metrics.</li>
+      <li>A site-controlled evaluation protocol that separates real acoustic structure from the recording-site shortcut — so any field claim rests on defensible methods.</li>
+      <li>Validated catalogue call types that transfer across sites, and a behavioural-context decoder, ready to condition on your observed contexts.</li>
+      <li>Code that scores playback stimulus &amp; response audio against the <em>same</em> frozen representation, drop-in.</li>
+    </ul></div>
+    <div class="panel reveal"><h3>What a field partner brings</h3><ul>
+      <li>Permitted, non-invasive in-situ playback with a study population that has individual/group ID.</li>
+      <li>Per-trial response measurement (movement, vocal, behavioural) with pre-exposure and matched controls.</li>
+      <li>The one design that closes the loop: a <b>content-controlled, conspecific playback</b> — same dialect, different call type — to test whether whales respond to a call’s <em>content</em>, not just whose voice it is.</li>
+      <li>Observer-grounded, segment-level behavioural context.</li>
+    </ul></div>
+  </div>
+  <div class="two" style="margin-top:18px">
+    <div class="panel reveal"><h3>Run the tool yourself</h3>
+      <p style="color:var(--dim);font-size:14.5px;margin:0 0 12px">Everything is open and reproducible. Clone it, point it at the public DCLDE data, and regenerate every number:</p>
+      <pre style="background:#04080d;border:1px solid var(--border);border-radius:10px;padding:14px;overflow:auto;font-family:var(--mono);font-size:12.5px;color:var(--teal);margin:0"><code>git clone https://github.com/ladyFaye1998/OrcaDolittle
+cd OrcaDolittle &amp;&amp; pip install -e ".[dev,analysis]"
+python scripts/run_h4_confound.py --embeddings data/embeddings/aves2_full_labeled.npz</code></pre>
+    </div>
+    <div class="panel reveal" style="display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:14px">
+      <h3 style="margin:0">Reach out</h3>
+      <p style="color:var(--dim);font-size:14.5px;margin:0">Field group, biologging team, or resident-orca acoustic-ecology lab? Let’s talk feasibility for your season.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <a class="btn primary" href="mailto:REPLACE_WITH_YOUR_EMAIL?subject=OrcaDolittle%20playback%20collaboration">✉ Email the team</a>
+        <a class="btn" href="https://github.com/ladyFaye1998/OrcaDolittle/issues/new" target="_blank" rel="noopener">Open a collaboration issue ↗</a>
+      </div>
+    </div>
+  </div>
+</div></section>
+<section id="claim"><div class="wrap">
+  <div class="eyebrow reveal">Where we draw the line</div>
+  <h2 class="reveal">Honesty is the method, not the disclaimer.</h2>
+  <div class="claimgrid">
+    <div class="do reveal"><h3>✓ What we claim</h3><ul>
+      <li>Killer-whale call structure is decodable from frozen embeddings <b>once the recording site is controlled</b>.</li>
+      <li>Validated catalogue call types are recoverable and <b>transfer across sites</b>.</li>
+      <li>Calls carry information about <b>more than one behavioural context</b>, with the individual held out.</li>
+      <li>Call sequences are non-random, and in Southern Residents show structure <b>beyond first order</b>.</li>
+      <li>Wild whales produce a <b>measurable, dialect-selective response</b> to broadcast conspecific calls (by re-analysis of a published experiment).</li>
+    </ul></div>
+    <div class="dont reveal"><h3>✗ What we do not claim</h3><ul>
+      <li>That we can <b>translate</b> orca calls or that any call has a known “meaning”.</li>
+      <li>That the playback response is governed by call <b>content</b> rather than <b>dialect membership</b>.</li>
+      <li>That decoded structure equals language, syntax-with-semantics, or thought.</li>
+      <li>That we ran a new field experiment — the response result is a re-analysis of prior published work.</li>
+      <li>Two-way or interactive communication. That remains future work — the reason this page exists.</li>
+    </ul></div>
+  </div>
+</div></section>
+<section id="refs"><div class="wrap">
+  <div class="eyebrow reveal">References &amp; data</div>
+  <h2 class="reveal">Everything here is sourced.</h2>
+  <p class="lead reveal">Data are public: DCLDE 2026 (NOAA/NCEI), the DTAG archive (Zenodo, CC-BY), and the FEROP catalogue. Code and the full bibliography are in the repository.</p>
+  <div class="refs reveal">
+    <p class="r"><b>Palmer, K. J., et al.</b> (2025). A public dataset of annotated <em>Orcinus orca</em> acoustic signals for detection and ecotype classification. <em>Scientific Data</em> 12:1137.</p>
+    <p class="r"><b>Hagiwara, M.</b> (2023). AVES: animal vocalization encoder based on self-supervision. <em>ICASSP 2023</em>.</p>
+    <p class="r"><b>Chen, S., et al.</b> (2022). BEATs: audio pre-training with acoustic tokenizers. <em>arXiv</em>.</p>
+    <p class="r"><b>Ford, J. K. B.</b> (1989). Acoustic behaviour of resident killer whales off Vancouver Island, British Columbia. <em>Canadian Journal of Zoology</em> 67:727–745.</p>
+    <p class="r"><b>Foote, A. D., Osborne, R. W., Hoelzel, A. R.</b> (2008). Temporal and contextual patterns of killer whale call type production. <em>Ethology</em> 114:599–606.</p>
+    <p class="r"><b>Filatova, O. A., et al.</b> (2015). Cultural evolution of killer whale calls. <em>Behaviour</em> 152:2001–2038.</p>
+    <p class="r"><b>Yurk, H., et al.</b> (2002). Cultural transmission within maternal lineages: vocal clans in resident killer whales in southern Alaska. <em>Animal Behaviour</em> 63:1103–1119.</p>
+    <p class="r"><b>Riesch, R., Ford, J. K. B., Thomsen, F.</b> (2008). Whistle sequences in wild killer whales. <em>J. Acoust. Soc. Am.</em> 124:1822–1829.</p>
+    <p class="r"><b>Filatova, O. A., Fedutin, I. D., Burdin, A. M., Hoyt, E.</b> (2011). Responses of Kamchatkan fish-eating killer whales to playbacks of conspecific calls. <em>Marine Mammal Science</em> 27:E26–E42.</p>
+    <p class="r"><b>Far East Russia Orca Project (FEROP).</b> Catalogue of Kamchatkan killer whale calls.</p>
+    <p class="r"><b>Holt, M. M., Tennessen, J. B., et al.</b> (2024). Calibrated movement data and variables. <em>Zenodo</em>, doi:10.5281/zenodo.13308835.</p>
+    <p class="r"><b>Tennessen, J. B., et al.</b> (2019). Hidden Markov models reveal temporal patterns and sex differences in killer whale behavior. <em>Scientific Reports</em> 9:14951.</p>
+    <p class="r"><b>Wilson, R. P., et al.</b> (2006). Moving towards acceleration for estimates of activity-specific metabolic rate (ODBA). <em>J. Animal Ecology</em> 75:1081–1090.</p>
+    <p class="r"><b>Berthet, M., Surbeck, M., Townsend, S. W.</b> (2025). Extensive compositionality in the vocal system of bonobos. <em>Science</em> 388:104–108.</p>
+    <p class="r"><b>Girard-Buttoz, C., …, Crockford, C.</b> (2025). Versatile use of chimpanzee call combinations promotes meaning expansion. <em>Science Advances</em> 11:eadq2879.</p>
+    <p class="r"><b>Sharma, P., et al.</b> (2024). Contextual and combinatorial structure in sperm whale vocalisations. <em>Nature Communications</em> 15:3617.</p>
+    <p class="r"><b>Stowell, D.</b> (2022). Computational bioacoustics with deep learning. <em>PeerJ</em> 10:e13152.</p>
+    <p class="r"><b>Ghani, B., et al.</b> (2023). Global birdsong embeddings enable superior transfer learning. <em>Scientific Reports</em> 13:22876.</p>
+    <p class="r"><b>Kershenbaum, A.</b> (2024). <em>Why Animals Talk</em>. Penguin Press.</p>
+    <p class="r"><b>Sayigh, L. S., et al.</b> (2025). Widespread sharing of stereotyped non-signature whistle types by wild dolphins. <em>bioRxiv</em>.</p>
+    <p class="r"><b>Selbmann, A., et al.</b> (2026). Aversive behavioural responses of killer whales to sounds of long-finned pilot whales. <em>Scientific Reports</em> 16:4716.</p>
+    <p class="r"><b>Bowers, M. T., et al.</b> (2018). Selective reactions to different killer whale call categories in two delphinid species. <em>J. Experimental Biology</em> 221:jeb162479.</p>
+    <p class="r"><b>Miller, P. J. O., et al.</b> (2004). Call-type matching in vocal exchanges of free-ranging resident killer whales. <em>Animal Behaviour</em> 67:1099–1107.</p>
+    <p class="r"><b>Robinson, D., et al.</b> (2024). NatureLM-audio: an audio-language foundation model for bioacoustics. <em>arXiv:2411.07186</em>.</p>
+  </div>
+</div></section>
+<footer><div class="wrap">
+  <div>OrcaDolittle · killer-whale bioacoustics, decoded honestly.<br/><span style="color:var(--faint)">Non-invasive · public data · MIT-licensed code · no claim of translation or meaning.</span></div>
+  <div style="text-align:right">
+    <a href="https://github.com/ladyFaye1998/OrcaDolittle" target="_blank" rel="noopener">GitHub repository ↗</a><br/>
+    <span style="color:var(--faint)">Danielle Lesin · Georgia Institute of Technology</span>
+  </div>
+</div></footer>
+<script>
+// reveal on scroll
+const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// animated counters
+function animateCounter(el){
+  const to=parseFloat(el.dataset.to), dec=parseInt(el.dataset.dec||'0'), pre=el.dataset.pre||'';
+  const dur=1100, t0=performance.now();
+  const fmt=(v)=>pre+(dec>0?v.toFixed(dec):Math.round(v).toLocaleString());
+  function step(t){const k=Math.min(1,(t-t0)/dur);const e=1-Math.pow(1-k,3);el.textContent=fmt(to*e);if(k<1)requestAnimationFrame(step);else el.textContent=fmt(to);}
+  requestAnimationFrame(step);
+}
+const cio=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){animateCounter(e.target);cio.unobserve(e.target);}});},{threshold:0.6});
+document.querySelectorAll('.stat .n').forEach(el=>cio.observe(el));
+
+// ---- Talk Orca: synth + live spectrogram ----
+let ac=null, analyser=null, freqData=null, rafId=null;
+const canvas=document.getElementById('spec'), cx=canvas.getContext('2d');
+function sizeCanvas(){const r=canvas.getBoundingClientRect();canvas.width=Math.max(300,Math.floor(r.width));canvas.height=200;clearSpec();}
+function clearSpec(){cx.fillStyle='#02060a';cx.fillRect(0,0,canvas.width,canvas.height);}
+function color(v){const r=Math.round(20+Math.pow(v,1.5)*120);const g=Math.round(30+v*210);const b=Math.round(70+(1-v)*120+v*70);return 'rgb('+r+','+Math.min(255,g)+','+Math.min(255,b)+')';}
+window.addEventListener('resize',sizeCanvas); sizeCanvas();
+
+const opts=document.querySelectorAll('.opt');
+let current=document.querySelector('.opt.active');
+const readout=document.getElementById('readout'), statusEl=document.getElementById('status');
+function setReadout(o){
+  readout.innerHTML='<span class="lab">'+o.dataset.call+' — '+o.dataset.name+'.</span> Documented context: <b>'+o.dataset.context+'</b> ('+o.dataset.cite+'). In our analysis, call types like this are decodable within a recording site at 0.71–0.97 balanced accuracy, and a caller&rsquo;s behavioural context is decodable from its calls at 0.77 with the individual held out — see Results. <em>Illustrative synthesis; not a real recording, and not a translation.</em>';
+}
+setReadout(current);
+opts.forEach(o=>o.addEventListener('click',()=>{opts.forEach(x=>x.classList.remove('active'));o.classList.add('active');current=o;setReadout(o);statusEl.textContent='Ready — press play';}));
+
+function drawColumn(){
+  if(!analyser)return;
+  analyser.getByteFrequencyData(freqData);
+  const w=canvas.width,h=canvas.height;
+  const img=cx.getImageData(2,0,w-2,h); cx.putImageData(img,0,0);
+  const bins=freqData.length, useBins=Math.floor(bins*0.30), x=w-2;
+  for(let i=0;i<useBins;i++){
+    const v=freqData[i]/255, y=h-(i/useBins)*h;
+    cx.fillStyle=v<0.05?'#02060a':color(v);
+    cx.fillRect(x,y-2,2,3);
+  }
+  rafId=requestAnimationFrame(drawColumn);
+}
+
+function playCall(o){
+  if(!ac){ac=new (window.AudioContext||window.webkitAudioContext)();}
+  if(ac.state==='suspended')ac.resume();
+  const t0=ac.currentTime, dur=parseFloat(o.dataset.dur), fa=+o.dataset.fa, fb=+o.dataset.fb,
+        pulse=+o.dataset.pulse, bi=o.dataset.bi==='1', burst=o.dataset.burst==='1';
+  const master=ac.createGain(); master.gain.value=0.0001;
+  const bp=ac.createBiquadFilter(); bp.type='bandpass'; bp.frequency.value=2200; bp.Q.value=0.6;
+  analyser=ac.createAnalyser(); analyser.fftSize=1024; freqData=new Uint8Array(analyser.frequencyBinCount);
+  master.connect(bp); bp.connect(analyser); analyser.connect(ac.destination);
+  const carrier=ac.createOscillator(); carrier.type='sawtooth';
+  carrier.frequency.setValueAtTime(fa,t0); carrier.frequency.linearRampToValueAtTime(fb,t0+dur);
+  const cgain=ac.createGain(); cgain.gain.value=0.5;
+  const lfo=ac.createOscillator(); lfo.type='square'; lfo.frequency.value=pulse;
+  const lfoGain=ac.createGain(); lfoGain.gain.value=0.5;
+  lfo.connect(lfoGain); lfoGain.connect(cgain.gain);
+  carrier.connect(cgain); cgain.connect(master);
+  let over=null;
+  if(bi){over=ac.createOscillator();over.type='triangle';over.frequency.setValueAtTime(fa*1.9,t0);over.frequency.linearRampToValueAtTime(fb*2.05,t0+dur);const og=ac.createGain();og.gain.value=0.12;over.connect(og);og.connect(master);}
+  if(burst){let tt=t0;const n=5,seg=dur/n;for(let i=0;i<n;i++){master.gain.setValueAtTime(0.0001,tt);master.gain.exponentialRampToValueAtTime(0.55,tt+0.02);master.gain.exponentialRampToValueAtTime(0.0001,tt+seg*0.65);tt+=seg;}}
+  else{master.gain.setValueAtTime(0.0001,t0);master.gain.exponentialRampToValueAtTime(0.55,t0+0.025);master.gain.setValueAtTime(0.55,t0+dur-0.12);master.gain.exponentialRampToValueAtTime(0.0001,t0+dur);}
+  carrier.start(t0);lfo.start(t0);if(over)over.start(t0);
+  const stop=t0+dur+0.05; carrier.stop(stop);lfo.stop(stop);if(over)over.stop(stop);
+  if(rafId)cancelAnimationFrame(rafId); clearSpec(); drawColumn();
+  statusEl.textContent='Playing…';
+  setTimeout(()=>{if(rafId)cancelAnimationFrame(rafId);statusEl.textContent='Done — pick another call';},(dur+0.12)*1000);
+}
+document.getElementById('play').addEventListener('click',()=>playCall(current));
+</script>
+</body>
+</html>
