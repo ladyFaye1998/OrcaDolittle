@@ -1,5 +1,12 @@
 # Decoding behavioural context from killer-whale communication: a confound-clean design
 
+> **Status: EXECUTED.** This is the design document; the analysis it specifies has been
+> run. Results are in `docs/results_analysis.md` (H5) and `docs/decoding_program.md`
+> (Section 5f): the binary foraging/non-foraging decode reached 0.770 and the three-way
+> foraging/travelling/resting decode 0.577 across 22/20 tagged whales (10,834/9,723
+> calls), leave-individual-out, with rate/loudness/echolocation controls. The "pending"
+> and "pilot first" language below is the original pre-run plan, retained for provenance.
+
 ## 1. Goal and claim boundary
 
 We aim to test, rigorously and on open data, whether **behavioural context can be
@@ -71,7 +78,7 @@ data request are required for the core build [@holt2024masking_data].
 |---|---|---|
 | Per-dive movement/kinematic variables (`maxdep`, `durwho`, `kindet`) | Zenodo 13308835 `foraging_data.csv` | downloaded, parsed |
 | Calibrated PRH (`p/pitch/roll/head/A`, 50 Hz) | Zenodo 13308835 `*_prh50.mat` | `scipy.io.loadmat`-readable |
-| Tag audio (communicative calls) | Zenodo 13333019 + 13328931 (`.dtg`, ~44 GB) | decode pending (Colab) |
+| Tag audio (communicative calls) | Zenodo 13333019 + 13328931 (`.dtg`, ~44 GB) | decoded; 10,834 calls (see results_analysis.md H5) |
 
 The data are 25 DTAG deployments on fish-eating killer whales (NRKW + SRKW),
 Salish Sea 2009–2014 [@tennessen2019; @holt2024masking].

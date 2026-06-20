@@ -12,7 +12,7 @@ The call-type-to-context mapping is NOT a clean 1:1 relationship. Ford 1989 expl
 2. **Social-context-associated** (Foote 2008): "Dominant" calls (pod identity) decrease in multi-pod groups; "rare" biphonic calls (inter-pod affiliation) increase
 3. **Arousal-associated** (Ford 1989): Excited calls are shorter, higher-pitched, faster; N2 spikes during pod meetings
 
-This means H1 probes should predict **distributional shifts** (which activity state is most likely given this embedding), not deterministic labels. Frame as: "embeddings predict the probability distribution over behavioural states."
+This means a behavioural-context probe (the H5 family, **not** the H1 ecotype probe) should predict **distributional shifts** (which activity state is most likely given this embedding), not deterministic labels. Frame as: "embeddings predict the probability distribution over behavioural states."
 
 ## Columns
 
@@ -27,9 +27,9 @@ This means H1 probes should predict **distributional shifts** (which activity st
 
 ## Source papers
 
-1. **Ford 1989** — 5 activity states (foraging, travelling, resting, socializing, beach-rubbing) × 16 Northern Resident pods. Key: N3=resting, S1=foraging, S2/S44/S42=travelling.
-2. **Foote 2008** — Single-pod vs multi-pod context for Southern Residents over 27 years. Key: dominant calls = pod identity; rare biphonic calls = inter-pod affiliation.
-3. **Riesch 2006** — Stereotyped whistles (W1-W6 in NR, SW1-SW4 in SR). Key: NR whistles = close-range socializing; SR whistles = long-range contact (like discrete calls).
-4. **Yurk 2005** — Southern Alaska residents. Key: two vocal clans (AB, AD) reflecting matrilineal ancestry; call sharing correlates with association rate; transients use entirely distinct LFC syllables.
+1. **Ford 1989** [@ford1989] — 5 activity states (foraging, travelling, resting, socializing, beach-rubbing) × 16 Northern Resident pods. Key: N3=resting, S1=foraging, S2/S44/S42=travelling.
+2. **Foote 2008** [@foote2008] — Single-pod vs multi-pod context for Southern Residents over 27 years. Key: dominant calls = pod identity; rare biphonic calls = inter-pod affiliation.
+3. **Riesch et al.** [@riesch2008] — Stereotyped whistles (W1-W6 in NR, SW1-SW4 in SR); the `citation_key` for these rows is `riesch2008` (whistle sequences); the companion 2006 discrete-call paper is unindexed. Key: NR whistles = close-range socializing; SR whistles = long-range contact (like discrete calls).
+4. **Yurk et al. 2002** [@yurk2002] — Southern Alaska residents (the table's `citation_key` is `yurk2002`). Key: two vocal clans (AB, AD) reflecting matrilineal ancestry; call sharing correlates with association rate; transients use entirely distinct LFC syllables.
 5. **Ford 1989** (transients) — TKW are largely silent during foraging (prey detection avoidance); vocal post-kill and during travel.
 
