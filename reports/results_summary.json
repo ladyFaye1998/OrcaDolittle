@@ -159,6 +159,30 @@
         "note": "echolocation peak energy (>>8 kHz) absent by construction at 16 kHz; signal is call structure, not rate/loudness/biosonar"
       },
       "boundary": "context-specific production of communicative calls across more than one movement-defined behavioural context, individual held out; not referential meaning and not a response to a broadcast signal"
+    },
+    "h6_playback_response": {
+      "head": "H6",
+      "criterion": "C3 / response criterion: a measurable response to a broadcast signal (non-invasive, naive animals)",
+      "behavioural_source": "filatova2011playback (re-analysis of a published conspecific playback experiment)",
+      "differential_response_all_trials": {"same_pod": [8, 0], "different_pod": [0, 6], "fisher_exact_p_two_sided": 0.000333},
+      "differential_response_pseudoreplication_controlled": {"same_pod": [6, 0], "different_pod": [0, 6], "fisher_exact_p_two_sided": 0.00216},
+      "embedding_dialect_recovery": {
+        "encoder": "AVES2 (frozen, mean-pooled)",
+        "stimulus_source": "russianorca_catalogue (public FEROP K-type catalogue)",
+        "n_exemplars": 57, "n_types": 19,
+        "loo_1nn_purity": 0.439, "null_mean": 0.050, "null_std": 0.033,
+        "proportional_chance": 0.067, "n_perm": 1000, "permutation_pvalue": 0.001,
+        "silhouette_cosine": 0.029
+      },
+      "corroboration": {"n_broadcast_studies": 3, "studies": ["filatova2011playback", "selbmann2026aversive", "bowers2018"], "natural_matching": "miller2004repertoires"},
+      "boundary": "meets the response criterion (receivers act selectively on a broadcast endogenous signal, naive animals); the behavioural experiment is prior published work re-analysed here, and the response tracks dialect membership, NOT call content"
+    },
+    "c2_calltype_context_specialization": {
+      "analysis": "catalogue call-type foraging-vs-socializing specialization (named-unit level)",
+      "context_label_source": "published field ethograms (ford1989, foote2008, riesch2008, yurk2002), NOT embeddings",
+      "n_call_types": 18, "n_single_context_specialist": 13,
+      "specialization_index": 0.722, "disjointness_fisher_p": 0.069,
+      "boundary": "context-specific PRODUCTION across two functionally distinct contexts (foraging vs social); non-circular (labels from ethograms); NOT a claim of meaning"
     }
   },
   "summary": {
@@ -171,7 +195,9 @@
     "rung1_calltype_discovery": "Unsupervised within-SRKW clustering yields no usable repertoire: pooled clusters are 93% single-provider (site artifact, 82% noise) and a single-provider run collapses to one blob; a validated repertoire requires labelled call types (e.g., Wellard Type C, Dryad).",
     "rung4_sequence_structure": "Call streams carry non-random first-order sequential structure: adjacent-call MI 1.91 bits vs order-shuffled null 1.65 (p<0.001), still 1.09 bits after removing 40% repetition, and a held-out bigram beats unigram by 1.74 bits/token. A prerequisite for combinatorial coding, not evidence of meaning.",
     "rung4_validated_calltype_sequence": "The same first-order test run on VALIDATED catalogue call types (site held constant, within-recording order-shuffle null) is positive in both resident populations: NRKW (31 N-call types, 5,273 calls) adjacent-pair MI 2.85 bits vs null 1.71 (p=1e-3), 1.60 bits after removing heavy bouting (self-transition 0.92), bigram beats unigram by 2.73 bits/token; SRKW (19 S-call types, 1,553 calls) MI 1.29 vs 0.78 (p=1e-3), self-transition 0.52, bigram gain 0.31 bits/token. This upgrades the Rung-4 result from unsupervised tokens to validated biological units; still a prerequisite for combinatorial coding, not evidence of meaning.",
-    "rung1_calltype_classification": "With validated catalogue labels recovered from the DCLDE per-provider annotations, the full call-type catalogue (8,552 detections encoded with AVES2) is discriminated within a fixed recording site at balanced accuracy 0.709 for 14 SRKW S-call types (chance 0.071, majority 0.278) and 0.968 for 18 NRKW N-call types (chance 0.056, majority 0.390), both permutation p~0.005. Call-type identity also transfers across independent sites: a VFPA-trained SRKW classifier scores 0.636 on SMRU over 5 shared types (chance 0.20; 0.830 over the 4 unambiguous types) - the cross-site control the ecotype boundary failed (0.529). Stereotyped call types are therefore a site-independent acoustic category in both resident populations; this is call-type discrimination, not meaning. Supervised success here also explains the Rung 1 discovery failure: the categories exist, but are too fine for unsupervised recovery from site-confounded embeddings."
+    "rung1_calltype_classification": "With validated catalogue labels recovered from the DCLDE per-provider annotations, the full call-type catalogue (8,552 detections encoded with AVES2) is discriminated within a fixed recording site at balanced accuracy 0.709 for 14 SRKW S-call types (chance 0.071, majority 0.278) and 0.968 for 18 NRKW N-call types (chance 0.056, majority 0.390), both permutation p~0.005. Call-type identity also transfers across independent sites: a VFPA-trained SRKW classifier scores 0.636 on SMRU over 5 shared types (chance 0.20; 0.830 over the 4 unambiguous types) - the cross-site control the ecotype boundary failed (0.529). Stereotyped call types are therefore a site-independent acoustic category in both resident populations; this is call-type discrimination, not meaning. Supervised success here also explains the Rung 1 discovery failure: the categories exist, but are too fine for unsupervised recovery from site-confounded embeddings.",
+    "h6_playback_response": "Response criterion (C3) met by re-analysis of a published conspecific playback (filatova2011playback): wild killer whales reply vocally to same-pod and not different-pod broadcasts (6/0 vs 0/6 pseudoreplication-controlled, Fisher p=0.00216; 8/0 vs 0/6 across all trials), naive free-ranging animals; and frozen AVES2 recovers the Kamchatka dialect call types that drive it (leave-one-out 1-NN purity 0.439 vs a 0.050 label-shuffle null, p=1e-3, 19 types, 57 exemplars). Corroborated across independent broadcast-response datasets (selbmann2026aversive, bowers2018) and natural vocal matching (miller2004repertoires). The behavioural experiment is prior published work re-analysed here; the response tracks dialect membership, not call content.",
+    "c2_calltype_context_specialization": "Recovered catalogue call types specialize across two functionally distinct contexts: 72% (13/18) are single-context foraging- or socializing-specialists (specialization index 0.722; disjointness Fisher p=0.069); context labels are from published ethograms, not embeddings (non-circular). Production-side reading of 'more than one behavioural context' at the named-unit level; not a claim of meaning."
   },
   "source_docs": [
     "docs/results_analysis.md",
