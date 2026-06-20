@@ -132,6 +132,7 @@ scaffolding only and are excluded from every headline claim.
 | `docs/evidence_mapping.md` | Evidence axes, controls, and claim boundaries. |
 | `docs/decoding_program.md` | Criterion-based evidence ladder and verified public-data ceiling. |
 | `docs/data_availability.md` | Per-source data inventory for the context and responsiveness rungs. |
+| `docs/local_environment_manifest.md` | Full accounting of every artifact (committed vs Zenodo-deposited vs external public source), per-head reproduction status, and independent local reproduction. |
 | `docs/results_analysis.md` | Current run interpretation and limitations. |
 | `docs/literature_review.md` | Cited literature map. |
 | `paper/` | Full and condensed manuscripts and bibliography. |

@@ -17,7 +17,16 @@
     "rung1_calltype_model": "python scripts/run_calltype_model.py --embeddings data/embeddings/aves2_full_labeled.npz --manifest data/join_tables/call_type_manifest.csv --min-per-type 30",
     "rung1_calltype_model_full": "run notebooks/calltype_encode_colab.ipynb on a GPU (encodes the full DCLDE call-type catalogue and runs the site-controlled models; writes reports/calltype_model_full_summary.json and figures/calltype_model_full.png)",
     "rung4_calltype_sequence": "python scripts/run_calltype_sequence.py --manifest data/join_tables/call_type_manifest.csv --n-perm 1000",
-    "public_data_audit": "python scripts/fetch_orcasound_labels.py --bucket acoustic-sandbox --list labeled-data/"
+    "public_data_audit": "python scripts/fetch_orcasound_labels.py --bucket acoustic-sandbox --list labeled-data/",
+    "attribution_controls": "python scripts/run_attribution_controls.py --embeddings data/embeddings/aves2_full_labeled.npz --provider JASCO_VFPA --classes SRKW TKW",
+    "h7_compositionality": "python scripts/run_calltype_compositionality.py --manifest data/join_tables/call_type_manifest.csv --n-surrogate 1000",
+    "h8_site_invariance": "python scripts/run_site_invariance.py --embeddings data/embeddings/aves2_full_labeled.npz",
+    "calltype_context_specialization": "python scripts/run_calltype_context_specialization.py",
+    "calltype_multicontext": "python scripts/run_calltype_multicontext.py",
+    "h6_playback_stats": "python scripts/run_playback_response_stats.py",
+    "h6_playback_embedding": "python scripts/run_playback_response.py --n-perm 1000  (needs FEROP embeddings; see docs/local_environment_manifest.md section 3)",
+    "h6_broadcast_rollup": "python scripts/summarize_broadcast_response.py",
+    "h5_dtag_context": "run notebooks/dtag_context_decode_colab.ipynb on a GPU (regenerates DTAG call embeddings + leave-individual-out decode; writes reports/context_decode_summary.json, reports/context3_decode_summary.json, reports/calltype_context_selectivity.json, reports/context_controls_summary.json and the matching figures)"
   },
   "sha256": {
     "data/embeddings/aves2_full_labeled.npz": "4f5a0c371c476a8fbe09ac6216e348c3f526a3390a20b0759fd89cd26cde56e0",
@@ -49,5 +58,11 @@
     "data/join_tables/call_type_manifest.csv": "d0f2d400d4b67e58094db15322159630e722b7d34a028277f1a815decbb55c55"
   },
   "missing": [],
-  "note": "Local re-run manifest for the published figures/metrics. reports/results_summary.json was extended with the H7 (compositionality), H8 (site-invariance), and multi-context catalogue heads and re-hashed on 2026-06-20; the embedding artifact and core H1-H4/sequence/call-type figures are unchanged. reports/artifact_hashes.json records the original Colab run provenance."
+  "note": "Local re-run manifest for the published figures/metrics. reports/results_summary.json was extended with the H7 (compositionality), H8 (site-invariance), and multi-context catalogue heads and re-hashed on 2026-06-20; the embedding artifact and core H1-H4/sequence/call-type figures are unchanged. Two hash files coexist by design and are NOT contradictory: reports/artifact_hashes.json records the ORIGINAL Colab run provenance (its hashes are the Colab-generated artifacts), while this file records the LOCAL re-run; figure PNGs are not byte-reproducible across matplotlib/platform versions, so figure hashes legitimately differ between the two while the underlying metrics match. The complete cross-head accounting (committed vs Zenodo-deposited vs external public source), per-head reproduction commands, and the independent local reproduction verified 2026-06-20 are in docs/local_environment_manifest.md.",
+  "local_reproduction_2026_06_20": {
+    "environment": "Python 3.11, numpy/scipy/scikit-learn/pandas/torch-CPU, committed aves2_full_labeled.npz",
+    "h6_playback_stats": "EXACT match (8/0 vs 0/6 p=0.000333; 6/0 vs 0/6 p=0.00216)",
+    "h4_confound": "EXACT match (provider 0.948; within-site 0.889/0.973/0.949/0.909; cross-site 0.529); additionally emits UAF_NGOS within-site 0.969 (n=10113) not in results_summary.json",
+    "sequence_structure": "Same conclusion, sub-1% drift (adjacent MI 1.92 vs published 1.909; null 1.657 vs 1.652; p=4.98e-3; KMeans/platform variation)"
+  }
 }
