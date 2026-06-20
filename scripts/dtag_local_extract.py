@@ -20,8 +20,8 @@ end to end on native Windows: it decodes a DTAG-2 `.dtg` to a 2-channel 192 kHz 
 
 One-command run (downloads .dtg, decodes, clips, manifests):
   python scripts/dtag_local_extract.py --auto C:\\dtag\\oo09_237d --deployments oo09_237d
-  # then upload C:\\dtag\\oo09_237d\\clips\\ to MyDrive/OrcaDolittle_context/clips/ and
-  # clips_manifest.json to MyDrive/OrcaDolittle_context/detections/, and run the
+  # then upload C:\\dtag\\oo09_237d\\clips\\ to MyDrive/OrcaAcoustics_context/clips/ and
+  # clips_manifest.json to MyDrive/OrcaAcoustics_context/detections/, and run the
   # notebook (Drive mounted, DOWNLOAD_DTG=False) from the ingest cell onward.
 
 Staged alternative:
@@ -461,8 +461,8 @@ def clip_dir(wav_dir: Path, out: Path, deployments) -> int:
 
     manifest_path.write_text(json.dumps(manifest))
     print(f"\nDone: {len(manifest)} clips ({total} new) -> {out}")
-    print(f"Upload '{out}' to MyDrive/OrcaDolittle_context/clips/ and "
-          f"'{manifest_path.name}' to MyDrive/OrcaDolittle_context/detections/, "
+    print(f"Upload '{out}' to MyDrive/OrcaAcoustics_context/clips/ and "
+          f"'{manifest_path.name}' to MyDrive/OrcaAcoustics_context/detections/, "
           f"then run the notebook from the ingest cell.")
     return 0
 

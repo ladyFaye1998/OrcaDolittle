@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build conservative OrcaDolittle validation evidence tables.
+"""Build conservative OrcaAcoustics validation evidence tables.
 
 This script creates a natural vocal-response proxy table from ordered Wellard
 segment timings and writes a behavior/context template when no verified behavior
@@ -64,11 +64,11 @@ def sha256_file(path: Path) -> str:
 
 def find_segment_manifest() -> Path | None:
     candidates = [
-        Path("/content/drive/MyDrive/OrcaDolittle_validation_evidence/_cache/wellard_segment_features_manifest.csv"),
-        Path("/content/drive/MyDrive/OrcaDolittle_validation_evidence/reports/wellard_segment_features_manifest.csv"),
-        Path("/content/drive/MyDrive/OrcaDolittle_validation_evidence/reports/wellard_segment_manifest.csv"),
+        Path("/content/drive/MyDrive/OrcaAcoustics_validation_evidence/_cache/wellard_segment_features_manifest.csv"),
+        Path("/content/drive/MyDrive/OrcaAcoustics_validation_evidence/reports/wellard_segment_features_manifest.csv"),
+        Path("/content/drive/MyDrive/OrcaAcoustics_validation_evidence/reports/wellard_segment_manifest.csv"),
         # Backward-compatible local search only.
-        Path("/content/drive/MyDrive/OrcaDolittle_validation_H1_H8/_cache/wellard_segment_features_manifest.csv"),
+        Path("/content/drive/MyDrive/OrcaAcoustics_validation_H1_H8/_cache/wellard_segment_features_manifest.csv"),
     ]
     for path in candidates:
         if path.exists():
@@ -198,7 +198,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--wellard-segment-manifest", default="")
     parser.add_argument("--verified-behavior-table", default="")
-    parser.add_argument("--output-dir", default="/content/drive/MyDrive/OrcaDolittle_verified_evidence")
+    parser.add_argument("--output-dir", default="/content/drive/MyDrive/OrcaAcoustics_verified_evidence")
     parser.add_argument("--response-window-s", type=float, default=30.0)
     args = parser.parse_args()
 

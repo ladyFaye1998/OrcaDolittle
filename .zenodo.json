@@ -1,7 +1,7 @@
 {
   "title": "Orca Bioacoustic Embeddings: site-controlled killer-whale call analysis with frozen audio-model embeddings",
   "upload_type": "software",
-  "description": "Reproducible research code for analysing killer-whale (Orcinus orca) vocalisations with frozen audio foundation-model embeddings (AVES2) on the public DCLDE 2026 corpus, with provider/site confound controls, catalogue call-type classification and cross-site transfer, first-order call-sequence structure, an animal-borne DTAG behavioural-context decode, and a representation-attribution and negative-control battery. Includes a hash-frozen embedding artifact, per-head metrics and figures, and citation-backed documentation. The work is fully non-invasive and makes no claim of semantic meaning or of a response to broadcast signals.",
+  "description": "Reproducible research code for analysing killer-whale (Orcinus orca) vocalisations with frozen audio foundation-model embeddings (AVES2) on the public DCLDE 2026 corpus, with provider/site confound controls, catalogue call-type classification and cross-site transfer, first-order call-sequence structure, an animal-borne DTAG behavioural-context decode, and a representation-attribution and negative-control battery. Includes a hash-frozen embedding artifact, per-head metrics and figures, and citation-backed documentation. The work is fully non-invasive and makes no claim of semantic meaning; its single response result re-analyses a published conspecific playback experiment and tracks dialect membership rather than call content.",
   "license": "MIT",
   "access_right": "open",
   "keywords": [

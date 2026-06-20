@@ -1,5 +1,5 @@
 [project]
-name = "orcadolittle"
+name = "orca-acoustic-embeddings"
 version = "0.1.0"
 description = "Killer-whale bioacoustic analysis with frozen audio foundation-model embeddings"
 readme = "README.md"
