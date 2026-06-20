@@ -127,6 +127,8 @@ H5 & Foraging/non-foraging (LIO) & $0.770$ ($0.500$) \\
 H5 & Three-way context (LIO) & $0.577$ ($0.333$) \\
 H6 & Playback reply same- vs different-pod & $6/6$ vs $0/6$ ($p{=}0.002$) \\
 H6 & FEROP dialect-type purity vs null & $0.439$ vs $0.05$ \\
+H7 & SRKW second-order info vs 1st-order surrogate & $0.645$ bits ($p{\approx}10^{-3}$) \\
+H8 & Site-invariant cross-site ecotype (SRKW/TKW) & $0.597{\to}0.625$ \\
 \bottomrule
 \end{tabular}
 \caption{Headline results. LIO = leave-individual-out. All effects have permutation
@@ -152,6 +154,16 @@ $1.65$-bit order-shuffle null ($p<10^{-3}$), $1.09$ bits after removing repetiti
 holds over validated catalogue call types (NRKW $2.85$ vs $1.71$ bits). A prerequisite for
 combinatorial coding, not evidence of meaning.
 
+\paragraph{Compositional structure beyond first order.} Against first-order Markov surrogates
+(which preserve unigram and bigram statistics, so any excess is not a re-detection of pairwise
+structure), the call two steps back adds information a first-order model cannot explain in SRKW
+S-calls ($h_2-h_3=0.645$ bits; $p\approx10^{-3}$ vs global and per-recording surrogates;
+held-out trigram beats bigram by $0.09$ bits/token; top candidate phrase
+S01$\to$S04$\to$S01, $z=7.95$) but not in NRKW N-calls ($0.008$ bits, $p=1.0$, despite heavy
+bouting). The stronger combinatorial prerequisite the comparative literature tests for
+\citep{sharma2024,berthet2025bonobo,crockford2025}; reported honestly both ways and still not
+semantic compositionality.
+
 \paragraph{Communicative calls track behaviour, individual held out.} Across 22 tagged
 whales ($10{,}834$ calls), calls predict movement-defined foraging context at $0.770$
 (null $0.499$, $p=5\times10^{-3}$); a three-way foraging/travelling/resting decode reaches
@@ -174,13 +186,24 @@ The criterion is corroborated across independent broadcast-response datasets
 recovered catalogue call types specialise across foraging vs socialising---$72\%$ ($13/18$
 NRKW/SRKW types) are single-context specialists (foraging: N4, N9; socialising: the multi-pod
 two-voiced/identity calls), context labels from published ethograms, not embeddings
-\citep{ford1989,foote2008}.
+\citep{ford1989,foote2008}; broadening the axis, the same named units are documented across
+\emph{six} distinct behavioural contexts (foraging, travelling, resting, socialising,
+greeting/excitement, multi-pod aggregation; specialisation index $0.62$), so the
+``more than one context'' criterion holds well beyond movement state
+\citep{riesch2008,yurk2002}.
 
 \paragraph{The signal is distributed and not an artifact.} On the within-site SRKW/TKW
 decode ($0.979$), no small dimension set is necessary (top-$k$ knock-out stays $0.93$--$0.97$
 through $k{=}200$; one dimension is at chance; $\sim\!100$ PCA components reach $0.91$), and
 matched-noise ($0.536$), feature-shuffle ($0.505$), and label-permutation ($0.503$,
 $p=8\times10^{-3}$) controls all sit near chance: genuine joint structure, not a gamed leak.
+
+\paragraph{Label-free site-invariance.} A site-nuisance subspace projection fit \emph{without}
+the held-out site's ecotype labels improves cross-site ecotype transfer (SRKW vs TKW
+$0.597\to0.625$; leave-one-provider-out four-way $0.402\to0.445$ vs a $0.234$ null,
+$p=5\times10^{-3}$) while preserving within-site ecotype ($0.883\to0.876$): a label-free
+deconfounding step whose absolute ceiling is bounded by the corpus-level ecotype/site
+confound \citep{stowell2022,ghani2023}.
 
 \begin{figure}[h]
 \centering

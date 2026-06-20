@@ -67,10 +67,20 @@ recording artefact: call rate alone decodes the binary contrast at $0.536$, loud
 $0.577$, and discarding the most click-like clips leaves it at $0.749$, so the signal
 reflects call structure rather than how often or how loudly the animal calls or residual
 echolocation \citep{holt2024masking_data,tennessen2019,wilson2006,ford1989}. We
-release all code, a hash-frozen artifact, and exact reproduction commands. The work is fully
-non-invasive and makes no claim of semantic meaning or of a response to broadcast signals; it
-establishes the acoustic, call-type, and sequential prerequisites for such claims and the
-site-controlled baseline on which interactive playback studies can build.
+Beyond first-order ordering, Southern-Resident S-call sequences carry the structure the
+comparative literature treats as a combinatorial prerequisite: against first-order Markov
+surrogates the two-back call adds $0.645$ bits ($p\approx10^{-3}$; candidate phrase
+S01$\to$S04$\to$S01, $z=7.95$), though Northern-Resident N-calls show none. At the named-unit
+level the validated call types are documented across six functionally distinct behavioural
+contexts \citep{ford1989,foote2008,riesch2008}. On the perception side, re-analysis of a
+published conspecific playback experiment shows wild killer whales respond selectively to
+broadcast calls---a vocal reply to every same-pod and no different-pod playback ($6/6$ vs
+$0/6$, Fisher $p=0.002$, naive free-ranging animals)---and frozen AVES2 recovers the dialect
+call types that drive it (leave-one-out purity $0.439$ vs a $0.05$ null)
+\citep{filatova2011playback,russianorca_catalogue}. We release all code, a hash-frozen
+artifact, and exact reproduction commands. The work is fully non-invasive and makes no claim of
+semantic meaning; its single response result re-analyses prior published playbacks and tracks
+dialect membership, not call content.
 \end{abstract}
 
 \section{Introduction}
@@ -243,6 +253,12 @@ H3 & Held-out MLM order test & loss & $1.809$ vs.\ $1.753$ ($p=0.77$) \\
 Rung 4 & Validated N-call MI (DFO\_CRP, 31 types) & bits & $2.848$ vs.\ $1.711$ ($p=10^{-3}$) \\
 Rung 4 & Validated S-call MI (VFPA, 19 types) & bits & $1.287$ vs.\ $0.779$ ($p=10^{-3}$) \\
 Rung 1 & Within-SRKW clusters, provider purity & frac. & $0.93$ (site artifact) \\
+H7 & SRKW second-order info vs.\ 1st-order surrogate & bits & $0.645$ ($p\approx10^{-3}$) \\
+H7 & NRKW second-order info vs.\ 1st-order surrogate & bits & $0.008$ ($p=1.0$) \\
+C2 & Multi-context breadth (NRKW/SRKW catalogue) & contexts & $6$ (spec.\ index $0.62$) \\
+H8 & Site-invariant cross-site transfer (SRKW/TKW) & balanced acc. & $0.597{\to}0.625$ \\
+H6 & Playback reply (same- vs.\ different-pod) & trials & $6/6$ vs.\ $0/6$ ($p=0.002$) \\
+H6 & FEROP dialect-type purity vs.\ null & purity & $0.439$ vs.\ $0.05$ ($p=10^{-3}$) \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -321,6 +337,24 @@ over expert catalogue call types, with site held constant, in both populations
 \citep{ford1989,filatova2015,sharma2024}. It remains a statement about call ordering, not
 meaning.
 
+\paragraph{Southern-Resident call sequences carry structure beyond first order.} The
+combinatorial-coding question the comparative literature actually asks---sperm-whale codas
+\citep{sharma2024}, bonobo and chimpanzee compositionality
+\citep{berthet2025bonobo,crockford2025}---is whether structure goes \emph{beyond} first order.
+We test the validated catalogue call types against first-order Markov surrogates that preserve
+each population's unigram and bigram statistics, so any excess cannot be a re-detection of the
+pairwise result and the finite-sample entropy bias cancels (Figure~\ref{fig:comp}). For
+Southern-Resident S-calls (VFPA, $19$ types) the two-back call reduces conditional entropy by
+$h_2-h_3=0.645$ bits, against a global surrogate null of $0.373$ ($p\approx10^{-3}$) and a
+tighter per-recording null of $0.546$ ($p\approx2\times10^{-3}$); a held-out interpolated
+trigram beats a bigram by $0.09$ bits/token, and the strongest over-represented three-call
+motif is S01$\to$S04$\to$S01 (observed $13$ vs.\ $1.87$ expected under first order, $z=7.95$),
+a candidate phrase. For Northern-Resident N-calls (DFO\_CRP, $31$ types) the second-order
+reduction is $0.008$ bits, indistinguishable from the surrogate null ($p=1.0$) despite heavy
+bouting. At least one resident population therefore shows the stronger, beyond-first-order
+combinatorial prerequisite with recurring candidate phrases; the other does not on this
+corpus. It remains a statement about call ordering, not semantic compositionality.
+
 \paragraph{Unsupervised discovery does not recover a repertoire.} Within the SRKW ecotype,
 PCA + HDBSCAN yields $16$ candidate clusters pooled across providers, but their mean
 dominant-provider fraction is $0.93$ with $82\%$ of calls left as noise, and restricting to a
@@ -368,6 +402,38 @@ $0.770$; coarse acoustic scalars reach $0.723$; and removing the $25\%$ most cli
 leaves the decode at $0.749$. The result is therefore neither ``more calls'' in one context,
 nor ``louder calls'', nor residual biosonar \citep{wilson2006}.
 
+\paragraph{The validated call types specialise across more than one behavioural context.}
+Cross-referencing the recovered NRKW/SRKW catalogue types against the published field
+ethograms (context labels from the literature, not from embeddings, so non-circular), $72\%$
+($13/18$) are single-context foraging- or socialising-specialists (foraging: N4, N9;
+socialising: the multi-pod two-voiced and pod-identity calls; specialisation index $0.72$,
+disjointness Fisher $p=0.069$) \citep{ford1989,foote2008}. Broadening the axis beyond the
+foraging-vs-social contrast, the same $16$ named units are documented across \emph{six}
+functionally distinct behavioural contexts---foraging ($8$ types), travelling ($5$),
+socialising ($4$), multi-pod aggregation ($3$), resting ($1$), greeting/excitement
+($1$)---with a specialisation index of $0.62$, so the ``more than one context'' criterion
+holds well beyond movement state at the named-unit level (Figure~\ref{fig:multictx}; the
+non-uniformity $\chi^2$ is suggestive only, $p=0.086$, small $n$)
+\citep{ford1989,foote2008,riesch2008,yurk2002}. This is a literature-grounded production-side
+map that complements the DTAG decode, not a claim of meaning.
+
+\paragraph{Receivers respond selectively to broadcast conspecific calls (perception side).}
+The analyses above concern call \emph{production}; the perception side requires a playback,
+which an archive cannot supply, so we re-analyse a published conspecific playback on wild
+killer whales \citep{filatova2011playback}. Recomputing the differential-response statistic
+from the transcribed per-trial table, whales replied vocally to every same-pod playback and to
+none of the different-pod playbacks ($8/8$ vs.\ $0/6$ across all trials; $6/6$ vs.\ $0/6$ after
+a pseudoreplication control, Fisher exact $p=0.002$), naive animals that were silent for
+$\geq30$ min beforehand, often matching the played call type \citep{miller2004repertoires}.
+Encoding the public FEROP catalogue \citep{russianorca_catalogue} with the same frozen AVES2
+model, leave-one-out $1$-NN call-type purity is $0.439$ across $19$ Kamchatka dialect types
+against a $0.050$ label-shuffle null ($p=10^{-3}$): the encoder represents the dialect space
+that drives the response, corroborated across independent broadcast-response datasets
+\citep{selbmann2026aversive,bowers2018}. This meets the response criterion---a measurable,
+non-invasive response of naive animals to a broadcast endogenous signal---but the behavioural
+experiment is prior published work re-analysed here, and the response tracks dialect
+membership, not call content (Figure~\ref{fig:playback}).
+
 \paragraph{The biological signal is distributed and is not a probe artifact.} Attribution
 on the within-site SRKW/TKW decode (5-fold balanced accuracy $0.979$) shows the signal is
 multi-dimensional and redundant rather than a single suspicious channel: one AVES2
@@ -380,6 +446,19 @@ structure, not a gamed marginal or a leak: structure-matched Gaussian noise deco
 $0.536$, a per-dimension feature shuffle at $0.505$, and the label-permutation null at
 $0.503$ ($p=8\times10^{-3}$), all near the $0.500$ chance level against the embeddings'
 $0.979$ (Figure~\ref{fig:attribution}).
+
+\paragraph{A label-free site-invariance transform partially deconfounds ecotype.} Because the
+ecotype signal is real but local, we ask whether a \emph{label-free} transform can recover its
+site-invariant part. Fitting StandardScaler $+$ PCA($100$) $+$ a site-nuisance subspace
+projection on the training providers only---the held-out provider's ecotype labels are never
+used---raises leave-one-provider-out four-way ecotype from $0.402$ to $0.445$ mean over folds
+(best $k=8$ nuisance dimensions removed), against a permutation null of $0.234$
+($p\approx0.005$), and improves cross-site pair transfer where it can (SRKW vs.\ TKW
+$0.597\to0.625$; OKW vs.\ TKW $0.560\to0.586$), while preserving within-site ecotype
+($0.883\to0.876$ at VFPA). The absolute ceiling stays modest because ecotype and recording
+site are structurally confounded in this corpus (SAR is single-provider)---reported rather
+than hidden. This is a methods contribution to confound-controlled bioacoustics
+\citep{stowell2022,ghani2023}, not a claim of meaning (Figure~\ref{fig:siteinv}).
 
 \begin{figure}[t]
 \centering
@@ -486,6 +565,47 @@ label-permutation null ($0.50$) all sit near chance, far below the real embeddin
 \label{fig:attribution}
 \end{figure}
 
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{calltype_compositionality.png}
+\caption{H7: compositional structure beyond first order over validated catalogue call types,
+tested against first-order Markov surrogates. Southern-Resident S-calls (VFPA) exceed the
+surrogate null (second-order information $0.645$ bits, $p\approx10^{-3}$; top candidate phrase
+S01$\to$S04$\to$S01, $z=7.95$); Northern-Resident N-calls do not ($0.008$ bits, $p=1.0$).}
+\label{fig:comp}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.92\linewidth]{calltype_multicontext.png}
+\caption{C2: the validated NRKW/SRKW catalogue call types are documented across six
+functionally distinct behavioural contexts (call-type $\times$ context incidence map; context
+labels from published ethograms, not embeddings). ``More than one context'' holds well beyond
+movement state at the named-unit level.}
+\label{fig:multictx}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{playback_response.png}
+\caption{H6 (perception side, re-analysis of a published playback \citep{filatova2011playback}):
+wild killer whales reply vocally to same-pod and not different-pod broadcasts ($6/6$ vs.\ $0/6$
+after a pseudoreplication control, Fisher $p=0.002$), naive animals. Frozen AVES2 recovers the
+Kamchatka dialect call types that drive the response (purity $0.439$ vs.\ a $0.05$ null). The
+response tracks dialect membership, not call content.}
+\label{fig:playback}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{site_invariance.png}
+\caption{H8: a label-free site-nuisance subspace projection (fit without the held-out site's
+ecotype labels) improves cross-site ecotype transfer (SRKW vs.\ TKW $0.597\to0.625$;
+leave-one-provider-out $0.402\to0.445$ vs.\ a $0.234$ null) while preserving within-site
+ecotype. A methods contribution, bounded by the corpus-level ecotype/site confound.}
+\label{fig:siteinv}
+\end{figure}
+
 \section{Limitations}
 The pooled $0.97$ figure is not a biological result and we do not report it as one; the
 honest estimate is the within-site number. Cross-site transfer for ecotype is bounded by the
@@ -512,10 +632,14 @@ to this because its null reuses the same clustering. Echolocation is addressed b
 $16$\,kHz analysis band (which excludes click peak energy) and by the click-likeness control,
 but on-tag attribution of calls to the focal whale is imperfect; and absolute call times
 assume contiguous tag audio from the start of the movement record. Most fundamentally, this
-remains an archival decoding study: it is non-invasive and uses the animals' endogenous
-signals, and while H5 shows that communicative calls are produced context-specifically across
-more than one behavioural context, it demonstrates neither referential call-level meaning nor
-any measured response to a broadcast signal.
+remains an archival study: it is non-invasive and uses the animals' endogenous signals, and
+while H5 shows context-specific production across more than one behavioural context and H6
+establishes a measurable, dialect-selective receiver response to broadcast conspecific calls,
+the H6 playback is \emph{prior published work} re-analysed here and its response tracks dialect
+membership, not call content. The study therefore demonstrates neither referential call-level
+meaning nor that the receiver response is governed by content rather than dialect; closing the
+content step requires a controlled content-isolating playback this archive cannot provide
+\citep{deecke2005,sayigh2025nsw}.
 
 \paragraph{Arousal versus content.} A behavioural-context decode could in principle
 reflect a graded arousal or activity axis rather than context-specific signal content. Two
@@ -533,9 +657,13 @@ independent recording sites (multiple controls, both resident populations, struc
 destroyed under matched-noise and feature-shuffle controls). \emph{Medium--high}:
 communicative calls are produced context-specifically across more than one movement-defined
 behavioural context with the individual held out (identity-controlled and multi-control,
-but the labels are movement-only proxies and the on-tag call-type clusters are soft).
-\emph{No claim (out of scope)}: referential call-level meaning, the perception side of
-context-specificity, and any response to a broadcast signal.
+but the labels are movement-only proxies and the on-tag call-type clusters are soft); and a
+dialect-selective receiver response to broadcast conspecific calls (H6), by re-analysis of a
+prior published playback (clean differential response, corroborated across independent
+datasets, but modest conspecific $n$). \emph{Medium}: structure beyond first order in
+Southern-Resident call sequences (H7; positive in SRKW, null in NRKW, small recording counts).
+\emph{No claim (out of scope)}: referential call-level meaning, and that the receiver response
+is governed by call content rather than dialect membership.
 
 \section{Reproducibility}
 The repository provides exact commands, a hash-frozen artifact, per-head metrics JSON and
@@ -565,16 +693,32 @@ decode and within-individual null; \texttt{reports/context3\_decode\_summary.jso
 all reusing the frozen-AVES2 call embeddings so no re-encoding is required. The
 representation attribution and negative-control battery are reproduced by
 \texttt{run\_attribution\_controls.py} (\texttt{reports/attribution\_controls\_summary.json},
-\texttt{figures/attribution\_controls.png}). Raw audio and tag
+\texttt{figures/attribution\_controls.png}). The catalogue context maps are reproduced by
+\texttt{run\_calltype\_context\_specialization.py} and \texttt{run\_calltype\_multicontext.py};
+the beyond-first-order test by \texttt{run\_calltype\_compositionality.py}
+(\texttt{reports/calltype\_compositionality\_summary.json}); the label-free site-invariance
+transform by \texttt{run\_site\_invariance.py} (\texttt{reports/site\_invariance\_summary.json});
+and the perception-side playback re-analysis (H6) by \texttt{run\_playback\_response\_stats.py}
+(differential-response statistic), \texttt{build\_playback\_manifest.py} and
+\texttt{run\_playback\_response.py} (FEROP dialect-space recovery and null), and
+\texttt{summarize\_broadcast\_response.py} (cross-dataset roll-up). Raw audio and tag
 archives are downloaded from public
 sources and excluded from version control.
 
 \section{Future work}
-A site-controlled decoding baseline is the credible foundation for the next scientific step:
-pairing these embeddings with field groups capable of in-situ playbacks to test whether
-specific call structures elicit measurable, context-specific responses, as demonstrated for
-dolphins \citep{sayigh2025nsw}. We release the pipeline to make that collaboration
-concrete and reproducible.
+Every gap that public-archival re-analysis can close is closed here: validated call units,
+sequential and (in Southern Residents) beyond-first-order structure, context-specific
+production across more than one context, and---by re-analysis of a published playback (H6)---a
+measurable receiver response to a broadcast endogenous signal. The single remaining step is
+\emph{not} a larger model: it is a controlled conspecific playback that isolates call
+\emph{content} and measures a response across more than one content class, the step that takes
+the result from dialect-selective response to demonstrated meaning, as achieved for dolphins
+\citep{sayigh2025nsw,deecke2005}. Because our production-context corpus (Pacific N/S-calls) and
+the only conspecific playback corpus (Kamchatka K-calls) are non-overlapping catalogues, this
+also requires either a playback on the population for which we have context, or per-call
+context coding on the population for which we have playback---in both cases new field data, not
+re-analysis. We release the site-controlled pipeline to make that collaboration concrete and
+reproducible.
 
 \bibliographystyle{plainnat}
 \bibliography{refs}
