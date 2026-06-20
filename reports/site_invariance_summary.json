@@ -1,0 +1,185 @@
+{
+  "head": "H8_site_invariance",
+  "encoder": "AVES2 (frozen, mean-pooled)",
+  "pipeline": "StandardScaler + PCA(100) + site-nuisance subspace projection + LogisticRegression",
+  "leakage_safety": "scaler/PCA/subspace fit on training providers; test-provider ECOTYPE labels never used (transductive uses test-provider embeddings only, label-free)",
+  "ecotype_protected": true,
+  "raw_lopo": {
+    "per_fold": {
+      "JASCO_VFPA": 0.3884079794512866,
+      "JASCO_VFPA_ONC": 0.5067332005210329,
+      "ONC": 0.4363576007326007,
+      "OrcaSound": 0.4745664739884393,
+      "SIMRES": 0.1334113516676419,
+      "SIO": 0.4540009904273565,
+      "SMRUConsulting": 0.6934210526315789,
+      "UAF_NGOS": 0.13020196308816787
+    },
+    "mean_over_folds": 0.4021375765635131,
+    "pooled": 0.2751673650364813
+  },
+  "site_invariant_lopo_transductive": {
+    "k_sweep": {
+      "1": {
+        "per_fold": {
+          "JASCO_VFPA": 0.3913971891334096,
+          "JASCO_VFPA_ONC": 0.5008316731795776,
+          "ONC": 0.45012362637362635,
+          "OrcaSound": 0.35028901734104045,
+          "SIMRES": 0.13779988297249854,
+          "SIO": 0.45034886493399195,
+          "SMRUConsulting": 0.6171052631578947,
+          "UAF_NGOS": 0.12143115891175994
+        },
+        "mean_over_folds": 0.3774158345004749,
+        "pooled": 0.27426603673476746
+      },
+      "2": {
+        "per_fold": {
+          "JASCO_VFPA": 0.32241262310159946,
+          "JASCO_VFPA_ONC": 0.5008316731795776,
+          "ONC": 0.44345581501831505,
+          "OrcaSound": 0.4213872832369942,
+          "SIMRES": 0.3794616734932709,
+          "SIO": 0.42428902976185806,
+          "SMRUConsulting": 0.6,
+          "UAF_NGOS": 0.09190329725560649
+        },
+        "mean_over_folds": 0.39796767438090275,
+        "pooled": 0.2829576643402013
+      },
+      "3": {
+        "per_fold": {
+          "JASCO_VFPA": 0.30164238284317024,
+          "JASCO_VFPA_ONC": 0.4714182182719076,
+          "ONC": 0.3376797161172161,
+          "OrcaSound": 0.41965317919075146,
+          "SIMRES": 0.5157987126974839,
+          "SIO": 0.43323190716587084,
+          "SMRUConsulting": 0.5921052631578947,
+          "UAF_NGOS": 0.08790787948782729
+        },
+        "mean_over_folds": 0.39492965736651525,
+        "pooled": 0.29067218828768776
+      },
+      "4": {
+        "per_fold": {
+          "JASCO_VFPA": 0.3338549027525406,
+          "JASCO_VFPA_ONC": 0.46885934666564505,
+          "ONC": 0.3481146978021978,
+          "OrcaSound": 0.5352601156069364,
+          "SIMRES": 0.4853715623171445,
+          "SIO": 0.43845624811826217,
+          "SMRUConsulting": 0.6052631578947368,
+          "UAF_NGOS": 0.08984276313415059
+        },
+        "mean_over_folds": 0.41312784928645174,
+        "pooled": 0.30407091806808384
+      },
+      "6": {
+        "per_fold": {
+          "JASCO_VFPA": 0.39884637817708685,
+          "JASCO_VFPA_ONC": 0.510822925446326,
+          "ONC": 0.33809752747252747,
+          "OrcaSound": 0.6086705202312138,
+          "SIMRES": 0.43417203042715036,
+          "SIO": 0.46607157015207307,
+          "SMRUConsulting": 0.6,
+          "UAF_NGOS": 0.16160990339617196
+        },
+        "mean_over_folds": 0.4397863569128187,
+        "pooled": 0.32606857497942965
+      },
+      "8": {
+        "per_fold": {
+          "JASCO_VFPA": 0.4170774726877089,
+          "JASCO_VFPA_ONC": 0.5196792072127295,
+          "ONC": 0.3498122710622711,
+          "OrcaSound": 0.6069364161849711,
+          "SIMRES": 0.4675248683440609,
+          "SIO": 0.4343221030378708,
+          "SMRUConsulting": 0.5868421052631579,
+          "UAF_NGOS": 0.17854130492028544
+        },
+        "mean_over_folds": 0.4450919685891319,
+        "pooled": 0.33972135268147097
+      },
+      "12": {
+        "per_fold": {
+          "JASCO_VFPA": 0.4170774726877089,
+          "JASCO_VFPA_ONC": 0.5196792072127295,
+          "ONC": 0.3498122710622711,
+          "OrcaSound": 0.6069364161849711,
+          "SIMRES": 0.4675248683440609,
+          "SIO": 0.4343221030378708,
+          "SMRUConsulting": 0.5868421052631579,
+          "UAF_NGOS": 0.17854130492028544
+        },
+        "mean_over_folds": 0.4450919685891319,
+        "pooled": 0.33972135268147097
+      }
+    },
+    "best_k": 8,
+    "best": {
+      "per_fold": {
+        "JASCO_VFPA": 0.4170774726877089,
+        "JASCO_VFPA_ONC": 0.5196792072127295,
+        "ONC": 0.3498122710622711,
+        "OrcaSound": 0.6069364161849711,
+        "SIMRES": 0.4675248683440609,
+        "SIO": 0.4343221030378708,
+        "SMRUConsulting": 0.5868421052631579,
+        "UAF_NGOS": 0.17854130492028544
+      },
+      "mean_over_folds": 0.4450919685891319,
+      "pooled": 0.33972135268147097
+    }
+  },
+  "site_invariant_lopo_inductive_best_k": {
+    "per_fold": {
+      "JASCO_VFPA": 0.4022604145635642,
+      "JASCO_VFPA_ONC": 0.5631927949326999,
+      "ONC": 0.38065132783882777,
+      "OrcaSound": 0.3838150289017341,
+      "SIMRES": 0.16032767700409598,
+      "SIO": 0.4596050652955174,
+      "SMRUConsulting": 0.6460526315789473,
+      "UAF_NGOS": 0.1400728772755769
+    },
+    "mean_over_folds": 0.3919972271738705,
+    "pooled": 0.28222103846580604
+  },
+  "cross_site_pairs_raw_vs_invariant": {
+    "OKW_vs_TKW": {
+      "raw": 0.5597159035438835,
+      "site_invariant": 0.5856163742353805,
+      "n_provider_pairs": 6,
+      "chance": 0.5
+    },
+    "SRKW_vs_TKW": {
+      "raw": 0.5972737795629534,
+      "site_invariant": 0.6248767132620895,
+      "n_provider_pairs": 12,
+      "chance": 0.5
+    },
+    "OKW_vs_SRKW": {
+      "raw": 0.5185190839560859,
+      "site_invariant": 0.4829530333148154,
+      "n_provider_pairs": 2,
+      "chance": 0.5
+    }
+  },
+  "within_site_sanity_srkw_tkw_vfpa": {
+    "raw": 0.8825211747718782,
+    "after_removing_8_dims": 0.8756252804341493
+  },
+  "permutation_null": {
+    "k": 8,
+    "n_perm": 200,
+    "null_mean": 0.23445268902045904,
+    "null_std": 0.017415942821556674,
+    "pvalue": 0.004975124378109453
+  },
+  "figure": "figures/site_invariance.png",
+  "boundary": "Methods contribution: a label-free site-invariance transform for frozen bioacoustic embeddings. Ecotype and recording site are confounded in this corpus (SAR is single-provider), so recovery is bounded; reported honestly. Not a claim of meaning."
+}
