@@ -1,0 +1,72 @@
+{
+  "criterion": "C3 / response criterion (Yovel & Rechavi 2023, criterion 3): measurable response to a broadcast signal (non-invasive, naive animals, not only decoding)",
+  "criterion_met": true,
+  "basis": "Met by a published conspecific playback re-analysis (filatova2011playback: same-pod vs different-pod vocal response 6/6 vs 0/6, Fisher p=0.002, naive wild animals) plus an embedding model that recovers the dialect space driving the response (AVES2 purity 0.439 vs 0.05 null, p=1e-3), corroborated by independent broadcast-response datasets (selbmann2026aversive, bowers2018) and natural vocal matching (miller2004repertoires).",
+  "n_broadcast_studies": 3,
+  "n_conspecific_playback": 1,
+  "n_naive_playback": 3,
+  "evidence": [
+    {
+      "study": "Filatova 2011",
+      "citation_key": "filatova2011playback",
+      "design": "conspecific playback",
+      "stimulus_type": "orca calls (same vs different pod)",
+      "responder_species": "Orcinus orca",
+      "n_trials": "14 (6 vs 6 pooled)",
+      "response_measure": "vocal reply + approach",
+      "result": "same-pod replied / different-pod silent",
+      "statistic": "Fisher exact p=0.002",
+      "naive_animals": "yes",
+      "value_source": "recomputed by us",
+      "our_contribution": "recomputed statistic + AVES2 dialect-recovery (purity 0.439 vs 0.05 null p=1e-3)"
+    },
+    {
+      "study": "Selbmann 2026",
+      "citation_key": "selbmann2026aversive",
+      "design": "playback with matched controls",
+      "stimulus_type": "pilot-whale sound vs noise/upsweep control",
+      "responder_species": "Orcinus orca",
+      "n_trials": "15 (8 stimulus + 7 control)",
+      "response_measure": "horizontal-movement reaction score + calling rate (HMM/GEE)",
+      "result": "significant avoidance to stimulus vs control",
+      "statistic": "Stimulus effect p=0.02",
+      "naive_animals": "yes",
+      "value_source": "published value (open data+code in SI)",
+      "our_contribution": "independent corroboration; re-analysable from public SI"
+    },
+    {
+      "study": "Bowers 2018",
+      "citation_key": "bowers2018",
+      "design": "playback with conspecific/baleen controls",
+      "stimulus_type": "orca calls broadcast to delphinids",
+      "responder_species": "Globicephala macrorhynchus; Grampus griseus",
+      "n_trials": "14 (10 + 4)",
+      "response_measure": "heading change (DTAG)",
+      "result": "significant heading change only to orca calls (nonlinear features)",
+      "statistic": "significant vs controls",
+      "naive_animals": "yes",
+      "value_source": "published value (open access)",
+      "our_contribution": "corroboration that orca call STRUCTURE drives responses"
+    },
+    {
+      "study": "Miller 2004",
+      "citation_key": "miller2004repertoires",
+      "design": "natural vocal exchange (observational)",
+      "stimulus_type": "conspecific calls (natural)",
+      "responder_species": "Orcinus orca",
+      "n_trials": "free-ranging exchanges",
+      "response_measure": "call-type matching of preceding caller",
+      "result": "matches above chance",
+      "statistic": "above-chance matching",
+      "naive_animals": "natural (no playback)",
+      "value_source": "published value",
+      "our_contribution": "the matching mechanism re-presented in H6 (Filatova Table 3)"
+    }
+  ],
+  "scope_and_caveats": [
+    "MET refers to the response criterion (a measurable response to a broadcast signal), NOT to referential meaning.",
+    "The behavioural playback experiments are prior published work re-analysed here (Path A); our contribution is the reproducible statistic + the embedding model + the cross-dataset roll-up.",
+    "The conspecific result tracks DIALECT membership (same vs different pod), not call CONTENT; a content-controlled playback would be needed for referential meaning and remains future work.",
+    "Conspecific n is modest (6 vs 6 after pseudoreplication control); robustness comes from convergence across independent datasets and stimulus types."
+  ]
+}

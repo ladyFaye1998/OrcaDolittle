@@ -1,0 +1,23 @@
+{
+  "head": "H6_embedding_prerequisite",
+  "analysis": "ferop_catalogue_calltype_separability",
+  "encoder": "AVES2 (esp_aves2_sl_beats_all, frozen, mean-pooled)",
+  "stimulus_source": "russianorca_catalogue (public FEROP K-type catalogue)",
+  "n_exemplars_total": 60,
+  "n_types_total": 22,
+  "purity_test": {
+    "n_exemplars": 57,
+    "n_types": 19,
+    "min_per_type": 2,
+    "loo_1nn_purity": 0.43859649122807015,
+    "null_mean": 0.050140350877192985,
+    "null_std": 0.03288636618643027,
+    "proportional_chance": 0.06740535549399816,
+    "n_perm": 1000,
+    "pvalue": 0.000999000999000999,
+    "silhouette_cosine": 0.029048170894384384
+  },
+  "figure": "figures/playback_embedding.png",
+  "interpretation": "Frozen AVES2 embeddings separate the Kamchatka dialect call types well above a label-shuffle null -- the encoder represents the signal space of the playback stimuli. This is the embedding prerequisite for a dialect-distance response model; it is NOT itself evidence of meaning.",
+  "gated_next_step": "The per-trial stimulus->response model (does embedding dialect-distance predict the vocal response and call-type matching of filatova2011playback?) requires the playback-session audio, which is request-only from FEROP (see docs/data_requests.md)."
+}

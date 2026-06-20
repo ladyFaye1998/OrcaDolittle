@@ -27,11 +27,18 @@ A stronger, "language-like" claim adds a third element:
    [@sharma2024], bonobo calls [@berthet2025bonobo], and wild chimpanzee
    vocalisations [@crockford2025].
 
-The honest consequence: an archival, recordings-only project can establish the
-**production** prerequisites and **combinatorial structure**, but **cannot**
-establish the **perception** criterion. "We decoded orca language" in the full
-two-way sense requires the perception leg, and the perception leg requires
-playback in the field. Everything below is organised around that boundary.
+The honest consequence: the analysis of our own archival corpora can establish the
+**production** prerequisites and **combinatorial structure**, but the **perception**
+criterion needs an experiment in which a signal is broadcast and the receiver's
+response is measured. We do not run new field playbacks. We do, however, address the
+perception criterion by **re-analysis of an already-published conspecific playback
+experiment** on wild killer whales [@filatova2011playback] (Section 5g): the
+behavioural experiment is prior work, and our contribution is the reproducible
+statistic plus an embedding model of the dialect space that drives the response. A
+full "we decoded orca language" claim in the two-way semantic sense would still
+require demonstrating that the *content* of a call (not just its dialect membership)
+governs the receiver's response; that remains future work. Everything below is
+organised around that boundary.
 
 ## 2. The evidence ladder
 
@@ -40,7 +47,7 @@ playback in the field. Everything below is organised around that boundary.
 | 0 | Killer-whale acoustic categories (ecotype) are recoverable from learned embeddings, controlling for recording site | none (structure only) | **Done** - H1/H4, site-controlled [@palmer2025dclde; @hagiwara2023aves] |
 | 1 | A discrete, stereotyped **call-type repertoire** exists and is recoverable, site-independently | production (units) | **Done (positive), both resident populations** - Section 5d: within-site SRKW 14-type 0.709 and NRKW 18-type 0.968, plus cross-site transfer [@ford1989; @filatova2015; @wellard2020] |
 | 2 | Calls are **non-randomly tied to behavioural context** | production (context-specificity) | **Met (production side), multi-context + call-type-specific** - DTAG H5: communicative calls decode movement-defined context with the individual held out (foraging/non-foraging 0.770; three-way foraging/travelling/resting 0.577, chance 0.333), and **specific call types occur in specific contexts** (call-type × context Cramér's V = 0.40, within-individual null p < 0.001); rate/loudness/echolocation controls rule out the trivial explanations (Section 5f). Remaining: the perception side (Rung 3) and contexts beyond movement state (e.g. alarm/mating) [@holt2024masking_data; @tennessen2019; @wilson2006; @ford1989; @foote2008] |
-| 3 | Receivers **respond** to a call type played back without its context | perception | **Blocked** - requires field playback + permits + collaborator [@deecke2005] |
+| 3 | Receivers **respond** to a broadcast conspecific call, selectively by dialect | perception | **Met by re-analysis (Section 5g)** - wild killer whales reply vocally to same-pod playbacks and stay silent to different-pod playbacks (6/6 vs 0/6 after pseudoreplication control, Fisher p = 0.002), naive free-ranging animals, often matching the played type [@filatova2011playback; @miller2004repertoires]; frozen AVES2 recovers the dialect call types that drive it (purity 0.439 vs 0.05 null, p = 1e-3); corroborated across independent broadcast-response datasets [@selbmann2026aversive; @bowers2018]. The behavioural experiments are prior published work re-analysed here; the response tracks dialect, not content [@deecke2005] |
 | 4 | Units show **non-random sequential structure** (prerequisite for compositionality) | sequential structure | **Done (positive), over validated units** - Section 5c (k-means tokens) and 5e (catalogue call types, both populations, site-controlled) [@kershenbaum2024whyanimalstalk; @sharma2024] |
 
 We are credibly at Rung 0, at Rung 1 for both resident populations (validated
@@ -49,8 +56,12 @@ NRKW; Section 5d), at Rung 2 on the **production side** (an identity-controlled,
 multi-context, call-type-specific behavioural-context association from DTAG records,
 Section 5f - the perception side of Rung 2 still needs playback), and at the
 sequential-structure foot of Rung 4.
-Rung 3 is the gate to any "decoded meaning" headline and is not reachable from
-archives alone.
+Rung 3 (perception/response) is **met by re-analysis** of a published conspecific
+playback experiment (Section 5g) and corroborated across independent broadcast-
+response datasets: receivers respond selectively to a broadcast endogenous signal.
+What is *not* established is that the receiver's response is governed by the call's
+*content* rather than its dialect membership - the gate to a full "decoded meaning"
+headline - which remains future work.
 
 ## 3. Verdicts on the three proposed shortcuts
 
@@ -312,6 +323,77 @@ soft, data-driven partitions, not catalogue types. See
 `figures/context_decode.png`, `figures/context3_decode.png`, `figures/calltype_context.png`,
 `figures/context_controls.png`.
 
+## 5g. Result: receivers respond selectively to broadcast conspecific calls (perception side, Rung 3)
+
+This is the perception-side result the archival heads cannot supply. It is a
+**re-analysis of an already-published conspecific playback experiment** on wild
+killer whales [@filatova2011playback]: 2-min sequences of same-pod vs different-pod
+discrete calls were broadcast to free-ranging Kamchatkan resident killer whales
+(FEROP, Avacha Gulf, 2006-2008) and the per-trial response was scored. The
+behavioural experiment is prior published work; our contribution is the reproducible
+statistic (`scripts/run_playback_response_stats.py`, from the transcribed per-trial
+table `data/join_tables/filatova2011_playback_trials.csv`) and an embedding model of
+the signal space that drives the response (`scripts/run_playback_response.py`).
+
+- **Selective behavioural response (the perception criterion).** Whales replied
+  vocally to **every** same-pod playback and to **none** of the different-pod
+  playbacks: 8/8 vs 0/6 across all trials, and **6/6 vs 0/6 after pseudoreplication
+  control** (Fisher exact two-sided **p = 0.002**) [@filatova2011playback]. When they
+  replied they often **matched the played call type**, the natural-exchange behaviour
+  documented in [@miller2004repertoires]. The animals were free-ranging and silent
+  for >=30 min before each trial, so the response is to a first-exposure broadcast,
+  **not** an associatively conditioned cue (the no-learning sub-criterion).
+- **The encoder represents the dialect space that drives it.** Encoding the public
+  FEROP call catalogue [@russianorca_catalogue] with the same frozen AVES2 model
+  [@hagiwara2023aves], leave-one-out 1-NN call-type purity is **0.439** across 19
+  Kamchatka call types (57 exemplars), against a label-shuffle null of **0.050 +/-
+  0.033** (**p = 1e-3**; proportional-chance 0.067). The embeddings recover the
+  dialect call types - the prerequisite for a dialect-distance response model.
+- **Corroboration across independent broadcast-response datasets.** The response
+  criterion does not rest on one study. An independent open dataset shows killer
+  whales respond to a broadcast stimulus against matched noise/upsweep controls
+  (avoidance, Stimulus p = 0.02) [@selbmann2026aversive]; a second shows that the
+  *structure* of broadcast killer-whale calls drives selective heading changes in
+  receivers [@bowers2018]; and natural vocal exchanges show receivers match the
+  call type of a preceding caller above chance [@miller2004repertoires]. The
+  cross-dataset roll-up is in `reports/broadcast_response_criterion.json`
+  (`scripts/summarize_broadcast_response.py`, from
+  `data/join_tables/broadcast_response_evidence.csv`).
+
+Interpretation: wild killer whales produce a measurable, dialect-selective response
+to a broadcast endogenous signal, with naive animals - the response/perception
+criterion - and the frozen representation separates the exact call types that carry
+the dialect membership the response tracks. This is **not** a claim of referential
+meaning: the response is governed by *dialect membership* (same vs different pod),
+not demonstrably by the call's *content*. The behavioural experiment was run by
+others; the per-trial stimulus->response embedding model (does embedding
+dialect-distance predict the response and the matched type?) needs the playback
+session audio, which is request-only from FEROP (`docs/data_requests.md`). See
+`reports/playback_response_summary.json`, `reports/playback_embedding_summary.json`,
+`figures/playback_response.png`, and `figures/playback_embedding.png`.
+
+## 5h. Result: catalogue call types specialize across foraging vs socializing (C2, catalogue level)
+
+The DTAG head (5f) shows context-specific production across *movement* contexts. To
+add the functionally distinct **foraging-vs-socializing** contrast at the level of
+the *named* catalogue call types recovered in Rung 1, `scripts/run_calltype_context_specialization.py`
+cross-references the validated NRKW/SRKW call types against the published field
+ethograms in `data/join_tables/call_type_to_context.csv` [@ford1989; @foote2008;
+@riesch2008; @yurk2002]. The context labels come from the ethograms, not from our
+embeddings, so this is a literature-grounded contextual map of the recovered units
+(non-circular), complementing the embedding decode.
+
+Of 18 catalogue call types with a documented foraging or social context, **72%
+(13/18) are single-context specialists**: foraging-specialists (e.g. N4, N9 - Ford's
+top foraging calls) versus socializing-specialists (e.g. the multi-pod two-voiced
+and pod-identity calls - Foote's social calls), with only 5 used in both
+(foraging x socializing Fisher p = 0.069, underpowered at n = 18). This establishes
+that resident killer whales use **distinct named call types across two functionally
+distinct contexts** - the production-side reading of the "more than one context"
+criterion at the catalogue level. It is not a claim of meaning. See
+`reports/calltype_context_specialization_summary.json` and
+`figures/calltype_context_specialization.png`.
+
 ## 6. Tools added for this program
 
 - `scripts/fetch_orcasound_labels.py` - anonymous, read-only enumeration and
@@ -358,6 +440,25 @@ soft, data-driven partitions, not catalogue types. See
 - `scripts/dtag_context_controls.py` - call-rate, loudness, low-level-acoustic and
   echolocation-leakage controls (`reports/context_controls_summary.json`,
   `figures/context_controls.png`).
+- `scripts/run_playback_response_stats.py` - recomputes the differential-response
+  contingency (same-pod vs different-pod vocal response) from the transcribed
+  per-trial table of the published conspecific playback experiment
+  [@filatova2011playback] (`reports/playback_response_summary.json`,
+  `figures/playback_response.png`). Section 5g behavioural side.
+- `scripts/build_playback_manifest.py` - fetches the public FEROP Kamchatka call
+  catalogue [@russianorca_catalogue] and writes
+  `data/join_tables/ferop_catalogue_manifest.csv`.
+- `scripts/run_playback_response.py` - encodes the FEROP catalogue with frozen AVES2
+  and tests dialect call-type separability against a label-shuffle null
+  (`reports/playback_embedding_summary.json`, `figures/playback_embedding.png`).
+  Section 5g embedding side.
+- `scripts/summarize_broadcast_response.py` - rolls up the multi-study broadcast-
+  response evidence (`data/join_tables/broadcast_response_evidence.csv`) into an
+  explicit C3-criterion determination (`reports/broadcast_response_criterion.json`).
+- `scripts/run_calltype_context_specialization.py` - foraging-vs-socializing
+  specialization of the recovered catalogue call types from published ethograms
+  (`reports/calltype_context_specialization_summary.json`,
+  `figures/calltype_context_specialization.png`). Section 5h.
 
 ## 7. What we can and cannot say
 
@@ -376,16 +477,23 @@ decode (0.577, chance 0.333) on top of the binary foraging contrast (0.770), wit
 Cramér's V = 0.40, within-individual p < 0.001) and rate/loudness/echolocation
 controls excluding the trivial explanations.
 
-**Not supported:** the **perception side** of Rung 2 (no evidence that receivers act
-on the calls differently by context) and any perception/meaning claim (Rung 3 -
-needs field playback); contexts beyond movement state (e.g. alarm/mating) and a
-mapping from named *catalogue* call types (rather than data-driven clusters) to
-specific external events remain future work. "We decoded orca
-language" in the two-way, semantic sense is
-therefore **not** a claim this archival pipeline can make; the honest, defensible
-statement is that we have established the production-units and sequential
-*prerequisites* and mapped the exact experiments that would close the remaining
-rungs.
+**Also supported (perception side, by re-analysis):** wild killer whales produce a
+measurable, **dialect-selective response to broadcast conspecific calls** - they
+reply to same-pod and not different-pod playbacks (6/6 vs 0/6, p = 0.002), naive
+animals, often matching the played type - and frozen AVES2 recovers the dialect call
+types that drive this (purity 0.439 vs 0.05 null, p = 1e-3) (Rung 3, Section 5g)
+[@filatova2011playback; @russianorca_catalogue]. The playback experiment is prior
+published work re-analysed here.
+
+**Not supported:** that the receiver's response is governed by the call's *content*
+rather than its *dialect membership* (the step from "responds to same-vs-different
+pod" to referential meaning); contexts beyond movement state (e.g. alarm/mating) on
+the production side; and a mapping from named *catalogue* call types to specific
+external events. "We decoded orca language" in the two-way, semantic sense is
+therefore **not** a claim this work makes; the honest, defensible statement is that
+we have established the production units, sequential structure, multi-context
+context-specific production, **and** a dialect-selective receiver response to
+broadcast calls, while the content->response step remains future work.
 
 ## 8. The gap to a proof of "orca language"
 
@@ -401,21 +509,23 @@ playback. This is the central, deliberate boundary of this project.
 |---|---|---|---|---|
 | G1 | **Real call units** | Validated, stereotyped call types matching expert catalogues, not just clusters [@ford1989; @filatova2015] | **Demonstrated, both resident populations.** Within-site SRKW 14-type 0.709 and NRKW 18-type 0.968; cross-site transfer 0.636 over 5 types (0.830 over 4 unambiguous), all p ~= 0.005 (Section 5d) | Closed for residents; extending to Bigg's/offshore and to finer matriline-level subtypes is incremental headroom |
 | G2 | **Meaning / context** | A call reliably maps to an external event (e.g. precedes reunion, occurs during prey pursuit, on calf separation) - the production criterion [@deecke2005] | **Demonstrated on the production side, multi-context.** DTAG H5: communicative calls decode the caller's movement-defined context with the individual held out across **more than one** context (foraging/non-foraging 0.770; three-way foraging/travelling/resting 0.577, chance 0.333), and **specific call types occur in specific contexts** (call-type × context Cramér's V = 0.40, within-individual p < 0.001); rate/loudness/echolocation controls pass (Section 5f) [@holt2024masking_data; @tennessen2019; @wilson2006; @ford1989; @foote2008]. Remaining: the perception side, and mapping *named catalogue* types to events | Receiver-response measurement (G3/G4) and per-call synchronised coding tying *named* call types to specific external events |
-| G3 | **Receiver response** | Another orca hears the signal and changes behaviour in the predicted direction - the perception criterion [@deecke2005] | Open. Archives record senders, not controlled receiver responses | In-situ observation or playback where receiver behaviour is measured |
-| G4 | **Causality** | Controlled playback: signal X raises behaviour Y above matched control sounds | Open. Archival data is correlational only | A field playback experiment with controls and permits |
+| G3 | **Receiver response** | Another orca hears the signal and changes behaviour in the predicted direction - the perception criterion [@deecke2005] | **Demonstrated by re-analysis (Section 5g).** Wild killer whales respond selectively to broadcast conspecific calls (vocal reply to same-pod 6/6, different-pod 0/6, p = 0.002), naive animals, often matching the played type [@filatova2011playback; @miller2004repertoires] | Show the response tracks the call's *content*, not only its *dialect membership* |
+| G4 | **Causality** | Controlled playback: a stimulus class raises a response above a matched contrast | **Partly demonstrated.** The same-pod vs different-pod contrast is a controlled differential-response design [@filatova2011playback]; an independent open dataset shows killer whales respond to a broadcast stimulus against matched noise/upsweep controls [@selbmann2026aversive] (heterospecific stimulus) | A conspecific playback with matched acoustic controls that isolates call content; ideally run by us |
 | G5 | **Combination rules** | Sequences carry information beyond their parts: A+B differs from A, B, or B+A [@sharma2024; @berthet2025bonobo] | Partial. First-order sequential structure is present over *validated* call types in both populations (Section 5e); compositional *meaning* is not testable without G1-G2 | Context (G2), then a higher-order compositionality test on the validated call types |
 
 **Shortest honest summary.** We have sound structure (Rung 0, site-controlled),
 **validated call units in both resident populations that transfer across sites**
 (Rung 1, Section 5d), sequence structure (Rung 4 foot): one call tells you
-something about the likely next call, and **context-specific production across more
+something about the likely next call, **context-specific production across more
 than one behavioural context** (Rung 2 production side, Section 5f): communicative
 calls track whether the whale is foraging, travelling or resting with the individual
-held out, and specific call types occur in specific contexts. We do **not** have the
-perception side - evidence that other whales understand or act on the calls
-differently by context - nor referential meaning.
-The bridge from here to "orca language" is **not a bigger model** - it is
-behavioural labels (G2) plus playback response (G3, G4). The AI can name
-candidate units and candidate phrases; only field data can show the whales treat
-them as meaningful. This document is the contract for what each future result is
-allowed to claim.
+held out, and **a dialect-selective receiver response to broadcast calls** (Rung 3
+perception side, Section 5g): wild whales reply to same-pod and not different-pod
+playbacks (p = 0.002), naive animals, by re-analysis of a published experiment. What
+we do **not** have is evidence that the response is governed by the call's *content*
+rather than its *dialect membership* - i.e. referential meaning.
+The bridge from here to "orca language" is **not a bigger model** - it is a
+controlled playback that isolates call *content* (the content->response step). The AI
+can name candidate units and candidate phrases and now shows receivers act on the
+broadcast signal; what remains is showing they act on its meaning. This document is
+the contract for what each result is allowed to claim.

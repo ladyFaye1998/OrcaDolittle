@@ -1,0 +1,66 @@
+{
+  "head": "H6",
+  "analysis": "response_to_broadcast_conspecific_calls",
+  "behavioural_source": "filatova2011playback (Marine Mammal Science 27(2):E26-E42)",
+  "behavioural_source_note": "Prior published conspecific playback experiment on wild killer whales; this script recomputes the differential-response statistic from the transcribed per-trial table. The embedding/matching model is in run_playback_response.py.",
+  "criteria_addressed": {
+    "C1_endogenous_signals": true,
+    "C3_measurable_response_to_broadcast": true,
+    "no_learning_naive_wild_animals": true
+  },
+  "all_trials": {
+    "table_rows": [
+      "same_pod",
+      "different_pod"
+    ],
+    "table_cols": [
+      "responded",
+      "silent"
+    ],
+    "table": [
+      [
+        8,
+        0
+      ],
+      [
+        0,
+        6
+      ]
+    ],
+    "n_same_pod": 8,
+    "n_different_pod": 6,
+    "fisher_exact_p_two_sided": 0.000333000333000333
+  },
+  "pseudoreplication_controlled": {
+    "table_rows": [
+      "same_pod",
+      "different_pod"
+    ],
+    "table_cols": [
+      "responded",
+      "silent"
+    ],
+    "table": [
+      [
+        6,
+        0
+      ],
+      [
+        0,
+        6
+      ]
+    ],
+    "n_same_pod": 6,
+    "n_different_pod": 6,
+    "fisher_exact_p_two_sided": 0.0021645021645021645
+  },
+  "primary_result": "pseudoreplication_controlled",
+  "direction_toward_boat_trials": 1,
+  "figure": "figures/playback_response.png",
+  "caveats": [
+    "Behavioural experiment is prior published work (Filatova et al. 2011); our contribution is the reproducible statistic + the embedding model.",
+    "Small sample (14 playbacks; 6 vs 6 after pseudoreplication control) -- typical for cetacean playback but a real power limit.",
+    "Differential vocal response = the response/perception criterion (receivers act on the broadcast signal); NOT a claim of referential meaning.",
+    "Direction-change is reported descriptively; the paper found it n.s. (p=0.444)."
+  ]
+}

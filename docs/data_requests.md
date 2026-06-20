@@ -86,3 +86,36 @@ acknowledge accordingly.
 
 With thanks,
 [Name, affiliation, contact]
+
+---
+
+## Request 4 — Filatova / Fedutin (FEROP): playback-session audio (Kamchatka)
+
+**To:** Dr. Olga Filatova and Dr. Ivan Fedutin, Far East Russia Orca Project
+(FEROP).
+
+**Subject:** Request for the playback-stimulus and response recordings underlying
+Filatova et al. (2011, Marine Mammal Science)
+
+Dear Dr. Filatova and Dr. Fedutin,
+
+I am conducting a non-invasive, embedding-based re-analysis of receiver responses
+to broadcast conspecific calls in killer whales, building on your conspecific
+playback experiment [@filatova2011playback]. Using the public FEROP call catalogue
+[@russianorca_catalogue] I have confirmed that a frozen self-supervised audio model
+recovers the Kamchatka discrete call types, and I have reproduced the differential
+same-pod vs different-pod vocal-response statistic from your published tables.
+
+To complete an embedding-based stimulus-to-response model — testing whether the
+acoustic (dialect) distance between the *played* sequence and the recipient unit's
+repertoire predicts the per-trial response and the matched response call type — I
+would need, for the 14 playback experiments: (a) the 2-min playback stimulus
+recordings, and (b) the during/after response recordings, with the experiment
+numbering used in the paper.
+
+I would use these solely for this analysis, cite Filatova et al. (2011) as the
+experiment and data source, redistribute no raw audio, and offer acknowledgement or
+co-authorship as you prefer. I am happy to sign a data-use agreement.
+
+With thanks,
+[Name, affiliation, contact]

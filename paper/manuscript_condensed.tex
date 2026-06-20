@@ -45,10 +45,14 @@ tokens and over validated call types. On an independent animal-borne DTAG archiv
 communicative calls predict the caller's movement-defined behavioural context with the
 individual held out, across more than one context (foraging/non-foraging $0.770$;
 foraging/travelling/resting $0.577$, chance $0.333$), with call-type$\times$context
-selectivity and rate/loudness/echolocation controls \citep{holt2024masking_data}. The work
-is fully non-invasive and makes no claim of meaning or of a response to broadcast signals;
-it establishes the production-side prerequisites and the site-controlled baseline on which
-interactive playback studies can build.
+selectivity and rate/loudness/echolocation controls \citep{holt2024masking_data}. On the
+perception side, a re-analysis of a published conspecific playback experiment shows wild
+killer whales respond selectively to broadcast calls---vocal reply to same-pod and not
+different-pod playbacks ($6/6$ vs $0/6$, Fisher $p=0.002$), naive animals---and frozen AVES2
+recovers the dialect call types that drive it (purity $0.439$ vs a $0.05$ null)
+\citep{filatova2011playback,russianorca_catalogue}. The work is fully non-invasive and makes
+no claim of meaning; its single response result re-analyses prior published playbacks and
+tracks dialect membership, not call content.
 \end{abstract}
 
 \vspace{-0.5em}
@@ -66,7 +70,12 @@ public data, frozen weights, explicit nulls, and a hash-frozen artifact, in the
 conservative-claims spirit appropriate to interspecies-communication research
 \citep{kershenbaum2024whyanimalstalk}. We make no claim of meaning or two-way
 communication; the work that established context-specific dolphin signals required decades
-of field data and in-situ playbacks \citep{sayigh2025nsw}.
+of field data and in-situ playbacks \citep{sayigh2025nsw}. Our contribution is
+methodological, not a new architecture: a confound-controlled evaluation protocol
+(leave-one-provider-out site isolation, within-site discrimination, cross-site transfer), a
+causal-attribution and negative-control battery, and an embedding-based playback-response
+model, all built around one frozen encoder so every result is attributable to the
+representation under a single auditable protocol.
 
 \vspace{-0.3em}
 \section{Data and methods}
@@ -116,6 +125,8 @@ H3 & Adjacent-call MI vs shuffle & $1.91$ vs $1.65$ bits \\
 Rung 4 & Validated N-call MI vs shuffle & $2.85$ vs $1.71$ bits \\
 H5 & Foraging/non-foraging (LIO) & $0.770$ ($0.500$) \\
 H5 & Three-way context (LIO) & $0.577$ ($0.333$) \\
+H6 & Playback reply same- vs different-pod & $6/6$ vs $0/6$ ($p{=}0.002$) \\
+H6 & FEROP dialect-type purity vs null & $0.439$ vs $0.05$ \\
 \bottomrule
 \end{tabular}
 \caption{Headline results. LIO = leave-individual-out. All effects have permutation
@@ -149,6 +160,22 @@ Specific call types occur in specific contexts (Cram\'er's $V=0.40$ vs a within-
 null of $0.08$, $p<10^{-3}$). Controls exclude trivial explanations: call rate alone decodes
 at $0.536$, loudness at $0.577$, and dropping click-like clips leaves $0.749$.
 
+\paragraph{Receivers respond to broadcast conspecific calls (perception side).} Re-analysing
+a published conspecific playback experiment \citep{filatova2011playback}, wild killer whales
+replied vocally to every same-pod playback and to none of the different-pod playbacks ($8/8$
+vs $0/6$; $6/6$ vs $0/6$ after a pseudoreplication control, Fisher exact $p=0.002$), naive
+free-ranging animals, often matching the played type \citep{miller2004repertoires}. Encoding
+the public FEROP catalogue \citep{russianorca_catalogue} with frozen AVES2, leave-one-out
+1-NN call-type purity is $0.439$ across 19 dialect types vs a $0.050$ label-shuffle null
+($p=10^{-3}$): the encoder represents the dialect space that drives the response. The
+behavioural experiment is prior work; the response tracks dialect membership, not call content.
+The criterion is corroborated across independent broadcast-response datasets
+\citep{selbmann2026aversive,bowers2018,miller2004repertoires}. On the production side, the
+recovered catalogue call types specialise across foraging vs socialising---$72\%$ ($13/18$
+NRKW/SRKW types) are single-context specialists (foraging: N4, N9; socialising: the multi-pod
+two-voiced/identity calls), context labels from published ethograms, not embeddings
+\citep{ford1989,foote2008}.
+
 \paragraph{The signal is distributed and not an artifact.} On the within-site SRKW/TKW
 decode ($0.979$), no small dimension set is necessary (top-$k$ knock-out stays $0.93$--$0.97$
 through $k{=}200$; one dimension is at chance; $\sim\!100$ PCA components reach $0.91$), and
@@ -179,12 +206,16 @@ are detection-level and correlate with pod/matriline, so this is call-type discr
 not meaning; the SMRU transfer set is small. The H5 context labels are movement-only
 proxies and the on-tag call-type clusters are soft; a behavioural-context decode could
 reflect arousal rather than content, though the call-type$\times$context selectivity and the
-loudness control ($0.577$) argue against a pure-arousal account. \emph{Calibrated
+loudness control ($0.577$) argue against a pure-arousal account. Non-acoustic channels
+(posture, surface behaviour, touch) are not captured, which bounds interpretation but cannot
+inflate an acoustic decode or a response to an acoustic broadcast. \emph{Calibrated
 confidence}---\textbf{high}: site-controlled ecotype/call-type structure and cross-site
 call-type transfer; \textbf{medium--high}: context-specific production across more than one
-movement-defined context, individual held out; \textbf{no claim}: referential meaning, the
-perception side, or any response to a broadcast signal, which require field playbacks an
-archival corpus cannot supply \citep{deecke2005,sayigh2025nsw}.
+movement-defined context, individual held out; \textbf{medium--high}: a dialect-selective receiver
+response to broadcast conspecific calls (H6), by re-analysis of a prior published playback
+(clean differential response, corroborated across independent datasets, but small conspecific $n$); \textbf{no claim}: referential meaning, or that
+the receiver response is governed by call content rather than dialect membership---which
+requires a controlled content-isolating playback \citep{deecke2005,sayigh2025nsw}.
 
 \vspace{-0.3em}
 \section{Reproducibility}

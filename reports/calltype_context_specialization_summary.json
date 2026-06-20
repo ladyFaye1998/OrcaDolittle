@@ -1,0 +1,47 @@
+{
+  "analysis": "catalogue_calltype_foraging_vs_socializing_specialization",
+  "criterion": "C2 (more than one behavioural context), catalogue / named-unit level",
+  "context_label_source": "published field ethograms (NOT embeddings): ford1989, foote2008, riesch2008, yurk2002",
+  "populations": [
+    "NRKW",
+    "SRKW"
+  ],
+  "n_call_types": 18,
+  "n_foraging_associated": 8,
+  "n_socializing_associated": 15,
+  "n_foraging_specialist": 3,
+  "n_socializing_specialist": 10,
+  "n_both": 5,
+  "foraging_specialist_types": [
+    "N4",
+    "N9",
+    "whistles_SW1-SW4"
+  ],
+  "socializing_specialist_types": [
+    "N11",
+    "N12",
+    "S16",
+    "S17",
+    "S19",
+    "S2iii",
+    "S4",
+    "dominant_calls",
+    "two_voiced_calls",
+    "whistles_W1-W6"
+  ],
+  "both_context_types": [
+    "N2",
+    "N5",
+    "N7",
+    "N8",
+    "S1"
+  ],
+  "specialization_index": 0.7222222222222222,
+  "disjointness_fisher_p": 0.06862745098039216,
+  "figure": "figures/calltype_context_specialization.png",
+  "caveats": [
+    "Context labels come from published ethograms, not from our embeddings (non-circular); this maps the documented contextual use of the recovered catalogue units, complementing the H5 embedding decode.",
+    "Establishes context-specific PRODUCTION across two functionally distinct contexts (foraging vs social); NOT a claim of referential meaning.",
+    "Ford 1989: 'no call type was correlated exclusively with any behaviour' - this is differential specialization, not deterministic mapping."
+  ]
+}
