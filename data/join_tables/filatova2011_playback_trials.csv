@@ -1,0 +1,15 @@
+experiment,stimulus_type,stimulus_subtype,played_unit,recipient_units,direction_change,vocal_response,response_call_types,pooled_id,notes
+1,different_pod,different_pod,,,,no,,,different-pod playback; no vocal response
+2,same_pod,own_unit,Moloko,Moloko,,yes,K1;K5;K23,,responded to own unit calls
+3,same_pod,own_unit,Drkin,Drkin;Figurny,,yes,K4;K5;K7,,two units present same pod
+4,same_pod,own_unit,Kaplya,Kaplya;Nemo,,yes,K5;K7,A,pooled with exp 10 (same recipient and stimulus)
+5,same_pod,different_unit_same_pod,AV2,Winny,,yes,K5;K12,B,pooled with exp 9; Winny responded to AV2-unit calls (low association)
+6,same_pod,different_unit_same_pod,AV140,Commandor;Cezar,,yes,K3;K20,,Commandor/Cezar are K20 clan; table prints played AV140 - see dataset README caveat
+7,different_pod,different_clan,,,toward,no,,,changed direction ~90deg toward boat passed it no sound (explicit in text)
+8,different_pod,different_pod,,,,no,,,different-pod playback; no vocal response
+9,same_pod,different_unit_same_pod,AV2,Winny,,yes,K5;K7,B,pooled with exp 5
+10,same_pod,own_unit,Kaplya,Kaplya;Nemo,,yes,K4;K5;K7,A,pooled with exp 4
+11,different_pod,different_pod,,,,no,,,different-pod playback; no vocal response
+12,different_pod,different_pod,,,,no,,,different-pod playback; no vocal response
+13,same_pod,different_unit_same_pod,Galkin,Businka;Misha,,yes,K5;K17,,different unit same pod
+14,different_pod,different_pod,,,,no,,,multi-pod present; excluded from direction analysis

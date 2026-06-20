@@ -87,7 +87,7 @@
   pages   = {595--603},
   year    = {2012},
   doi     = {10.1016/j.anbehav.2011.12.013},
-  note    = {Kamchatka resident call corpus. Companion playback paper exists separately; verify when reading.},
+  note    = {Kamchatka resident call corpus. The companion playback paper is filatova2011playback (Marine Mammal Science 2011).},
 }
 
 @article{filatova2015,
@@ -127,7 +127,7 @@
   pages   = {1099--1107},
   year    = {2004},
   doi     = {10.1016/j.anbehav.2003.06.017},
-  note    = {VERIFY title against original; sometimes referenced as "Call repertoires of killer whales".},
+  note    = {Title confirmed via the Filatova et al. 2011 reference list. Documents that resident killer whales regularly match the call type of a preceding caller in natural vocal exchanges - the natural-exchange analogue of a playback response, and the mechanism behind the call-type matching seen in filatova2011playback.},
 }
 
 @article{wieland2010,
@@ -152,13 +152,27 @@
   note    = {Cross-species playback (orca calls broadcast to pilots and Risso's, DTAG-quantified responses). Response-evidence source. VERIFY per-trial supplementary tables.},
 }
 
-@article{cure2026,
-  author  = {Cur{\'e}, C. and others},
-  title   = {Aversive behavioural responses of free-ranging killer whales to pilot whale sounds quantified by multi-sensor biologging tags},
+@article{selbmann2026aversive,
+  author  = {Selbmann, A. and Samarra, F. I. P. and Barluet de Beauchesne, L. and Marchon, T. M. J. and Hayward, E. and Svavarsson, J. and Miller, P. J. O. and Wensveen, P. J. and Cur{\'e}, C.},
+  title   = {Aversive behavioural responses of killer whales to sounds of long-finned pilot whales},
   journal = {Scientific Reports},
+  volume  = {16},
+  pages   = {4716},
   year    = {2026},
   doi     = {10.1038/s41598-026-35574-7},
-  note    = {15 playback trials on 8 tagged orcas. Response-evidence source. VERIFY full author list and exact title from publisher landing page.},
+  note    = {Open access (CC-BY-NC-ND 4.0). 15 playbacks (8 pilot-whale-sound, 5 noise control, 2 upsweep control) on 8 D-tagged killer whales, Iceland; HMM + GEE on a horizontal-movement reaction score, calling rate, and group-behaviour variables; significant avoidance to pilot-whale sound (Stimulus p = 0.02). Wild naive animals respond to a broadcast acoustic signal (heterospecific stimulus). Data and code are in the Supplementary Information. Replaces the earlier mis-attributed key cure2026 (Cure is the last author, not the first).},
+}
+
+@article{filatova2011playback,
+  author  = {Filatova, O. A. and Fedutin, I. D. and Burdin, A. M. and Hoyt, E.},
+  title   = {Responses of {K}amchatkan fish-eating killer whales ({O}rcinus orca) to playbacks of conspecific calls},
+  journal = {Marine Mammal Science},
+  volume  = {27},
+  number  = {2},
+  pages   = {E26--E42},
+  year    = {2011},
+  doi     = {10.1111/j.1748-7692.2010.00433.x},
+  note    = {The conspecific-playback response source. 14 playbacks of same-pod vs different-pod calls to wild Kamchatkan resident killer whales (FEROP, Avacha Gulf, 2006-2008). Differential, statistically significant vocal response: whales replied to all same-pod playbacks (8/8) and to none of the different-pod playbacks (0/6), Fisher exact P = 0.002, often matching the played call type (Table 3). Wild naive animals, first exposure (no associative conditioning). Per-trial outcomes are in Tables 1 and 3; the stimulus call-type repertoire (K-types) is the public FEROP catalogue (russianorca_catalogue). Full text read 2026-06.},
 }
 
 @article{samarra2010,
@@ -455,6 +469,15 @@
   year         = {2018--present},
   url          = {https://registry.opendata.aws/orcasound/},
   note         = {Best demo input source. CC-BY-NC-SA-4.0 on labelled subsets.},
+}
+
+@misc{russianorca_catalogue,
+  author       = {{Far East Russia Orca Project (FEROP)}},
+  title        = {Catalogue of {K}amchatkan killer whale calls},
+  year         = {2007--present},
+  howpublished = {FEROP / russianorca.com},
+  url          = {http://russianorca.com/sounds/catalog/index.htm},
+  note         = {Public per-call-type WAV catalogue of Kamchatkan resident killer-whale discrete calls (K1-K34) - the dialect repertoire used as playback stimuli in filatova2011playback. Encode targets for the embedding-based response-predictor head. Verified live 2026-06.},
 }
 
 % ---------------------------------------------------------------------

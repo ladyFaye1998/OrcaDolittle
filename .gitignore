@@ -84,6 +84,12 @@ data/embeddings/*_calltype_embeddings.npz
 data/embeddings/audio_cache/
 data/dclde/audio_cache/
 
+# Playback head (H6): public FEROP catalogue audio + AVES2 encode cache are
+# reproducible from scripts/build_playback_manifest.py + run_playback_response.py.
+# The manifest and per-trial table (data/join_tables/) ARE committed.
+data/playback/ferop_catalogue/
+data/playback/*.npz
+
 # --- Secrets ---
 .env
 *.key

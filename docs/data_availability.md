@@ -45,19 +45,27 @@ differently by context - and contexts beyond movement state.
 
 ## Rung 3 - responsiveness: candidate sources
 
-| Source | What it contains | Public now? | Enables natural receiver-response? |
+| Source | What it contains | Public now? | Enables receiver-response? |
 |---|---|---|---|
-| **ESP x Raincoast multimodal** [@esp2025raincoast] | Time-synchronised drone video + hydrophone + field behaviour + individual ID (Johnstone Strait, Northern Residents); pilot summer 2025 | **No** - in collection | Canonical design for this question; not yet released |
+| **Filatova et al. 2011 conspecific playback** [@filatova2011playback] **- used for H6** | 14 playbacks of same-pod vs different-pod calls to wild Kamchatkan killer whales; per-trial response (direction, vocal reply, response call types) | **Per-trial table: yes** (published Tables 1, 3, transcribed to `data/join_tables/filatova2011_playback_trials.csv`); stimulus repertoire public via FEROP catalogue [@russianorca_catalogue]; raw session audio request-only | **Yes - delivered the Rung 3 result** (`docs/decoding_program.md` 5g): selective vocal response to same-pod vs different-pod broadcast, 6/6 vs 0/6, p = 0.002, naive animals |
+| **Selbmann et al. 2026** [@selbmann2026aversive] | 15 DTAG playbacks (pilot-whale sound + controls) to 8 killer whales; HMM reaction scores | **Yes** (data + code in SI, CC-BY-NC-ND) | Supporting: measurable response to a broadcast (heterospecific) stimulus with matched controls |
+| **Bowers et al. 2018** [@bowers2018] | Killer-whale calls broadcast to two delphinids; DTAG responses | **Yes** (open access) | Supporting: orca call structure drives receiver responses |
+| **ESP x Raincoast multimodal** [@esp2025raincoast] | Time-synchronised drone video + hydrophone + field behaviour + individual ID (Johnstone Strait, Northern Residents); pilot summer 2025 | **No** - in collection | Canonical design for *natural* (non-playback) receiver-response; not yet released |
 | DCLDE multi-hydrophone (SOG, VENUS) [@palmer2025dclde] | 4 synchronised hydrophones -> localisation possible | Yes | Localisation only; no behaviour, no video, no ID |
 | Orcasound network + sightings logs [@orcasound] | Live/archived hydrophones; informal sightings | Yes | Weak; no synchronised behaviour/ID |
 | Lime Kiln hydrophone + Whale Museum webcam | Co-located audio + surface webcam | Partly; licensing care | Possible coarse surface-behaviour proxy; ID and time-alignment unverified |
 | ORCA-SPY | Detection/localisation toolkit, not a behaviour dataset | Yes (code) | No |
 
-**Assessment for Rung 3.** A non-invasive natural receiver-response analysis needs
-synchronised acoustics + behaviour + individual ID. No public dataset currently provides
-this combination; the dataset under collection by Earth Species Project and Raincoast is
-the closest match [@esp2025raincoast]. Responsiveness therefore cannot be evaluated from
-public archives alone and depends on a field-collected multimodal dataset.
+**Assessment for Rung 3.** Two routes exist. The **playback route** is available now: a
+published conspecific playback experiment [@filatova2011playback] supplies a measured,
+dialect-selective receiver response to broadcast calls (the perception criterion), which we
+re-analyse for the H6 result (`docs/decoding_program.md` 5g) - the behavioural experiment is
+prior work, our contribution is the reproducible statistic plus an embedding model of the
+dialect space on the public FEROP catalogue [@russianorca_catalogue]. What this route does
+*not* isolate is whether the response tracks call *content* rather than *dialect membership*;
+that, plus a *natural* (non-playback) receiver-response, still needs a synchronised
+acoustics + behaviour + ID dataset such as the one under collection by Earth Species Project
+and Raincoast [@esp2025raincoast], or a new content-controlled playback.
 
 ## Summary of what the data supports
 
@@ -65,14 +73,16 @@ public archives alone and depends on a field-collected multimodal dataset.
    supplies on-animal behaviour that varies within a held-out individual, yielding a
    segment-level, identity-controlled, multi-context decode (`docs/decoding_program.md`
    5f) [@holt2024masking_data; @tennessen2019].
-2. **Rung 2 (perception side)** and **Rung 3 - responsiveness** depend on an
-   ESP/Raincoast-class synchronised multimodal dataset (or field playbacks) that is not
-   yet public [@esp2025raincoast].
+2. **Rung 3 - responsiveness (perception side)** is established by re-analysis of a
+   published conspecific playback [@filatova2011playback]: receivers respond selectively to
+   broadcast calls (H6). What remains open is the **content vs dialect** distinction and a
+   *natural* receiver-response, which depend on an ESP/Raincoast-class synchronised
+   multimodal dataset or a content-controlled playback [@esp2025raincoast].
 3. The defensible statement is therefore: validated production units, first-order
-   sequential structure (tokens and validated call types), and context-specific
-   *production* across more than one movement-defined context are established; the
-   perception side and responsiveness are mapped to specific datasets/experiments but
-   not yet demonstrated.
+   sequential structure (tokens and validated call types), context-specific *production*
+   across more than one movement-defined context, **and a dialect-selective receiver
+   response to broadcast conspecific calls** are established; what is not yet shown is that
+   the response is governed by call content (referential meaning).
 
 ## Possible next analyses (technical, in order of feasibility)
 
