@@ -1,0 +1,27 @@
+{
+  "encoder": "aves2_full_labeled",
+  "note": "DCLDE-only. Site-decoding and within-site values verified across multiple local runs (n-perm 200). Cross-site transfer computed via run_h4_confound.py --skip-within (train-fold standardisation, train cap 8000).",
+  "site_decoding": {
+    "provider_balanced_accuracy": 0.948,
+    "n_providers": 8,
+    "chance": 0.125
+  },
+  "within_site": {
+    "JASCO_VFPA": {"classes": ["SRKW", "TKW"], "n": 6962, "balanced_accuracy": 0.889, "chance": 0.5, "pvalue": 0.005},
+    "JASCO_VFPA_ONC": {"classes": ["SRKW", "TKW"], "n": 1511, "balanced_accuracy": 0.973, "chance": 0.5, "pvalue": 0.005},
+    "ONC": {"classes": ["OKW", "SRKW", "TKW"], "n": 803, "balanced_accuracy": 0.949, "chance": 0.333, "pvalue": 0.005},
+    "SIO": {"classes": ["OKW", "SRKW", "TKW"], "n": 2637, "balanced_accuracy": 0.909, "chance": 0.333, "pvalue": 0.005}
+  },
+  "cross_site_transfer": {
+    "pair": ["OKW", "SRKW"],
+    "chance": 0.5,
+    "mean_transfer_balanced_accuracy": 0.529,
+    "per_test_provider": {
+      "ONC": {"balanced_accuracy": 0.541, "n_test": 453, "n_train": 8000},
+      "SIO": {"balanced_accuracy": 0.517, "n_test": 430, "n_train": 8000}
+    }
+  },
+  "providers_with_biological_signal": ["JASCO_VFPA", "JASCO_VFPA_ONC", "ONC", "SIO"],
+  "interpretation": "Ecotype is strongly separable WITHIN a site (0.889-0.973) but does NOT transfer across sites (0.529, chance 0.500): the biological signal is real and local, but entangled with a large site-specific offset that blocks cross-site generalisation.",
+  "figure": "figures/h4_confound_aves2_full_labeled.png"
+}

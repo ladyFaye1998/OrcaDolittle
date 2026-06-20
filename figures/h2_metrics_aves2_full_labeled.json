@@ -1,0 +1,12 @@
+{
+  "encoder": "aves2_full_labeled",
+  "best_config": "PCA(nc=5)",
+  "n_clusters": 3,
+  "n_noise": 14067,
+  "ari_ecotype_all_points": 0.042519907771558556,
+  "nmi_ecotype_all_points": 0.08593484992955745,
+  "ari_provider_all_points": 0.028097138237603944,
+  "nmi_provider_all_points": 0.08712513974122216,
+  "permutation_pvalue_ecotype": 0.001996007984031936,
+  "figure": "figures/h2_clustering_aves2_full_labeled.png"
+}

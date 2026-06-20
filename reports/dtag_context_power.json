@@ -1,0 +1,200 @@
+{
+  "source": "Zenodo 10.5281/zenodo.13308835 (DTAG calibrated movement + per-dive variables)",
+  "label_rule": "foraging = (kindet>0 OR maxdep>=30.0 m); else non_foraging (movement/kinematic only, no acoustic variables)",
+  "n_dives": 1727,
+  "n_deployments": 25,
+  "by_population_dives": {
+    "NRKW": {
+      "foraging": 185,
+      "non_foraging": 1321
+    },
+    "SRKW": {
+      "foraging": 33,
+      "non_foraging": 188
+    }
+  },
+  "context_counts": {
+    "non_foraging": 1509,
+    "foraging": 218
+  },
+  "deployments_with_both_contexts": 23,
+  "deployments_total": 25,
+  "median_dives_per_deployment": 52.0,
+  "per_deployment": {
+    "oo09_234a": {
+      "population": "NRKW",
+      "sex": "M",
+      "foraging": 15,
+      "non_foraging": 89,
+      "has_both": true
+    },
+    "oo09_235a": {
+      "population": "NRKW",
+      "sex": "F",
+      "foraging": 5,
+      "non_foraging": 36,
+      "has_both": true
+    },
+    "oo09_237c": {
+      "population": "NRKW",
+      "sex": "F",
+      "foraging": 3,
+      "non_foraging": 25,
+      "has_both": true
+    },
+    "oo09_237d": {
+      "population": "NRKW",
+      "sex": "M",
+      "foraging": 11,
+      "non_foraging": 21,
+      "has_both": true
+    },
+    "oo09_239a": {
+      "population": "NRKW",
+      "sex": "M",
+      "foraging": 4,
+      "non_foraging": 77,
+      "has_both": true
+    },
+    "oo09_240a": {
+      "population": "NRKW",
+      "sex": "M",
+      "foraging": 23,
+      "non_foraging": 125,
+      "has_both": true
+    },
+    "oo09_244a": {
+      "population": "NRKW",
+      "sex": "M",
+      "foraging": 19,
+      "non_foraging": 59,
+      "has_both": true
+    },
+    "oo09_245b": {
+      "population": "NRKW",
+      "sex": "M",
+      "foraging": 8,
+      "non_foraging": 31,
+      "has_both": true
+    },
+    "oo09_247a": {
+      "population": "NRKW",
+      "sex": "F",
+      "foraging": 2,
+      "non_foraging": 50,
+      "has_both": true
+    },
+    "oo10_256a": {
+      "population": "NRKW",
+      "sex": "F",
+      "foraging": 41,
+      "non_foraging": 115,
+      "has_both": true
+    },
+    "oo10_261a": {
+      "population": "NRKW",
+      "sex": "M",
+      "foraging": 6,
+      "non_foraging": 60,
+      "has_both": true
+    },
+    "oo10_261m": {
+      "population": "SRKW",
+      "sex": "F",
+      "foraging": 3,
+      "non_foraging": 2,
+      "has_both": true
+    },
+    "oo10_264m": {
+      "population": "SRKW",
+      "sex": "F",
+      "foraging": 1,
+      "non_foraging": 69,
+      "has_both": true
+    },
+    "oo10_265a": {
+      "population": "NRKW",
+      "sex": "F",
+      "foraging": 4,
+      "non_foraging": 34,
+      "has_both": true
+    },
+    "oo10_265m": {
+      "population": "SRKW",
+      "sex": "M",
+      "foraging": 17,
+      "non_foraging": 56,
+      "has_both": true
+    },
+    "oo11_224a": {
+      "population": "NRKW",
+      "sex": "F",
+      "foraging": 4,
+      "non_foraging": 22,
+      "has_both": true
+    },
+    "oo11_224b": {
+      "population": "NRKW",
+      "sex": "M",
+      "foraging": 0,
+      "non_foraging": 1,
+      "has_both": false
+    },
+    "oo11_244a": {
+      "population": "NRKW",
+      "sex": "M",
+      "foraging": 9,
+      "non_foraging": 47,
+      "has_both": true
+    },
+    "oo11_244b": {
+      "population": "NRKW",
+      "sex": "M",
+      "foraging": 3,
+      "non_foraging": 3,
+      "has_both": true
+    },
+    "oo11_245a": {
+      "population": "NRKW",
+      "sex": "M",
+      "foraging": 15,
+      "non_foraging": 382,
+      "has_both": true
+    },
+    "oo11_246a": {
+      "population": "NRKW",
+      "sex": "F",
+      "foraging": 10,
+      "non_foraging": 24,
+      "has_both": true
+    },
+    "oo11_248a": {
+      "population": "NRKW",
+      "sex": "M",
+      "foraging": 3,
+      "non_foraging": 8,
+      "has_both": true
+    },
+    "oo11_248b": {
+      "population": "NRKW",
+      "sex": "M",
+      "foraging": 0,
+      "non_foraging": 112,
+      "has_both": false
+    },
+    "oo14_263m": {
+      "population": "SRKW",
+      "sex": "M",
+      "foraging": 8,
+      "non_foraging": 53,
+      "has_both": true
+    },
+    "oo14_264m": {
+      "population": "SRKW",
+      "sex": "F",
+      "foraging": 4,
+      "non_foraging": 8,
+      "has_both": true
+    }
+  }
+}

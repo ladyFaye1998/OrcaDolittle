@@ -1,0 +1,45 @@
+# Evidence Mapping
+
+This document maps each analysis head to the claim it can support and the control required before that claim is public-facing.
+
+### Headline heads (defensible, public-facing)
+
+| Head | Supported Claim | Required Control | Boundary |
+|---|---|---|---|
+| H1 | Frozen embeddings encode ecotype-related acoustic structure that is decodable within a recording site. | Leave-one-provider-out grouped validation, per-class cross-site recall, and label permutation. | Pooled accuracy is a site-confounded upper bound, not a biological claim. |
+| H4 | The recording-site signal is large and measurable, and ecotype structure survives when site is held constant. | Site-decoding probe, within-site discrimination with permutation, and cross-site transfer. | Within-site signal is biological structure, not semantic content. |
+| Call type | Catalogue call types (Ford/Filatova codes) are recoverable within a site in both resident populations (SRKW 0.709, NRKW 0.968) and, unlike ecotype, transfer across independent sites (VFPA→SMRU 0.636; 0.830 on unambiguous types). | Site held constant; 200-fold label-permutation null; cross-provider train/test split [@ford1989; @filatova2015]. | Call-type discrimination, not meaning; labels correlate with pod/matriline; SMRU transfer set is small. |
+| Attribution | The within-site ecotype signal is multi-dimensional, redundantly distributed, and not a probe artifact. | Per-dimension permutation importance, top-k vs random-k knock-out, PCA curve; structure-matched-noise, feature-shuffle, and label-permutation negative controls. | Characterises *where* the signal lives in the representation; not a claim about meaning or function. |
+| H2 | Embedding geometry contains non-random structure weakly aligned with ecotype. | Shuffled-label ARI/NMI null and reduction-parameter sensitivity. | Small absolute ARI; does not recover a literature call catalogue. |
+| H3 | Encounter call-token co-occurrence is non-random; call streams carry non-random first-order sequential structure. | Balanced token vocabulary, unigram baseline, order-shuffle null; adjacent-call mutual information and held-out bigram-vs-unigram (Markov test); repetition removed. | Sequential structure is a prerequisite for combinatorial coding, not evidence of meaning; tokens are unsupervised, not validated call types. The masked-LM order test is null and reported alongside the better-powered Markov result. |
+| Rung 4 | The first-order sequential structure holds over *validated* catalogue call types, site held constant, in both resident populations (NRKW 2.85 vs 1.71 bits; SRKW 1.29 vs 0.78 bits, both p = 1e-3). | Within-recording order-shuffle null; repetition removed; held-out bigram-vs-unigram [@ford1989; @filatova2015; @sharma2024]. | Removes the unvalidated-token caveat, but remains a statement about call ordering, not meaning. |
+| H5 (DTAG) | Communicative calls are produced context-specifically across **more than one** behavioural context: binary foraging/non-foraging decodes at 0.770 and a three-way foraging/travelling/resting contrast at 0.577 (chance 0.333), with specific call types over-represented in specific contexts (call-type × context Cramér's V = 0.40). | Movement-only context labels (depth + jerk for foraging; per-individual ODBA split for travelling/resting; independent of the decoded audio), leave-individual-out cross-validation, within-individual permutation nulls, and rate/loudness/low-level/echolocation controls (clips 16 kHz, click peak energy absent). | The *production* side of context-specificity, not referential meaning and not a receiver/perception response; movement-only proxy labels (travelling/resting is an ODBA activity dichotomy); soft data-driven call-type clusters (not catalogue types); imperfect on-tag attribution; contiguous-audio assumption [@holt2024masking_data; @tennessen2019; @holt2024masking; @wilson2006; @ford1989; @foote2008]. |
+
+### Exploratory heads (NOT public-facing; scaffolding only)
+
+| Head | Status | Boundary |
+|---|---|---|
+| Legacy Wellard context heads | Wellard Type C recording-level context, inherited whole-encounter to fixed segments and duplicated across contexts. | Weak recording-level association, not segment-level behaviour; excluded from every headline claim and superseded for behavioural-context evidence by the DTAG H5 head above [@wellard2020; @wellard2020_appendix2]. |
+| Legacy timing proxy | Within-encounter vocal-continuation timing proxy. | A temporal statistic over already-recorded calls; not a response to a broadcast signal and not a playback experiment. |
+
+## Claim Language
+
+Use conservative language:
+
+- "decodable from embeddings" rather than "understood"
+- "associated with context" rather than "means"
+- "above a matched null" rather than "proven"
+- "provider-aware" rather than "fully deconfounded" unless the split design supports it
+- "response proxy" rather than "playback response" unless a playback experiment was actually run
+
+## Required Citations
+
+- DCLDE data provenance: [@palmer2025dclde; @palmer2025dclde_data]
+- Frozen encoder methods: [@hagiwara2023aves; @chen2022beats; @robinson2024naturelm]
+- Unsupervised repertoire precedent: [@sainburg2020; @mcinnes2018umap; @mcinnes2017hdbscan]
+- Sequence modelling: [@vaswani2017attention; @devlin2019bert; @sharma2024]
+- Orca behavioural and call-context literature: [@ford1989; @foote2008; @filatova2015; @riesch2008; @yurk2002]
+- DTAG behavioural-context source (H5): [@holt2024masking_data; @tennessen2019; @holt2024masking]
+- ODBA activity proxy for the travelling/resting split (H5): [@wilson2006]
+- Call-type-by-behavioural-context association (H5 production criterion): [@ford1989; @foote2008]
+- Wellard/Dryad Type C context source (legacy): [@wellard2020; @wellard2020_data; @wellard2020_appendix2]

@@ -1,0 +1,23 @@
+{
+  "embeddings_path": "data\\embeddings\\aves2_full_labeled.npz",
+  "passed": true,
+  "n_rows": 27934,
+  "embedding_dim": 768,
+  "label_distribution": {
+    "SRKW": 14240,
+    "SAR": 8078,
+    "TKW": 4121,
+    "OKW": 1495
+  },
+  "ecotype_provider_breadth": {
+    "SRKW": 7,
+    "TKW": 5,
+    "OKW": 3,
+    "SAR": 1
+  },
+  "sha256": "4f5a0c371c476a8fbe09ac6216e348c3f526a3390a20b0759fd89cd26cde56e0",
+  "errors": [],
+  "warnings": [
+    "ecotype 'SAR' appears at only 1 provider(s): pooled decodability is site-confounded for this class"
+  ]
+}

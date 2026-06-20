@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+message: >
+  If you use this repository, cite the repository release (Zenodo DOI below, once
+  minted) and the underlying datasets, methods, and papers listed in paper/refs.bib.
+title: "Orca Bioacoustic Embeddings"
+abstract: >
+  Reproducible research code for analysing killer-whale (Orcinus orca) vocalisations
+  with frozen audio foundation-model embeddings (AVES2), the public DCLDE 2026 corpus,
+  provider/site confound controls, catalogue call-type classification with cross-site
+  transfer, call-sequence structure, an animal-borne DTAG behavioural-context decode, and
+  a representation-attribution and negative-control battery. Fully non-invasive; makes no
+  claim of semantic meaning or of a response to broadcast signals.
+type: software
+authors:
+  - family-names: Lesin
+    given-names: Danielle
+    affiliation: "Georgia Institute of Technology, College of Computing"
+keywords:
+  - bioacoustics
+  - killer whale
+  - Orcinus orca
+  - audio embeddings
+  - AVES
+  - DCLDE
+  - reproducibility
+license: MIT
+repository-code: "https://github.com/ladyFaye1998/OrcaDolittle"
+version: "0.1.0"
+# date-released: YYYY-MM-DD  # set when the release tag is cut
+# doi: 10.5281/zenodo.XXXXXXX  # set after the Zenodo deposit is minted

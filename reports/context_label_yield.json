@@ -1,0 +1,151 @@
+{
+  "n_labeled_calls": 10972,
+  "deployments": [
+    "oo09_234a",
+    "oo09_235a",
+    "oo09_237c",
+    "oo09_237d",
+    "oo09_239a",
+    "oo09_240a",
+    "oo09_244a",
+    "oo09_245b",
+    "oo09_247a",
+    "oo10_256a",
+    "oo10_261a",
+    "oo10_261m",
+    "oo10_264m",
+    "oo10_265a",
+    "oo10_265m",
+    "oo11_224a",
+    "oo11_244a",
+    "oo11_244b",
+    "oo11_245a",
+    "oo11_246a",
+    "oo11_248a",
+    "oo14_263m",
+    "oo14_264m"
+  ],
+  "usable_both_contexts": [
+    "oo09_234a",
+    "oo09_235a",
+    "oo09_237c",
+    "oo09_237d",
+    "oo09_239a",
+    "oo09_240a",
+    "oo09_244a",
+    "oo09_245b",
+    "oo09_247a",
+    "oo10_256a",
+    "oo10_261a",
+    "oo10_261m",
+    "oo10_264m",
+    "oo10_265a",
+    "oo10_265m",
+    "oo11_224a",
+    "oo11_244a",
+    "oo11_244b",
+    "oo11_246a",
+    "oo11_248a",
+    "oo14_263m",
+    "oo14_264m"
+  ],
+  "thresholds": {
+    "deep_m": 30.0,
+    "surface_m": 5.0,
+    "min_dive_s": 10.0
+  },
+  "yield": {
+    "oo09_234a": {
+      "foraging": 130,
+      "non_foraging": 530
+    },
+    "oo09_235a": {
+      "foraging": 233,
+      "non_foraging": 697
+    },
+    "oo09_237c": {
+      "foraging": 23,
+      "non_foraging": 176
+    },
+    "oo09_237d": {
+      "foraging": 27,
+      "non_foraging": 254
+    },
+    "oo09_239a": {
+      "foraging": 115,
+      "non_foraging": 460
+    },
+    "oo09_240a": {
+      "foraging": 560,
+      "non_foraging": 982
+    },
+    "oo09_244a": {
+      "foraging": 360,
+      "non_foraging": 400
+    },
+    "oo09_245b": {
+      "foraging": 250,
+      "non_foraging": 907
+    },
+    "oo09_247a": {
+      "foraging": 5,
+      "non_foraging": 957
+    },
+    "oo10_256a": {
+      "foraging": 98,
+      "non_foraging": 276
+    },
+    "oo10_261a": {
+      "foraging": 22,
+      "non_foraging": 261
+    },
+    "oo10_261m": {
+      "foraging": 78,
+      "non_foraging": 289
+    },
+    "oo10_264m": {
+      "foraging": 35,
+      "non_foraging": 173
+    },
+    "oo10_265a": {
+      "foraging": 142,
+      "non_foraging": 220
+    },
+    "oo10_265m": {
+      "foraging": 25,
+      "non_foraging": 170
+    },
+    "oo11_224a": {
+      "foraging": 49,
+      "non_foraging": 190
+    },
+    "oo11_244a": {
+      "foraging": 30,
+      "non_foraging": 119
+    },
+    "oo11_244b": {
+      "foraging": 101,
+      "non_foraging": 123
+    },
+    "oo11_245a": {
+      "foraging": 0,
+      "non_foraging": 138
+    },
+    "oo11_246a": {
+      "foraging": 45,
+      "non_foraging": 274
+    },
+    "oo11_248a": {
+      "foraging": 104,
+      "non_foraging": 251
+    },
+    "oo14_263m": {
+      "foraging": 41,
+      "non_foraging": 163
+    },
+    "oo14_264m": {
+      "foraging": 219,
+      "non_foraging": 270
+    }
+  }
+}

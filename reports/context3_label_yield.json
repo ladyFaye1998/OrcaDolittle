@@ -1,0 +1,206 @@
+{
+  "source": "Zenodo 13308835 prh50.mat (depth + jerk + ODBA), movement-only",
+  "label_rule": {
+    "foraging": "dive maxdep>=30.0 m OR jerk prey-capture spike",
+    "travelling": "non-foraging AND ODBA >= per-deployment median",
+    "resting": "non-foraging AND ODBA < per-deployment median",
+    "odba_window_s": 2.0
+  },
+  "n_labeled_calls": 10972,
+  "context_counts": {
+    "travelling": 6086,
+    "foraging": 2692,
+    "resting": 2194
+  },
+  "individuals_all3_contexts": [
+    "oo09_234a",
+    "oo09_235a",
+    "oo09_237c",
+    "oo09_237d",
+    "oo09_239a",
+    "oo09_240a",
+    "oo09_244a",
+    "oo09_245b",
+    "oo09_247a",
+    "oo10_256a",
+    "oo10_261a",
+    "oo10_261m",
+    "oo10_264m",
+    "oo10_265a",
+    "oo10_265m",
+    "oo11_224a",
+    "oo11_244a",
+    "oo11_244b",
+    "oo11_246a",
+    "oo11_248a",
+    "oo14_263m",
+    "oo14_264m"
+  ],
+  "individuals_ge2_contexts": [
+    "oo09_234a",
+    "oo09_235a",
+    "oo09_237c",
+    "oo09_237d",
+    "oo09_239a",
+    "oo09_240a",
+    "oo09_244a",
+    "oo09_245b",
+    "oo09_247a",
+    "oo10_256a",
+    "oo10_261a",
+    "oo10_261m",
+    "oo10_264m",
+    "oo10_265a",
+    "oo10_265m",
+    "oo11_224a",
+    "oo11_244a",
+    "oo11_244b",
+    "oo11_245a",
+    "oo11_246a",
+    "oo11_248a",
+    "oo14_263m",
+    "oo14_264m"
+  ],
+  "odba_threshold_per_deployment": {
+    "oo09_234a": 0.0808995069249831,
+    "oo09_235a": 0.06880826948642635,
+    "oo09_237c": 0.16643078128051778,
+    "oo09_237d": 0.11100610960533164,
+    "oo09_239a": 0.09108280899691953,
+    "oo09_240a": 0.12321662842942734,
+    "oo09_244a": 0.08859917862515179,
+    "oo09_245b": 0.043664891790663976,
+    "oo09_247a": 0.06645896531137421,
+    "oo10_256a": 0.14592569121373433,
+    "oo10_261a": 0.04694108613474515,
+    "oo10_261m": 0.034718606001344646,
+    "oo10_264m": 0.04057546124987879,
+    "oo10_265a": 0.151896450804052,
+    "oo10_265m": 0.06309765853849258,
+    "oo11_224a": 0.14674602809231882,
+    "oo11_244a": 0.06396678720783795,
+    "oo11_244b": 0.14704908068781675,
+    "oo11_245a": 0.04603188935342309,
+    "oo11_246a": 0.11813429566951214,
+    "oo11_248a": 0.07885861407753597,
+    "oo14_263m": 0.07349222184909097,
+    "oo14_264m": 0.03920783403174384
+  },
+  "yield": {
+    "oo09_234a": {
+      "foraging": 130,
+      "travelling": 392,
+      "resting": 138
+    },
+    "oo09_235a": {
+      "foraging": 233,
+      "travelling": 629,
+      "resting": 68
+    },
+    "oo09_237c": {
+      "foraging": 23,
+      "travelling": 86,
+      "resting": 90
+    },
+    "oo09_237d": {
+      "foraging": 27,
+      "travelling": 114,
+      "resting": 140
+    },
+    "oo09_239a": {
+      "foraging": 115,
+      "travelling": 345,
+      "resting": 115
+    },
+    "oo09_240a": {
+      "foraging": 560,
+      "travelling": 835,
+      "resting": 147
+    },
+    "oo09_244a": {
+      "foraging": 360,
+      "travelling": 248,
+      "resting": 152
+    },
+    "oo09_245b": {
+      "foraging": 250,
+      "travelling": 640,
+      "resting": 267
+    },
+    "oo09_247a": {
+      "foraging": 5,
+      "travelling": 657,
+      "resting": 300
+    },
+    "oo10_256a": {
+      "foraging": 98,
+      "travelling": 208,
+      "resting": 68
+    },
+    "oo10_261a": {
+      "foraging": 22,
+      "travelling": 210,
+      "resting": 51
+    },
+    "oo10_261m": {
+      "foraging": 78,
+      "travelling": 208,
+      "resting": 81
+    },
+    "oo10_264m": {
+      "foraging": 35,
+      "travelling": 145,
+      "resting": 28
+    },
+    "oo10_265a": {
+      "foraging": 142,
+      "travelling": 155,
+      "resting": 65
+    },
+    "oo10_265m": {
+      "foraging": 25,
+      "travelling": 102,
+      "resting": 68
+    },
+    "oo11_224a": {
+      "foraging": 49,
+      "travelling": 124,
+      "resting": 66
+    },
+    "oo11_244a": {
+      "foraging": 30,
+      "travelling": 111,
+      "resting": 8
+    },
+    "oo11_244b": {
+      "foraging": 101,
+      "travelling": 68,
+      "resting": 55
+    },
+    "oo11_245a": {
+      "foraging": 0,
+      "travelling": 134,
+      "resting": 4
+    },
+    "oo11_246a": {
+      "foraging": 45,
+      "travelling": 183,
+      "resting": 91
+    },
+    "oo11_248a": {
+      "foraging": 104,
+      "travelling": 155,
+      "resting": 96
+    },
+    "oo14_263m": {
+      "foraging": 41,
+      "travelling": 125,
+      "resting": 38
+    },
+    "oo14_264m": {
+      "foraging": 219,
+      "travelling": 212,
+      "resting": 58
+    }
+  }
+}

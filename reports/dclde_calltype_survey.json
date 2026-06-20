@@ -1,0 +1,104 @@
+{
+  "per_provider": {
+    "dfo_crp": {
+      "files_scanned": 4,
+      "rows": 592198,
+      "call_type_rows": 5992,
+      "pct": 1.01
+    },
+    "dfo_wdlp": {
+      "files_scanned": 12,
+      "rows": 76572,
+      "call_type_rows": 0,
+      "pct": 0.0
+    },
+    "onc": {
+      "files_scanned": 1,
+      "rows": 2706,
+      "call_type_rows": 0,
+      "pct": 0.0
+    },
+    "orcasound": {
+      "files_scanned": 1,
+      "rows": 5537,
+      "call_type_rows": 0,
+      "pct": 0.0
+    },
+    "scripps": {
+      "files_scanned": 0,
+      "rows": 0,
+      "call_type_rows": 0,
+      "pct": 0.0
+    },
+    "simres": {
+      "files_scanned": 0,
+      "rows": 0,
+      "call_type_rows": 0,
+      "pct": 0.0
+    },
+    "smru": {
+      "files_scanned": 2,
+      "rows": 1988,
+      "call_type_rows": 1130,
+      "pct": 56.84
+    },
+    "uaf": {
+      "files_scanned": 0,
+      "rows": 0,
+      "call_type_rows": 0,
+      "pct": 0.0
+    },
+    "vfpa": {
+      "files_scanned": 4,
+      "rows": 14606,
+      "call_type_rows": 3017,
+      "pct": 20.66
+    }
+  },
+  "total_rows": 693607,
+  "total_call_type_rows": 10139,
+  "distinct_call_types": 256,
+  "top_call_types": {
+    "N24ii": 1954,
+    "Unk": 1587,
+    "N23ii": 601,
+    "N23i": 589,
+    "S01": 438,
+    "N04": 391,
+    "S04": 289,
+    "OFF17": 243,
+    "N28": 220,
+    "N40": 151,
+    "S44": 148,
+    "N01ii": 133,
+    "N16": 132,
+    "S16": 129,
+    "N29": 128,
+    "N24i": 123,
+    "S36": 112,
+    "N25": 107,
+    "T01": 100,
+    "N18": 98,
+    "N03": 85,
+    "S10": 82,
+    "N33": 80,
+    "T04": 79,
+    "T07": 77,
+    "T02": 73,
+    "T12": 69,
+    "T08": 62,
+    "S02iii": 61,
+    "S42": 58,
+    "S19": 56,
+    "N32ii": 55,
+    "N32i": 54,
+    "T03": 49,
+    "S16/S17": 43,
+    "S01 call?": 41,
+    "S01?": 39,
+    "S02i": 38,
+    "N45": 37,
+    "S17": 37
+  },
+  "limit_per_provider": 0
+}

@@ -1,0 +1,35 @@
+{
+  "label_column": "context",
+  "n_calls": 10834,
+  "n_individuals": 22,
+  "classes": [
+    "foraging",
+    "non_foraging"
+  ],
+  "decode_balanced_accuracy": {
+    "aves2_embeddings": 0.7698525759156838,
+    "call_rate_only_C1": 0.5361154971032378,
+    "loudness_logrms_only_C2b": 0.5773001912925221,
+    "lowlevel_acoustic_only_C2": 0.7230196698059664,
+    "aves2_embeddings_same_rows_as_C2": 0.7698525759156838
+  },
+  "echolocation_leakage_C3": {
+    "drop_fraction_most_clicklike": 0.25,
+    "n_dropped": 2708,
+    "aves2_after_dropping_clicklike": 0.7492052564364341,
+    "aves2_on_clicklike_quartile_only": 0.7514952153110048,
+    "note": "Clips are 16 kHz; echolocation peak energy (>>8 kHz) is absent by construction. This addresses residual low-band transients only."
+  },
+  "lowlevel_feature_order": [
+    "dur_s",
+    "log_rms",
+    "zcr",
+    "spectral_centroid_hz",
+    "hf_fraction_ge4khz",
+    "spectral_flatness"
+  ],
+  "interpretation": [
+    "If aves2_embeddings >> call_rate_only and >> lowlevel_acoustic_only, the decode reflects call STRUCTURE, not rate or loudness (rules out C1, C2).",
+    "If aves2_after_dropping_clicklike stays high, the decode is not carried by click-like transients (addresses C3)."
+  ]
+}
