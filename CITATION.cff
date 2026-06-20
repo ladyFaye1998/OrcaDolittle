@@ -26,7 +26,7 @@ keywords:
   - DCLDE
   - reproducibility
 license: MIT
-repository-code: "https://github.com/ladyFaye1998/orca-acoustic-embeddings"
+repository-code: "https://github.com/ladyFaye1998/OrcaDolittle"
 version: "0.1.0"
 # date-released: YYYY-MM-DD  # set when the release tag is cut
 # doi: 10.5281/zenodo.XXXXXXX  # set after the Zenodo deposit is minted

@@ -89,7 +89,7 @@ def main() -> int:
     if not my_drive.exists():
         raise FileNotFoundError(f"My Drive path is not mounted: {my_drive}")
 
-    source_root = my_drive / "OrcaAcoustics_sources" / "wellard_type_c"
+    source_root = my_drive / "OrcaDolittle_sources" / "wellard_type_c"
     folders = {
         "raw_zip": source_root / "raw_zip",
         "raw_unzipped": source_root / "raw_unzipped",
@@ -97,13 +97,13 @@ def main() -> int:
         "audit": source_root / "audit",
         "labels": source_root / "labels",
     }
-    verified_evidence = my_drive / "OrcaAcoustics_verified_evidence"
+    verified_evidence = my_drive / "OrcaDolittle_verified_evidence"
 
     if args.execute:
         for folder in [*folders.values(), verified_evidence]:
             folder.mkdir(parents=True, exist_ok=True)
 
-    cache_root = my_drive / "OrcaAcoustics_validation_evidence" / "_cache"
+    cache_root = my_drive / "OrcaDolittle_validation_evidence" / "_cache"
     wellard_root = cache_root / "wellard_mcmurdo_type_c"
     planned = [
         (my_drive / OUTER_ZIP, folders["raw_zip"] / OUTER_ZIP),

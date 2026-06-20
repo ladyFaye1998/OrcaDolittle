@@ -54,7 +54,7 @@ def main():
         return 1
 
     audio_path = wav_files[0]
-    print(f"=== OrcaAcoustics Stage 1: Hello World ===\n")
+    print(f"=== OrcaDolittle Stage 1: Hello World ===\n")
     print(f"Audio file: {audio_path.name}")
 
     # Load audio
