@@ -26,7 +26,8 @@
     "h6_playback_stats": "python scripts/run_playback_response_stats.py",
     "h6_playback_embedding": "python scripts/run_playback_response.py --n-perm 1000  (needs FEROP embeddings; see docs/local_environment_manifest.md section 3)",
     "h6_broadcast_rollup": "python scripts/summarize_broadcast_response.py",
-    "h5_dtag_context": "run notebooks/dtag_context_decode_colab.ipynb on a GPU (regenerates DTAG call embeddings + leave-individual-out decode; writes reports/context_decode_summary.json, reports/context3_decode_summary.json, reports/calltype_context_selectivity.json, reports/context_controls_summary.json and the matching figures)"
+    "h5_dtag_context": "run notebooks/dtag_context_decode_colab.ipynb on a GPU (regenerates DTAG call embeddings + leave-individual-out decode; writes reports/context_decode_summary.json, reports/context3_decode_summary.json, reports/calltype_context_selectivity.json, reports/context_controls_summary.json and the matching figures)",
+    "calltype_distributional_semantics": "python scripts/run_calltype_distributional_semantics.py --n-perm 2000 --window 2  (PPMI sequence vectors vs independent ethogram context; Mantel test; writes reports/calltype_distributional_semantics_summary.json, figures/calltype_distributional_semantics.png)"
   },
   "sha256": {
     "data/embeddings/aves2_full_labeled.npz": "4f5a0c371c476a8fbe09ac6216e348c3f526a3390a20b0759fd89cd26cde56e0",
