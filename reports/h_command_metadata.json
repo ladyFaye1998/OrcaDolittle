@@ -1,0 +1,11 @@
+{
+  "run_id": "20260529_072930",
+  "scope": "AVES2 DCLDE call-level downstream run",
+  "commands": {
+    "h1": "scripts/run_h1_probes.py on aves2_full_labeled.npz",
+    "h2": "scripts/run_h2_clustering.py on aves2_full_labeled.npz",
+    "h3": "scripts/run_h3_sequence_lm.py on aves2_full_labeled.npz",
+    "h4": "scripts/run_h4_confound.py is the active provider/site control head"
+  },
+  "public_summary": "Raw command logs are intentionally not embedded in this public summary. See docs/results_analysis.md for interpretation and rerun scripts for fresh logs."
+}

@@ -1,0 +1,48 @@
+{
+  "n_calls": 10834,
+  "n_individuals": 22,
+  "deployments": [
+    "oo09_234a",
+    "oo09_235a",
+    "oo09_237c",
+    "oo09_237d",
+    "oo09_239a",
+    "oo09_240a",
+    "oo09_244a",
+    "oo09_245b",
+    "oo09_247a",
+    "oo10_256a",
+    "oo10_261a",
+    "oo10_261m",
+    "oo10_264m",
+    "oo10_265a",
+    "oo10_265m",
+    "oo11_224a",
+    "oo11_244a",
+    "oo11_244b",
+    "oo11_246a",
+    "oo11_248a",
+    "oo14_263m",
+    "oo14_264m"
+  ],
+  "class_counts": {
+    "non_foraging": 8142,
+    "foraging": 2692
+  },
+  "models": {
+    "linear": {
+      "balanced_accuracy": 0.7696668404030538,
+      "null_mean": 0.49914059503070135,
+      "null_std": 0.006590952362860665,
+      "n_perm": 200,
+      "pvalue": 0.004975124378109453
+    }
+  },
+  "caveats": [
+    "Context label is movement-only (depth + jerk); decoder input is communicative calls -> non-circular.",
+    "Echolocation excluded by band/duration; residual click leakage is a limitation.",
+    "Leave-individual-out so identity cannot stand in for behaviour.",
+    "Association, not 'meaning'; non-invasive re-analysis of archived DTAG data.",
+    "Absolute call time assumes contiguous audio from prh t=0."
+  ]
+}

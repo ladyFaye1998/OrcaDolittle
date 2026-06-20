@@ -1,0 +1,90 @@
+{
+  "design": "3-state movement-only context (foraging/travelling/resting); decoder input = communicative calls (AVES2); leave-individual-out.",
+  "n_calls": 9723,
+  "n_individuals": 20,
+  "deployments": [
+    "oo09_234a",
+    "oo09_235a",
+    "oo09_237c",
+    "oo09_237d",
+    "oo09_239a",
+    "oo09_240a",
+    "oo09_244a",
+    "oo09_245b",
+    "oo10_256a",
+    "oo10_261a",
+    "oo10_261m",
+    "oo10_264m",
+    "oo10_265a",
+    "oo10_265m",
+    "oo11_224a",
+    "oo11_244b",
+    "oo11_246a",
+    "oo11_248a",
+    "oo14_263m",
+    "oo14_264m"
+  ],
+  "classes": [
+    "foraging",
+    "travelling",
+    "resting"
+  ],
+  "class_counts": {
+    "travelling": 5184,
+    "foraging": 2657,
+    "resting": 1882
+  },
+  "chance_balanced_accuracy": 0.3333333333333333,
+  "balanced_accuracy": 0.5773236821892084,
+  "macro_f1": 0.5478752399792385,
+  "per_class_recall": {
+    "foraging": 0.7854723372224313,
+    "travelling": 0.5171682098765432,
+    "resting": 0.4293304994686504
+  },
+  "confusion_matrix_rows_true": {
+    "foraging": [
+      2087,
+      178,
+      392
+    ],
+    "travelling": [
+      1049,
+      2681,
+      1454
+    ],
+    "resting": [
+      447,
+      627,
+      808
+    ]
+  },
+  "confusion_matrix_normalised": {
+    "foraging": [
+      0.7854723372224313,
+      0.06699284907790741,
+      0.14753481369966126
+    ],
+    "travelling": [
+      0.2023533950617284,
+      0.5171682098765432,
+      0.2804783950617284
+    ],
+    "resting": [
+      0.23751328374070138,
+      0.3331562167906483,
+      0.4293304994686504
+    ]
+  },
+  "null_mean": 0.3545429967995979,
+  "null_std": 0.00819714709252616,
+  "n_perm": 200,
+  "pvalue": 0.004975124378109453,
+  "caveats": [
+    "Context is movement-only (depth + jerk + ODBA); decoder input is communicative calls -> non-circular.",
+    "Clips are 16 kHz: echolocation peak energy (>>8 kHz) is absent by construction, so the decode operates on the communicative band, not biosonar.",
+    "Leave-individual-out: identity cannot stand in for behaviour.",
+    "travelling/resting split is an ODBA activity dichotomy, not a named ethogram state; context-association, not 'meaning'.",
+    "Non-invasive secondary analysis of archived DTAG data."
+  ]
+}

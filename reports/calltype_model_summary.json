@@ -1,0 +1,58 @@
+{
+  "analysis": "rung1_calltype_classification_srkw",
+  "encoder": "AVES2",
+  "label_source": "DCLDE per-provider annotations (call_type)",
+  "n_calltype_labeled_segments": 1954,
+  "within_provider_vfpa": {
+    "provider": "vfpa",
+    "n": 1488,
+    "k_types": 14,
+    "classes": [
+      "S01",
+      "S02i",
+      "S02iii",
+      "S04",
+      "S10",
+      "S12",
+      "S16",
+      "S16/S17",
+      "S17",
+      "S18",
+      "S19",
+      "S36",
+      "S42",
+      "S44"
+    ],
+    "balanced_accuracy": 0.7094133860669218,
+    "macro_f1": 0.7086897228375256,
+    "mlp_balanced_accuracy": 0.7098538606324862,
+    "mlp_macro_f1": 0.7280670202604498,
+    "chance_1_over_k": 0.07142857142857142,
+    "majority_baseline": 0.2782258064516129,
+    "permutation_mean": 0.070936010802923,
+    "permutation_pvalue": 0.004975124378109453
+  },
+  "cross_provider_transfer": {
+    "train_provider": "vfpa",
+    "test_provider": "smru",
+    "shared_types": [
+      "S01",
+      "S04",
+      "S16",
+      "S10"
+    ],
+    "k": 4,
+    "n_train": 828,
+    "n_test": 175,
+    "transfer_balanced_accuracy": 0.8302738336713995,
+    "transfer_macro_f1": 0.7612398991771072,
+    "chance_1_over_k": 0.25
+  },
+  "figure": "figures/calltype_model_srkw.png",
+  "caveats": [
+    "Catalogue call-type labels are detection-level and provider-concentrated; SRKW S-calls here come from VFPA and SMRU only.",
+    "Within-provider result holds recording site constant, so it reflects call-type acoustic structure, not hydrophone identity.",
+    "S-call types correlate with pod/matriline; this is call-type discrimination, NOT evidence of meaning or function.",
+    "SMRU test set is small; transfer is a first-pass control, not a definitive estimate."
+  ]
+}

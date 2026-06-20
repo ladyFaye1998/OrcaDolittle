@@ -1,0 +1,34 @@
+{
+  "title": "Orca Bioacoustic Embeddings: site-controlled killer-whale call analysis with frozen audio-model embeddings",
+  "upload_type": "software",
+  "description": "Reproducible research code for analysing killer-whale (Orcinus orca) vocalisations with frozen audio foundation-model embeddings (AVES2) on the public DCLDE 2026 corpus, with provider/site confound controls, catalogue call-type classification and cross-site transfer, first-order call-sequence structure, an animal-borne DTAG behavioural-context decode, and a representation-attribution and negative-control battery. Includes a hash-frozen embedding artifact, per-head metrics and figures, and citation-backed documentation. The work is fully non-invasive and makes no claim of semantic meaning or of a response to broadcast signals.",
+  "license": "MIT",
+  "access_right": "open",
+  "keywords": [
+    "bioacoustics",
+    "killer whale",
+    "Orcinus orca",
+    "audio embeddings",
+    "self-supervised learning",
+    "AVES",
+    "DCLDE",
+    "passive acoustic monitoring",
+    "confound control",
+    "reproducibility"
+  ],
+  "creators": [
+    {
+      "name": "Lesin, Danielle",
+      "affiliation": "Georgia Institute of Technology, College of Computing"
+    }
+  ],
+  "related_identifiers": [
+    {
+      "relation": "isDerivedFrom",
+      "identifier": "10.5281/zenodo.13308835",
+      "scheme": "doi",
+      "resource_type": "dataset"
+    }
+  ],
+  "notes": "DCLDE 2026 killer-whale annotations are distributed by NOAA/NCEI with a public Google Cloud Storage mirror; DTAG behavioural-context recordings are openly deposited (CC-BY-4.0). Raw audio and tag archives are not redistributed here and are downloaded from their public sources by the pipeline scripts."
+}

@@ -1,0 +1,182 @@
+{
+  "run_id": "20260529_072930",
+  "encoder": "AVES2",
+  "scope": "public DCLDE call-level embedding run; 27934 calls x 768 dims; 8 providers; 4 ecotypes",
+  "artifact_sha256": "4f5a0c371c476a8fbe09ac6216e348c3f526a3390a20b0759fd89cd26cde56e0",
+  "headline": "Frozen AVES2 embeddings carry genuine killer-whale ecotype acoustic structure, but pooled decodability overstates it due to a recording-site shortcut; only site-controlled evaluation reveals the real biological signal.",
+  "metrics": {
+    "h1": {
+      "pooled_balanced_accuracy_logreg": 0.910,
+      "pooled_accuracy_mlp": 0.974,
+      "leave_one_provider_out_balanced_accuracy": 0.231,
+      "chance": 0.250,
+      "cross_site_macro_f1": 0.213,
+      "per_class_cross_site_recall": {"SRKW": 0.481, "TKW": 0.412, "OKW": 0.031, "SAR": 0.000},
+      "pooled_permutation_pvalue": 0.00498
+    },
+    "h4": {
+      "site_decoding_balanced_accuracy": 0.948,
+      "site_chance": 0.125,
+      "within_site_ecotype_balanced_accuracy": {
+        "JASCO_VFPA": 0.889,
+        "JASCO_VFPA_ONC": 0.973,
+        "ONC": 0.949,
+        "SIO": 0.909
+      },
+      "within_site_permutation_pvalue": 0.005,
+      "cross_site_transfer_balanced_accuracy": 0.529,
+      "cross_site_transfer_pair": ["OKW", "SRKW"],
+      "cross_site_transfer_chance": 0.500
+    },
+    "h2": {
+      "ari_vs_ecotype": 0.043,
+      "ari_vs_provider": 0.028,
+      "permutation_pvalue_ecotype": 0.002,
+      "reduction": "PCA(nc=5) + HDBSCAN"
+    },
+    "h3": {
+      "vocab_size": 40,
+      "token_entropy_bits": 5.24,
+      "max_entropy_bits": 5.32,
+      "heldout_real_order_loss": 1.809,
+      "heldout_shuffled_loss": 1.753,
+      "unigram_baseline_loss": 3.486,
+      "order_pvalue": 0.77,
+      "beats_unigram": true
+    },
+    "rung1_calltype_discovery": {
+      "ecotype": "SRKW",
+      "pooled_n_clusters": 16,
+      "pooled_mean_dominant_provider_fraction": 0.93,
+      "pooled_noise_fraction": 0.82,
+      "single_provider_n_clusters": 3,
+      "single_provider_noise_fraction": 0.68,
+      "verdict": "unsupervised discovery does not recover a repertoire; pooled clusters are site-confounded; real call-type labels required"
+    },
+    "rung4_sequence_structure": {
+      "vocab_size": 40,
+      "n_encounters": 702,
+      "n_adjacent_pairs": 27112,
+      "adjacent_mi_bits": 1.909,
+      "self_transition_rate": 0.401,
+      "off_diagonal_mi_bits": 1.088,
+      "shuffled_mi_mean_bits": 1.652,
+      "mi_permutation_pvalue": 0.000999,
+      "heldout_bigram_ce_bits": 3.614,
+      "heldout_unigram_ce_bits": 5.355,
+      "predictive_gain_bits_per_token": 1.741,
+      "sequential_structure": true
+    },
+    "rung4_validated_calltype_sequence": {
+      "label_source": "DCLDE per-provider annotations (call_type)",
+      "n_perm": 1000,
+      "nrkw_dfo_crp": {
+        "k_call_types": 31, "n_calls": 5273, "n_recordings": 142, "n_adjacent_pairs": 5057,
+        "adjacent_mi_bits": 2.848, "shuffled_mi_mean_bits": 1.711, "mi_permutation_pvalue": 0.001,
+        "self_transition_rate": 0.915, "off_diagonal_mi_bits": 1.605,
+        "heldout_bigram_ce_bits": 0.931, "heldout_unigram_ce_bits": 3.662,
+        "predictive_gain_bits_per_token": 2.731, "sequential_structure": true
+      },
+      "srkw_vfpa": {
+        "k_call_types": 19, "n_calls": 1553, "n_recordings": 28, "n_adjacent_pairs": 1523,
+        "adjacent_mi_bits": 1.287, "shuffled_mi_mean_bits": 0.779, "mi_permutation_pvalue": 0.001,
+        "self_transition_rate": 0.520, "off_diagonal_mi_bits": 0.979,
+        "heldout_bigram_ce_bits": 3.201, "heldout_unigram_ce_bits": 3.507,
+        "predictive_gain_bits_per_token": 0.306, "sequential_structure": true
+      }
+    },
+    "rung1_calltype_classification": {
+      "label_source": "DCLDE per-provider annotations (call_type)",
+      "n_encoded_segments_full_catalogue": 8552,
+      "encode_notebook": "notebooks/calltype_encode_colab.ipynb",
+      "within_provider_vfpa_srkw": {
+        "k_types": 14, "n": 1489,
+        "linear_balanced_accuracy": 0.709, "macro_f1": 0.706,
+        "mlp_balanced_accuracy": 0.706, "chance": 0.071,
+        "majority_baseline": 0.278, "permutation_pvalue": 0.00498
+      },
+      "within_provider_dfo_crp_nrkw": {
+        "k_types": 18, "n": 5009,
+        "linear_balanced_accuracy": 0.968, "macro_f1": 0.966,
+        "mlp_balanced_accuracy": 0.963, "chance": 0.056,
+        "majority_baseline": 0.390, "permutation_pvalue": 0.00498
+      },
+      "cross_provider_transfer": {
+        "pair": ["vfpa", "smru"],
+        "shared_types": ["S01", "S04", "S16", "S10", "S16/S17"],
+        "k": 5, "n_train": 872, "n_test": 267,
+        "balanced_accuracy": 0.636, "macro_f1": 0.607, "chance": 0.20,
+        "four_unambiguous_types_balanced_accuracy": 0.830
+      },
+      "calltype_structure_transfers_across_sites": true
+    },
+    "h5_context_decode_dtag": {
+      "data_source": "open animal-borne DTAG deployments (Salish Sea fish-eating killer whales)",
+      "context_label": "movement-only (depth + jerk-derived prey capture); independent of decoded audio",
+      "n_individuals": 22,
+      "n_calls": 10834,
+      "class_counts": {"foraging": 2692, "non_foraging": 8142},
+      "evaluation": "leave-individual-out",
+      "linear_balanced_accuracy": 0.770,
+      "null_mean": 0.499,
+      "null_std": 0.007,
+      "n_perm": 200,
+      "permutation_pvalue": 0.00498,
+      "multi_context_3way": {
+        "contexts": ["foraging", "travelling", "resting"],
+        "label_rule": "foraging = depth>=30m or jerk prey-capture; travelling/resting split by per-individual ODBA median (movement-only)",
+        "n_individuals": 20,
+        "n_calls": 9723,
+        "class_counts": {"travelling": 5184, "foraging": 2657, "resting": 1882},
+        "balanced_accuracy": 0.577,
+        "chance": 0.333,
+        "null_mean": 0.355,
+        "null_std": 0.008,
+        "permutation_pvalue": 0.00498,
+        "macro_f1": 0.548,
+        "per_class_recall": {"foraging": 0.785, "travelling": 0.517, "resting": 0.429}
+      },
+      "calltype_context_selectivity": {
+        "n_call_types": 6,
+        "clustering": "KMeans on AVES2 embeddings (silhouette 0.062; soft/continuous repertoire)",
+        "cramers_v": 0.400,
+        "null_mean": 0.079,
+        "null_std": 0.006,
+        "n_perm": 1000,
+        "permutation_pvalue": 0.000999,
+        "n_context_selective_types": 6,
+        "example_enrichments": {"foraging_top": 2.26, "travelling_top": 1.49, "resting_top": 1.46},
+        "note": "within-individual shuffle null preserves each whale's context marginal; production-side context-specificity"
+      },
+      "controls_binary": {
+        "aves2_embeddings": 0.770,
+        "call_rate_only": 0.536,
+        "loudness_logrms_only": 0.577,
+        "lowlevel_acoustic_only": 0.723,
+        "aves2_after_dropping_25pct_clicklike": 0.749,
+        "clicklike_quartile_only": 0.751,
+        "clip_sample_rate_hz": 16000,
+        "note": "echolocation peak energy (>>8 kHz) absent by construction at 16 kHz; signal is call structure, not rate/loudness/biosonar"
+      },
+      "boundary": "context-specific production of communicative calls across more than one movement-defined behavioural context, individual held out; not referential meaning and not a response to a broadcast signal"
+    }
+  },
+  "summary": {
+    "h1": "Pooled balanced accuracy 0.910 (MLP accuracy 0.974) collapses to 0.231 (chance 0.250) under leave-one-provider-out; pooled number is a site-confounded upper bound.",
+    "h2": "PCA+HDBSCAN ARI 0.043 vs ecotype (p=0.002), above shuffled-label null but small and parameter-sensitive.",
+    "h3": "Balanced 40-token vocabulary: call co-occurrence is strongly non-random (loss 1.809 vs unigram 3.486) but call order is not (p=0.77).",
+    "h4": "Provider decodable at 0.948; within-site ecotype discrimination 0.889-0.973 (p=0.005) isolates genuine biological signal, but cross-site transfer is near chance (0.529): the signal is real but local.",
+    "h5_context_decode_dtag": "On an independent DTAG archive, communicative calls predict the caller's movement-defined behavioural context under leave-individual-out: binary foraging/non-foraging at 0.770 balanced accuracy across 22 whales (10,834 calls; null 0.499, p=0.005), and a three-way foraging/travelling/resting contrast at 0.577 across the 20 whales carrying all three contexts (chance 0.333; null 0.355, p=0.005) - communication in more than one behavioural context. The link is call-type-specific (call-type x context Cramer's V=0.40 vs within-individual null 0.08, p<1e-3; every cluster context-enriched), and is not an artefact: call rate alone decodes at 0.536, loudness alone at 0.577, and dropping the 25% most click-like clips leaves 0.749 (clips are 16 kHz, so echolocation peak energy is absent). The context label uses tag depth/acceleration only and the individual is held out, so this is context-specific production of communicative calls, not referential meaning and not a response to a broadcast signal.",
+    "legacy_context_heads": "Exploratory only and superseded by the DTAG H5 decode for behavioural-context evidence: the earlier Wellard recording-level context heads and a vocal-continuation timing proxy are weak recording-level associations; not headline claims and not response evidence.",
+    "rung1_calltype_discovery": "Unsupervised within-SRKW clustering yields no usable repertoire: pooled clusters are 93% single-provider (site artifact, 82% noise) and a single-provider run collapses to one blob; a validated repertoire requires labelled call types (e.g., Wellard Type C, Dryad).",
+    "rung4_sequence_structure": "Call streams carry non-random first-order sequential structure: adjacent-call MI 1.91 bits vs order-shuffled null 1.65 (p<0.001), still 1.09 bits after removing 40% repetition, and a held-out bigram beats unigram by 1.74 bits/token. A prerequisite for combinatorial coding, not evidence of meaning.",
+    "rung4_validated_calltype_sequence": "The same first-order test run on VALIDATED catalogue call types (site held constant, within-recording order-shuffle null) is positive in both resident populations: NRKW (31 N-call types, 5,273 calls) adjacent-pair MI 2.85 bits vs null 1.71 (p=1e-3), 1.60 bits after removing heavy bouting (self-transition 0.92), bigram beats unigram by 2.73 bits/token; SRKW (19 S-call types, 1,553 calls) MI 1.29 vs 0.78 (p=1e-3), self-transition 0.52, bigram gain 0.31 bits/token. This upgrades the Rung-4 result from unsupervised tokens to validated biological units; still a prerequisite for combinatorial coding, not evidence of meaning.",
+    "rung1_calltype_classification": "With validated catalogue labels recovered from the DCLDE per-provider annotations, the full call-type catalogue (8,552 detections encoded with AVES2) is discriminated within a fixed recording site at balanced accuracy 0.709 for 14 SRKW S-call types (chance 0.071, majority 0.278) and 0.968 for 18 NRKW N-call types (chance 0.056, majority 0.390), both permutation p~0.005. Call-type identity also transfers across independent sites: a VFPA-trained SRKW classifier scores 0.636 on SMRU over 5 shared types (chance 0.20; 0.830 over the 4 unambiguous types) - the cross-site control the ecotype boundary failed (0.529). Stereotyped call types are therefore a site-independent acoustic category in both resident populations; this is call-type discrimination, not meaning. Supervised success here also explains the Rung 1 discovery failure: the categories exist, but are too fine for unsupervised recovery from site-confounded embeddings."
+  },
+  "source_docs": [
+    "docs/results_analysis.md",
+    "docs/ai_architecture.md",
+    "docs/evidence_mapping.md",
+    "paper/manuscript.md"
+  ]
+}

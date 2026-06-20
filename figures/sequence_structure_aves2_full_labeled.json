@@ -1,0 +1,21 @@
+{
+  "rung": 4,
+  "analysis": "first_order_markov_structure",
+  "encoder": "aves2_full_labeled",
+  "vocab_size": 40,
+  "n_encounters": 702,
+  "n_adjacent_pairs": 27112,
+  "adjacent_mi_bits": 1.9091973509257696,
+  "self_transition_rate": 0.4012245500147536,
+  "off_diagonal_mi_bits": 1.0875785459885066,
+  "shuffled_mi_mean_bits": 1.6514836476186912,
+  "shuffled_mi_std_bits": 0.006118575260015128,
+  "mi_permutation_pvalue": 0.000999000999000999,
+  "heldout_bigram_ce_bits": 3.613941049334195,
+  "heldout_unigram_ce_bits": 5.355193610075603,
+  "predictive_gain_bits_per_token": 1.7412525607414082,
+  "sequential_structure": true,
+  "verdict": "sequential structure present (transitions non-random AND bigram predicts out of sample)",
+  "caveat": "Sequential structure is a prerequisite for combinatorial coding, NOT evidence of meaning. Tokens are unsupervised k-means call types, not validated biological call types.",
+  "figure": "figures/sequence_structure_aves2_full_labeled.png"
+}

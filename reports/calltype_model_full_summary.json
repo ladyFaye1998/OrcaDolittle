@@ -1,0 +1,64 @@
+{
+  "analysis": "rung1_calltype_classification_full_catalogue",
+  "encoder": "AVES2",
+  "label_source": "DCLDE per-provider annotations (call_type)",
+  "n_segments": 8552,
+  "n_perm": 200,
+  "within": {
+    "vfpa_SRKW": {
+      "provider": "vfpa",
+      "family": "SRKW",
+      "n": 1489,
+      "k": 14,
+      "classes": [
+        "S01", "S02i", "S02iii", "S04", "S10", "S12", "S16",
+        "S16/S17", "S17", "S18", "S19", "S36", "S42", "S44"
+      ],
+      "balanced_accuracy": 0.7089137487291021,
+      "macro_f1": 0.7060097682282993,
+      "mlp_balanced_accuracy": 0.7058480284803643,
+      "majority_baseline": 0.2780389523169913,
+      "chance_1_over_k": 0.07142857142857142,
+      "permutation_mean": 0.07206069398062531,
+      "permutation_pvalue": 0.004975124378109453
+    },
+    "dfo_crp_NRKW": {
+      "provider": "dfo_crp",
+      "family": "NRKW",
+      "n": 5009,
+      "k": 18,
+      "classes": [
+        "N01ii", "N03", "N04", "N16", "N18", "N20", "N23i", "N23ii", "N24i",
+        "N24ii", "N25", "N28", "N29", "N32i", "N32ii", "N33", "N40", "N45"
+      ],
+      "balanced_accuracy": 0.9682187685716299,
+      "macro_f1": 0.9659725830545172,
+      "mlp_balanced_accuracy": 0.963153031587436,
+      "majority_baseline": 0.39009782391694947,
+      "chance_1_over_k": 0.05555555555555555,
+      "permutation_mean": 0.055454660308680064,
+      "permutation_pvalue": 0.004975124378109453
+    }
+  },
+  "transfer": {
+    "vfpa_to_smru_SRKW": {
+      "train": "vfpa",
+      "test": "smru",
+      "family": "SRKW",
+      "k": 5,
+      "shared_types": ["S01", "S04", "S16", "S10", "S16/S17"],
+      "n_train": 872,
+      "n_test": 267,
+      "transfer_balanced_accuracy": 0.6362115643245795,
+      "transfer_macro_f1": 0.607014831606876,
+      "chance_1_over_k": 0.2
+    }
+  },
+  "figure": "figures/calltype_model_full.png",
+  "caveats": [
+    "Within-provider designs hold recording site constant; transfer tests cross-site generalisation.",
+    "Catalogue call types correlate with pod/matriline: call-type discrimination, NOT meaning.",
+    "Encoded directly from public DCLDE audio (8,552 labelled detections); raw audio is not redistributed.",
+    "Transfer over 5 shared SRKW types includes the merged/ambiguous S16/S17 label; on the 4 unambiguous shared types the join-subset transfer was higher (0.83)."
+  ]
+}

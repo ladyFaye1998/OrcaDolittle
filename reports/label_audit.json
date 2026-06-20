@@ -1,0 +1,339 @@
+{
+  "embeddings_path": "data\\embeddings\\aves2_full_labeled.npz",
+  "n_rows": 27934,
+  "embedding_dim": 768,
+  "npz_keys": [
+    "embeddings",
+    "labels",
+    "metadata"
+  ],
+  "label_field_used": "ecotype (via labels array)",
+  "ecotype_distribution": {
+    "SRKW": 14240,
+    "SAR": 8078,
+    "TKW": 4121,
+    "OKW": 1495
+  },
+  "n_ecotypes": 4,
+  "metadata_fields": [
+    "begin_sec",
+    "class_species",
+    "dataset",
+    "duration_sec_raw",
+    "ecotype",
+    "end_sec",
+    "gcs_path",
+    "provider",
+    "row_id",
+    "soundfile"
+  ],
+  "field_summaries": {
+    "begin_sec": {
+      "present_rows": 27934,
+      "coverage": 1.0,
+      "n_unique": 27308,
+      "top_values": {
+        "24.5": 17,
+        "51.45": 15,
+        "9.8": 15,
+        "19.6": 14,
+        "22.05": 14,
+        "2.45": 13,
+        "7.35": 13,
+        "17.15": 13,
+        "31.85": 13,
+        "36.75": 13,
+        "41.65": 13,
+        "53.9": 13,
+        "56.35": 13,
+        "4.9": 12,
+        "12.25": 12,
+        "34.3": 12,
+        "49.0": 11,
+        "44.1": 10,
+        "46.55": 9,
+        "29.4": 9,
+        "0.0": 9,
+        "26.95": 8,
+        "39.2": 8,
+        "14.7": 7,
+        "58.8": 4
+      }
+    },
+    "class_species": {
+      "present_rows": 27934,
+      "coverage": 1.0,
+      "n_unique": 1,
+      "top_values": {
+        "KW": 27934
+      }
+    },
+    "dataset": {
+      "present_rows": 27934,
+      "coverage": 1.0,
+      "n_unique": 24,
+      "top_values": {
+        "Field_HTI": 6360,
+        "Tekteksen": 3418,
+        "HaroStraitNorth": 3212,
+        "HaroStraitSouth": 2715,
+        "Cpe_Elz": 2011,
+        "Field_SondTrap": 1718,
+        "StraitofGeorgia": 1511,
+        "BoundaryPass": 1035,
+        "orcasound_lab": 1022,
+        "BarkleyCanyon": 803,
+        "LimeKiln": 760,
+        "Quin_Can": 626,
+        "bush_point": 510,
+        "MS_671879205": 464,
+        "KB_67383303": 450,
+        "MS_6897": 373,
+        "KB_67424266": 299,
+        "HE_67424266": 294,
+        "port_townsend": 198,
+        "MS_5360": 97,
+        "KB_5354": 32,
+        "RB_335826997": 12,
+        "HE_67391498": 9,
+        "RB_67424266": 5
+      }
+    },
+    "duration_sec_raw": {
+      "present_rows": 27934,
+      "coverage": 1.0,
+      "n_unique": 10591,
+      "top_values": {
+        "1.5": 301,
+        "0.5": 154,
+        "0.7026419000000033": 153,
+        "0.7599999999999909": 152,
+        "0.7400000000000091": 137,
+        "0.647170200000005": 136,
+        "0.554717299999993": 125,
+        "0.7799999999999727": 124,
+        "0.6286795999999981": 122,
+        "1.0": 111,
+        "2.4499999999999993": 106,
+        "0.7200000000000273": 105,
+        "0.5199999999999818": 105,
+        "2.450000000000003": 103,
+        "0.5399999999999636": 103,
+        "0.7581136000000015": 103,
+        "0.6101889999999912": 101,
+        "0.7000000000000455": 94,
+        "0.9800000000000182": 91,
+        "0.7999999999999545": 87,
+        "0.4800000000000182": 87,
+        "0.5732078999999999": 86,
+        "0.49924559999999474": 82,
+        "1.0199999999999818": 78,
+        "0.6200000000000045": 78
+      }
+    },
+    "ecotype": {
+      "present_rows": 27934,
+      "coverage": 1.0,
+      "n_unique": 4,
+      "top_values": {
+        "SRKW": 14240,
+        "SAR": 8078,
+        "TKW": 4121,
+        "OKW": 1495
+      }
+    },
+    "end_sec": {
+      "present_rows": 27934,
+      "coverage": 1.0,
+      "n_unique": 27390,
+      "top_values": {
+        "7.35": 16,
+        "9.8": 14,
+        "26.95": 13,
+        "34.3": 13,
+        "4.9": 12,
+        "56.35": 12,
+        "22.05": 11,
+        "58.8": 11,
+        "53.9": 10,
+        "41.65": 9,
+        "44.1": 9,
+        "46.55": 9,
+        "49.0": 9,
+        "36.75": 9,
+        "12.25": 9,
+        "24.5": 9,
+        "19.6": 8,
+        "51.45": 8,
+        "31.85": 8,
+        "14.7": 7,
+        "17.15": 7,
+        "29.4": 7,
+        "39.2": 7,
+        "61.25": 4,
+        "108.02": 3
+      }
+    },
+    "gcs_path": {
+      "present_rows": 27934,
+      "coverage": 1.0,
+      "n_unique": 792,
+      "top_values": {
+        "noaa-passive-bioacoustic/dclde/2027/dclde_2027_killer_whales/uaf/audio/field/20200620_0377.wav": 570,
+        "noaa-passive-bioacoustic/dclde/2027/dclde_2027_killer_whales/uaf/audio/field/20210621_1653.wav": 526,
+        "noaa-passive-bioacoustic/dclde/2027/dclde_2027_killer_whales/uaf/audio/field/20200627_0388.wav": 525,
+        "noaa-passive-bioacoustic/dclde/2027/dclde_2027_killer_whales/scripps/audio/ce/OCNMS13CE_110811_040112_Transients.wav": 500,
+        "noaa-passive-bioacoustic/dclde/2027/dclde_2027_killer_whales/uaf/audio/field/20191004_1932.wav": 440,
+        "noaa-passive-bioacoustic/dclde/2027/dclde_2027_killer_whales/uaf/audio/field/20190623_1322.wav": 434,
+        "noaa-passive-bioacoustic/dclde/2027/dclde_2027_killer_whales/uaf/audio/field/20210621_1950.wav": 391,
+        "noaa-passive-bioacoustic/dclde/2027/dclde_2027_killer_whales/uaf/audio/field/20200627_0387.wav": 361,
+        "noaa-passive-bioacoustic/dclde/2027/dclde_2027_killer_whales/vfpa/audio/boundarypass/AMAR418.1.20190322T172409Z.wav": 339,
+        "noaa-passive-bioacoustic/dclde/2027/dclde_2027_killer_whales/uaf/audio/field/20210526_2005.wav": 333,
+        "noaa-passive-bioacoustic/dclde/2027/dclde_2027_killer_whales/vfpa/audio/vfpa-harostrait-sb/AMAR395.1.20170905T010001Z.wav": 291,
+        "noaa-passive-bioacoustic/dclde/2027/dclde_2027_killer_whales/uaf/audio/field/20200627_0386.wav": 290,
+        "noaa-passive-bioacoustic/dclde/2027/dclde_2027_killer_whales/uaf/audio/field/20190617_2021.wav": 283,
+        "noaa-passive-bioacoustic/dclde/2027/dclde_2027_killer_whales/uaf/audio/field/20210607_1847.wav": 277,
+        "noaa-passive-bioacoustic/dclde/2027/dclde_2027_killer_whales/vfpa/audio/vfpa-harostrait-nb/AMAR418.1.20170905T013001Z.wav": 276,
+        "noaa-passive-bioacoustic/dclde/2027/dclde_2027_killer_whales/uaf/audio/field/20191004_1748.wav": 269,
+        "noaa-passive-bioacoustic/dclde/2027/dclde_2027_killer_whales/uaf/audio/field/20200701_0392.wav": 268,
+        "noaa-passive-bioacoustic/dclde/2027/dclde_2027_killer_whales/uaf/audio/field/20210622_1422.wav": 264,
+        "noaa-passive-bioacoustic/dclde/2027/dclde_2027_killer_whales/uaf/audio/field/20210617_1930.wav": 260,
+        "noaa-passive-bioacoustic/dclde/2027/dclde_2027_killer_whales/uaf/audio/field/20210607_1816.wav": 247,
+        "noaa-passive-bioacoustic/dclde/2027/dclde_2027_killer_whales/uaf/audio/field/20200622_0382.wav": 231,
+        "noaa-passive-bioacoustic/dclde/2027/dclde_2027_killer_whales/scripps/audio/ce/OCNMS13CE_110812_035527_Transients.wav": 227,
+        "noaa-passive-bioacoustic/dclde/2027/dclde_2027_killer_whales/simres/audio/eastpoint/ICLISTENHF6156_20220711T151000.000Z_20220711T151459.996Z.flac": 225,
+        "noaa-passive-bioacoustic/dclde/2027/dclde_2027_killer_whales/uaf/audio/field/20190601_2323.wav": 222,
+        "noaa-passive-bioacoustic/dclde/2027/dclde_2027_killer_whales/vfpa/audio/vfpa-harostrait-nb/AMAR429.1.20170930T033001Z.wav": 221
+      }
+    },
+    "provider": {
+      "present_rows": 27934,
+      "coverage": 1.0,
+      "n_unique": 8,
+      "top_values": {
+        "UAF_NGOS": 10113,
+        "JASCO_VFPA": 6962,
+        "SIMRES": 3418,
+        "SIO": 2637,
+        "OrcaSound": 1730,
+        "JASCO_VFPA_ONC": 1511,
+        "ONC": 803,
+        "SMRUConsulting": 760
+      }
+    },
+    "row_id": {
+      "present_rows": 27934,
+      "coverage": 1.0,
+      "n_unique": 27934,
+      "top_values": {
+        "0": 1,
+        "1": 1,
+        "2": 1,
+        "3": 1,
+        "4": 1,
+        "5": 1,
+        "6": 1,
+        "7": 1,
+        "8": 1,
+        "9": 1,
+        "10": 1,
+        "11": 1,
+        "12": 1,
+        "13": 1,
+        "14": 1,
+        "15": 1,
+        "16": 1,
+        "17": 1,
+        "18": 1,
+        "19": 1,
+        "20": 1,
+        "21": 1,
+        "22": 1,
+        "23": 1,
+        "24": 1
+      }
+    },
+    "soundfile": {
+      "present_rows": 27934,
+      "coverage": 1.0,
+      "n_unique": 792,
+      "top_values": {
+        "20200620_0377.wav": 570,
+        "20210621_1653.wav": 526,
+        "20200627_0388.wav": 525,
+        "OCNMS13CE_110811_040112_Transients.wav": 500,
+        "20191004_1932.wav": 440,
+        "20190623_1322.wav": 434,
+        "20210621_1950.wav": 391,
+        "20200627_0387.wav": 361,
+        "AMAR418.1.20190322T172409Z.wav": 339,
+        "20210526_2005.wav": 333,
+        "AMAR395.1.20170905T010001Z.wav": 291,
+        "20200627_0386.wav": 290,
+        "20190617_2021.wav": 283,
+        "20210607_1847.wav": 277,
+        "AMAR418.1.20170905T013001Z.wav": 276,
+        "20191004_1748.wav": 269,
+        "20200701_0392.wav": 268,
+        "20210622_1422.wav": 264,
+        "20210617_1930.wav": 260,
+        "20210607_1816.wav": 247,
+        "20200622_0382.wav": 231,
+        "OCNMS13CE_110812_035527_Transients.wav": 227,
+        "ICLISTENHF6156_20220711T151000.000Z_20220711T151459.996Z.flac": 225,
+        "20190601_2323.wav": 222,
+        "AMAR429.1.20170930T033001Z.wav": 221
+      }
+    }
+  },
+  "calltype": {
+    "candidate_fields": [],
+    "has_usable_calltype_label": false,
+    "decision": "LEG1_FALLBACK: no call-type labels; use population/site + unsupervised structure"
+  },
+  "sequence_feasibility": {
+    "n_source_files": 792,
+    "calls_per_file_max": 570,
+    "calls_per_file_median": 12,
+    "calls_per_file_mean": 35.27,
+    "files_with_ge3_calls": 702,
+    "files_with_ge5_calls": 630
+  },
+  "provider_confound": {
+    "ecotype_by_provider": {
+      "SRKW": {
+        "JASCO_VFPA": 6858,
+        "SIMRES": 3418,
+        "OrcaSound": 1730,
+        "JASCO_VFPA_ONC": 1263,
+        "SMRUConsulting": 760,
+        "ONC": 128,
+        "SIO": 83
+      },
+      "TKW": {
+        "SIO": 2207,
+        "UAF_NGOS": 1212,
+        "ONC": 350,
+        "JASCO_VFPA_ONC": 248,
+        "JASCO_VFPA": 104
+      },
+      "OKW": {
+        "UAF_NGOS": 823,
+        "SIO": 347,
+        "ONC": 325
+      },
+      "SAR": {
+        "UAF_NGOS": 8078
+      }
+    },
+    "ecotype_provider_breadth": {
+      "SRKW": 7,
+      "TKW": 5,
+      "OKW": 3,
+      "SAR": 1
+    },
+    "single_provider_ecotypes": [
+      "SAR"
+    ]
+  }
+}

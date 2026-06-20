@@ -1,0 +1,117 @@
+{
+  "rung": 1,
+  "analysis": "within_ecotype_calltype_discovery",
+  "ecotype": "SRKW",
+  "single_provider": null,
+  "n_segments": 14240,
+  "n_candidate_clusters": 16,
+  "n_noise": 11675,
+  "noise_fraction": 0.819873595505618,
+  "cluster_sizes_desc": [
+    1541,
+    236,
+    104,
+    96,
+    86,
+    72,
+    58,
+    52,
+    51,
+    49,
+    48,
+    39,
+    36,
+    34,
+    32,
+    31
+  ],
+  "cluster_to_provider_nmi": 0.23403520850026366,
+  "mean_dominant_provider_fraction": 0.9316285693211344,
+  "subsample_stability_ari_mean": 0.6157787686830599,
+  "subsample_stability_ari_std": 0.24568329815328133,
+  "per_cluster_provider": {
+    "0": {
+      "size": 48,
+      "dominant_provider": "JASCO_VFPA",
+      "dominant_fraction": 1.0
+    },
+    "1": {
+      "size": 39,
+      "dominant_provider": "JASCO_VFPA",
+      "dominant_fraction": 1.0
+    },
+    "2": {
+      "size": 51,
+      "dominant_provider": "SIMRES",
+      "dominant_fraction": 0.5882352941176471
+    },
+    "3": {
+      "size": 49,
+      "dominant_provider": "JASCO_VFPA",
+      "dominant_fraction": 0.7346938775510204
+    },
+    "4": {
+      "size": 31,
+      "dominant_provider": "JASCO_VFPA",
+      "dominant_fraction": 0.967741935483871
+    },
+    "5": {
+      "size": 36,
+      "dominant_provider": "SMRUConsulting",
+      "dominant_fraction": 1.0
+    },
+    "6": {
+      "size": 34,
+      "dominant_provider": "JASCO_VFPA",
+      "dominant_fraction": 1.0
+    },
+    "7": {
+      "size": 72,
+      "dominant_provider": "SMRUConsulting",
+      "dominant_fraction": 0.7222222222222222
+    },
+    "8": {
+      "size": 32,
+      "dominant_provider": "SIMRES",
+      "dominant_fraction": 1.0
+    },
+    "9": {
+      "size": 96,
+      "dominant_provider": "OrcaSound",
+      "dominant_fraction": 1.0
+    },
+    "10": {
+      "size": 104,
+      "dominant_provider": "OrcaSound",
+      "dominant_fraction": 1.0
+    },
+    "11": {
+      "size": 58,
+      "dominant_provider": "OrcaSound",
+      "dominant_fraction": 1.0
+    },
+    "12": {
+      "size": 236,
+      "dominant_provider": "OrcaSound",
+      "dominant_fraction": 1.0
+    },
+    "13": {
+      "size": 86,
+      "dominant_provider": "OrcaSound",
+      "dominant_fraction": 1.0
+    },
+    "14": {
+      "size": 52,
+      "dominant_provider": "JASCO_VFPA",
+      "dominant_fraction": 0.9807692307692307
+    },
+    "15": {
+      "size": 1541,
+      "dominant_provider": "SIMRES",
+      "dominant_fraction": 0.9123945489941596
+    }
+  },
+  "interpretation": "clusters are 93% dominated by a single provider; they track recording site, not call type; 82% of segments are noise; most calls are unclustered",
+  "caveat": "Unsupervised candidate clusters; NOT validated against Ford/Filatova call-type catalogues. A repertoire claim requires labelled call types.",
+  "figure": "figures/calltype_discovery_srkw.png"
+}

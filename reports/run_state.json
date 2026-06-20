@@ -1,0 +1,38 @@
+{
+  "run_id": "20260529_072930",
+  "created_utc": "2026-05-29T07:29:31Z",
+  "repo_url": "https://github.com/ladyFaye1998/OrcaDolittle.git",
+  "repo_head": "8fc2ab839ab4887f93af1a99cdc973fd90a17bca",
+  "target_call_count": 27934,
+  "target_sr": 16000,
+  "min_duration_s": 1.0,
+  "strict_full_run": true,
+  "performance_knobs": {
+    "encode_batch_size": 64,
+    "gcs_block_size_mb": 4,
+    "use_amp": false,
+    "max_file_retries": 3,
+    "encode_log_every_batches": 10
+  },
+  "h_knobs": {
+    "h1_n_perm": 1000,
+    "h1_perm_train_subsample": 5000,
+    "h2_min_cluster_size": 25,
+    "h2_min_samples": 5,
+    "h3_epochs": 30,
+    "h3_n_perm": 100,
+    "h3_min_cluster_size": 10,
+    "h3_min_samples": 3,
+    "h4_n_perm": 1000
+  },
+  "drive_run_dir": "/content/drive/MyDrive/OrcaDolittle_full_dclde/20260529_072930",
+  "logs": {
+    "run_events_jsonl": "/content/drive/MyDrive/OrcaDolittle_full_dclde/20260529_072930/logs/run_events.jsonl",
+    "encoding_progress_jsonl": "/content/drive/MyDrive/OrcaDolittle_full_dclde/20260529_072930/logs/encoding_progress.jsonl",
+    "encoding_progress_csv": "/content/drive/MyDrive/OrcaDolittle_full_dclde/20260529_072930/logs/encoding_progress.csv",
+    "encoding_errors_jsonl": "/content/drive/MyDrive/OrcaDolittle_full_dclde/20260529_072930/logs/encoding_errors.jsonl",
+    "live_status_json": "/content/drive/MyDrive/OrcaDolittle_full_dclde/20260529_072930/live_status.json",
+    "environment_json": "/content/drive/MyDrive/OrcaDolittle_full_dclde/20260529_072930/reports/environment_snapshot.json",
+    "artifact_hashes_json": "/content/drive/MyDrive/OrcaDolittle_full_dclde/20260529_072930/reports/artifact_hashes.json"
+  }
+}

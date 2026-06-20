@@ -1,0 +1,122 @@
+{
+  "design": "KMeans call-type clusters on AVES2 embeddings x movement-only context; within-individual permutation null preserves each whale's context marginal.",
+  "label_column": "context3",
+  "classes": [
+    "foraging",
+    "resting",
+    "travelling"
+  ],
+  "n_calls": 10972,
+  "n_individuals": 23,
+  "n_call_types": 6,
+  "silhouette": 0.0621270053088665,
+  "cramers_v": 0.4001345972954641,
+  "cramers_v_null_mean": 0.0786894375161008,
+  "cramers_v_null_std": 0.005666230963206362,
+  "n_perm": 1000,
+  "pvalue_association": 0.000999000999000999,
+  "n_context_selective_types": 6,
+  "selective_cells": [
+    {
+      "call_type": 1,
+      "context": "foraging",
+      "enrichment": 2.2585277462531153,
+      "n_calls": 1126,
+      "pvalue": 0.000999000999000999
+    },
+    {
+      "call_type": 5,
+      "context": "foraging",
+      "enrichment": 1.883687682153077,
+      "n_calls": 623,
+      "pvalue": 0.000999000999000999
+    },
+    {
+      "call_type": 0,
+      "context": "travelling",
+      "enrichment": 1.4892423066553138,
+      "n_calls": 2650,
+      "pvalue": 0.000999000999000999
+    },
+    {
+      "call_type": 4,
+      "context": "foraging",
+      "enrichment": 1.4715680776757265,
+      "n_calls": 508,
+      "pvalue": 0.000999000999000999
+    },
+    {
+      "call_type": 3,
+      "context": "resting",
+      "enrichment": 1.4610958248091779,
+      "n_calls": 317,
+      "pvalue": 0.000999000999000999
+    },
+    {
+      "call_type": 2,
+      "context": "travelling",
+      "enrichment": 1.317816372654392,
+      "n_calls": 1383,
+      "pvalue": 0.000999000999000999
+    },
+    {
+      "call_type": 5,
+      "context": "resting",
+      "enrichment": 1.265067394485635,
+      "n_calls": 341,
+      "pvalue": 0.003996003996003996
+    },
+    {
+      "call_type": 2,
+      "context": "resting",
+      "enrichment": 1.2528710821941833,
+      "n_calls": 474,
+      "pvalue": 0.001998001998001998
+    }
+  ],
+  "enrichment_matrix": {
+    "0": {
+      "foraging": 0.017787070214508306,
+      "resting": 0.8480348808925726,
+      "travelling": 1.4892423066553138
+    },
+    "1": {
+      "foraging": 2.2585277462531153,
+      "resting": 0.66941336070457,
+      "travelling": 0.5624959569012139
+    },
+    "2": {
+      "foraging": 0.07539762321371914,
+      "resting": 1.2528710821941833,
+      "travelling": 1.317816372654392
+    },
+    "3": {
+      "foraging": 1.4500010271088255,
+      "resting": 1.4610958248091779,
+      "travelling": 0.6347277350298562
+    },
+    "4": {
+      "foraging": 1.4715680776757265,
+      "resting": 0.8743598066445997,
+      "travelling": 0.8367060990993579
+    },
+    "5": {
+      "foraging": 1.883687682153077,
+      "resting": 1.265067394485635,
+      "travelling": 0.5135647216796637
+    }
+  },
+  "type_counts": {
+    "0": 3208,
+    "1": 2032,
+    "2": 1892,
+    "3": 1085,
+    "4": 1407,
+    "5": 1348
+  },
+  "caveats": [
+    "Clusters are data-driven putative types in the on-animal tag domain, not named DCLDE catalogue types.",
+    "Context is movement-only; within-individual null controls for repertoire and activity-budget differences between whales.",
+    "Production criterion (context-specific production), not receiver response."
+  ]
+}

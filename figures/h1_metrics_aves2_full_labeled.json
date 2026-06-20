@@ -1,0 +1,87 @@
+{
+  "encoder": "aves2_full_labeled",
+  "n_samples": 27934,
+  "classes": [
+    "OKW",
+    "SAR",
+    "SRKW",
+    "TKW"
+  ],
+  "pooled_cv": {
+    "lr_accuracy": 0.936886778299914,
+    "lr_accuracy_std": 0.0024965771848235413,
+    "lr_balanced_accuracy": 0.9101367384861266,
+    "mlp_accuracy": 0.9741890780032492,
+    "macro_f1": 0.9127545586589814
+  },
+  "leave_one_provider_out": {
+    "overall_accuracy": 0.3076537552803036,
+    "overall_balanced_accuracy": 0.23100422626367006,
+    "overall_macro_f1": 0.21322041634266348,
+    "chance": 0.25,
+    "per_class_recall": {
+      "OKW": {
+        "recall": 0.03076923076923077,
+        "support": 1495
+      },
+      "SAR": {
+        "recall": 0.0,
+        "support": 8078
+      },
+      "SRKW": {
+        "recall": 0.48096910112359553,
+        "support": 14240
+      },
+      "TKW": {
+        "recall": 0.4122785731618539,
+        "support": 4121
+      }
+    },
+    "per_provider": {
+      "JASCO_VFPA": {
+        "balanced_accuracy": 0.4648150952284811,
+        "n": 6962,
+        "classes_absent_from_train": []
+      },
+      "JASCO_VFPA_ONC": {
+        "balanced_accuracy": 0.4951999208234363,
+        "n": 1511,
+        "classes_absent_from_train": []
+      },
+      "ONC": {
+        "balanced_accuracy": 0.4048592032967033,
+        "n": 803,
+        "classes_absent_from_train": []
+      },
+      "OrcaSound": {
+        "balanced_accuracy": 0.4635838150289017,
+        "n": 1730,
+        "classes_absent_from_train": []
+      },
+      "SIMRES": {
+        "balanced_accuracy": 0.23434757167934464,
+        "n": 3418,
+        "classes_absent_from_train": []
+      },
+      "SIO": {
+        "balanced_accuracy": 0.4928376772649883,
+        "n": 2637,
+        "classes_absent_from_train": []
+      },
+      "SMRUConsulting": {
+        "balanced_accuracy": 0.7460526315789474,
+        "n": 760,
+        "classes_absent_from_train": []
+      },
+      "UAF_NGOS": {
+        "balanced_accuracy": 0.08124272330027656,
+        "n": 10113,
+        "classes_absent_from_train": [
+          "SAR"
+        ]
+      }
+    }
+  },
+  "pooled_permutation_pvalue": 0.004975124378109453,
+  "figure": "figures/h1_probes_aves2_full_labeled.png"
+}

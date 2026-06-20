@@ -1,0 +1,39 @@
+{
+  "rung": 1,
+  "analysis": "within_ecotype_calltype_discovery",
+  "ecotype": "SRKW",
+  "single_provider": "JASCO_VFPA",
+  "n_segments": 6858,
+  "n_candidate_clusters": 3,
+  "n_noise": 4663,
+  "noise_fraction": 0.6799358413531642,
+  "cluster_sizes_desc": [
+    2085,
+    68,
+    42
+  ],
+  "cluster_to_provider_nmi": null,
+  "mean_dominant_provider_fraction": 1.0,
+  "subsample_stability_ari_mean": 0.5719385823017278,
+  "subsample_stability_ari_std": 0.11300673422806248,
+  "per_cluster_provider": {
+    "0": {
+      "size": 42,
+      "dominant_provider": "JASCO_VFPA",
+      "dominant_fraction": 1.0
+    },
+    "1": {
+      "size": 68,
+      "dominant_provider": "JASCO_VFPA",
+      "dominant_fraction": 1.0
+    },
+    "2": {
+      "size": 2085,
+      "dominant_provider": "JASCO_VFPA",
+      "dominant_fraction": 1.0
+    }
+  },
+  "interpretation": "one cluster dominates the non-noise mass; no resolved multi-type repertoire; 68% of segments are noise; most calls are unclustered",
+  "caveat": "Unsupervised candidate clusters; NOT validated against Ford/Filatova call-type catalogues. A repertoire claim requires labelled call types.",
+  "figure": "figures/calltype_discovery_srkw_single.png"
+}

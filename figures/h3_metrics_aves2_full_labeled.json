@@ -1,0 +1,16 @@
+{
+  "encoder": "aves2_full_labeled",
+  "vocab_size": 40,
+  "token_entropy_bits": 5.235079526395253,
+  "max_entropy_bits": 5.321928094887363,
+  "n_encounters": 702,
+  "n_train": 562,
+  "n_val": 140,
+  "heldout_real_loss": 1.8091331720352173,
+  "heldout_shuffled_loss_mean": 1.752461926817894,
+  "heldout_shuffled_loss_std": 0.08211774198603025,
+  "unigram_baseline_loss": 3.4859667523044897,
+  "beats_unigram": true,
+  "order_pvalue": 0.7722772277227723,
+  "figure": "figures/h3_sequence_lm_aves2_full_labeled.png"
+}
