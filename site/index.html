@@ -140,6 +140,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
 .slidergrid input{accent-color:var(--teal);width:100%}
 .slidergrid span{font-size:11px;color:var(--dim);font-weight:600;letter-spacing:0;text-transform:none}
 .templates{display:flex;flex-wrap:wrap;gap:8px}
+.presetnote{font-size:10.5px;color:var(--faint);font-weight:850;text-transform:uppercase;letter-spacing:.08em;margin-top:2px}
 .template{border:1px solid rgba(255,180,84,.28);background:rgba(255,180,84,.08);color:#f4dcae;border-radius:8px;padding:8px 10px;font:700 12px var(--sans);cursor:pointer}
 .template:hover{border-color:var(--warn)}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
@@ -392,14 +393,12 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
           <label>Spacing <input id="spacing" type="range" min="0" max="100" value="56" /><span id="spacingLabel">Natural gaps</span></label>
           <label>Water echo <input id="echoMix" type="range" min="0" max="100" value="38" /><span id="echoLabel">Soft water</span></label>
         </div>
+        <div class="presetnote">Evidence presets, not context translations</div>
         <div class="templates" id="templates">
-          <button class="template" data-template="presence">Dialect frame</button>
-          <button class="template" data-template="food">Foraging metadata</button>
-          <button class="template" data-template="move">Travel metadata</button>
-          <button class="template" data-template="close">Cohesion metadata</button>
-          <button class="template" data-template="greet">Social metadata</button>
-          <button class="template" data-template="reply">Response scoring</button>
-          <button class="template" data-template="scan">Expanded K set</button>
+          <button class="template" data-template="compact">H6 compact set</button>
+          <button class="template" data-template="expanded">Expanded K-types</button>
+          <button class="template" data-template="response">Response subset</button>
+          <button class="template" data-template="diversity">Diversity scan</button>
         </div>
       </div>
       <div class="chips" id="chips">
@@ -651,13 +650,10 @@ const CALLS={
   v_scan:{call:'v_scan',real:'k5',name:'Scan ripple contour sketch',role:'optional contour sketch',human:'Synthetic contour only; not evidence.',ctx:'sketch',cite:'non-evidence audition aid',dur:.96,evidence:40,validated:false}
 };
 const TEMPLATES={
-  presence:{text:'Dialect-response frame; observed context is field metadata only.',activity:'contact',receiver:'same-pod',style:'balanced',tone:'gentle',energy:28,spacing:64,echo:42,phrase:['k1','k3','k7']},
-  food:{text:'Foraging observation logged as field metadata; audio remains a dialect exemplar set.',activity:'foraging',receiver:'same-pod',style:'forage',tone:'curious',energy:42,spacing:54,echo:34,phrase:['k1','k3','k7']},
-  move:{text:'Travelling observation logged as field metadata; audio remains a dialect exemplar set.',activity:'travelling',receiver:'nearby',style:'travel',tone:'gentle',energy:36,spacing:58,echo:36,phrase:['k1','k3','k7']},
-  close:{text:'Cohesion observation logged as field metadata; audio remains a dialect exemplar set.',activity:'contact',receiver:'nearby',style:'contact',tone:'gentle',energy:32,spacing:68,echo:40,phrase:['k1','k3','k7']},
-  greet:{text:'Social observation logged as field metadata; audio remains a dialect exemplar set.',activity:'social',receiver:'same-pod',style:'social',tone:'bright',energy:46,spacing:48,echo:30,phrase:['k1','k3','k7']},
-  reply:{text:'Score vocal replies to the dialect exemplar set; do not infer call content.',activity:'contact',receiver:'nearby',style:'reply',tone:'distant',energy:30,spacing:72,echo:64,phrase:['k1','k3','k7']},
-  scan:{text:'Expanded FEROP K-type audition set for review; no content claim.',activity:'unknown',receiver:'field-test',style:'scan',tone:'curious',energy:30,spacing:62,echo:44,phrase:['k1','k3','k5','k7','k12']}
+  compact:{label:'H6 compact set',text:'Compact FEROP dialect-response exemplar set; observed context is field metadata only.',activity:'contact',receiver:'same-pod',style:'balanced',tone:'gentle',energy:28,spacing:64,echo:42,phrase:['k1','k3','k7']},
+  expanded:{label:'Expanded K-types',text:'Expanded FEROP K-type audition set for review; no content claim.',activity:'unknown',receiver:'field-test',style:'scan',tone:'curious',energy:30,spacing:62,echo:44,phrase:['k1','k3','k5','k7','k12']},
+  response:{label:'Response subset',text:'Small response-scoring subset for same-pod/different-pod design; do not infer call content.',activity:'contact',receiver:'same-pod',style:'reply',tone:'distant',energy:30,spacing:72,echo:44,phrase:['k1','k7']},
+  diversity:{label:'Diversity scan',text:'Catalogue-diversity listening set; compares K-call acoustics, not meanings.',activity:'unknown',receiver:'field-test',style:'scan',tone:'curious',energy:36,spacing:58,echo:36,phrase:['k3','k5','k12']}
 };
 const canvas=document.getElementById('spec'), cx=canvas.getContext('2d');
 const stage=document.getElementById('stage'), statusEl=document.getElementById('status'),
@@ -683,7 +679,7 @@ const stage=document.getElementById('stage'), statusEl=document.getElementById('
       randomSeed=document.getElementById('randomSeed'), uploadClip=document.getElementById('uploadClip'),
       uploadNote=document.getElementById('uploadNote'), uploadViz=document.getElementById('uploadViz'),
       uploadCanvas=document.getElementById('uploadCanvas'), labStatus=document.getElementById('labStatus');
-let phrase=TEMPLATES.food.phrase.map(k=>CALLS[k]);
+let phrase=TEMPLATES.compact.phrase.map(k=>CALLS[k]);
 function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
 function clamp(n,min,max){return Math.max(min,Math.min(max,n));}
 function clearSpec(){cx.fillStyle='#02060a';cx.fillRect(0,0,canvas.width,canvas.height);}
@@ -991,7 +987,7 @@ function setTemplate(key){
   humanText.value=t.text; activityEl.value=t.activity; receiverEl.value=t.receiver;
   styleEl.value=t.style; toneEl.value=t.tone; energyEl.value=t.energy; spacingEl.value=t.spacing; echoEl.value=t.echo;
   phrase=t.phrase.map(k=>CALLS[k]); renderChips(t.style); renderTray();
-  statusEl.textContent='Template loaded: '+key;
+  statusEl.textContent='Evidence preset loaded: '+(t.label||key);
 }
 function buildFromContext(){
   const intent=intentFromContext();
