@@ -212,6 +212,11 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
 .ev .en{font-size:20px;color:var(--teal);font-weight:850;font-variant-numeric:tabular-nums}
 .ev .et{font-size:11px;color:var(--faint);text-transform:uppercase;letter-spacing:.06em;font-weight:800}
 .ev .ed{font-size:11.5px;color:var(--dim);line-height:1.3;margin-top:3px}
+.opslist{display:grid;gap:8px}
+.opstep{display:grid;grid-template-columns:28px 1fr;gap:9px;align-items:flex-start;border:1px solid rgba(76,201,255,.18);border-radius:8px;background:rgba(3,7,12,.55);padding:9px}
+.opstep span{display:flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:rgba(57,224,200,.10);border:1px solid rgba(57,224,200,.35);color:var(--teal);font:850 11px var(--mono)}
+.opstep b{display:block;color:var(--text);font-size:12.5px;margin-bottom:2px}
+.opstep em{display:block;color:var(--dim);font-style:normal;font-size:12px;line-height:1.35}
 .protocolControls{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
 .protocolControls label{display:flex;flex-direction:column;gap:5px;font-size:11px;color:var(--faint);font-weight:800;text-transform:uppercase;letter-spacing:.05em}
 .protocolControls input,.protocolControls select{border:1px solid var(--border2);background:#050b12;color:var(--text);border-radius:8px;padding:9px 10px;font:13px var(--sans);width:100%}
@@ -443,14 +448,18 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
   <div class="labdeck reveal" id="fieldLab">
     <div class="labhead">
       <div>
-        <h3>Field Playback Lab</h3>
-        <p>Build a playback-ready stimulus set, inspect the evidence attached to it, and draft a conservative field protocol with controls, response windows, and stop rules.</p>
+        <h3>Expedition Playback Kit</h3>
+        <p>Configure a permitted broadcast plan, produce a randomized run sheet, and export the files a lab or field team needs: protocol, stimulus manifest, run sheet, and blinded scoring sheet.</p>
       </div>
       <div class="labactions">
-        <a class="btn primary" id="draftPlan" href="#protocolPlan">Draft field plan</a>
-        <button class="btn" id="copyPlan" type="button">Copy plan</button>
-        <button class="btn" id="downloadPlan" type="button">Download JSON</button>
-        <span class="labstatus" id="labStatus">Field plan is generated below; edit controls or copy/download it.</span>
+        <a class="btn primary" id="draftPlan" href="#protocolPlan">Build field kit</a>
+        <button class="btn" id="copyPlan" type="button">Copy protocol</button>
+        <button class="btn" id="copyRunSheet" type="button">Copy run sheet</button>
+        <button class="btn" id="downloadPlan" type="button">Field kit JSON</button>
+        <button class="btn" id="downloadRunSheet" type="button">Run sheet CSV</button>
+        <button class="btn" id="downloadScoringSheet" type="button">Scoring CSV</button>
+        <button class="btn" id="downloadManifest" type="button">Manifest CSV</button>
+        <span class="labstatus" id="labStatus">Kit updates as you edit; exports are ready for lab review and permitted field operations.</span>
       </div>
     </div>
     <div class="labgrid">
@@ -461,6 +470,10 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
       <div class="labcard">
         <h4>Evidence stack</h4>
         <div class="evidence" id="evidenceStack"></div>
+      </div>
+      <div class="labcard">
+        <h4>Operator steps</h4>
+        <div class="opslist" id="opsList"></div>
       </div>
       <div class="labcard">
         <h4>Protocol builder</h4>
@@ -486,7 +499,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
         <div class="runsheet" id="runSheet"></div>
       </div>
       <div class="labcard">
-        <h4>Field gates</h4>
+        <h4>Expedition checklist</h4>
         <div class="gates" id="gateList"></div>
       </div>
       <div class="labcard">
@@ -500,9 +513,9 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
       </div>
       <div class="labcard exportcard">
         <h4>Export</h4>
-        <p class="minihelp">Use Download JSON for the full randomized plan. Preview only when needed.</p>
+        <p class="minihelp">Field kit JSON includes protocol, treatment table, randomized run sheet, manifest, scoring schema, and checklist. CSV buttons create the lab-friendly worksheets.</p>
         <details class="exportdetails">
-          <summary>Preview JSON</summary>
+          <summary>Preview field kit JSON</summary>
           <div class="planbox" id="exportPreview"></div>
         </details>
       </div>
@@ -683,6 +696,7 @@ const stage=document.getElementById('stage'), statusEl=document.getElementById('
       chips=document.getElementById('chips'),
       timeline=document.getElementById('timeline'), meters=document.getElementById('meters'),
       stimulusSet=document.getElementById('stimulusSet'), evidenceStack=document.getElementById('evidenceStack'),
+      opsList=document.getElementById('opsList'),
       protocolPlan=document.getElementById('protocolPlan'), exportPreview=document.getElementById('exportPreview'),
       gateList=document.getElementById('gateList'), runSheet=document.getElementById('runSheet'),
       runMeta=document.getElementById('runMeta'), trialCount=document.getElementById('trialCount'),
@@ -805,19 +819,141 @@ function runSheetRows(){
 function fieldGates(){
   const synthetic=phrase.filter(p=>!p.validated).length;
   return [
-    {ok:false,title:'Permits first',text:'No field broadcast without local approval, stand-off plan, and calibrated source level.'},
-    {ok:synthetic===0,title:'Stimulus status',text:synthetic?synthetic+' synthetic audition token'+(synthetic===1?'':'s')+' in current selection; replace or approve before field use.':'All selected anchors are validated recordings.'},
-    {ok:mode==='recordings',title:'Playback mode',text:mode==='recordings'?'Real FEROP clip playback selected.':'Current mode includes contour sketches; switch to Real FEROP clips before field use.'},
-    {ok:diffPod.checked&&matchedNoise.checked,title:'Controls required',text:(diffPod.checked?'Dialect control included':'Add a dialect control')+'; '+(matchedNoise.checked?'matched-noise included':'add matched-noise control')+'.'},
-    {ok:blindObservers.checked,title:'Blinded scoring',text:blindObservers.checked?'Observer-blinded scoring enabled.':'Enable observer-blinded scoring before running trials.'},
-    {ok:stopRules.checked,title:'Stop rules',text:stopRules.checked?'Disturbance stop rules enabled.':'Enable disturbance stop rules before export.'}
+    {ok:false,title:'Local signoff',text:'Kit is exportable for collaborator review; field teams add permit, stand-off, and calibrated source-level signoff before broadcast.'},
+    {ok:synthetic===0,title:'Stimulus manifest',text:synthetic?synthetic+' contour audition token'+(synthetic===1?'':'s')+' in the selection; replace or explicitly approve before field use.':'All selected anchors are validated FEROP recordings.'},
+    {ok:mode==='recordings',title:'Broadcast mode',text:mode==='recordings'?'Real FEROP clip playback selected for the kit.':'Current mode includes contour sketches; switch to Real FEROP clips for field broadcast.'},
+    {ok:diffPod.checked&&matchedNoise.checked,title:'Controls included',text:(diffPod.checked?'Dialect control included':'Add a dialect control')+'; '+(matchedNoise.checked?'matched-noise included':'add matched-noise control')+'.'},
+    {ok:blindObservers.checked,title:'Blinded scoring sheet',text:blindObservers.checked?'Observer-blinded scoring sheet generated.':'Enable observer-blinded scoring before running trials.'},
+    {ok:stopRules.checked,title:'Stop rules',text:stopRules.checked?'Disturbance stop rules included in protocol.':'Enable disturbance stop rules before export.'}
   ];
 }
+function operatorSteps(){
+  return [
+    {title:'Select evidence anchors',text:'Use FEROP presets or upload a candidate clip for offline pipeline review.'},
+    {title:'Lock field settings',text:'Set session, windows, washout, controls, and seed before the crew receives the kit.'},
+    {title:'Export worksheets',text:'Send protocol, run sheet, scoring sheet, and manifest to the PI and operators.'},
+    {title:'Broadcast permitted clips',text:'Use real recordings only after local approvals and source-level calibration.'},
+    {title:'Score blind response',text:'Observers fill the scoring CSV against the randomized run sheet and stop rules.'}
+  ];
+}
+function fieldReadiness(){
+  const gates=fieldGates(), ready=gates.filter(g=>g.ok).length, remaining=gates.filter(g=>!g.ok).map(g=>g.title);
+  return {
+    ready,
+    total:gates.length,
+    remaining,
+    label:remaining.length
+      ? ready+'/'+gates.length+' kit checks ready; local signoff stays with the field team: '+remaining.join(', ')+'.'
+      : 'All kit checks ready for permitted field execution.'
+  };
+}
+function manifestRows(){
+  const seen=new Set(), rows=[];
+  phrase.forEach((p,i)=>{
+    const key=p.call+'|'+(p.real||'');
+    if(seen.has(key))return;
+    seen.add(key);
+    rows.push({
+      anchor_id:'A'+String(i+1).padStart(2,'0'),
+      call_type:p.call.toUpperCase(),
+      role:p.role,
+      audio_file:p.validated?CLIPS[p.real]:SYNTH_CLIPS[p.call],
+      source:p.validated?'FEROP catalogue / Filatova 2011':'browser contour sketch',
+      validated_recording:p.validated?'yes':'no',
+      field_use:(p.validated&&mode==='recordings')?'candidate playback anchor after permit and calibration':'review or audition only',
+      citation:p.cite,
+      notes:p.human
+    });
+  });
+  if(diffPod.checked)rows.push({anchor_id:'CTRL-DIFF-POD',call_type:'DIFF-POD',role:'dialect-membership control',audio_file:'collaborator-supplied validated call',source:'local collaborator archive or approved catalogue',validated_recording:'pending',field_use:'control after collaborator signoff',citation:'Filatova 2011 response contrast frame',notes:'Match source level, duration, and playback handling to target treatment.'});
+  if(matchedNoise.checked)rows.push({anchor_id:'CTRL-MATCHED',call_type:'MATCHED',role:'matched envelope / noise control',audio_file:'generated from approved anchor envelope',source:'analysis pipeline export',validated_recording:'not applicable',field_use:'negative acoustic-energy control',citation:'OrcaDolittle protocol',notes:'Preserve duration and amplitude envelope without call-type structure.'});
+  rows.push({anchor_id:'CTRL-SILENCE',call_type:'SILENCE',role:'no-playback baseline',audio_file:'none',source:'field protocol',validated_recording:'not applicable',field_use:'baseline',citation:'OrcaDolittle protocol',notes:'Record baseline and response windows with no broadcast.'});
+  return rows;
+}
+function runSheetColumns(){
+  return [
+    {key:'trial_id',label:'trial_id'},
+    {key:'trial',label:'trial_number'},
+    {key:'treatment',label:'treatment'},
+    {key:'stimulus',label:'stimulus'},
+    {key:'replicate',label:'replicate'},
+    {key:'baseline',label:'baseline_minutes'},
+    {key:'response',label:'response_minutes'},
+    {key:'washout',label:'washout_minutes'}
+  ];
+}
+function scoringColumns(){
+  return [
+    {key:'trial_id',label:'trial_id'},
+    {key:'treatment',label:'treatment'},
+    {key:'stimulus',label:'stimulus'},
+    {key:'observer_id',label:'observer_id'},
+    {key:'planned_start_utc',label:'planned_start_utc'},
+    {key:'actual_start_utc',label:'actual_start_utc'},
+    {key:'baseline_vocal_count',label:'baseline_vocal_count'},
+    {key:'response_vocal_count',label:'response_vocal_count'},
+    {key:'first_reply_latency_s',label:'first_reply_latency_s'},
+    {key:'matched_call_type',label:'matched_call_type'},
+    {key:'heading_change_deg',label:'heading_change_deg'},
+    {key:'speed_change_mps',label:'speed_change_mps'},
+    {key:'group_spread_pre_m',label:'group_spread_pre_m'},
+    {key:'group_spread_post_m',label:'group_spread_post_m'},
+    {key:'received_level_db',label:'received_level_db'},
+    {key:'sea_state',label:'sea_state'},
+    {key:'stop_rule_triggered',label:'stop_rule_triggered'},
+    {key:'notes',label:'notes'}
+  ];
+}
+function manifestColumns(){
+  return [
+    {key:'anchor_id',label:'anchor_id'},
+    {key:'call_type',label:'call_type'},
+    {key:'role',label:'role'},
+    {key:'audio_file',label:'audio_file'},
+    {key:'source',label:'source'},
+    {key:'validated_recording',label:'validated_recording'},
+    {key:'field_use',label:'field_use'},
+    {key:'citation',label:'citation'},
+    {key:'notes',label:'notes'}
+  ];
+}
+function scoringRows(){
+  return runSheetRows().map(r=>({
+    trial_id:r.trial_id,
+    treatment:r.treatment,
+    stimulus:r.stimulus,
+    observer_id:'',
+    planned_start_utc:'',
+    actual_start_utc:'',
+    baseline_vocal_count:'',
+    response_vocal_count:'',
+    first_reply_latency_s:'',
+    matched_call_type:'',
+    heading_change_deg:'',
+    speed_change_mps:'',
+    group_spread_pre_m:'',
+    group_spread_post_m:'',
+    received_level_db:'',
+    sea_state:'',
+    stop_rule_triggered:'',
+    notes:''
+  }));
+}
+function csvEscape(v){
+  const s=String(v==null?'':v);
+  return /[",\n\r]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s;
+}
+function toCsv(rows,cols){
+  return cols.map(c=>csvEscape(c.label)).join(',')+'\n'+rows.map(r=>cols.map(c=>csvEscape(r[c.key])).join(',')).join('\n');
+}
+function runSheetCsv(){return toCsv(runSheetRows(),runSheetColumns());}
+function scoringCsv(){return toCsv(scoringRows(),scoringColumns());}
+function manifestCsv(){return toCsv(manifestRows(),manifestColumns());}
 function planPayload(){
   const seq=phrase.map(p=>p.call);
   const gates=fieldGates();
   return {
-    objective:'Research-bound conspecific playback feasibility plan',
+    objective:'Research-bound field playback kit for permitted lab or expedition use',
     session:sessionLabel.value,
     context:activityEl.value,
     receiver:receiverEl.value,
@@ -865,19 +1001,47 @@ function fieldPlanText(){
     'randomized condition order with washout',
     'analysis pre-registered against matched controls'
   ].join('\n  - ');
-  return 'ORCADOLITTLE FIELD PLAYBACK DRAFT\n'
+  return 'ORCADOLITTLE EXPEDITION PLAYBACK KIT\n'
     +'Question: do receivers respond differently to this candidate stimulus set than to dialect, noise, and silence controls?\n'
     +'Session: '+(p.session||'session')+' | Context: '+p.context+' | Receiver: '+p.receiver+' | Mode: '+p.controls.mode+' | Anchors: '+p.phrase.map(x=>x.toUpperCase()).join(' -> ')+'\n\n'
     +'Model claim: call-type/dialect structure, production-side context association, and dialect-response design are supported; content-specific response remains the next field-test question.\n\n'
     +'Treatments:\n'+treatments+'\n\n'
     +'Design: '+p.design.trials_per_condition+' trials/condition; '+p.design.baseline_minutes+' min baseline; '+p.design.response_minutes+' min response window; '+p.design.washout_minutes+' min washout.\n\n'
-    +'Randomized run sheet: '+p.run_sheet.length+' trials generated from seed "'+(p.design.randomization_seed||'seed')+'"; export JSON includes every trial ID, treatment, baseline, response, and washout value.\n\n'
+    +'Field kit exports: protocol text, randomized run sheet CSV, blinded scoring CSV, stimulus manifest CSV, and full JSON package.\n'
+    +'Randomized run sheet: '+p.run_sheet.length+' trials generated from seed "'+(p.design.randomization_seed||'seed')+'"; export files include every trial ID, treatment, baseline, response, and washout value.\n\n'
     +'Response metrics:\n  - '+metrics+'\n\n'
-    +'Field gates:\n  - '+gates+'\n\n'
+    +'Expedition checklist:\n  - '+gates+'\n\n'
     +'Boundary: '+p.claim_boundary;
 }
-function showPlanFeedback(message){
-  updateLab();
+function fieldKitPayload(){
+  const core=planPayload(), readiness=fieldReadiness();
+  return Object.assign({},core,{
+    field_kit_version:'2026-06-21',
+    readiness,
+    operator_steps:operatorSteps(),
+    stimulus_manifest:manifestRows(),
+    scoring_sheet:scoringRows(),
+    csv_exports:{
+      run_sheet_filename:'orcadolittle_run_sheet.csv',
+      run_sheet_columns:runSheetColumns().map(c=>c.label),
+      scoring_filename:'orcadolittle_scoring_sheet.csv',
+      scoring_columns:scoringColumns().map(c=>c.label),
+      manifest_filename:'orcadolittle_stimulus_manifest.csv',
+      manifest_columns:manifestColumns().map(c=>c.label)
+    },
+    protocol_text:fieldPlanText()
+  });
+}
+function downloadText(filename,text,type){
+  const blob=new Blob([text],{type:type||'text/plain;charset=utf-8'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=filename;
+  a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+}
+function showPlanFeedback(message,preserveCurrent){
+  if(!preserveCurrent)updateLab();
   protocolPlan.classList.remove('flash');
   void protocolPlan.offsetWidth;
   protocolPlan.classList.add('flash');
@@ -887,6 +1051,19 @@ function showPlanFeedback(message){
   statusEl.textContent=message;
   setTimeout(()=>protocolPlan.classList.remove('flash'),1400);
 }
+function selectTextBlock(el){
+  if(!window.getSelection||!document.createRange||!el)return;
+  const range=document.createRange(), selection=window.getSelection();
+  range.selectNodeContents(el);
+  selection.removeAllRanges();
+  selection.addRange(range);
+}
+function showCopyFallback(message,text){
+  updateLab();
+  protocolPlan.textContent=text;
+  showPlanFeedback(message,true);
+  selectTextBlock(protocolPlan);
+}
 async function copyTextWithFallback(text){
   if(navigator.clipboard&&window.isSecureContext){
     try{await navigator.clipboard.writeText(text);return true;}catch(e){}
@@ -895,8 +1072,11 @@ async function copyTextWithFallback(text){
   ta.value=text;
   ta.setAttribute('readonly','');
   ta.style.position='fixed';
-  ta.style.left='-9999px';
+  ta.style.left='0';
   ta.style.top='0';
+  ta.style.width='1px';
+  ta.style.height='1px';
+  ta.style.opacity='0';
   document.body.appendChild(ta);
   ta.focus();
   ta.select();
@@ -918,14 +1098,15 @@ function updateLab(){
     [validated+'/'+phrase.length,'Validated anchors','Real FEROP K-call units inside this selection.'],
     ['Scoped','Claim boundary','Content-specific response and synthetic speech validity remain future field-test questions.']
   ].map(e=>'<div class="ev"><div class="en">'+e[0]+'</div><div class="et">'+e[1]+'</div><div class="ed">'+e[2]+'</div></div>').join('');
-  gateList.innerHTML=[
-    ...fieldGates().map(g=>[g.ok,g.title,g.text])
-  ].map(g=>'<div class="gate '+(g[0]?'':'warn')+'"><span class="dotok"></span><div><b>'+esc(g[1])+':</b> '+esc(g[2])+'</div></div>').join('');
+  if(opsList)opsList.innerHTML=operatorSteps().map((s,i)=>'<div class="opstep"><span>'+String(i+1)+'</span><div><b>'+esc(s.title)+'</b><em>'+esc(s.text)+'</em></div></div>').join('');
+  const gates=fieldGates(), readiness=fieldReadiness();
+  gateList.innerHTML=gates.map(g=>'<div class="gate '+(g.ok?'':'warn')+'"><span class="dotok"></span><div><b>'+esc(g.title)+':</b> '+esc(g.text)+'</div></div>').join('');
   const rows=runSheetRows(), preview=rows.slice(0,36);
   runMeta.innerHTML='<span>'+rows.length+' trials</span><span>'+treatmentRows().length+' conditions</span><span>'+trialCount.value+' reps/condition</span><span>seed '+esc(randomSeed.value||'seed')+'</span>';
-  runSheet.innerHTML=preview.map(r=>'<div class="trialrow"><div class="trialid">'+esc(r.trial_id)+'</div><div class="trialtreatment">'+esc(r.treatment)+'</div><div class="trialflags">'+esc(r.baseline)+'m baseline · '+esc(r.response)+'m response · '+esc(r.washout)+'m washout<br>'+esc(r.stimulus)+'</div></div>').join('')+(rows.length>preview.length?'<div class="trialrow"><div class="trialid">+</div><div class="trialtreatment">MORE</div><div class="trialflags">'+(rows.length-preview.length)+' additional trials included in JSON export.</div></div>':'');
+  runSheet.innerHTML=preview.map(r=>'<div class="trialrow"><div class="trialid">'+esc(r.trial_id)+'</div><div class="trialtreatment">'+esc(r.treatment)+'</div><div class="trialflags">'+esc(r.baseline)+'m baseline · '+esc(r.response)+'m response · '+esc(r.washout)+'m washout<br>'+esc(r.stimulus)+'</div></div>').join('')+(rows.length>preview.length?'<div class="trialrow"><div class="trialid">+</div><div class="trialtreatment">MORE</div><div class="trialflags">'+(rows.length-preview.length)+' additional trials included in kit exports.</div></div>':'');
   protocolPlan.textContent=fieldPlanText();
-  exportPreview.textContent=JSON.stringify(planPayload(),null,2);
+  exportPreview.textContent=JSON.stringify(fieldKitPayload(),null,2);
+  if(labStatus)labStatus.textContent=readiness.label+' Exports update automatically.';
 }
 function drawUploadEmpty(){
   if(!uploadCanvas)return;
@@ -1067,18 +1248,37 @@ document.getElementById('clear').addEventListener('click',()=>{phrase=[];renderT
   const ev=(el.type==='checkbox'||el.tagName==='SELECT')?'change':'input';
   el.addEventListener(ev,updateLab);
 });
-const draftPlanBtn=document.getElementById('draftPlan'), copyPlanBtn=document.getElementById('copyPlan');
-draftPlanBtn.addEventListener('click',()=>setTimeout(()=>showPlanFeedback('Field plan drafted below'),0));
+const draftPlanBtn=document.getElementById('draftPlan'), copyPlanBtn=document.getElementById('copyPlan'), copyRunSheetBtn=document.getElementById('copyRunSheet');
+draftPlanBtn.addEventListener('click',()=>setTimeout(()=>showPlanFeedback('Field kit built below'),0));
 copyPlanBtn.addEventListener('click',async()=>{
   updateLab();
-  try{await copyTextWithFallback(protocolPlan.textContent);showPlanFeedback('Field plan copied');copyPlanBtn.textContent='Copied';setTimeout(()=>{copyPlanBtn.textContent='Copy plan';},1200);}
-  catch(e){showPlanFeedback('Copy blocked - select the plan text below or use Download JSON');}
+  try{await copyTextWithFallback(protocolPlan.textContent);showPlanFeedback('Protocol copied');copyPlanBtn.textContent='Copied';setTimeout(()=>{copyPlanBtn.textContent='Copy protocol';},1200);}
+  catch(e){showCopyFallback('Clipboard blocked - protocol selected below',protocolPlan.textContent);}
+});
+copyRunSheetBtn.addEventListener('click',async()=>{
+  updateLab();
+  try{await copyTextWithFallback(runSheetCsv());showPlanFeedback('Run sheet CSV copied');copyRunSheetBtn.textContent='Copied';setTimeout(()=>{copyRunSheetBtn.textContent='Copy run sheet';},1200);}
+  catch(e){showCopyFallback('Clipboard blocked - run sheet selected below',runSheetCsv());}
 });
 document.getElementById('downloadPlan').addEventListener('click',()=>{
   updateLab();
-  const blob=new Blob([exportPreview.textContent],{type:'application/json'});
-  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='orcadolittle_playback_plan.json'; a.click();
-  setTimeout(()=>URL.revokeObjectURL(a.href),1000); statusEl.textContent='Downloaded field-plan JSON';
+  downloadText('orcadolittle_field_kit.json',JSON.stringify(fieldKitPayload(),null,2),'application/json;charset=utf-8');
+  statusEl.textContent='Downloaded field-kit JSON';
+});
+document.getElementById('downloadRunSheet').addEventListener('click',()=>{
+  updateLab();
+  downloadText('orcadolittle_run_sheet.csv',runSheetCsv(),'text/csv;charset=utf-8');
+  statusEl.textContent='Downloaded run sheet CSV';
+});
+document.getElementById('downloadScoringSheet').addEventListener('click',()=>{
+  updateLab();
+  downloadText('orcadolittle_scoring_sheet.csv',scoringCsv(),'text/csv;charset=utf-8');
+  statusEl.textContent='Downloaded scoring CSV';
+});
+document.getElementById('downloadManifest').addEventListener('click',()=>{
+  updateLab();
+  downloadText('orcadolittle_stimulus_manifest.csv',manifestCsv(),'text/csv;charset=utf-8');
+  statusEl.textContent='Downloaded stimulus manifest CSV';
 });
 document.getElementById('scoreUpload').addEventListener('click',()=>{
   previewUploadedClip();
