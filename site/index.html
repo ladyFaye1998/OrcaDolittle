@@ -350,15 +350,15 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
           </label>
         </div>
         <div class="fieldrow compact">
-          <label>Evidence lens
+          <label>Protocol lens
             <select id="phraseStyle">
-              <option value="balanced">Balanced</option>
-              <option value="contact">Contact/cohesion</option>
-              <option value="forage">Foraging context</option>
-              <option value="travel">Travelling context</option>
-              <option value="reply">Call-back response</option>
-              <option value="social">Social context</option>
-              <option value="scan">Unknown/inspection</option>
+              <option value="balanced">Dialect-response frame</option>
+              <option value="contact">Cohesion context note</option>
+              <option value="forage">Foraging protocol note</option>
+              <option value="travel">Travelling protocol note</option>
+              <option value="reply">Vocal-reply scoring</option>
+              <option value="social">Social-context note</option>
+              <option value="scan">Unknown-context caution</option>
             </select>
           </label>
           <label>Audition tone
@@ -376,18 +376,18 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
           <label>Water echo <input id="echoMix" type="range" min="0" max="100" value="38" /><span id="echoLabel">Soft water</span></label>
         </div>
         <div class="templates" id="templates">
-          <button class="template" data-template="presence">Contact note</button>
-          <button class="template" data-template="food">Foraging note</button>
-          <button class="template" data-template="move">Travel note</button>
-          <button class="template" data-template="close">Cohesion note</button>
-          <button class="template" data-template="greet">Social note</button>
-          <button class="template" data-template="reply">Response note</button>
-          <button class="template" data-template="scan">Unknown note</button>
+          <button class="template" data-template="presence">Dialect frame</button>
+          <button class="template" data-template="food">Foraging metadata</button>
+          <button class="template" data-template="move">Travel metadata</button>
+          <button class="template" data-template="close">Cohesion metadata</button>
+          <button class="template" data-template="greet">Social metadata</button>
+          <button class="template" data-template="reply">Response scoring</button>
+          <button class="template" data-template="scan">Expanded K set</button>
         </div>
       </div>
       <div class="chips" id="chips">
-        <button class="chip" type="button" data-call="k1">K1 · contact anchor<small>research K-call</small></button>
-        <button class="chip synthetic" type="button" data-call="v_soft">Soft arc<small>gentle synthetic variant</small></button>
+        <button class="chip" type="button" data-call="k1">K1 · FEROP dialect exemplar<small>recording anchor</small></button>
+        <button class="chip" type="button" data-call="k3">K3 · FEROP dialect exemplar<small>recording anchor</small></button>
       </div>
       <div class="tray" id="tray"><span class="trayhint">Tap anchors above to build an audition set…</span></div>
       <div class="phrasebar">
@@ -618,29 +618,29 @@ let ac=null, bus=null, analyser=null, wetGain=null, delayNode=null, freqData=nul
 const CLIPS={k1:'assets/calls/k1.wav',k3:'assets/calls/k3.wav',k5:'assets/calls/k5.wav',k7:'assets/calls/k7.wav',k12:'assets/calls/k12.wav'};
 const SYNTH_CLIPS={k1:'assets/calls/synth_k1.wav',k3:'assets/calls/synth_k3.wav',k5:'assets/calls/synth_k5.wav',k7:'assets/calls/synth_k7.wav',k12:'assets/calls/synth_k12.wav',v_soft:'assets/calls/synth_v_soft.wav',v_reply:'assets/calls/synth_v_reply.wav',v_feed:'assets/calls/synth_v_feed.wav',v_travel:'assets/calls/synth_v_travel.wav',v_social:'assets/calls/synth_v_social.wav',v_echo:'assets/calls/synth_v_echo.wav',v_close:'assets/calls/synth_v_close.wav',v_reunion:'assets/calls/synth_v_reunion.wav',v_scan:'assets/calls/synth_v_scan.wav'};
 const CALLS={
-  k1:{call:'k1',real:'k1',name:'Kamchatkan call type K1',role:'FEROP K1 exemplar',human:'K1: public Kamchatka catalogue clip; not a translated word.',ctx:'contact',cite:'FEROP catalogue; Filatova 2011',dur:1.20,evidence:90,validated:true},
-  k3:{call:'k3',real:'k3',name:'Kamchatkan call type K3',role:'FEROP K3 exemplar',human:'K3: public Kamchatka catalogue clip; not a translated word.',ctx:'foraging',cite:'FEROP catalogue; Filatova 2011',dur:1.05,evidence:88,validated:true},
-  k5:{call:'k5',real:'k5',name:'Kamchatkan call type K5',role:'FEROP K5 exemplar',human:'K5: public Kamchatka catalogue clip; not a translated word.',ctx:'travelling',cite:'FEROP catalogue; Filatova 2011',dur:1.38,evidence:86,validated:true},
-  k7:{call:'k7',real:'k7',name:'Kamchatkan call type K7',role:'FEROP K7 exemplar',human:'K7: public Kamchatka catalogue clip; not a translated word.',ctx:'contact',cite:'FEROP catalogue; Filatova 2011',dur:1.15,evidence:88,validated:true},
-  k12:{call:'k12',real:'k12',name:'Kamchatkan call type K12',role:'FEROP K12 exemplar',human:'K12: public Kamchatka catalogue clip; not a translated word.',ctx:'social',cite:'FEROP catalogue; Filatova 2011',dur:.96,evidence:84,validated:true},
-  v_soft:{call:'v_soft',real:'k1',name:'Soft arc contour sketch',role:'optional contour sketch',human:'Synthetic contour only; not evidence.',ctx:'contact',cite:'non-evidence audition aid',dur:1.10,evidence:42,validated:false},
-  v_reply:{call:'v_reply',real:'k7',name:'Reply sweep contour sketch',role:'optional contour sketch',human:'Synthetic contour only; not evidence.',ctx:'contact',cite:'non-evidence audition aid',dur:1.26,evidence:42,validated:false},
-  v_feed:{call:'v_feed',real:'k3',name:'Feed chirp contour sketch',role:'optional contour sketch',human:'Synthetic contour only; not evidence.',ctx:'foraging',cite:'non-evidence audition aid',dur:1.02,evidence:42,validated:false},
-  v_travel:{call:'v_travel',real:'k5',name:'Long glide contour sketch',role:'optional contour sketch',human:'Synthetic contour only; not evidence.',ctx:'travelling',cite:'non-evidence audition aid',dur:1.44,evidence:42,validated:false},
-  v_social:{call:'v_social',real:'k12',name:'Bright trill contour sketch',role:'optional contour sketch',human:'Synthetic contour only; not evidence.',ctx:'social',cite:'non-evidence audition aid',dur:.92,evidence:42,validated:false},
-  v_echo:{call:'v_echo',real:'k1',name:'Distant echo contour sketch',role:'optional contour sketch',human:'Synthetic contour only; not evidence.',ctx:'contact',cite:'non-evidence audition aid',dur:1.32,evidence:42,validated:false},
-  v_close:{call:'v_close',real:'k7',name:'Close pulse contour sketch',role:'optional contour sketch',human:'Synthetic contour only; not evidence.',ctx:'contact',cite:'non-evidence audition aid',dur:1.08,evidence:40,validated:false},
-  v_reunion:{call:'v_reunion',real:'k12',name:'Reunion trill contour sketch',role:'optional contour sketch',human:'Synthetic contour only; not evidence.',ctx:'social',cite:'non-evidence audition aid',dur:1.24,evidence:40,validated:false},
-  v_scan:{call:'v_scan',real:'k5',name:'Scan ripple contour sketch',role:'optional contour sketch',human:'Synthetic contour only; not evidence.',ctx:'unknown',cite:'non-evidence audition aid',dur:.96,evidence:40,validated:false}
+  k1:{call:'k1',real:'k1',name:'Kamchatkan call type K1',role:'FEROP dialect exemplar',human:'K1: public Kamchatka catalogue clip; not a translated word.',ctx:'dialect',cite:'FEROP catalogue; Filatova 2011',dur:1.20,evidence:90,validated:true},
+  k3:{call:'k3',real:'k3',name:'Kamchatkan call type K3',role:'FEROP dialect exemplar',human:'K3: public Kamchatka catalogue clip; not a translated word.',ctx:'dialect',cite:'FEROP catalogue; Filatova 2011',dur:1.05,evidence:88,validated:true},
+  k5:{call:'k5',real:'k5',name:'Kamchatkan call type K5',role:'FEROP dialect exemplar',human:'K5: public Kamchatka catalogue clip; not a translated word.',ctx:'dialect',cite:'FEROP catalogue; Filatova 2011',dur:1.38,evidence:86,validated:true},
+  k7:{call:'k7',real:'k7',name:'Kamchatkan call type K7',role:'FEROP dialect exemplar',human:'K7: public Kamchatka catalogue clip; not a translated word.',ctx:'dialect',cite:'FEROP catalogue; Filatova 2011',dur:1.15,evidence:88,validated:true},
+  k12:{call:'k12',real:'k12',name:'Kamchatkan call type K12',role:'FEROP dialect exemplar',human:'K12: public Kamchatka catalogue clip; not a translated word.',ctx:'dialect',cite:'FEROP catalogue; Filatova 2011',dur:.96,evidence:84,validated:true},
+  v_soft:{call:'v_soft',real:'k1',name:'Soft arc contour sketch',role:'optional contour sketch',human:'Synthetic contour only; not evidence.',ctx:'sketch',cite:'non-evidence audition aid',dur:1.10,evidence:42,validated:false},
+  v_reply:{call:'v_reply',real:'k7',name:'Reply sweep contour sketch',role:'optional contour sketch',human:'Synthetic contour only; not evidence.',ctx:'sketch',cite:'non-evidence audition aid',dur:1.26,evidence:42,validated:false},
+  v_feed:{call:'v_feed',real:'k3',name:'Feed chirp contour sketch',role:'optional contour sketch',human:'Synthetic contour only; not evidence.',ctx:'sketch',cite:'non-evidence audition aid',dur:1.02,evidence:42,validated:false},
+  v_travel:{call:'v_travel',real:'k5',name:'Long glide contour sketch',role:'optional contour sketch',human:'Synthetic contour only; not evidence.',ctx:'sketch',cite:'non-evidence audition aid',dur:1.44,evidence:42,validated:false},
+  v_social:{call:'v_social',real:'k12',name:'Bright trill contour sketch',role:'optional contour sketch',human:'Synthetic contour only; not evidence.',ctx:'sketch',cite:'non-evidence audition aid',dur:.92,evidence:42,validated:false},
+  v_echo:{call:'v_echo',real:'k1',name:'Distant echo contour sketch',role:'optional contour sketch',human:'Synthetic contour only; not evidence.',ctx:'sketch',cite:'non-evidence audition aid',dur:1.32,evidence:42,validated:false},
+  v_close:{call:'v_close',real:'k7',name:'Close pulse contour sketch',role:'optional contour sketch',human:'Synthetic contour only; not evidence.',ctx:'sketch',cite:'non-evidence audition aid',dur:1.08,evidence:40,validated:false},
+  v_reunion:{call:'v_reunion',real:'k12',name:'Reunion trill contour sketch',role:'optional contour sketch',human:'Synthetic contour only; not evidence.',ctx:'sketch',cite:'non-evidence audition aid',dur:1.24,evidence:40,validated:false},
+  v_scan:{call:'v_scan',real:'k5',name:'Scan ripple contour sketch',role:'optional contour sketch',human:'Synthetic contour only; not evidence.',ctx:'sketch',cite:'non-evidence audition aid',dur:.96,evidence:40,validated:false}
 };
 const TEMPLATES={
-  presence:{text:'Contact/cohesion observation; same-pod receiver frame.',activity:'contact',receiver:'same-pod',style:'contact',tone:'gentle',energy:28,spacing:64,echo:42,phrase:['k1','k7']},
-  food:{text:'Foraging observation; same-pod receiver; test dialect response.',activity:'foraging',receiver:'same-pod',style:'forage',tone:'curious',energy:42,spacing:54,echo:34,phrase:['k1','k3','k7']},
-  move:{text:'Travelling observation; nearby group receiver frame.',activity:'travelling',receiver:'nearby',style:'travel',tone:'gentle',energy:36,spacing:58,echo:36,phrase:['k1','k5']},
-  close:{text:'Cohesion observation; nearby group receiver frame.',activity:'contact',receiver:'nearby',style:'contact',tone:'gentle',energy:32,spacing:68,echo:40,phrase:['k7','k1']},
-  greet:{text:'Social observation; same-pod receiver frame.',activity:'social',receiver:'same-pod',style:'social',tone:'bright',energy:46,spacing:48,echo:30,phrase:['k12','k7']},
-  reply:{text:'Response observation; listen for same-pod vocal reply.',activity:'contact',receiver:'nearby',style:'reply',tone:'distant',energy:30,spacing:72,echo:64,phrase:['k7','k1']},
-  scan:{text:'Uncertain context; inspect response against controls.',activity:'unknown',receiver:'nearby',style:'scan',tone:'curious',energy:30,spacing:62,echo:44,phrase:['k5','k1']}
+  presence:{text:'Dialect-response frame; observed context is field metadata only.',activity:'contact',receiver:'same-pod',style:'balanced',tone:'gentle',energy:28,spacing:64,echo:42,phrase:['k1','k3','k7']},
+  food:{text:'Foraging observation logged as field metadata; audio remains a dialect exemplar set.',activity:'foraging',receiver:'same-pod',style:'forage',tone:'curious',energy:42,spacing:54,echo:34,phrase:['k1','k3','k7']},
+  move:{text:'Travelling observation logged as field metadata; audio remains a dialect exemplar set.',activity:'travelling',receiver:'nearby',style:'travel',tone:'gentle',energy:36,spacing:58,echo:36,phrase:['k1','k3','k7']},
+  close:{text:'Cohesion observation logged as field metadata; audio remains a dialect exemplar set.',activity:'contact',receiver:'nearby',style:'contact',tone:'gentle',energy:32,spacing:68,echo:40,phrase:['k1','k3','k7']},
+  greet:{text:'Social observation logged as field metadata; audio remains a dialect exemplar set.',activity:'social',receiver:'same-pod',style:'social',tone:'bright',energy:46,spacing:48,echo:30,phrase:['k1','k3','k7']},
+  reply:{text:'Score vocal replies to the dialect exemplar set; do not infer call content.',activity:'contact',receiver:'nearby',style:'reply',tone:'distant',energy:30,spacing:72,echo:64,phrase:['k1','k3','k7']},
+  scan:{text:'Expanded FEROP K-type audition set for review; no content claim.',activity:'unknown',receiver:'field-test',style:'scan',tone:'curious',energy:30,spacing:62,echo:44,phrase:['k1','k3','k5','k7','k12']}
 };
 const canvas=document.getElementById('spec'), cx=canvas.getContext('2d');
 const stage=document.getElementById('stage'), statusEl=document.getElementById('status'),
@@ -675,10 +675,10 @@ function color(v){const r=Math.round(25+Math.pow(v,1.35)*150),g=Math.round(42+v*
 window.addEventListener('resize',sizeCanvas); sizeCanvas();
 
 function scorePhrase(){
-  const target=activityEl.value, energy=+energyEl.value, has=phrase.some(p=>p.ctx===target);
+  const energy=+energyEl.value, validated=phrase.filter(p=>p.validated).length, synthetic=phrase.length-validated;
   const evidence=phrase.length?Math.round(phrase.reduce((a,p)=>a+p.evidence,0)/phrase.length):0;
-  const fit=Math.min(99,Math.round((has?62:35)+Math.min(25,phrase.length*6)+(styleEl.value==='balanced'?4:8)));
-  const field=Math.min(98,Math.round((mode==='synthetic'?50:72)+(receiverEl.value==='field-test'?12:5)+(energy<55?6:0)));
+  const fit=Math.max(20,Math.min(99,Math.round(52+Math.min(30,validated*8)+(diffPod&&diffPod.checked?5:0)+(matchedNoise&&matchedNoise.checked?5:0)-synthetic*10)));
+  const field=Math.max(20,Math.min(98,Math.round((mode==='recordings'?72:45)+(receiverEl.value==='field-test'?10:5)+(energy<55?6:0)-synthetic*8)));
   return {fit,evidence,field};
 }
 function updateControlLabels(){
@@ -690,7 +690,7 @@ function updateControlLabels(){
 function renderMeters(){
   const s=scorePhrase();
   meters.innerHTML=[
-    ['Evidence fit',s.fit+'%','Selected anchors and controls match the chosen evidence lens; not semantic certainty.'],
+    ['Protocol fit',s.fit+'%','Selected anchors and controls match the playback-response design; not semantic certainty.'],
     ['Anchor trace',s.evidence+'%','Real FEROP K-call anchors and playback/context evidence stay attached to the selection.'],
     ['Field readiness',s.field+'%','Claim boundary, controls, and playback purpose stay visible to a reviewer.']
   ].map(m=>'<div class="meter"><div class="mt">'+m[0]+'</div><div class="mn">'+m[1]+'</div><div class="md">'+m[2]+'</div></div>').join('');
@@ -707,7 +707,8 @@ function renderReadout(last){
   const picked=last?'<span class="lab">'+esc(last.name)+' added.</span> ':'';
   const synthetic=phrase.filter(p=>!p.validated).length;
   const synthNote=synthetic?' '+synthetic+' optional contour sketch'+(synthetic===1?' is':'es are')+' present; replace before any field stimulus.':'';
-  readout.innerHTML=picked+'<b>Observer note:</b> '+esc(line)+'<br><b>Candidate stimulus anchors:</b> '+esc(seq)+'<br><b>Audition controls:</b> '+esc(style)+' · '+esc(tone)+' · '+energyLabel.textContent+' · '+spacingLabel.textContent+' · '+echoLabel.textContent+'.<br><b>Research basis:</b> context changes the evidence lens and field-plan controls; it does not validate that selected calls mean the note. Real clips are FEROP K-call examples from the dialect-response frame; DTAG/context evidence is production-side and from a different dataset.'+esc(synthNote);
+  const modeNote=mode==='recordings'?'':' Current playback mode includes a contour sketch layer; use real FEROP clips for field review.';
+  readout.innerHTML=picked+'<b>Observer note:</b> '+esc(line)+'<br><b>Observed context:</b> '+esc(ctx)+' field metadata only; it does not pick call meaning.<br><b>Candidate stimulus anchors:</b> '+esc(seq)+'<br><b>Audition controls:</b> '+esc(style)+' · '+esc(tone)+' · '+energyLabel.textContent+' · '+spacingLabel.textContent+' · '+echoLabel.textContent+'.<br><b>Research basis:</b> real clips are FEROP K-call examples from the dialect-response frame. DTAG/context evidence is production-side and from a different dataset, so changing observed context changes the protocol text and scoring frame, not validated call content.'+esc(synthNote+modeNote);
 }
 function treatmentRows(){
   const seq=phrase.map(p=>p.call.toUpperCase()).join(' -> ')||'No stimulus anchors';
@@ -752,6 +753,7 @@ function fieldGates(){
   return [
     {ok:false,title:'Permits first',text:'No field broadcast without local approval, stand-off plan, and calibrated source level.'},
     {ok:synthetic===0,title:'Stimulus status',text:synthetic?synthetic+' synthetic audition token'+(synthetic===1?'':'s')+' in current selection; replace or approve before field use.':'All selected anchors are validated recordings.'},
+    {ok:mode==='recordings',title:'Playback mode',text:mode==='recordings'?'Real FEROP clip playback selected.':'Current mode includes contour sketches; switch to Real FEROP clips before field use.'},
     {ok:diffPod.checked&&matchedNoise.checked,title:'Controls required',text:(diffPod.checked?'Dialect control included':'Add a dialect control')+'; '+(matchedNoise.checked?'matched-noise included':'add matched-noise control')+'.'},
     {ok:blindObservers.checked,title:'Blinded scoring',text:blindObservers.checked?'Observer-blinded scoring enabled.':'Enable observer-blinded scoring before running trials.'},
     {ok:stopRules.checked,title:'Stop rules',text:stopRules.checked?'Disturbance stop rules enabled.':'Enable disturbance stop rules before export.'}
@@ -891,26 +893,25 @@ function drawUploadWaveform(buf){
 function intentFromContext(){
   const txt=humanText.value.toLowerCase(), act=activityEl.value, style=styleEl.value;
   if(style!=='balanced')return style;
-  if(act==='foraging'||/food|feed|hunt|salmon/.test(txt))return 'forage';
-  if(act==='travelling'||/move|go|travel|follow/.test(txt))return 'travel';
-  if(act==='social'||/hello|together|greet|meet/.test(txt))return 'social';
-  if(/answer|reply|hear|nearby/.test(txt))return 'reply';
   if(act==='unknown'||/check|scan|inspect|nearby|who/.test(txt))return 'scan';
-  return 'contact';
+  return 'balanced';
 }
 function keysForIntent(intent){
   const banks={
-    contact:['k1','k7','v_soft','v_reply'],
-    forage:['k3','k1','k7','v_feed'],
-    travel:['k5','k1','v_travel'],
-    reply:['k7','k1','v_reply','v_echo'],
-    social:['k12','k7','v_social','v_reunion'],
-    scan:['k5','k1','v_scan','v_echo']
+    balanced:['k1','k3','k7'],
+    contact:['k1','k3','k7'],
+    forage:['k1','k3','k7'],
+    travel:['k1','k3','k7'],
+    reply:['k1','k3','k7'],
+    social:['k1','k3','k7'],
+    scan:['k1','k3','k5','k7','k12']
   };
-  let keys=(banks[intent]||banks.contact).slice();
-  if(toneEl.value==='curious')keys.splice(1,0,'v_reply');
-  if(toneEl.value==='bright'&&!keys.includes('v_social'))keys.push('v_social');
-  if(toneEl.value==='distant')keys=['v_echo'].concat(keys.filter(k=>k!=='v_echo'));
+  let keys=(banks[intent]||banks.balanced).slice();
+  if(mode!=='recordings'){
+    const sketches={balanced:'v_soft',contact:'v_reply',forage:'v_feed',travel:'v_travel',reply:'v_echo',social:'v_social',scan:'v_scan'};
+    const sketch=sketches[intent]||'v_soft';
+    if(!keys.includes(sketch))keys.push(sketch);
+  }
   if(+energyEl.value>72)keys.push(keys[keys.length-1]);
   else if(+energyEl.value<25&&keys.length>2)keys=keys.slice(0,2);
   return keys;
@@ -957,7 +958,7 @@ function setMode(next){
   mode=next;
   document.querySelectorAll('.modebtn').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));
   modeLabel.innerHTML='<b>'+({recordings:'Real FEROP clips',synthetic:'Contour sketch',hybrid:'Clips + contour'}[mode])+'</b>';
-  renderMeters(); renderReadout();
+  renderChips(); renderMeters(); renderReadout(); updateLab();
 }
 function setTemplate(key){
   const t=TEMPLATES[key]; if(!t)return;
@@ -969,7 +970,7 @@ function setTemplate(key){
 function buildFromContext(){
   const intent=intentFromContext();
   const keys=keysForIntent(intent).filter(k=>CALLS[k]&&CALLS[k].validated);
-  phrase=keys.map(k=>CALLS[k]); renderTray(); statusEl.textContent='Built from observer note';
+  phrase=keys.map(k=>CALLS[k]); renderTray(); statusEl.textContent='Built dialect exemplar set; context kept as metadata';
 }
 function savePhrase(){
   try{localStorage.setItem('orcaDemoPhrase',JSON.stringify({text:humanText.value,activity:activityEl.value,receiver:receiverEl.value,style:styleEl.value,tone:toneEl.value,energy:energyEl.value,spacing:spacingEl.value,echo:echoEl.value,phrase:phrase.map(p=>p.call),mode}));}catch(e){}
