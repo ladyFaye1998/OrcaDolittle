@@ -134,6 +134,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
 .chip{padding:10px 14px;border-radius:12px;border:1px solid var(--border2);background:var(--panel);color:var(--text);cursor:pointer;font-size:13.5px;font-weight:700;font-family:inherit;transition:.15s;text-align:left}
 .chip.synthetic{border-color:rgba(76,201,255,.28);background:rgba(76,201,255,.065)}
+.chip.active{border-color:var(--teal);background:rgba(57,224,200,.14);color:var(--teal)}
 .chip:hover{border-color:var(--teal);transform:translateY(-1px)}
 .chip:active{transform:scale(.97)}
 .chip small{display:block;color:var(--faint);font-weight:400;font-size:11px;margin-top:2px;font-style:italic}
@@ -141,6 +142,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
 .trayhint{color:var(--faint);font-size:13px}
 .token{padding:7px 11px;border-radius:8px;background:rgba(57,224,200,.12);border:1px solid rgba(57,224,200,.4);color:var(--teal);font-size:13px;font-weight:800;font-family:var(--mono);cursor:pointer}
 .token:hover{background:rgba(255,107,107,.12);border-color:rgba(255,107,107,.55);color:#ffd0d0}
+.token .x{display:inline-block;margin-left:7px;color:#ffd0d0}
 .phrasebar{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .phrasebar .btn{padding:10px 16px;border-radius:10px}
 .stage{position:relative;height:240px;border-radius:12px;overflow:hidden;background:#02060a url('assets/callwave.png') left center/cover no-repeat;border:1px solid var(--border);transition:box-shadow .3s}
@@ -384,20 +386,8 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
         </div>
       </div>
       <div class="chips" id="chips">
-        <button class="chip" data-call="k1">K1 · contact anchor<small>research K-call</small></button>
-        <button class="chip" data-call="k3">K3 · foraging pulse<small>research K-call</small></button>
-        <button class="chip" data-call="k5">K5 · travel cue<small>research K-call</small></button>
-        <button class="chip" data-call="k7">K7 · cohesion call<small>research K-call</small></button>
-        <button class="chip" data-call="k12">K12 · social burst<small>research K-call</small></button>
-        <button class="chip synthetic" data-call="v_soft">Soft arc<small>gentle synthetic variant</small></button>
-        <button class="chip synthetic" data-call="v_reply">Reply sweep<small>call-back variant</small></button>
-        <button class="chip synthetic" data-call="v_feed">Feed chirp<small>foraging variant</small></button>
-        <button class="chip synthetic" data-call="v_travel">Long glide<small>travel variant</small></button>
-        <button class="chip synthetic" data-call="v_social">Bright trill<small>social variant</small></button>
-        <button class="chip synthetic" data-call="v_echo">Distant echo<small>soft far-call variant</small></button>
-        <button class="chip synthetic" data-call="v_close">Close pulse<small>cohesion variant</small></button>
-        <button class="chip synthetic" data-call="v_reunion">Reunion trill<small>soft social variant</small></button>
-        <button class="chip synthetic" data-call="v_scan">Scan ripple<small>inspection variant</small></button>
+        <button class="chip" type="button" data-call="k1">K1 · contact anchor<small>research K-call</small></button>
+        <button class="chip synthetic" type="button" data-call="v_soft">Soft arc<small>gentle synthetic variant</small></button>
       </div>
       <div class="tray" id="tray"><span class="trayhint">Tap calls above to build a phrase…</span></div>
       <div class="phrasebar">
@@ -663,6 +653,7 @@ const stage=document.getElementById('stage'), statusEl=document.getElementById('
       energyLabel=document.getElementById('energyLabel'), spacingLabel=document.getElementById('spacingLabel'),
       echoLabel=document.getElementById('echoLabel'),
       modeLabel=document.getElementById('modeLabel'), phraseLabel=document.getElementById('phraseLabel'),
+      chips=document.getElementById('chips'),
       timeline=document.getElementById('timeline'), meters=document.getElementById('meters'),
       stimulusSet=document.getElementById('stimulusSet'), evidenceStack=document.getElementById('evidenceStack'),
       protocolPlan=document.getElementById('protocolPlan'), exportPreview=document.getElementById('exportPreview'),
@@ -895,6 +886,42 @@ function drawUploadWaveform(buf){
   ux.fillStyle='rgba(255,180,84,.92)'; ux.font='12px sans-serif';
   ux.fillText(buf.duration.toFixed(2)+'s · '+Math.round(buf.sampleRate/1000)+' kHz · '+buf.numberOfChannels+' ch',12,h-12);
 }
+function intentFromContext(){
+  const txt=humanText.value.toLowerCase(), act=activityEl.value, style=styleEl.value;
+  if(style!=='balanced')return style;
+  if(act==='foraging'||/food|feed|hunt|salmon/.test(txt))return 'forage';
+  if(act==='travelling'||/move|go|travel|follow/.test(txt))return 'travel';
+  if(act==='social'||/hello|together|greet|meet/.test(txt))return 'social';
+  if(/answer|reply|hear|nearby/.test(txt))return 'reply';
+  if(act==='unknown'||/check|scan|inspect|nearby|who/.test(txt))return 'scan';
+  return 'contact';
+}
+function keysForIntent(intent){
+  const banks={
+    contact:['v_soft','v_close','k1','v_reply'],
+    forage:['v_soft','v_feed','k3','k7'],
+    travel:['v_soft','v_travel','k5'],
+    reply:['v_echo','v_reply','k7'],
+    social:['v_reunion','v_social','k12','v_reply'],
+    scan:['v_scan','v_echo','v_travel','k5']
+  };
+  let keys=(banks[intent]||banks.contact).slice();
+  if(toneEl.value==='curious')keys.splice(1,0,'v_reply');
+  if(toneEl.value==='bright'&&!keys.includes('v_social'))keys.push('v_social');
+  if(toneEl.value==='distant')keys=['v_echo'].concat(keys.filter(k=>k!=='v_echo'));
+  if(+energyEl.value>72)keys.push(keys[keys.length-1]);
+  else if(+energyEl.value<25&&keys.length>2)keys=keys.slice(0,2);
+  return keys;
+}
+function renderChips(intent){
+  const selected=new Set(phrase.map(p=>p.call));
+  const seen=new Set();
+  const keys=keysForIntent(intent||intentFromContext()).filter(k=>{if(seen.has(k))return false;seen.add(k);return true;});
+  chips.innerHTML=keys.map(k=>{
+    const c=CALLS[k], active=selected.has(k);
+    return '<button class="chip '+(c.validated?'':'synthetic ') +(active?'active':'')+'" type="button" data-call="'+esc(k)+'">'+esc(k.toUpperCase()+' · '+c.role)+'<small>'+(active?'selected - tap to remove':'tap to add')+'</small></button>';
+  }).join('');
+}
 async function previewUploadedClip(){
   const f=uploadClip.files&&uploadClip.files[0];
   if(!f){drawUploadEmpty(); uploadNote.textContent='Choose an audio file first. Browser preview does not run the AVES2 model.'; return;}
@@ -912,11 +939,12 @@ async function previewUploadedClip(){
   }
 }
 function renderTray(last){
+  renderChips();
   if(!phrase.length){
     tray.innerHTML='<span class="trayhint">Tap calls above or press Build from context…</span>';
     analogy.innerHTML='';
   }else{
-    tray.innerHTML=phrase.map((p,i)=>'<button class="token" data-idx="'+i+'" data-call="'+esc(p.call)+'" data-real="'+esc(p.real||'')+'" title="Remove '+p.call.toUpperCase()+'">'+p.call.toUpperCase()+'</button>').join('');
+    tray.innerHTML=phrase.map((p,i)=>'<button class="token" type="button" data-idx="'+i+'" data-call="'+esc(p.call)+'" data-real="'+esc(p.real||'')+'" title="Remove '+p.call.toUpperCase()+'">'+p.call.toUpperCase()+'<span class="x">x</span></button>').join('');
     analogy.innerHTML='<span class="alab">Human-readable analogy, not a translation:</span>"'+esc(phrase.map(p=>p.human).join(' '))+'"';
   }
   phraseLabel.textContent=phrase.length?phrase.map(p=>p.call.toUpperCase()).join(' · '):'No phrase';
@@ -932,34 +960,12 @@ function setTemplate(key){
   const t=TEMPLATES[key]; if(!t)return;
   humanText.value=t.text; activityEl.value=t.activity; receiverEl.value=t.receiver;
   styleEl.value=t.style; toneEl.value=t.tone; energyEl.value=t.energy; spacingEl.value=t.spacing; echoEl.value=t.echo;
-  phrase=t.phrase.map(k=>CALLS[k]); renderTray();
+  phrase=t.phrase.map(k=>CALLS[k]); renderChips(t.style); renderTray();
   statusEl.textContent='Template loaded: '+key;
 }
 function buildFromContext(){
-  const txt=humanText.value.toLowerCase(), act=activityEl.value, style=styleEl.value, tone=toneEl.value, energy=+energyEl.value;
-  let intent=style;
-  if(intent==='balanced'){
-    if(act==='foraging'||/food|feed|hunt|salmon/.test(txt))intent='forage';
-    else if(act==='travelling'||/move|go|travel|follow/.test(txt))intent='travel';
-    else if(act==='social'||/hello|together|greet|meet/.test(txt))intent='social';
-    else if(/answer|reply|hear|nearby/.test(txt))intent='reply';
-    else if(act==='unknown'||/check|scan|inspect|nearby|who/.test(txt))intent='scan';
-    else intent='contact';
-  }
-  const banks={
-    contact:['v_soft','v_close','k1','v_reply'],
-    forage:['v_soft','v_feed','k3','k7'],
-    travel:['v_soft','v_travel','k5'],
-    reply:['v_echo','v_reply','k7'],
-    social:['v_reunion','v_social','k12','v_reply'],
-    scan:['v_scan','v_echo','v_travel','k5']
-  };
-  let keys=(banks[intent]||banks.contact).slice();
-  if(tone==='curious')keys.splice(1,0,'v_reply');
-  if(tone==='bright'&&!keys.includes('v_social'))keys.push('v_social');
-  if(tone==='distant')keys=['v_echo'].concat(keys.filter(k=>k!=='v_echo'));
-  if(energy>72)keys.push(keys[keys.length-1]);
-  else if(energy<25&&keys.length>2)keys=keys.slice(0,2);
+  const intent=intentFromContext();
+  const keys=keysForIntent(intent);
   phrase=keys.map(k=>CALLS[k]); renderTray(); statusEl.textContent='Built from human context';
 }
 function savePhrase(){
@@ -974,11 +980,17 @@ function reusePhrase(){
     phrase=(saved.phrase||[]).map(k=>CALLS[k]).filter(Boolean); setMode(saved.mode||mode); renderTray(); statusEl.textContent='Reused last phrase';
   }catch(e){statusEl.textContent='No saved phrase yet';}
 }
-document.querySelectorAll('#chips .chip').forEach(b=>b.addEventListener('click',()=>{const c=CALLS[b.dataset.call];phrase.push(c);renderTray(c);statusEl.textContent=phrase.length+' call'+(phrase.length>1?'s':'')+' queued';}));
-tray.addEventListener('click',e=>{const b=e.target.closest('.token');if(!b)return;phrase.splice(+b.dataset.idx,1);renderTray();statusEl.textContent='Removed call';});
+chips.addEventListener('click',e=>{
+  const b=e.target.closest('.chip');if(!b)return;
+  const c=CALLS[b.dataset.call];if(!c)return;
+  const idx=phrase.findIndex(p=>p.call===c.call);
+  if(idx>=0){phrase.splice(idx,1);renderTray();statusEl.textContent='Removed '+c.call.toUpperCase();}
+  else{phrase.push(c);renderTray(c);statusEl.textContent=c.call.toUpperCase()+' added';}
+});
+tray.addEventListener('click',e=>{const b=e.target.closest('.token');if(!b)return;e.preventDefault();phrase.splice(+b.dataset.idx,1);renderTray();statusEl.textContent='Removed call';});
 document.querySelectorAll('.template').forEach(b=>b.addEventListener('click',()=>setTemplate(b.dataset.template)));
 document.querySelectorAll('.modebtn').forEach(b=>b.addEventListener('click',()=>setMode(b.dataset.mode)));
-[humanText,energyEl,spacingEl,echoEl].forEach(el=>el.addEventListener('input',()=>{updateControlLabels();renderMeters();renderReadout();}));
+[humanText,energyEl,spacingEl,echoEl].forEach(el=>el.addEventListener('input',()=>{updateControlLabels();renderChips();renderMeters();renderReadout();}));
 [activityEl,receiverEl,styleEl,toneEl].forEach(el=>el.addEventListener('change',()=>{buildFromContext();}));
 document.getElementById('build').addEventListener('click',buildFromContext);
 document.getElementById('reuse').addEventListener('click',reusePhrase);
