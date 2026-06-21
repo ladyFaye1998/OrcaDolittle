@@ -731,14 +731,14 @@ function updateControlLabels(){
 }
 function humanHypothesis(p){
   const hints={
-    k1:'a familiar-dialect identity or contact cue',
-    k3:'another familiar unit in the same dialect inventory',
-    k5:'a contrasting call-type cue for testing type-specific response',
-    k7:'a response-scoring anchor in same-pod/different-pod playback',
-    k12:'an additional dialect-diversity cue'
+    k1:'"I am here / familiar pod here"',
+    k3:'"food is here"',
+    k5:'"we are moving"',
+    k7:'"answer me / stay close"',
+    k12:'"group check-in"'
   };
-  if(!p.validated)return 'an audition contour only, not a validated signal';
-  return hints[p.call]||'a named acoustic unit with unknown content';
+  if(!p.validated)return '"audition sketch only"';
+  return hints[p.call]||'"unknown call-type cue"';
 }
 function renderMeters(){
   const s=scorePhrase();
@@ -1205,7 +1205,7 @@ function renderTray(last){
     analogy.innerHTML='';
   }else{
     tray.innerHTML=phrase.map((p,i)=>'<button class="token" type="button" data-idx="'+i+'" data-call="'+esc(p.call)+'" data-real="'+esc(p.real||'')+'" title="Remove '+p.call.toUpperCase()+'">'+p.call.toUpperCase()+'<span class="x">x</span></button>').join('');
-    analogy.innerHTML='<span class="alab">In human terms it might mean (hypothesis, not translation):</span> '+esc(phrase.map(p=>p.call.toUpperCase()+': '+humanHypothesis(p)).join('; '))+'.<br><span class="alab">Research boundary:</span> '+esc(phrase.map(p=>p.call.toUpperCase()+': '+p.role).join('; '))+'. These anchors are not a translation of the observer note.';
+    analogy.innerHTML='<span class="alab">Human shorthand for the test (hypothesis, not translation):</span> '+esc(phrase.map(p=>p.call.toUpperCase()+': '+humanHypothesis(p)).join('; '))+'. <br><span class="alab">Research boundary:</span> '+esc(phrase.map(p=>p.call.toUpperCase()+': '+p.role).join('; '))+'. These anchors are not a translation of the observer note.';
   }
   phraseLabel.textContent=phrase.length?phrase.map(p=>p.call.toUpperCase()).join(' · '):'No anchors';
   updateControlLabels(); renderTimeline(-1); renderMeters(); renderReadout(last); renderModelChat(); updateLab();
