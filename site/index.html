@@ -301,35 +301,35 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
   </div>
 </div></section>
 <section id="talk"><div class="wrap">
-  <div class="eyebrow reveal">Talk Orca · interactive demo</div>
-  <h2 class="reveal">Turn a human situation into an <span class="grad">orca-like call sequence</span>.</h2>
-  <p class="lead reveal">Type or pick a plain-English context, let the demo assemble a K-call phrase, then hear it as reusable real recordings, a synthetic orca-like sketch, or both. The human text is a clear analogy for the viewer; the scientific boundary stays explicit.</p>
+  <div class="eyebrow reveal">Talk Orca · research demo</div>
+  <h2 class="reveal">Audition evidence-backed <span class="grad">playback stimulus anchors</span>.</h2>
+  <p class="lead reveal">Choose an observed context and receiver frame. The demo selects documented Kamchatka K-call examples and drafts the playback controls; the observer note never becomes an orca translation.</p>
   <div class="disclaimer reveal">
     <span>⚠</span>
-    <div><b>Research-backed, not a translator.</b> The call units are real FEROP Kamchatka K-call types tied to the published playback re-analysis; the context controls come from call-type/context and receiver-response evidence. The plain-English sentence is a human-facing scaffold, not a validated orca meaning. Whether a wild orca treats any sequence as content is exactly what controlled field playbacks must test. <a href="#field">Take the tool into the field →</a></div>
+    <div><b>Evidence-backed, not a translator.</b> Real FEROP K-call clips anchor the audition set from the published dialect-response re-analysis. DTAG/context findings inform the field protocol, but they do not assign English meanings to the K-calls. A content-controlled playback remains the required next study. <a href="#field">Take the tool into the field →</a></div>
   </div>
   <div class="basis reveal">
-    <div><b>Validated substrate</b> Real K-call recordings are reused as named stimulus units, not invented labels.</div>
-    <div><b>Evidence base</b> Call type structure, behavioural-context decodability, and same-pod playback response frame the demo.</div>
-    <div><b>Illustrative layer</b> The louder synthetic track is an orca-like sonification so humans can hear the intended contour clearly.</div>
+    <div><b>Validated substrate</b> Real FEROP K-call recordings are reused as named stimulus anchors, not invented labels.</div>
+    <div><b>Evidence base</b> Call-type structure, production-side context association, and same-pod playback response frame the demo.</div>
+    <div><b>Audition layer</b> Synthetic contours are optional sketches for listening only; they are not evidence or field stimuli.</div>
   </div>
   <div class="talkgrid">
     <div class="reveal"><div class="composer">
       <div class="intentpanel">
         <div class="intenttop">
           <div>
-            <div class="intenttitle">Human context</div>
-            <div style="font-size:13px;color:var(--dim)">Build the phrase from intent first; edit the call tokens after.</div>
+            <div class="intenttitle">Observer note</div>
+            <div style="font-size:13px;color:var(--dim)">Choose the evidence lens first; edit stimulus anchors after.</div>
           </div>
           <div class="modebar" id="modebar" aria-label="Playback mode">
-            <button class="modebtn" data-mode="recordings">Real clips</button>
-            <button class="modebtn" data-mode="synthetic">Synthetic</button>
-            <button class="modebtn active" data-mode="hybrid">Hybrid</button>
+            <button class="modebtn active" data-mode="recordings">Real FEROP clips</button>
+            <button class="modebtn" data-mode="synthetic">Contour sketch</button>
+            <button class="modebtn" data-mode="hybrid">Both</button>
           </div>
         </div>
         <div class="fieldrow">
-          <label>Human line
-            <input id="humanText" maxlength="90" value="I am here. Come feed with us." />
+          <label>Observer note
+            <input id="humanText" maxlength="90" value="Foraging group; same-pod receiver; test dialect response." />
           </label>
           <label>Observed context
             <select id="activity">
@@ -350,18 +350,18 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
           </label>
         </div>
         <div class="fieldrow compact">
-          <label>Signal style
+          <label>Evidence lens
             <select id="phraseStyle">
               <option value="balanced">Balanced</option>
-              <option value="contact">Contact call</option>
-              <option value="forage">Foraging call</option>
-              <option value="travel">Travel cue</option>
-              <option value="reply">Call-back / reply</option>
-              <option value="social">Social greeting</option>
-              <option value="scan">Inspection / scan</option>
+              <option value="contact">Contact/cohesion</option>
+              <option value="forage">Foraging context</option>
+              <option value="travel">Travelling context</option>
+              <option value="reply">Call-back response</option>
+              <option value="social">Social context</option>
+              <option value="scan">Unknown/inspection</option>
             </select>
           </label>
-          <label>Tone
+          <label>Audition tone
             <select id="tone">
               <option value="gentle">Gentle</option>
               <option value="curious">Curious</option>
@@ -376,33 +376,33 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
           <label>Water echo <input id="echoMix" type="range" min="0" max="100" value="38" /><span id="echoLabel">Soft water</span></label>
         </div>
         <div class="templates" id="templates">
-          <button class="template" data-template="presence">"I'm here"</button>
-          <button class="template" data-template="food">"Food here"</button>
-          <button class="template" data-template="move">"Move together"</button>
-          <button class="template" data-template="close">"Stay close"</button>
-          <button class="template" data-template="greet">"Good to be together"</button>
-          <button class="template" data-template="reply">"Answer me"</button>
-          <button class="template" data-template="scan">"Check nearby"</button>
+          <button class="template" data-template="presence">Contact note</button>
+          <button class="template" data-template="food">Foraging note</button>
+          <button class="template" data-template="move">Travel note</button>
+          <button class="template" data-template="close">Cohesion note</button>
+          <button class="template" data-template="greet">Social note</button>
+          <button class="template" data-template="reply">Response note</button>
+          <button class="template" data-template="scan">Unknown note</button>
         </div>
       </div>
       <div class="chips" id="chips">
         <button class="chip" type="button" data-call="k1">K1 · contact anchor<small>research K-call</small></button>
         <button class="chip synthetic" type="button" data-call="v_soft">Soft arc<small>gentle synthetic variant</small></button>
       </div>
-      <div class="tray" id="tray"><span class="trayhint">Tap calls above to build a phrase…</span></div>
+      <div class="tray" id="tray"><span class="trayhint">Tap anchors above to build an audition set…</span></div>
       <div class="phrasebar">
-        <button class="btn" id="build">Build from context</button>
-        <button class="btn primary" id="speak" onclick="document.getElementById('status').textContent='Preparing phrase…';setTimeout(function(){var s=document.getElementById('status');if(!s||s.textContent!=='Preparing phrase…')return;var st=document.getElementById('stage'),n=document.getElementById('nowcall'),ticks=[].slice.call(document.querySelectorAll('.tick')),tokens=[].slice.call(document.querySelectorAll('.token')),mode=(document.getElementById('modeLabel')||{}).textContent||'Hybrid',spacing=+(document.getElementById('spacing')||{value:56}).value,energy=+(document.getElementById('energy')||{value:34}).value,gap=620+spacing*6,rate=.94+energy*.0016,wantSynth=/Synthetic|Hybrid/.test(mode),wantReal=/Real|Hybrid/.test(mode),play=function(src,vol){try{var a=new Audio(src);a.volume=vol;a.playbackRate=rate;a.play().catch(function(){})}catch(e){}};if(st)st.classList.add('talking');s.textContent='Fallback playback — softer orca layer';tokens.forEach(function(tok,i){setTimeout(function(){var id=tok.dataset.call,real=tok.dataset.real;if(n)n.textContent=tok.textContent.trim();ticks.forEach(function(t,j){t.classList.toggle('active',i===j)});if(wantReal&&real)play('assets/calls/'+real+'.wav',wantSynth ? 0.20 : 0.82);if(wantSynth&&id)play('assets/calls/synth_'+id+'.wav',0.82)},i*gap)});setTimeout(function(){if(st)st.classList.remove('talking');if(n)n.textContent='';ticks.forEach(function(t){t.classList.remove('active')});s.textContent='Done — edit, reuse, or speak again'},Math.max(1,tokens.length)*gap+650)},120)">▶ Speak phrase</button>
+        <button class="btn" id="build">Build stimulus set</button>
+        <button class="btn primary" id="speak" type="button">Play selection</button>
         <button class="btn" id="reuse">Reuse last</button>
         <button class="btn" id="clear">Clear</button>
-        <span id="status" style="font-size:13px;color:var(--faint)">Add calls, then Speak</span>
+        <span id="status" style="font-size:13px;color:var(--faint)">Select anchors, then Play</span>
       </div>
       <div class="analogy" id="analogy"></div>
       <div class="readout" id="readout"></div>
     </div></div>
     <div class="viz reveal">
       <div class="stage" id="stage" aria-label="orca vocalising">
-        <div class="stagehud"><span id="modeLabel"><b>Hybrid</b></span><span id="phraseLabel">K1 · K3 · K7</span></div>
+        <div class="stagehud"><span id="modeLabel"><b>Real FEROP clips</b></span><span id="phraseLabel">K1 · K3 · K7</span></div>
         <div class="rings" id="rings"><span></span><span></span><span></span><span></span></div>
         <div class="nowcall" id="nowcall"></div>
       </div>
@@ -614,33 +614,33 @@ const cio=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){an
 document.querySelectorAll('.stat .n').forEach(el=>cio.observe(el));
 
 // ---- Talk Orca: context builder + reusable recordings + synthetic sketch ----
-let ac=null, bus=null, analyser=null, wetGain=null, delayNode=null, freqData=null, rafId=null, buffers={}, activeNodes=[], playRun=0, mode='hybrid';
+let ac=null, bus=null, analyser=null, wetGain=null, delayNode=null, freqData=null, rafId=null, buffers={}, activeNodes=[], playRun=0, mode='recordings';
 const CLIPS={k1:'assets/calls/k1.wav',k3:'assets/calls/k3.wav',k5:'assets/calls/k5.wav',k7:'assets/calls/k7.wav',k12:'assets/calls/k12.wav'};
 const SYNTH_CLIPS={k1:'assets/calls/synth_k1.wav',k3:'assets/calls/synth_k3.wav',k5:'assets/calls/synth_k5.wav',k7:'assets/calls/synth_k7.wav',k12:'assets/calls/synth_k12.wav',v_soft:'assets/calls/synth_v_soft.wav',v_reply:'assets/calls/synth_v_reply.wav',v_feed:'assets/calls/synth_v_feed.wav',v_travel:'assets/calls/synth_v_travel.wav',v_social:'assets/calls/synth_v_social.wav',v_echo:'assets/calls/synth_v_echo.wav',v_close:'assets/calls/synth_v_close.wav',v_reunion:'assets/calls/synth_v_reunion.wav',v_scan:'assets/calls/synth_v_scan.wav'};
 const CALLS={
-  k1:{call:'k1',real:'k1',name:'Kamchatkan call type K1',role:'contact anchor',human:'I am here.',ctx:'contact',cite:'FEROP catalogue; Filatova 2011',dur:1.20,evidence:90,validated:true},
-  k3:{call:'k3',real:'k3',name:'Kamchatkan call type K3',role:'foraging pulse',human:'There is food here.',ctx:'foraging',cite:'FEROP catalogue; Filatova 2011',dur:1.05,evidence:88,validated:true},
-  k5:{call:'k5',real:'k5',name:'Kamchatkan call type K5',role:'travel cue',human:'Move together.',ctx:'travelling',cite:'FEROP catalogue; Filatova 2011',dur:1.38,evidence:86,validated:true},
-  k7:{call:'k7',real:'k7',name:'Kamchatkan call type K7',role:'cohesion call',human:'Stay close.',ctx:'contact',cite:'FEROP catalogue; Filatova 2011',dur:1.15,evidence:88,validated:true},
-  k12:{call:'k12',real:'k12',name:'Kamchatkan call type K12',role:'social burst',human:'Good to be together.',ctx:'social',cite:'FEROP catalogue; Filatova 2011',dur:.96,evidence:84,validated:true},
-  v_soft:{call:'v_soft',real:'k1',name:'Soft arc synthetic variant',role:'gentle contact contour',human:'I am here, calmly.',ctx:'contact',cite:'synthetic contour derived from K-call interface',dur:1.10,evidence:64,validated:false},
-  v_reply:{call:'v_reply',real:'k7',name:'Reply sweep synthetic variant',role:'call-back contour',human:'I hear you.',ctx:'contact',cite:'synthetic contour derived from K-call interface',dur:1.26,evidence:64,validated:false},
-  v_feed:{call:'v_feed',real:'k3',name:'Feed chirp synthetic variant',role:'foraging contour',human:'Food is here.',ctx:'foraging',cite:'synthetic contour derived from K-call interface',dur:1.02,evidence:64,validated:false},
-  v_travel:{call:'v_travel',real:'k5',name:'Long glide synthetic variant',role:'travel contour',human:'Move with me.',ctx:'travelling',cite:'synthetic contour derived from K-call interface',dur:1.44,evidence:64,validated:false},
-  v_social:{call:'v_social',real:'k12',name:'Bright trill synthetic variant',role:'social contour',human:'Good to be together.',ctx:'social',cite:'synthetic contour derived from K-call interface',dur:.92,evidence:64,validated:false},
-  v_echo:{call:'v_echo',real:'k1',name:'Distant echo synthetic variant',role:'soft far-call contour',human:'I am over here.',ctx:'contact',cite:'synthetic contour derived from K-call interface',dur:1.32,evidence:64,validated:false},
-  v_close:{call:'v_close',real:'k7',name:'Close pulse synthetic variant',role:'cohesion contour',human:'Stay close, calmly.',ctx:'contact',cite:'synthetic contour derived from K-call interface',dur:1.08,evidence:62,validated:false},
-  v_reunion:{call:'v_reunion',real:'k12',name:'Reunion trill synthetic variant',role:'soft social contour',human:'Together again.',ctx:'social',cite:'synthetic contour derived from K-call interface',dur:1.24,evidence:62,validated:false},
-  v_scan:{call:'v_scan',real:'k5',name:'Scan ripple synthetic variant',role:'inspection contour',human:'Checking who is nearby.',ctx:'unknown',cite:'synthetic contour derived from K-call interface',dur:.96,evidence:60,validated:false}
+  k1:{call:'k1',real:'k1',name:'Kamchatkan call type K1',role:'FEROP K1 exemplar',human:'K1: public Kamchatka catalogue clip; not a translated word.',ctx:'contact',cite:'FEROP catalogue; Filatova 2011',dur:1.20,evidence:90,validated:true},
+  k3:{call:'k3',real:'k3',name:'Kamchatkan call type K3',role:'FEROP K3 exemplar',human:'K3: public Kamchatka catalogue clip; not a translated word.',ctx:'foraging',cite:'FEROP catalogue; Filatova 2011',dur:1.05,evidence:88,validated:true},
+  k5:{call:'k5',real:'k5',name:'Kamchatkan call type K5',role:'FEROP K5 exemplar',human:'K5: public Kamchatka catalogue clip; not a translated word.',ctx:'travelling',cite:'FEROP catalogue; Filatova 2011',dur:1.38,evidence:86,validated:true},
+  k7:{call:'k7',real:'k7',name:'Kamchatkan call type K7',role:'FEROP K7 exemplar',human:'K7: public Kamchatka catalogue clip; not a translated word.',ctx:'contact',cite:'FEROP catalogue; Filatova 2011',dur:1.15,evidence:88,validated:true},
+  k12:{call:'k12',real:'k12',name:'Kamchatkan call type K12',role:'FEROP K12 exemplar',human:'K12: public Kamchatka catalogue clip; not a translated word.',ctx:'social',cite:'FEROP catalogue; Filatova 2011',dur:.96,evidence:84,validated:true},
+  v_soft:{call:'v_soft',real:'k1',name:'Soft arc contour sketch',role:'optional contour sketch',human:'Synthetic contour only; not evidence.',ctx:'contact',cite:'non-evidence audition aid',dur:1.10,evidence:42,validated:false},
+  v_reply:{call:'v_reply',real:'k7',name:'Reply sweep contour sketch',role:'optional contour sketch',human:'Synthetic contour only; not evidence.',ctx:'contact',cite:'non-evidence audition aid',dur:1.26,evidence:42,validated:false},
+  v_feed:{call:'v_feed',real:'k3',name:'Feed chirp contour sketch',role:'optional contour sketch',human:'Synthetic contour only; not evidence.',ctx:'foraging',cite:'non-evidence audition aid',dur:1.02,evidence:42,validated:false},
+  v_travel:{call:'v_travel',real:'k5',name:'Long glide contour sketch',role:'optional contour sketch',human:'Synthetic contour only; not evidence.',ctx:'travelling',cite:'non-evidence audition aid',dur:1.44,evidence:42,validated:false},
+  v_social:{call:'v_social',real:'k12',name:'Bright trill contour sketch',role:'optional contour sketch',human:'Synthetic contour only; not evidence.',ctx:'social',cite:'non-evidence audition aid',dur:.92,evidence:42,validated:false},
+  v_echo:{call:'v_echo',real:'k1',name:'Distant echo contour sketch',role:'optional contour sketch',human:'Synthetic contour only; not evidence.',ctx:'contact',cite:'non-evidence audition aid',dur:1.32,evidence:42,validated:false},
+  v_close:{call:'v_close',real:'k7',name:'Close pulse contour sketch',role:'optional contour sketch',human:'Synthetic contour only; not evidence.',ctx:'contact',cite:'non-evidence audition aid',dur:1.08,evidence:40,validated:false},
+  v_reunion:{call:'v_reunion',real:'k12',name:'Reunion trill contour sketch',role:'optional contour sketch',human:'Synthetic contour only; not evidence.',ctx:'social',cite:'non-evidence audition aid',dur:1.24,evidence:40,validated:false},
+  v_scan:{call:'v_scan',real:'k5',name:'Scan ripple contour sketch',role:'optional contour sketch',human:'Synthetic contour only; not evidence.',ctx:'unknown',cite:'non-evidence audition aid',dur:.96,evidence:40,validated:false}
 };
 const TEMPLATES={
-  presence:{text:'I am here.',activity:'contact',receiver:'same-pod',style:'contact',tone:'gentle',energy:28,spacing:64,echo:42,phrase:['v_soft','k1','v_reply']},
-  food:{text:'I am here. Come feed with us.',activity:'foraging',receiver:'same-pod',style:'forage',tone:'curious',energy:42,spacing:54,echo:34,phrase:['k1','v_feed','k3','k7']},
-  move:{text:'Let us move together.',activity:'travelling',receiver:'nearby',style:'travel',tone:'gentle',energy:36,spacing:58,echo:36,phrase:['v_soft','v_travel','k5']},
-  close:{text:'Stay close to me.',activity:'contact',receiver:'nearby',style:'contact',tone:'gentle',energy:32,spacing:68,echo:40,phrase:['v_close','k7','v_reply','v_soft']},
-  greet:{text:'Good to be together.',activity:'social',receiver:'same-pod',style:'social',tone:'bright',energy:46,spacing:48,echo:30,phrase:['v_reunion','v_social','k12','v_reply']},
-  reply:{text:'Answer me if you are nearby.',activity:'contact',receiver:'nearby',style:'reply',tone:'distant',energy:30,spacing:72,echo:64,phrase:['v_echo','v_reply','k7']},
-  scan:{text:'Check who is nearby before moving.',activity:'unknown',receiver:'nearby',style:'scan',tone:'curious',energy:30,spacing:62,echo:44,phrase:['v_scan','v_echo','v_travel','k5']}
+  presence:{text:'Contact/cohesion observation; same-pod receiver frame.',activity:'contact',receiver:'same-pod',style:'contact',tone:'gentle',energy:28,spacing:64,echo:42,phrase:['k1','k7']},
+  food:{text:'Foraging observation; same-pod receiver; test dialect response.',activity:'foraging',receiver:'same-pod',style:'forage',tone:'curious',energy:42,spacing:54,echo:34,phrase:['k1','k3','k7']},
+  move:{text:'Travelling observation; nearby group receiver frame.',activity:'travelling',receiver:'nearby',style:'travel',tone:'gentle',energy:36,spacing:58,echo:36,phrase:['k1','k5']},
+  close:{text:'Cohesion observation; nearby group receiver frame.',activity:'contact',receiver:'nearby',style:'contact',tone:'gentle',energy:32,spacing:68,echo:40,phrase:['k7','k1']},
+  greet:{text:'Social observation; same-pod receiver frame.',activity:'social',receiver:'same-pod',style:'social',tone:'bright',energy:46,spacing:48,echo:30,phrase:['k12','k7']},
+  reply:{text:'Response observation; listen for same-pod vocal reply.',activity:'contact',receiver:'nearby',style:'reply',tone:'distant',energy:30,spacing:72,echo:64,phrase:['k7','k1']},
+  scan:{text:'Uncertain context; inspect response against controls.',activity:'unknown',receiver:'nearby',style:'scan',tone:'curious',energy:30,spacing:62,echo:44,phrase:['k5','k1']}
 };
 const canvas=document.getElementById('spec'), cx=canvas.getContext('2d');
 const stage=document.getElementById('stage'), statusEl=document.getElementById('status'),
@@ -690,28 +690,30 @@ function updateControlLabels(){
 function renderMeters(){
   const s=scorePhrase();
   meters.innerHTML=[
-    ['Context fit',s.fit+'%','How well the chosen calls cover the selected human context.'],
-    ['Research trace',s.evidence+'%','K-call recordings and playback/context evidence stay attached to the phrase.'],
-    ['Field clarity',s.field+'%','Claim boundary, context, and playback purpose stay visible to a human reviewer.']
+    ['Evidence fit',s.fit+'%','Selected anchors and controls match the chosen evidence lens; not semantic certainty.'],
+    ['Anchor trace',s.evidence+'%','Real FEROP K-call anchors and playback/context evidence stay attached to the selection.'],
+    ['Field readiness',s.field+'%','Claim boundary, controls, and playback purpose stay visible to a reviewer.']
   ].map(m=>'<div class="meter"><div class="mt">'+m[0]+'</div><div class="mn">'+m[1]+'</div><div class="md">'+m[2]+'</div></div>').join('');
 }
 function renderTimeline(active){
   timeline.innerHTML=phrase.map((p,i)=>'<div class="tick '+(i===active?'active':'')+'">'+p.call.toUpperCase()+'</div>').join('');
 }
 function renderReadout(last){
-  const line=humanText.value.trim()||'A human-readable field context.';
-  const seq=phrase.map(p=>p.call.toUpperCase()).join(' → ')||'No calls selected';
+  const line=humanText.value.trim()||'Observer note for the field protocol.';
+  const seq=phrase.map(p=>p.call.toUpperCase()).join(' → ')||'No anchors selected';
   const ctx=activityEl.options[activityEl.selectedIndex].text;
   const tone=toneEl.options[toneEl.selectedIndex].text;
   const style=styleEl.options[styleEl.selectedIndex].text;
   const picked=last?'<span class="lab">'+esc(last.name)+' added.</span> ':'';
-  readout.innerHTML=picked+'<b>Human context:</b> '+esc(line)+'<br><b>Orca-like sequence:</b> '+esc(seq)+'<br><b>Performance controls:</b> '+esc(style)+' · '+esc(tone)+' · '+energyLabel.textContent+' · '+spacingLabel.textContent+' · '+echoLabel.textContent+'.<br><b>Research basis:</b> public FEROP K-call units anchor the phrase; the analyses support call-type structure, context decodability, and dialect-selective response. Synthetic variants are clearly marked contour sonifications. Meaning/content still requires controlled playback.';
+  const synthetic=phrase.filter(p=>!p.validated).length;
+  const synthNote=synthetic?' '+synthetic+' optional contour sketch'+(synthetic===1?' is':'es are')+' present; replace before any field stimulus.':'';
+  readout.innerHTML=picked+'<b>Observer note:</b> '+esc(line)+'<br><b>Candidate stimulus anchors:</b> '+esc(seq)+'<br><b>Audition controls:</b> '+esc(style)+' · '+esc(tone)+' · '+energyLabel.textContent+' · '+spacingLabel.textContent+' · '+echoLabel.textContent+'.<br><b>Research basis:</b> context changes the evidence lens and field-plan controls; it does not validate that selected calls mean the note. Real clips are FEROP K-call examples from the dialect-response frame; DTAG/context evidence is production-side and from a different dataset.'+esc(synthNote);
 }
 function treatmentRows(){
-  const seq=phrase.map(p=>p.call.toUpperCase()).join(' -> ')||'No stimulus';
+  const seq=phrase.map(p=>p.call.toUpperCase()).join(' -> ')||'No stimulus anchors';
   const anchors=[...new Set(phrase.map(p=>p.real).filter(Boolean))].map(k=>k.toUpperCase()).join(' / ')||'Select validated anchors';
   const rows=[
-    ['TARGET',seq,'Built from selected context/style; hybrid audition only, not a field stimulus until calibrated.','test'],
+    ['TARGET',seq,'Candidate stimulus set for review; use real FEROP anchors only until collaborators approve final stimuli.','test'],
     ['SAME-POD','FEROP K-call anchors: '+anchors,'Positive conspecific-family condition from the dialect-response evidence frame.','control'],
     ['SILENCE','No playback baseline','Pre/post comparison for spontaneous vocal and movement rates.','baseline']
   ];
@@ -749,7 +751,7 @@ function fieldGates(){
   const synthetic=phrase.filter(p=>!p.validated).length;
   return [
     {ok:false,title:'Permits first',text:'No field broadcast without local approval, stand-off plan, and calibrated source level.'},
-    {ok:synthetic===0,title:'Stimulus status',text:synthetic?synthetic+' synthetic audition token'+(synthetic===1?'':'s')+' in current phrase; replace or approve before field use.':'All selected tokens are validated recording anchors.'},
+    {ok:synthetic===0,title:'Stimulus status',text:synthetic?synthetic+' synthetic audition token'+(synthetic===1?'':'s')+' in current selection; replace or approve before field use.':'All selected anchors are validated recordings.'},
     {ok:diffPod.checked&&matchedNoise.checked,title:'Controls required',text:(diffPod.checked?'Dialect control included':'Add a dialect control')+'; '+(matchedNoise.checked?'matched-noise included':'add matched-noise control')+'.'},
     {ok:blindObservers.checked,title:'Blinded scoring',text:blindObservers.checked?'Observer-blinded scoring enabled.':'Enable observer-blinded scoring before running trials.'},
     {ok:stopRules.checked,title:'Stop rules',text:stopRules.checked?'Disturbance stop rules enabled.':'Enable disturbance stop rules before export.'}
@@ -759,7 +761,7 @@ function planPayload(){
   const seq=phrase.map(p=>p.call);
   const gates=fieldGates();
   return {
-    objective:'Content-controlled conspecific playback feasibility plan',
+    objective:'Research-bound conspecific playback feasibility plan',
     session:sessionLabel.value,
     context:activityEl.value,
     receiver:receiverEl.value,
@@ -781,7 +783,7 @@ function planPayload(){
     },
     run_sheet:runSheetRows(),
     field_gates:gates,
-    claim_boundary:'Tests receiver response to a broadcast signal; does not assert translation or known meaning.'
+    claim_boundary:'Tests receiver response to broadcast stimulus anchors; the observer note is not translated into call content.'
   };
 }
 function fieldPlanText(){
@@ -802,8 +804,8 @@ function fieldPlanText(){
     'analysis pre-registered against matched controls'
   ].join('\n  - ');
   return 'ORCADOLITTLE FIELD PLAYBACK DRAFT\n'
-    +'Question: do receivers respond differently to the target call sequence than to dialect, noise, and silence controls?\n'
-    +'Session: '+(p.session||'session')+' | Context: '+p.context+' | Receiver: '+p.receiver+' | Mode: '+p.controls.mode+' | Phrase: '+p.phrase.map(x=>x.toUpperCase()).join(' -> ')+'\n\n'
+    +'Question: do receivers respond differently to this candidate stimulus set than to dialect, noise, and silence controls?\n'
+    +'Session: '+(p.session||'session')+' | Context: '+p.context+' | Receiver: '+p.receiver+' | Mode: '+p.controls.mode+' | Anchors: '+p.phrase.map(x=>x.toUpperCase()).join(' -> ')+'\n\n'
     +'Treatments:\n'+treatments+'\n\n'
     +'Design: '+p.design.trials_per_condition+' trials/condition; '+p.design.baseline_minutes+' min baseline; '+p.design.response_minutes+' min response window; '+p.design.washout_minutes+' min washout.\n\n'
     +'Randomized run sheet: '+p.run_sheet.length+' trials generated from seed "'+(p.design.randomization_seed||'seed')+'"; export JSON includes every trial ID, treatment, baseline, response, and washout value.\n\n'
@@ -848,8 +850,8 @@ function updateLab(){
   evidenceStack.innerHTML=[
     ['0.770','DTAG context','Movement-defined behavioural context from calls, individual held out.'],
     ['p=0.002','Playback response','Same-pod vs different-pod re-analysis; dialect, not content.'],
-    [validated+'/'+phrase.length,'Validated anchors','Real FEROP K-call units inside this phrase.'],
-    [s.fit+'%','Context fit','Interface score for selected context/style; not biological certainty.']
+    [validated+'/'+phrase.length,'Validated anchors','Real FEROP K-call units inside this selection.'],
+    [s.fit+'%','Protocol fit','Interface score for selected evidence lens; not biological certainty.']
   ].map(e=>'<div class="ev"><div class="en">'+e[0]+'</div><div class="et">'+e[1]+'</div><div class="ed">'+e[2]+'</div></div>').join('');
   gateList.innerHTML=[
     ...fieldGates().map(g=>[g.ok,g.title,g.text])
@@ -898,12 +900,12 @@ function intentFromContext(){
 }
 function keysForIntent(intent){
   const banks={
-    contact:['v_soft','v_close','k1','v_reply'],
-    forage:['v_soft','v_feed','k3','k7'],
-    travel:['v_soft','v_travel','k5'],
-    reply:['v_echo','v_reply','k7'],
-    social:['v_reunion','v_social','k12','v_reply'],
-    scan:['v_scan','v_echo','v_travel','k5']
+    contact:['k1','k7','v_soft','v_reply'],
+    forage:['k3','k1','k7','v_feed'],
+    travel:['k5','k1','v_travel'],
+    reply:['k7','k1','v_reply','v_echo'],
+    social:['k12','k7','v_social','v_reunion'],
+    scan:['k5','k1','v_scan','v_echo']
   };
   let keys=(banks[intent]||banks.contact).slice();
   if(toneEl.value==='curious')keys.splice(1,0,'v_reply');
@@ -919,7 +921,8 @@ function renderChips(intent){
   const keys=keysForIntent(intent||intentFromContext()).filter(k=>{if(seen.has(k))return false;seen.add(k);return true;});
   chips.innerHTML=keys.map(k=>{
     const c=CALLS[k], active=selected.has(k);
-    return '<button class="chip '+(c.validated?'':'synthetic ') +(active?'active':'')+'" type="button" data-call="'+esc(k)+'">'+esc(k.toUpperCase()+' · '+c.role)+'<small>'+(active?'selected - tap to remove':'tap to add')+'</small></button>';
+    const kind=c.validated?'FEROP recording anchor':'optional contour sketch';
+    return '<button class="chip '+(c.validated?'':'synthetic ') +(active?'active':'')+'" type="button" data-call="'+esc(k)+'">'+esc(k.toUpperCase()+' · '+c.role)+'<small>'+esc(kind)+' · '+(active?'selected - tap to remove':'tap to add')+'</small></button>';
   }).join('');
 }
 async function previewUploadedClip(){
@@ -941,19 +944,19 @@ async function previewUploadedClip(){
 function renderTray(last){
   renderChips();
   if(!phrase.length){
-    tray.innerHTML='<span class="trayhint">Tap calls above or press Build from context…</span>';
+    tray.innerHTML='<span class="trayhint">Tap anchors above or press Build stimulus set…</span>';
     analogy.innerHTML='';
   }else{
     tray.innerHTML=phrase.map((p,i)=>'<button class="token" type="button" data-idx="'+i+'" data-call="'+esc(p.call)+'" data-real="'+esc(p.real||'')+'" title="Remove '+p.call.toUpperCase()+'">'+p.call.toUpperCase()+'<span class="x">x</span></button>').join('');
-    analogy.innerHTML='<span class="alab">Human-readable analogy, not a translation:</span>"'+esc(phrase.map(p=>p.human).join(' '))+'"';
+    analogy.innerHTML='<span class="alab">Research boundary:</span> '+esc(phrase.map(p=>p.call.toUpperCase()+': '+p.role).join('; '))+'. These anchors are not a translation of the observer note.';
   }
-  phraseLabel.textContent=phrase.length?phrase.map(p=>p.call.toUpperCase()).join(' · '):'No phrase';
+  phraseLabel.textContent=phrase.length?phrase.map(p=>p.call.toUpperCase()).join(' · '):'No anchors';
   updateControlLabels(); renderTimeline(-1); renderMeters(); renderReadout(last); updateLab();
 }
 function setMode(next){
   mode=next;
   document.querySelectorAll('.modebtn').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));
-  modeLabel.innerHTML='<b>'+({recordings:'Real clips',synthetic:'Synthetic orca layer',hybrid:'Hybrid'}[mode])+'</b>';
+  modeLabel.innerHTML='<b>'+({recordings:'Real FEROP clips',synthetic:'Contour sketch',hybrid:'Clips + contour'}[mode])+'</b>';
   renderMeters(); renderReadout();
 }
 function setTemplate(key){
@@ -965,8 +968,8 @@ function setTemplate(key){
 }
 function buildFromContext(){
   const intent=intentFromContext();
-  const keys=keysForIntent(intent);
-  phrase=keys.map(k=>CALLS[k]); renderTray(); statusEl.textContent='Built from human context';
+  const keys=keysForIntent(intent).filter(k=>CALLS[k]&&CALLS[k].validated);
+  phrase=keys.map(k=>CALLS[k]); renderTray(); statusEl.textContent='Built from observer note';
 }
 function savePhrase(){
   try{localStorage.setItem('orcaDemoPhrase',JSON.stringify({text:humanText.value,activity:activityEl.value,receiver:receiverEl.value,style:styleEl.value,tone:toneEl.value,energy:energyEl.value,spacing:spacingEl.value,echo:echoEl.value,phrase:phrase.map(p=>p.call),mode}));}catch(e){}
@@ -977,8 +980,8 @@ function reusePhrase(){
     humanText.value=saved.text||humanText.value; activityEl.value=saved.activity||activityEl.value; receiverEl.value=saved.receiver||receiverEl.value;
     styleEl.value=saved.style||styleEl.value; toneEl.value=saved.tone||toneEl.value;
     energyEl.value=saved.energy||energyEl.value; spacingEl.value=saved.spacing||spacingEl.value; echoEl.value=saved.echo||echoEl.value;
-    phrase=(saved.phrase||[]).map(k=>CALLS[k]).filter(Boolean); setMode(saved.mode||mode); renderTray(); statusEl.textContent='Reused last phrase';
-  }catch(e){statusEl.textContent='No saved phrase yet';}
+    phrase=(saved.phrase||[]).map(k=>CALLS[k]).filter(Boolean); setMode(saved.mode||mode); renderTray(); statusEl.textContent='Reused last selection';
+  }catch(e){statusEl.textContent='No saved selection yet';}
 }
 chips.addEventListener('click',e=>{
   const b=e.target.closest('.chip');if(!b)return;
@@ -987,14 +990,14 @@ chips.addEventListener('click',e=>{
   if(idx>=0){phrase.splice(idx,1);renderTray();statusEl.textContent='Removed '+c.call.toUpperCase();}
   else{phrase.push(c);renderTray(c);statusEl.textContent=c.call.toUpperCase()+' added';}
 });
-tray.addEventListener('click',e=>{const b=e.target.closest('.token');if(!b)return;e.preventDefault();phrase.splice(+b.dataset.idx,1);renderTray();statusEl.textContent='Removed call';});
+tray.addEventListener('click',e=>{const b=e.target.closest('.token');if(!b)return;e.preventDefault();phrase.splice(+b.dataset.idx,1);renderTray();statusEl.textContent='Removed anchor';});
 document.querySelectorAll('.template').forEach(b=>b.addEventListener('click',()=>setTemplate(b.dataset.template)));
 document.querySelectorAll('.modebtn').forEach(b=>b.addEventListener('click',()=>setMode(b.dataset.mode)));
 [humanText,energyEl,spacingEl,echoEl].forEach(el=>el.addEventListener('input',()=>{updateControlLabels();renderChips();renderMeters();renderReadout();}));
 [activityEl,receiverEl,styleEl,toneEl].forEach(el=>el.addEventListener('change',()=>{buildFromContext();}));
 document.getElementById('build').addEventListener('click',buildFromContext);
 document.getElementById('reuse').addEventListener('click',reusePhrase);
-document.getElementById('clear').addEventListener('click',()=>{phrase=[];renderTray();statusEl.textContent='Add calls, then Speak';});
+document.getElementById('clear').addEventListener('click',()=>{phrase=[];renderTray();statusEl.textContent='Select anchors, then Play';});
 [trialCount,washoutMin,baselineWindow,responseWindow,matchedNoise,diffPod,blindObservers,stopRules,sessionLabel,randomSeed].forEach(el=>{
   const ev=(el.type==='checkbox'||el.tagName==='SELECT')?'change':'input';
   el.addEventListener(ev,updateLab);
@@ -1100,7 +1103,7 @@ function drawFallbackColumn(run){
 function scheduleVisualRun(run,marks,total,label){
   stage.classList.add('talking'); statusEl.textContent=label; clearSpec(); drawFallbackColumn(run);
   marks.forEach(m=>setTimeout(()=>{if(run!==playRun)return;nowcall.textContent=m.call.toUpperCase();renderTimeline(m.i);},Math.max(0,m.t*1000)));
-  setTimeout(()=>{if(run!==playRun)return;stage.classList.remove('talking');nowcall.textContent='';renderTimeline(-1);if(rafId)cancelAnimationFrame(rafId);statusEl.textContent='Done — edit, reuse, or speak again';},total*1000+320);
+  setTimeout(()=>{if(run!==playRun)return;stage.classList.remove('talking');nowcall.textContent='';renderTimeline(-1);if(rafId)cancelAnimationFrame(rafId);statusEl.textContent='Done — edit, reuse, or play again';},total*1000+320);
 }
 function speakWithoutWebAudio(){
   savePhrase();
@@ -1114,8 +1117,8 @@ function speakWithoutWebAudio(){
     t+=(p.dur/rate)+gap;
   });
   const label=(mode==='synthetic')
-    ? 'Playing synthetic orca-like calls'
-    : 'Playing hybrid: real K-calls plus synthetic orca layer';
+    ? 'Playing optional contour sketch'
+    : (mode==='recordings'?'Playing real FEROP clips':'Playing real FEROP clips plus contour sketch');
   scheduleVisualRun(run,marks,t,label);
 }
 function playHtmlClip(src,volume,delay,run,rate){
@@ -1131,11 +1134,12 @@ function playHtmlClip(src,volume,delay,run,rate){
 }
 async function speak(){
   if(!phrase.length)buildFromContext();
-  if(!phrase.length){statusEl.textContent='Add at least one call first';return;}
+  if(!phrase.length){statusEl.textContent='Select at least one anchor first';return;}
   stopActive();
+  statusEl.textContent=mode==='synthetic'?'Preparing optional contour sketch…':'Loading FEROP call recordings…';
   if(!ensureAudio()){speakWithoutWebAudio();return;}
-  try{await ac.resume();}catch(e){}
-  statusEl.textContent=mode==='synthetic'?'Synthesizing orca-like phrase…':'Loading reusable call recordings…';
+  try{await Promise.race([ac.resume(),new Promise(resolve=>setTimeout(resolve,450))]);}catch(e){}
+  if(ac&&ac.state==='suspended'){speakWithoutWebAudio();return;}
   let realLoaded={}, synthLoaded={};
   if(mode!=='synthetic'){
     for(const p of phrase){try{realLoaded[p.real]=await loadBuf(p.real,'real');}catch(e){realLoaded[p.real]=null;}}
@@ -1156,13 +1160,13 @@ async function speak(){
     }
     marks.push({i,t,call:p.call,dur}); t+=dur+gap;
   });
-  const total=t-ac.currentTime; stage.classList.add('talking'); statusEl.textContent='Speaking '+({recordings:'real recordings',synthetic:'synthetic orca-like calls',hybrid:'hybrid real + synthetic phrase'}[mode])+'…';
+  const total=t-ac.currentTime; stage.classList.add('talking'); statusEl.textContent='Playing '+({recordings:'real FEROP clips',synthetic:'optional contour sketch',hybrid:'real clips plus contour sketch'}[mode])+'…';
   clearSpec(); drawColumn();
   marks.forEach(m=>setTimeout(()=>{if(run!==playRun)return;nowcall.textContent=m.call.toUpperCase();renderTimeline(m.i);},Math.max(0,(m.t-ac.currentTime)*1000)));
-  setTimeout(()=>{if(run!==playRun)return;stage.classList.remove('talking');nowcall.textContent='';renderTimeline(-1);if(rafId)cancelAnimationFrame(rafId);statusEl.textContent='Done — edit, reuse, or speak again';},total*1000+320);
+  setTimeout(()=>{if(run!==playRun)return;stage.classList.remove('talking');nowcall.textContent='';renderTimeline(-1);if(rafId)cancelAnimationFrame(rafId);statusEl.textContent='Done — edit, reuse, or play again';},total*1000+320);
 }
 document.getElementById('speak').addEventListener('click',e=>{e.preventDefault();speak();});
-setMode('hybrid'); renderTray();
+setMode('recordings'); renderTray();
 
 // ---- Explore the data ----
 const DB={
