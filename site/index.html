@@ -252,6 +252,35 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
 .uploadnote{font-size:12px;color:var(--dim);line-height:1.35;margin-top:8px}
 @media(max-width:980px){.labgrid{grid-template-columns:1fr}.treatment{grid-template-columns:72px 1fr}.treatment .pill{grid-column:2}.evidence,.protocolControls,.checks,.trialrow{grid-template-columns:1fr}.trialid,.trialtreatment{font-size:12px}}
 @media(max-width:760px){.fieldrow,.fieldrow.compact,.slidergrid,.meters{grid-template-columns:1fr}.stage{height:210px}}
+.dictfacts{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:24px 0}
+.dictfact{border:1px solid var(--border);background:rgba(7,13,20,.76);border-radius:10px;padding:14px}
+.dictfact b{display:block;color:var(--teal);font-size:26px;line-height:1;font-variant-numeric:tabular-nums}
+.dictfact span{display:block;color:var(--dim);font-size:12px;line-height:1.35;margin-top:6px}
+.dicttabs{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 16px}
+.dicttab{border:1px solid var(--border2);background:#07101a;color:var(--dim);border-radius:9px;padding:9px 12px;font:800 12px var(--sans);cursor:pointer}
+.dicttab.active{border-color:var(--teal);background:rgba(57,224,200,.10);color:var(--teal)}
+.dictpanel{display:none}
+.dictpanel.active{display:block}
+.dictgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.dictcard{border:1px solid var(--border);background:rgba(7,13,20,.76);border-radius:10px;padding:14px;min-width:0}
+.dictcard h3{margin:0 0 7px;font-size:16px;color:var(--text)}
+.dictcard p{margin:0 0 10px;color:var(--dim);font-size:13px;line-height:1.45}
+.dictmeta{display:flex;gap:7px;flex-wrap:wrap;margin:9px 0}
+.dictmeta span{border:1px solid rgba(76,201,255,.22);border-radius:99px;padding:5px 8px;color:var(--faint);font:800 10.5px var(--sans);text-transform:uppercase;letter-spacing:.04em}
+.dictaudio{display:grid;gap:8px;margin-top:10px}
+.dictaudio label{display:grid;gap:5px;color:var(--faint);font-size:11px;text-transform:uppercase;letter-spacing:.05em;font-weight:800}
+.dictaudio audio{width:100%;height:34px}
+.dictadd{margin-top:10px}
+.dictnote{border:1px solid rgba(255,180,84,.24);background:rgba(255,180,84,.07);border-radius:10px;padding:13px;color:var(--dim);font-size:13px;line-height:1.45;margin-bottom:14px}
+.dictfig{display:grid;grid-template-columns:86px 1fr;gap:12px;align-items:center}
+.dictfig img{width:86px;height:64px;object-fit:cover;border-radius:8px;border:1px solid var(--border)}
+.termlist{display:grid;gap:10px}
+.termrow{display:grid;grid-template-columns:160px 1fr;gap:12px;border-bottom:1px solid rgba(42,61,80,.55);padding:10px 0}
+.termrow:last-child{border-bottom:0}
+.termrow b{color:var(--teal);font-size:13px}
+.termrow span{color:var(--dim);font-size:13px;line-height:1.45}
+@media(max-width:980px){.dictfacts{grid-template-columns:repeat(2,1fr)}.termrow{grid-template-columns:1fr}}
+@media(max-width:620px){.dictfacts{grid-template-columns:1fr}.dictfig{grid-template-columns:1fr}.dictfig img{width:100%;height:130px}}
 .dbtabs{display:flex;gap:8px;margin:22px 0 16px;flex-wrap:wrap}
 .dbtab{padding:9px 15px;border-radius:99px;border:1px solid var(--border2);background:var(--panel);color:var(--dim);cursor:pointer;font-family:inherit;font-size:13.5px;font-weight:700}
 .dbtab.active{border-color:var(--teal);color:var(--teal);background:rgba(57,224,200,.08)}
@@ -275,6 +304,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
     <a href="#work">The science</a>
     <a href="#gallery">Results</a>
     <a href="#talk">Talk&nbsp;Orca</a>
+    <a href="#dictionary">Dictionary</a>
     <a href="#field">For scientists</a>
     <a href="#explore">Data</a>
     <a href="#refs">References</a>
@@ -522,6 +552,133 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
     </div>
   </div>
 </div></section>
+<section id="dictionary"><div class="wrap">
+  <div class="eyebrow reveal">Orca dictionary &middot; evidence wiki</div>
+  <h2 class="reveal">A dictionary of <span class="grad">units, not words</span>.</h2>
+  <p class="lead reveal">This is the honest map of the demo: call types we can name and play, findings we can defend, synthetic sketches we can audition, and the field terms needed to test whether any unit carries receiver-interpretable content.</p>
+  <div class="dictnote reveal"><b>Claim boundary:</b> the project currently knows zero orca words. It knows structured acoustic units, call-type labels, dialect anchors, production-context associations, and a playback design for testing future meaning claims.</div>
+  <div class="dictfacts reveal">
+    <div class="dictfact"><b>0</b><span>validated orca words or translated meanings</span></div>
+    <div class="dictfact"><b>5</b><span>real FEROP K-call anchors available to play in the demo</span></div>
+    <div class="dictfact"><b>14 + 18</b><span>SRKW and NRKW call-type labels evaluated by the model heads</span></div>
+    <div class="dictfact"><b>6/6 vs 0/6</b><span>same-pod vs different-pod response in the published playback frame</span></div>
+  </div>
+  <div class="dicttabs reveal" role="tablist" aria-label="Dictionary sections">
+    <button class="dicttab active" type="button" data-dict-tab="calls">Call types</button>
+    <button class="dicttab" type="button" data-dict-tab="findings">Findings map</button>
+    <button class="dicttab" type="button" data-dict-tab="synthetic">Synthetic samples</button>
+    <button class="dicttab" type="button" data-dict-tab="terms">Field terms</button>
+  </div>
+  <div class="dictpanel active reveal" data-dict-panel="calls">
+    <div class="dictgrid">
+      <div class="dictcard" id="dict-k1">
+        <h3>K1</h3>
+        <p>Kamchatka FEROP catalogue call type used as a real dialect exemplar. The label is a call-type ID, not a known word.</p>
+        <p><b>In human terms it might mean:</b> a familiar-dialect identity or contact cue. That is a field-test hypothesis, not a translation.</p>
+        <div class="dictmeta"><span>real recording</span><span>FEROP</span><span>meaning unknown</span></div>
+        <div class="dictaudio">
+          <label>Real anchor <audio controls preload="none" src="assets/calls/k1.wav"></audio></label>
+          <label>Contour sketch <audio controls preload="none" src="assets/calls/synth_k1.wav"></audio></label>
+        </div>
+        <button class="btn dictadd" type="button" data-dict-add="k1">Send K1 to Talk Orca</button>
+      </div>
+      <div class="dictcard" id="dict-k3">
+        <h3>K3</h3>
+        <p>Kamchatka FEROP catalogue call type. The demo can use it as a playback anchor; it does not assign semantic content to the call.</p>
+        <p><b>In human terms it might mean:</b> another familiar unit in the same dialect inventory. The receiver content is still unknown.</p>
+        <div class="dictmeta"><span>real recording</span><span>FEROP</span><span>dialect anchor</span></div>
+        <div class="dictaudio">
+          <label>Real anchor <audio controls preload="none" src="assets/calls/k3.wav"></audio></label>
+          <label>Contour sketch <audio controls preload="none" src="assets/calls/synth_k3.wav"></audio></label>
+        </div>
+        <button class="btn dictadd" type="button" data-dict-add="k3">Send K3 to Talk Orca</button>
+      </div>
+      <div class="dictcard" id="dict-k5">
+        <h3>K5</h3>
+        <p>Kamchatka FEROP catalogue call type included in the expanded diversity scan. It is an acoustic unit, not a dictionary word.</p>
+        <p><b>In human terms it might mean:</b> a contrasting call-type cue for testing whether receivers react to type, not only group voice.</p>
+        <div class="dictmeta"><span>real recording</span><span>FEROP</span><span>sample anchor</span></div>
+        <div class="dictaudio">
+          <label>Real anchor <audio controls preload="none" src="assets/calls/k5.wav"></audio></label>
+          <label>Contour sketch <audio controls preload="none" src="assets/calls/synth_k5.wav"></audio></label>
+        </div>
+        <button class="btn dictadd" type="button" data-dict-add="k5">Send K5 to Talk Orca</button>
+      </div>
+      <div class="dictcard" id="dict-k7">
+        <h3>K7</h3>
+        <p>Kamchatka FEROP catalogue call type used in the response subset. It helps build a field test; it is not interpreted as a translated message.</p>
+        <p><b>In human terms it might mean:</b> a response-scoring anchor in a same-pod/different-pod playback. Exact content remains unproven.</p>
+        <div class="dictmeta"><span>real recording</span><span>FEROP</span><span>response frame</span></div>
+        <div class="dictaudio">
+          <label>Real anchor <audio controls preload="none" src="assets/calls/k7.wav"></audio></label>
+          <label>Contour sketch <audio controls preload="none" src="assets/calls/synth_k7.wav"></audio></label>
+        </div>
+        <button class="btn dictadd" type="button" data-dict-add="k7">Send K7 to Talk Orca</button>
+      </div>
+      <div class="dictcard" id="dict-k12">
+        <h3>K12</h3>
+        <p>Kamchatka FEROP catalogue call type used in the diversity scan. The model treats it as a named acoustic class with unknown meaning.</p>
+        <p><b>In human terms it might mean:</b> an additional dialect-diversity cue. Whether it carries a distinct message is the experiment.</p>
+        <div class="dictmeta"><span>real recording</span><span>FEROP</span><span>diversity scan</span></div>
+        <div class="dictaudio">
+          <label>Real anchor <audio controls preload="none" src="assets/calls/k12.wav"></audio></label>
+          <label>Contour sketch <audio controls preload="none" src="assets/calls/synth_k12.wav"></audio></label>
+        </div>
+        <button class="btn dictadd" type="button" data-dict-add="k12">Send K12 to Talk Orca</button>
+      </div>
+      <div class="dictcard">
+        <h3>SRKW / NRKW call-type labels</h3>
+        <p>The model heads evaluate 14 Southern-Resident and 18 Northern-Resident call-type labels. Those are classification targets, not a word list.</p>
+        <div class="dictmeta"><span>14 SRKW</span><span>18 NRKW</span><span>not sampled here</span></div>
+        <p>Reason for the distinction: call-type recovery shows stable acoustic categories. Meaning requires receiver-response experiments that control dialect, context, and playback content.</p>
+      </div>
+    </div>
+  </div>
+  <div class="dictpanel reveal" data-dict-panel="findings">
+    <div class="dictgrid">
+      <div class="dictcard dictfig"><img src="assets/figures/calltype_model_full.png" alt="Call-type model figure"><div><h3>Call-type recovery</h3><p>Catalogue call types are recoverable under controls: 14 SRKW types around 0.709 and 18 NRKW types around 0.968. This supports acoustic labels, not word meanings.</p><div class="dictmeta"><span>classification</span><span>site-controlled</span></div></div></div>
+      <div class="dictcard dictfig"><img src="assets/figures/context_decode.png" alt="Context decode figure"><div><h3>Production context</h3><p>DTAG calls predict movement-defined context: 0.770 for foraging vs non-foraging and 0.577 for the three-way head, with individuals held out.</p><div class="dictmeta"><span>production-side</span><span>not receiver meaning</span></div></div></div>
+      <div class="dictcard dictfig"><img src="assets/figures/playback_response.png" alt="Playback response figure"><div><h3>Receiver response</h3><p>Published playback re-analysis shows same-pod replies and different-pod silence: 6/6 vs 0/6. The response tracks dialect membership, not content.</p><div class="dictmeta"><span>playback</span><span>dialect response</span></div></div></div>
+      <div class="dictcard dictfig"><img src="assets/figures/calltype_compositionality.png" alt="Sequence structure figure"><div><h3>Sequence structure</h3><p>SRKW sequences show evidence beyond first-order transitions. This is a prerequisite for richer coding, not proof of semantic phrases.</p><div class="dictmeta"><span>sequence</span><span>frontier</span></div></div></div>
+      <div class="dictcard">
+        <h3>What the dictionary can say</h3>
+        <p>It can say: this is a named call type; this clip is a real FEROP anchor; this synthetic sample is only a contour sketch; this finding supports a field-test design.</p>
+        <div class="dictmeta"><span>safe claim</span><span>tool ready</span></div>
+      </div>
+      <div class="dictcard">
+        <h3>What it cannot say yet</h3>
+        <p>It cannot say: K1 means hello, K7 means come here, or any other one-to-one word mapping. That is exactly what the next permitted playback study is designed to test.</p>
+        <div class="dictmeta"><span>0 words</span><span>no translation</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="dictpanel reveal" data-dict-panel="synthetic">
+    <div class="dictnote"><b>Synthetic means audition sketch.</b> These files are not validated orca speech. They are browser-playable contour sketches used to help a human hear timing, spacing, and shape while the evidence stays attached to real recordings.</div>
+    <div class="dictgrid">
+      <div class="dictcard"><h3>Soft arc</h3><p>A gentle contour sketch mapped to the K1 anchor family for audition only.</p><div class="dictaudio"><label>Sample <audio controls preload="none" src="assets/calls/synth_v_soft.wav"></audio></label></div><div class="dictmeta"><span>synthetic</span><span>not evidence</span></div></div>
+      <div class="dictcard"><h3>Reply sweep</h3><p>A response-like contour sketch mapped to the K7 anchor family for audition only.</p><div class="dictaudio"><label>Sample <audio controls preload="none" src="assets/calls/synth_v_reply.wav"></audio></label></div><div class="dictmeta"><span>synthetic</span><span>not evidence</span></div></div>
+      <div class="dictcard"><h3>Feed chirp</h3><p>A short contour sketch used by the foraging protocol lens. It is not a decoded foraging word.</p><div class="dictaudio"><label>Sample <audio controls preload="none" src="assets/calls/synth_v_feed.wav"></audio></label></div><div class="dictmeta"><span>synthetic</span><span>context sketch</span></div></div>
+      <div class="dictcard"><h3>Travel glide</h3><p>A longer contour sketch for comparing pacing and spacing in the audition layer.</p><div class="dictaudio"><label>Sample <audio controls preload="none" src="assets/calls/synth_v_travel.wav"></audio></label></div><div class="dictmeta"><span>synthetic</span><span>not evidence</span></div></div>
+      <div class="dictcard"><h3>Social trill</h3><p>A bright contour sketch used for listening contrast. It is not a validated social signal.</p><div class="dictaudio"><label>Sample <audio controls preload="none" src="assets/calls/synth_v_social.wav"></audio></label></div><div class="dictmeta"><span>synthetic</span><span>audition only</span></div></div>
+      <div class="dictcard"><h3>Distant echo</h3><p>A contour sketch with distant-water styling. It demonstrates playback rendering controls, not biology.</p><div class="dictaudio"><label>Sample <audio controls preload="none" src="assets/calls/synth_v_echo.wav"></audio></label></div><div class="dictmeta"><span>synthetic</span><span>rendering control</span></div></div>
+      <div class="dictcard"><h3>Close pulse</h3><p>A tighter contour sketch for comparing energy and pulse feel in the demo.</p><div class="dictaudio"><label>Sample <audio controls preload="none" src="assets/calls/synth_v_close.wav"></audio></label></div><div class="dictmeta"><span>synthetic</span><span>not field use</span></div></div>
+      <div class="dictcard"><h3>Reunion trill</h3><p>A named listening sketch. The name describes the UI preset, not a proven receiver interpretation.</p><div class="dictaudio"><label>Sample <audio controls preload="none" src="assets/calls/synth_v_reunion.wav"></audio></label></div><div class="dictmeta"><span>synthetic</span><span>not a word</span></div></div>
+      <div class="dictcard"><h3>Scan ripple</h3><p>A cautious unknown-context sketch used when the protocol lens is set to scan.</p><div class="dictaudio"><label>Sample <audio controls preload="none" src="assets/calls/synth_v_scan.wav"></audio></label></div><div class="dictmeta"><span>synthetic</span><span>unknown context</span></div></div>
+    </div>
+  </div>
+  <div class="dictpanel reveal" data-dict-panel="terms">
+    <div class="termlist">
+      <div class="termrow"><b>Word</b><span>A receiver-interpretable unit with content. Current count in this project: zero validated words.</span></div>
+      <div class="termrow"><b>Call type</b><span>A stereotyped acoustic category from a catalogue or model head. This is what K1/K3/K5/K7/K12 represent in the demo.</span></div>
+      <div class="termrow"><b>Dialect</b><span>Group- or pod-linked call structure. The playback evidence supports dialect-sensitive response, not semantic translation.</span></div>
+      <div class="termrow"><b>Production context</b><span>What the vocalizing whale was doing when calls were recorded. The DTAG result is production-side context association.</span></div>
+      <div class="termrow"><b>Receiver response</b><span>What a whale does after hearing a broadcast. This is the evidence needed to move from call structure toward meaning.</span></div>
+      <div class="termrow"><b>Matched noise</b><span>A control preserving energy or envelope without call-type structure, used to test whether responses are specific to calls.</span></div>
+      <div class="termrow"><b>Synthetic contour</b><span>A generated audio sketch for listening and UI demonstration. It is not a validated orca vocalization and should not be used as field evidence.</span></div>
+      <div class="termrow"><b>Field kit</b><span>The exportable protocol, run sheet, scoring sheet, and manifest that let a lab or expedition test the next receiver-response question.</span></div>
+    </div>
+  </div>
+</div></section>
 <section id="field"><div class="wrap">
   <div class="eyebrow reveal">For field scientists</div>
   <h2 class="reveal">The experiment an archive <span class="grad">cannot</span> run.</h2>
@@ -727,6 +884,17 @@ function updateControlLabels(){
   energyLabel.textContent=energy<35?'Calm':energy<67?'Animated':'High energy';
   spacingLabel.textContent=spacing<35?'Quick exchange':spacing<70?'Natural gaps':'Long call-back';
   echoLabel.textContent=echo<35?'Dry/near':echo<70?'Soft water':'Distant water';
+}
+function humanHypothesis(p){
+  const hints={
+    k1:'a familiar-dialect identity or contact cue',
+    k3:'another familiar unit in the same dialect inventory',
+    k5:'a contrasting call-type cue for testing type-specific response',
+    k7:'a response-scoring anchor in same-pod/different-pod playback',
+    k12:'an additional dialect-diversity cue'
+  };
+  if(!p.validated)return 'an audition contour only, not a validated signal';
+  return hints[p.call]||'a named acoustic unit with unknown content';
 }
 function renderMeters(){
   const s=scorePhrase();
@@ -1193,7 +1361,7 @@ function renderTray(last){
     analogy.innerHTML='';
   }else{
     tray.innerHTML=phrase.map((p,i)=>'<button class="token" type="button" data-idx="'+i+'" data-call="'+esc(p.call)+'" data-real="'+esc(p.real||'')+'" title="Remove '+p.call.toUpperCase()+'">'+p.call.toUpperCase()+'<span class="x">x</span></button>').join('');
-    analogy.innerHTML='<span class="alab">Research boundary:</span> '+esc(phrase.map(p=>p.call.toUpperCase()+': '+p.role).join('; '))+'. These anchors are not a translation of the observer note.';
+    analogy.innerHTML='<span class="alab">In human terms it might mean (hypothesis, not translation):</span> '+esc(phrase.map(p=>p.call.toUpperCase()+': '+humanHypothesis(p)).join('; '))+'.<br><span class="alab">Research boundary:</span> '+esc(phrase.map(p=>p.call.toUpperCase()+': '+p.role).join('; '))+'. These anchors are not a translation of the observer note.';
   }
   phraseLabel.textContent=phrase.length?phrase.map(p=>p.call.toUpperCase()).join(' · '):'No anchors';
   updateControlLabels(); renderTimeline(-1); renderMeters(); renderReadout(last); renderModelChat(); updateLab();
@@ -1238,6 +1406,19 @@ chips.addEventListener('click',e=>{
 tray.addEventListener('click',e=>{const b=e.target.closest('.token');if(!b)return;e.preventDefault();phrase.splice(+b.dataset.idx,1);renderTray();statusEl.textContent='Removed anchor';});
 document.querySelectorAll('.template').forEach(b=>b.addEventListener('click',()=>setTemplate(b.dataset.template)));
 document.querySelectorAll('.modebtn').forEach(b=>b.addEventListener('click',()=>setMode(b.dataset.mode)));
+document.querySelectorAll('.dicttab').forEach(b=>b.addEventListener('click',()=>{
+  const key=b.dataset.dictTab;
+  document.querySelectorAll('.dicttab').forEach(x=>x.classList.toggle('active',x.dataset.dictTab===key));
+  document.querySelectorAll('.dictpanel').forEach(p=>p.classList.toggle('active',p.dataset.dictPanel===key));
+}));
+document.querySelectorAll('.dictadd').forEach(b=>b.addEventListener('click',()=>{
+  const c=CALLS[b.dataset.dictAdd]; if(!c)return;
+  if(!phrase.some(p=>p.call===c.call))phrase.push(c);
+  setMode('recordings');
+  renderTray();
+  statusEl.textContent=c.call.toUpperCase()+' added from dictionary';
+  document.getElementById('talk').scrollIntoView({behavior:'smooth',block:'start'});
+}));
 [humanText,energyEl,spacingEl,echoEl].forEach(el=>el.addEventListener('input',()=>{updateControlLabels();renderChips();renderMeters();renderReadout();renderModelChat();}));
 [activityEl,receiverEl,styleEl,toneEl].forEach(el=>el.addEventListener('change',()=>{buildFromContext();}));
 document.getElementById('build').addEventListener('click',buildFromContext);
