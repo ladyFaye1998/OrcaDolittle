@@ -85,12 +85,12 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:6
 .truthbar{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:0 0 24px}
 .truthitem{border:1px solid rgba(57,224,200,.22);background:rgba(57,224,200,.045);border-radius:10px;padding:13px;min-width:0}
 .truthitem.warn{border-color:rgba(255,180,84,.32);background:rgba(255,180,84,.055)}
-.truthitem.no{border-color:rgba(255,107,107,.35);background:rgba(255,107,107,.055)}
+.truthitem.scope{border-color:rgba(76,201,255,.24);background:rgba(76,201,255,.045)}
 .truthitem .tagline{font-size:10px;color:var(--faint);font-weight:850;text-transform:uppercase;letter-spacing:.08em}
 .truthitem b{display:block;color:var(--text);font-size:13px;line-height:1.25;margin:5px 0}
 .truthitem p{margin:0;color:var(--dim);font-size:12px;line-height:1.35}
 .truthitem .score{font:850 18px/1 var(--mono);color:var(--teal);margin-top:8px}
-.truthitem.warn .score{color:var(--warn)}.truthitem.no .score{color:var(--bad)}
+.truthitem.warn .score{color:var(--warn)}.truthitem.scope .score{color:var(--cyan)}
 @media(max-width:980px){.truthbar{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:620px){.truthbar{grid-template-columns:1fr}}
 .talkgrid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:10px}
@@ -98,6 +98,15 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:6
 .viz{background:#04080d;border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;display:flex;flex-direction:column}
 .readout{margin-top:14px;font-size:13.5px;color:var(--dim);min-height:74px}
 .readout .lab{color:var(--teal);font-weight:700}
+.modelchat{border:1px solid rgba(57,224,200,.22);background:rgba(3,7,12,.58);border-radius:12px;margin-top:12px;overflow:hidden}
+.chathead{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px 12px;border-bottom:1px solid rgba(42,61,80,.7);color:var(--teal);font-size:12px;font-weight:850;text-transform:uppercase;letter-spacing:.08em}
+.smallbtn{border:1px solid var(--border2);background:#07101a;color:var(--text);border-radius:8px;padding:6px 9px;font:800 11px var(--sans);cursor:pointer;text-transform:none;letter-spacing:0}
+.smallbtn:hover{border-color:var(--teal);color:var(--teal)}
+.chatlog{display:grid;gap:8px;padding:12px}
+.msg{border:1px solid rgba(76,201,255,.16);background:rgba(76,201,255,.04);border-radius:9px;padding:10px 11px;font-size:12.5px;color:var(--dim);line-height:1.42}
+.msg.user{border-color:rgba(255,180,84,.22);background:rgba(255,180,84,.045)}
+.msg b{color:var(--text)}
+.msg .mtag{display:block;color:var(--cyan);font-size:10px;text-transform:uppercase;letter-spacing:.08em;font-weight:850;margin-bottom:4px}
 /* field */
 #field{background:linear-gradient(180deg,var(--bg),var(--bg2))}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:30px}
@@ -313,23 +322,23 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
   </div>
 </div></section>
 <section id="talk"><div class="wrap">
-  <div class="eyebrow reveal">Talk Orca · finding-faithful model console</div>
-  <h2 class="reveal">Max out what the model <span class="grad">actually proves</span>.</h2>
-  <p class="lead reveal">The model does not understand or reproduce orca language. It recovers acoustic structure, call-type/dialect space, production-side context association, and playback-response evidence. This demo exposes those results without pretending the observer note is a whale sentence.</p>
+  <div class="eyebrow reveal">Talk Orca · full model console</div>
+  <h2 class="reveal">Run the full <span class="grad">evidence stack</span>.</h2>
+  <p class="lead reveal">Use the model-facing console the way you would use a full model: select or upload a candidate signal, inspect call-type/dialect structure, production-context evidence, playback-response design, and a field-ready readout from the same claim-bounded stack.</p>
   <div class="disclaimer reveal">
     <span>⚠</span>
-    <div><b>Evidence-backed, not a translator or generator.</b> Real FEROP K-call clips anchor the audition set from the published dialect-response re-analysis. DTAG/context findings inform the field protocol, but they do not assign English meanings to the K-calls. Synthetic contours are listening sketches only; a content-controlled playback remains the required next study. <a href="#field">Take the tool into the field →</a></div>
+    <div><b>Model scope.</b> Real FEROP K-call clips anchor the audition set from the published dialect-response re-analysis. DTAG/context findings inform the field protocol, and synthetic contours are listening sketches. The console reports structure, context association, and response design without turning the observer note into whale speech. <a href="#field">Take the tool into the field →</a></div>
   </div>
   <div class="basis reveal">
     <div><b>Validated substrate</b> Real FEROP K-call recordings are reused as named stimulus anchors, not invented labels.</div>
     <div><b>Model output</b> Frozen embeddings support classification, separability, and context-associated probes; not semantic translation.</div>
-    <div><b>Audition layer</b> Synthetic contours are optional sketches for listening only; they are not evidence, model output, or field stimuli.</div>
+    <div><b>Audition layer</b> Synthetic contours are optional listening sketches; real FEROP clips remain the evidence anchors.</div>
   </div>
   <div class="truthbar reveal" aria-label="What the model does and does not prove">
     <div class="truthitem"><div class="tagline">Model does</div><b>Recover call-type identity</b><p>Site-controlled catalogue heads recover stereotyped call types and cross-site transfer.</p><div class="score">0.709 / 0.968</div></div>
     <div class="truthitem"><div class="tagline">Model does</div><b>Decode production context</b><p>DTAG calls predict movement-defined context with the individual held out.</p><div class="score">0.770 / 0.577</div></div>
     <div class="truthitem warn"><div class="tagline">Playback evidence</div><b>Receivers respond to dialect</b><p>Published conspecific playback re-analysis: same-pod replies, different-pod silence.</p><div class="score">6/6 vs 0/6</div></div>
-    <div class="truthitem no"><div class="tagline">Model does not</div><b>Translate or generate meaning</b><p>No result proves English meaning, referential content, or valid synthetic orca speech.</p><div class="score">Gated</div></div>
+    <div class="truthitem scope"><div class="tagline">Claim scope</div><b>Content-specific response</b><p>The next route is a content-controlled conspecific playback with real field responses.</p><div class="score">Frontier</div></div>
   </div>
   <div class="talkgrid">
     <div class="reveal"><div class="composer">
@@ -415,6 +424,10 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
       </div>
       <div class="analogy" id="analogy"></div>
       <div class="readout" id="readout"></div>
+      <div class="modelchat" id="modelChat">
+        <div class="chathead"><span>Full model readout</span><button class="smallbtn" id="runModel" type="button">Run readout</button></div>
+        <div class="chatlog" id="chatLog"></div>
+      </div>
     </div></div>
     <div class="viz reveal">
       <div class="stage" id="stage" aria-label="orca vocalising">
@@ -666,6 +679,7 @@ const stage=document.getElementById('stage'), statusEl=document.getElementById('
       energyLabel=document.getElementById('energyLabel'), spacingLabel=document.getElementById('spacingLabel'),
       echoLabel=document.getElementById('echoLabel'),
       modeLabel=document.getElementById('modeLabel'), phraseLabel=document.getElementById('phraseLabel'),
+      chatLog=document.getElementById('chatLog'),
       chips=document.getElementById('chips'),
       timeline=document.getElementById('timeline'), meters=document.getElementById('meters'),
       stimulusSet=document.getElementById('stimulusSet'), evidenceStack=document.getElementById('evidenceStack'),
@@ -722,6 +736,33 @@ function renderReadout(last){
   const synthNote=synthetic?' '+synthetic+' optional contour sketch'+(synthetic===1?' is':'es are')+' present; replace before any field stimulus.':'';
   const modeNote=mode==='recordings'?' Real FEROP clips play unmodified in this mode; audition tone and echo do not alter the evidence anchors.':' Current playback mode includes a contour sketch layer; use real FEROP clips for field review.';
   readout.innerHTML=picked+'<b>Observer note:</b> '+esc(line)+'<br><b>Observed context:</b> '+esc(ctx)+' field metadata only; it does not pick call meaning.<br><b>Candidate stimulus anchors:</b> '+esc(seq)+'<br><b>Audition controls:</b> '+esc(style)+' · '+esc(tone)+' · '+energyLabel.textContent+' · '+spacingLabel.textContent+' · '+echoLabel.textContent+'.<br><b>Research basis:</b> real clips are FEROP K-call examples from the dialect-response frame. DTAG/context evidence is production-side and from a different dataset, so changing observed context changes the protocol text and scoring frame, not validated call content.'+esc(synthNote+modeNote);
+}
+function renderModelChat(){
+  if(!chatLog)return;
+  const seq=phrase.map(p=>p.call.toUpperCase()).join(' -> ')||'No anchors selected';
+  const real=[...new Set(phrase.map(p=>p.real).filter(Boolean))].map(k=>k.toUpperCase()).join(' / ')||'none';
+  const ctx=activityEl.options[activityEl.selectedIndex].text;
+  const receiver=receiverEl.options[receiverEl.selectedIndex].text;
+  const style=styleEl.options[styleEl.selectedIndex].text;
+  const synthetic=phrase.filter(p=>!p.validated).length;
+  const anchorCount=phrase.filter(p=>p.validated).length+'/'+Math.max(phrase.length,1);
+  const modeText=mode==='recordings'?'unmodified FEROP recordings':'audition mode with contour sketch layer';
+  const responseFrame=receiverEl.value==='same-pod'
+    ? 'same-pod condition matches the published dialect-response positive frame'
+    : receiverEl.value==='field-test'
+      ? 'field-test frame should include same-pod, different-pod, matched-noise, and silence controls'
+      : 'receiver frame is treated as design metadata until a controlled playback is run';
+  chatLog.innerHTML=[
+    ['user','Input to console','Observer note: '+lineForChat()+'<br>Selected anchors: '+esc(seq)+'<br>Observed context: '+esc(ctx)+'; receiver frame: '+esc(receiver)+'.'],
+    ['model','Call-type / dialect head','Frozen embeddings recover catalogue call-type structure and FEROP dialect space. Current set uses '+esc(anchorCount)+' validated recording anchors ('+esc(real)+').'],
+    ['model','Production-context head','The DTAG result supports movement-context association from calls (0.770 binary; 0.577 three-way, individual held out). Here, "'+esc(ctx)+'" is used as field metadata and protocol conditioning.'],
+    ['model','Playback-response head','Prior conspecific playback re-analysis gives a dialect-selective response criterion (6/6 same-pod replies vs 0/6 different-pod). For this selection, '+esc(responseFrame)+'.'],
+    ['model','Audition / stimulus output','Playback mode: '+esc(modeText)+'. '+esc(synthetic?synthetic+' contour sketch token'+(synthetic===1?' is':'s are')+' present; keep those out of field stimuli.':'The current selection is all real FEROP clips.')+' Protocol lens: '+esc(style)+'.'],
+    ['model','Frontier','The console can rank, audit, and audition supported signal structure. A content-specific response still needs the field playback design in the lab below.']
+  ].map(m=>'<div class="msg '+m[0]+'"><span class="mtag">'+esc(m[1])+'</span>'+m[2]+'</div>').join('');
+}
+function lineForChat(){
+  return esc(humanText.value.trim()||'Observer note for the field protocol.');
 }
 function treatmentRows(){
   const seq=phrase.map(p=>p.call.toUpperCase()).join(' -> ')||'No stimulus anchors';
@@ -790,7 +831,7 @@ function planPayload(){
       call_type:'Frozen embeddings recover catalogue call-type and dialect structure under controls.',
       context:'DTAG result is production-side movement-context association, not receiver interpretation.',
       playback:'Published conspecific playback re-analysis shows dialect-selective response, not content response.',
-      excluded:'No translation, semantic understanding, referential meaning, or validated synthetic orca speech.'
+      scope:'Content-specific response and synthetic speech validity remain future field-test questions.'
     },
     treatments:treatmentRows().map(r=>r[0]),
     design:{
@@ -827,7 +868,7 @@ function fieldPlanText(){
   return 'ORCADOLITTLE FIELD PLAYBACK DRAFT\n'
     +'Question: do receivers respond differently to this candidate stimulus set than to dialect, noise, and silence controls?\n'
     +'Session: '+(p.session||'session')+' | Context: '+p.context+' | Receiver: '+p.receiver+' | Mode: '+p.controls.mode+' | Anchors: '+p.phrase.map(x=>x.toUpperCase()).join(' -> ')+'\n\n'
-    +'Model claim: call-type/dialect structure and production-side context association are supported; translation, semantic understanding, and synthetic orca speech are not supported.\n\n'
+    +'Model claim: call-type/dialect structure, production-side context association, and dialect-response design are supported; content-specific response remains the next field-test question.\n\n'
     +'Treatments:\n'+treatments+'\n\n'
     +'Design: '+p.design.trials_per_condition+' trials/condition; '+p.design.baseline_minutes+' min baseline; '+p.design.response_minutes+' min response window; '+p.design.washout_minutes+' min washout.\n\n'
     +'Randomized run sheet: '+p.run_sheet.length+' trials generated from seed "'+(p.design.randomization_seed||'seed')+'"; export JSON includes every trial ID, treatment, baseline, response, and washout value.\n\n'
@@ -875,7 +916,7 @@ function updateLab(){
     ['6/6 vs 0/6','Playback response','Same-pod vs different-pod re-analysis; dialect, not content.'],
     ['0.439','FEROP embedding','AVES2 recovers Kamchatka dialect call-type space above shuffle null.'],
     [validated+'/'+phrase.length,'Validated anchors','Real FEROP K-call units inside this selection.'],
-    ['No','Translation','No semantic understanding, referential meaning, or valid synthetic speech claim.']
+    ['Scoped','Claim boundary','Content-specific response and synthetic speech validity remain future field-test questions.']
   ].map(e=>'<div class="ev"><div class="en">'+e[0]+'</div><div class="et">'+e[1]+'</div><div class="ed">'+e[2]+'</div></div>').join('');
   gateList.innerHTML=[
     ...fieldGates().map(g=>[g.ok,g.title,g.text])
@@ -974,13 +1015,13 @@ function renderTray(last){
     analogy.innerHTML='<span class="alab">Research boundary:</span> '+esc(phrase.map(p=>p.call.toUpperCase()+': '+p.role).join('; '))+'. These anchors are not a translation of the observer note.';
   }
   phraseLabel.textContent=phrase.length?phrase.map(p=>p.call.toUpperCase()).join(' · '):'No anchors';
-  updateControlLabels(); renderTimeline(-1); renderMeters(); renderReadout(last); updateLab();
+  updateControlLabels(); renderTimeline(-1); renderMeters(); renderReadout(last); renderModelChat(); updateLab();
 }
 function setMode(next){
   mode=next;
   document.querySelectorAll('.modebtn').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));
   modeLabel.innerHTML='<b>'+({recordings:'Real FEROP clips',synthetic:'Contour sketch',hybrid:'Clips + contour'}[mode])+'</b>';
-  renderChips(); renderMeters(); renderReadout(); updateLab();
+  renderChips(); renderMeters(); renderReadout(); renderModelChat(); updateLab();
 }
 function setTemplate(key){
   const t=TEMPLATES[key]; if(!t)return;
@@ -1016,9 +1057,10 @@ chips.addEventListener('click',e=>{
 tray.addEventListener('click',e=>{const b=e.target.closest('.token');if(!b)return;e.preventDefault();phrase.splice(+b.dataset.idx,1);renderTray();statusEl.textContent='Removed anchor';});
 document.querySelectorAll('.template').forEach(b=>b.addEventListener('click',()=>setTemplate(b.dataset.template)));
 document.querySelectorAll('.modebtn').forEach(b=>b.addEventListener('click',()=>setMode(b.dataset.mode)));
-[humanText,energyEl,spacingEl,echoEl].forEach(el=>el.addEventListener('input',()=>{updateControlLabels();renderChips();renderMeters();renderReadout();}));
+[humanText,energyEl,spacingEl,echoEl].forEach(el=>el.addEventListener('input',()=>{updateControlLabels();renderChips();renderMeters();renderReadout();renderModelChat();}));
 [activityEl,receiverEl,styleEl,toneEl].forEach(el=>el.addEventListener('change',()=>{buildFromContext();}));
 document.getElementById('build').addEventListener('click',buildFromContext);
+document.getElementById('runModel').addEventListener('click',()=>{renderModelChat();statusEl.textContent='Full model readout refreshed';});
 document.getElementById('reuse').addEventListener('click',reusePhrase);
 document.getElementById('clear').addEventListener('click',()=>{phrase=[];renderTray();statusEl.textContent='Select anchors, then Play';});
 [trialCount,washoutMin,baselineWindow,responseWindow,matchedNoise,diffPod,blindObservers,stopRules,sessionLabel,randomSeed].forEach(el=>{
