@@ -174,6 +174,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
 .labhead p{margin:5px 0 0;color:var(--dim);font-size:13px;max-width:720px}
 .labactions{display:flex;gap:8px;flex-wrap:wrap}
 .labactions .btn{padding:9px 13px;border-radius:9px;font-size:12.5px}
+.labstatus{width:100%;font-size:12px;color:var(--teal);min-height:16px}
 .labgrid{display:grid;grid-template-columns:1.05fr 1fr;gap:14px}
 .labcard{border:1px solid var(--border);border-radius:10px;background:rgba(7,13,20,.72);padding:14px;min-width:0}
 .labcard h4{margin:0 0 10px;font-size:13px;color:var(--cyan);text-transform:uppercase;letter-spacing:.07em}
@@ -195,6 +196,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
 .checks label{display:flex;align-items:center;gap:7px;color:var(--dim);font-size:12px}
 .checks input{accent-color:var(--teal)}
 .planbox{margin-top:10px;min-height:170px;border:1px solid var(--border);background:#03070c;color:var(--text);border-radius:8px;padding:11px;font:12px/1.45 var(--mono);white-space:pre-wrap;overflow:auto}
+.planbox.flash{border-color:var(--teal);box-shadow:0 0 0 1px rgba(57,224,200,.32),0 0 26px rgba(57,224,200,.18)}
 .minihelp{margin:0 0 10px;color:var(--dim);font-size:12.5px;line-height:1.35}
 .exportdetails{border:1px solid var(--border);border-radius:8px;background:#03070c;overflow:hidden}
 .exportdetails summary{cursor:pointer;padding:10px 11px;color:var(--teal);font:800 12px var(--sans);list-style:none}
@@ -426,9 +428,10 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
         <p>Build a playback-ready stimulus set, inspect the evidence attached to it, and draft a conservative field protocol with controls, response windows, and stop rules.</p>
       </div>
       <div class="labactions">
-        <button class="btn primary" id="draftPlan">Draft field plan</button>
-        <button class="btn" id="copyPlan">Copy plan</button>
-        <button class="btn" id="downloadPlan">Download JSON</button>
+        <a class="btn primary" id="draftPlan" href="#protocolPlan">Draft field plan</a>
+        <button class="btn" id="copyPlan" type="button">Copy plan</button>
+        <button class="btn" id="downloadPlan" type="button">Download JSON</button>
+        <span class="labstatus" id="labStatus">Field plan is generated below; edit controls or copy/download it.</span>
       </div>
     </div>
     <div class="labgrid">
@@ -456,7 +459,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
           <label><input id="blindObservers" type="checkbox" checked /> observer-blinded scoring</label>
           <label><input id="stopRules" type="checkbox" checked /> disturbance stop rules</label>
         </div>
-        <div class="planbox" id="protocolPlan"></div>
+        <div class="planbox" id="protocolPlan" tabindex="-1" aria-live="polite"></div>
       </div>
       <div class="labcard">
         <h4>Randomized run sheet</h4>
@@ -518,7 +521,7 @@ python scripts/run_playback_response_stats.py</code></pre>
       <h3 style="margin:0">Reach out</h3>
       <p style="color:var(--dim);font-size:14.5px;margin:0">For permitted playback or biologging studies, include the study population, permit status, season timing, and response measures.</p>
       <div style="display:flex;gap:12px;flex-wrap:wrap">
-        <a class="btn primary" href="mailto:lesindanielle@gmail.com?subject=OrcaDolittle%20field%20feasibility">✉ Reach out</a>
+        <a class="btn primary" id="reachOut" href="https://mail.google.com/mail/?view=cm&fs=1&to=lesindanielle%40gmail.com&su=OrcaDolittle%20field%20feasibility&body=Study%20population%3A%0APermit%20status%3A%0ASeason%20timing%3A%0AResponse%20measures%3A" target="_blank" rel="noopener">✉ Reach out</a>
         <a class="btn" href="https://github.com/ladyFaye1998/OrcaDolittle/issues/new" target="_blank" rel="noopener">Open GitHub issue ↗</a>
       </div>
     </div>
@@ -671,7 +674,7 @@ const stage=document.getElementById('stage'), statusEl=document.getElementById('
       stopRules=document.getElementById('stopRules'), sessionLabel=document.getElementById('sessionLabel'),
       randomSeed=document.getElementById('randomSeed'), uploadClip=document.getElementById('uploadClip'),
       uploadNote=document.getElementById('uploadNote'), uploadViz=document.getElementById('uploadViz'),
-      uploadCanvas=document.getElementById('uploadCanvas');
+      uploadCanvas=document.getElementById('uploadCanvas'), labStatus=document.getElementById('labStatus');
 let phrase=TEMPLATES.food.phrase.map(k=>CALLS[k]);
 function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
 function clamp(n,min,max){return Math.max(min,Math.min(max,n));}
@@ -817,6 +820,36 @@ function fieldPlanText(){
     +'Field gates:\n  - '+gates+'\n\n'
     +'Boundary: '+p.claim_boundary;
 }
+function showPlanFeedback(message){
+  updateLab();
+  protocolPlan.classList.remove('flash');
+  void protocolPlan.offsetWidth;
+  protocolPlan.classList.add('flash');
+  protocolPlan.scrollIntoView({behavior:'smooth',block:'center'});
+  if(protocolPlan.focus)protocolPlan.focus({preventScroll:true});
+  if(labStatus)labStatus.textContent=message;
+  statusEl.textContent=message;
+  setTimeout(()=>protocolPlan.classList.remove('flash'),1400);
+}
+async function copyTextWithFallback(text){
+  if(navigator.clipboard&&window.isSecureContext){
+    try{await navigator.clipboard.writeText(text);return true;}catch(e){}
+  }
+  const ta=document.createElement('textarea');
+  ta.value=text;
+  ta.setAttribute('readonly','');
+  ta.style.position='fixed';
+  ta.style.left='-9999px';
+  ta.style.top='0';
+  document.body.appendChild(ta);
+  ta.focus();
+  ta.select();
+  let copied=false;
+  try{copied=document.execCommand('copy');}catch(e){copied=false;}
+  ta.remove();
+  if(!copied)throw new Error('copy failed');
+  return true;
+}
 function updateLab(){
   if(!stimulusSet)return;
   stimulusSet.innerHTML=treatmentRows().map(r=>'<div class="treatment"><span class="tag">'+r[0]+'</span><div class="td"><b>'+esc(r[1])+'</b><br>'+esc(r[2])+'</div><span class="pill">'+esc(r[3])+'</span></div>').join('');
@@ -954,11 +987,12 @@ document.getElementById('clear').addEventListener('click',()=>{phrase=[];renderT
   const ev=(el.type==='checkbox'||el.tagName==='SELECT')?'change':'input';
   el.addEventListener(ev,updateLab);
 });
-document.getElementById('draftPlan').addEventListener('click',()=>{updateLab();statusEl.textContent='Field plan drafted below';});
-document.getElementById('copyPlan').addEventListener('click',async()=>{
+const draftPlanBtn=document.getElementById('draftPlan'), copyPlanBtn=document.getElementById('copyPlan');
+draftPlanBtn.addEventListener('click',()=>setTimeout(()=>showPlanFeedback('Field plan drafted below'),0));
+copyPlanBtn.addEventListener('click',async()=>{
   updateLab();
-  try{await navigator.clipboard.writeText(protocolPlan.textContent);statusEl.textContent='Field plan copied';}
-  catch(e){statusEl.textContent='Copy blocked — the plan is still visible in Protocol builder';}
+  try{await copyTextWithFallback(protocolPlan.textContent);showPlanFeedback('Field plan copied');copyPlanBtn.textContent='Copied';setTimeout(()=>{copyPlanBtn.textContent='Copy plan';},1200);}
+  catch(e){showPlanFeedback('Copy blocked - select the plan text below or use Download JSON');}
 });
 document.getElementById('downloadPlan').addEventListener('click',()=>{
   updateLab();
