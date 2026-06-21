@@ -86,7 +86,7 @@ footer{border-top:1px solid rgba(53,81,107,.55);margin-top:42px;color:var(--fain
   <div class="eyebrow">Respectful research dictionary</div>
   <h1>One dictionary for <span class="grad">call units</span>, examples, and evidence.</h1>
   <p class="lead">This is not a translation dictionary. It is the project map: real FEROP catalogue samples, larger DCLDE model-label inventory, synthetic listening sketches, and the field-test language needed to ask whether any unit has receiver-interpretable content.</p>
-  <div class="truth"><b>Current word count: 0 validated orca words.</b> The dictionary lists acoustic units and hypotheses. "In human terms it might mean" is an analogy for field-test design, not a claim that the call has been translated.</div>
+  <div class="truth"><b>Current word count: 0 validated orca words.</b> The dictionary lists acoustic units and hypotheses. Human shorthand like "food is here" is an analogy for field-test design, not a claim that the call has been translated.</div>
   <div class="stats">
     <div class="stat"><b>60</b><span>real FEROP catalogue clips shipped on this page</span></div>
     <div class="stat"><b>22</b><span>FEROP K-call types with local audio examples</span></div>
@@ -200,11 +200,11 @@ const SYNTH=[
 ['Scan ripple','assets/calls/synth_v_scan.wav','Unknown-context sketch for cautious scanning.']
 ];
 const HYP={
-K1:'a familiar-dialect identity or contact cue',
-K3:'another familiar unit in the same dialect inventory',
-K5:'a contrasting call-type cue for testing type-specific response',
-K7:'a response-scoring anchor in same-pod/different-pod playback',
-K12:'an additional dialect-diversity cue'
+K1:'"I am here / familiar pod here"',
+K3:'"food is here"',
+K5:'"we are moving"',
+K7:'"answer me / stay close"',
+K12:'"group check-in"'
 };
 const TALK_SET=new Set(['K1','K3','K5','K7','K12']);
 function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
@@ -225,8 +225,8 @@ function renderTypeBar(){
   });
 }
 function humanLine(type){
-  const text=HYP[type]||'a named catalogue acoustic class with unknown receiver content';
-  return '<div class="human"><b>In human terms it might mean:</b> '+esc(text)+'. This is a hypothesis for field testing, not a translation.</div>';
+  const text=HYP[type]||'"unknown call-type cue"';
+  return '<div class="human"><b>Human shorthand for the test:</b> '+esc(text)+'. This is a hypothesis for field testing, not a translation.</div>';
 }
 function renderFerop(){
   const q=document.getElementById('feropSearch').value.trim().toLowerCase();
