@@ -36,15 +36,17 @@ section{padding:96px 22px;position:relative}
 .grad{background:linear-gradient(100deg,var(--teal),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
 /* nav */
 nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rgba(5,8,12,.72);border-bottom:1px solid var(--border)}
-nav .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
-.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.02em}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:18px;height:62px;padding:0 22px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.02em;color:var(--text)}
+.brand:hover{text-decoration:none}
 .brand .dot{width:11px;height:11px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--cyan));box-shadow:0 0 16px var(--teal)}
-.navlinks{display:flex;gap:24px;font-size:14px;color:var(--dim)}
+.navlinks{display:flex;gap:24px;flex-wrap:wrap;align-items:center;font-size:14px;color:var(--dim)}
 .navlinks a{color:var(--dim)}.navlinks a:hover{color:var(--text);text-decoration:none}
+.navlinks a.active{color:var(--text)}
 .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:99px;font-weight:700;font-size:14px;border:1px solid var(--border2);cursor:pointer;transition:.18s;background:transparent;color:var(--text);font-family:inherit}
 .btn:hover{border-color:var(--teal);text-decoration:none;transform:translateY(-1px)}
 .btn.primary{background:linear-gradient(100deg,var(--teal),var(--cyan));color:#04121a;border:none;box-shadow:0 8px 30px rgba(57,224,200,.25)}
-@media(max-width:760px){.navlinks{display:none}}
+@media(max-width:900px){.navlinks{display:none}}
 /* hero */
 .hero{min-height:92vh;display:flex;align-items:center;padding-top:40px;overflow:hidden}
 .hero .bgvid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-3}
@@ -270,17 +272,17 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
 </head>
 <body>
 <nav><div class="wrap">
-  <div class="brand"><span class="dot"></span> OrcaDolittle</div>
+  <a class="brand" href="index.html"><span class="dot"></span> OrcaDolittle</a>
   <div class="navlinks">
-    <a href="#work">The science</a>
+    <a href="#work">Science</a>
     <a href="#gallery">Results</a>
     <a href="#talk">Talk&nbsp;Orca</a>
     <a href="dictionary.html">Dictionary</a>
-    <a href="#field">For scientists</a>
+    <a href="#field">Field kit</a>
     <a href="#explore">Data</a>
     <a href="#refs">References</a>
   </div>
-  <a class="btn primary" href="#field">Field use</a>
+  <a class="btn primary" href="#talk">Open tool</a>
 </div></nav>
 <header class="hero"><video class="bgvid" autoplay muted loop playsinline poster="assets/hero_orca_16x9_reference.png"><source src="assets/hero_orca_veo_multi_loop.mp4" type="video/mp4" /></video><div class="bg"></div><div class="wrap">
   <span class="badge">● Non-invasive · public data · fully reproducible · field-ready</span>
