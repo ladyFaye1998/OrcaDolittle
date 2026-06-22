@@ -217,12 +217,28 @@ const SYNTH=[
 ];
 const HYP={
 K1:'"I am here / familiar pod here"',
+K2:'"contact check"',
 K3:'"food is here"',
+K4:'"regroup / come closer"',
 K5:'"we are moving"',
+K6:'"hold position"',
 K7:'"answer me / stay close"',
-K12:'"group check-in"'
+K8:'"close-contact cue"',
+K9:'"split and rejoin"',
+K10:'"keep direction"',
+K11:'"scan / check surroundings"',
+K12:'"group check-in"',
+K13:'"excited social exchange"',
+K14:'"distant contact"',
+K15:'"slow down / wait"',
+K16:'"travel pass-by cue"',
+K17:'"attention here"',
+K19:'"variant/offshore cue to test"',
+K20:'"repeated check-in"',
+K21:'"closing distance"',
+K23:'"high-arousal contact"',
+K24:'"unknown dictionary cue"'
 };
-const TALK_SET=new Set(['K1','K3','K5','K7','K12']);
 function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
 function natural(a,b){return a.localeCompare(b,undefined,{numeric:true,sensitivity:'base'});}
 function byType(){
@@ -251,7 +267,7 @@ function renderFerop(){
   const total=groups.reduce((a,g)=>a+g[1].length,0);
   document.getElementById('feropCount').textContent=total+' clips shown across '+groups.length+' call types';
   grid.innerHTML=groups.map(([type,rows])=>{
-    const talk=TALK_SET.has(type)?'<a class="btn primary" href="index.html#talk">Use '+esc(type)+' in Talk Orca</a>':'<span class="btn" aria-disabled="true">Catalogue only</span>';
+    const talk='<a class="btn primary" href="index.html?call='+encodeURIComponent(type)+'#talk">Use '+esc(type)+' in Talk Orca</a>';
     const samples=rows.map(r=>'<div class="sample"><div class="shead"><span>'+esc(r.variant)+'</span><span>FEROP catalogue</span></div><audio controls preload="none" src="'+esc('assets/calls/ferop_catalogue/'+encodeURIComponent(r.file))+'"></audio></div>').join('');
     return '<article class="card"><h3>'+esc(type)+'</h3><p>FEROP Kamchatka catalogue call type. Meaning is not known; this entry provides real examples for listening, comparison, and playback planning.</p>'+humanLine(type)+'<div class="meta"><span>'+rows.length+' real examples</span><span>FEROP</span><span>meaning unknown</span></div><div class="samples">'+samples+'</div><div style="margin-top:11px">'+talk+'</div></article>';
   }).join('');
