@@ -21,7 +21,8 @@
         "JASCO_VFPA": 0.889,
         "JASCO_VFPA_ONC": 0.973,
         "ONC": 0.949,
-        "SIO": 0.909
+        "SIO": 0.909,
+        "UAF_NGOS": 0.969
       },
       "within_site_permutation_pvalue": 0.005,
       "cross_site_transfer_balanced_accuracy": 0.529,
@@ -236,7 +237,7 @@
     "h1": "Pooled balanced accuracy 0.910 (MLP accuracy 0.974) collapses to 0.231 (chance 0.250) under leave-one-provider-out; pooled number is a site-confounded upper bound.",
     "h2": "PCA+HDBSCAN ARI 0.043 vs ecotype (p=0.002), above shuffled-label null but small and parameter-sensitive.",
     "h3": "Balanced 40-token vocabulary: call co-occurrence is strongly non-random (loss 1.809 vs unigram 3.486) but call order is not (p=0.77).",
-    "h4": "Provider decodable at 0.948; within-site ecotype discrimination 0.889-0.973 (p=0.005) isolates genuine biological signal, but cross-site transfer is near chance (0.529): the signal is real but local.",
+    "h4": "Provider decodable at 0.948; within-site ecotype discrimination across five providers remains 0.889-0.973 (p=0.005), isolating genuine biological signal, but cross-site transfer is near chance (0.529): the signal is real but local.",
     "h5_context_decode_dtag": "On an independent DTAG archive, communicative calls predict the caller's movement-defined behavioural context under leave-individual-out: binary foraging/non-foraging at 0.770 balanced accuracy across 22 whales (10,834 calls; null 0.499, p=0.005), and a three-way foraging/travelling/resting contrast at 0.577 across the 20 whales carrying all three contexts (chance 0.333; null 0.355, p=0.005) - communication in more than one behavioural context. The link is call-type-specific (call-type x context Cramer's V=0.40 vs within-individual null 0.08, p<1e-3; every cluster context-enriched), and is not an artefact: call rate alone decodes at 0.536, loudness alone at 0.577, and dropping the 25% most click-like clips leaves 0.749 (clips are 16 kHz, so echolocation peak energy is absent). The context label uses tag depth/acceleration only and the individual is held out, so this is context-specific production of communicative calls, not referential meaning and not a response to a broadcast signal.",
     "legacy_context_heads": "Exploratory only and superseded by the DTAG H5 decode for behavioural-context evidence: the earlier Wellard recording-level context heads and a vocal-continuation timing proxy are weak recording-level associations; not headline claims and not response evidence.",
     "rung1_calltype_discovery": "Unsupervised within-SRKW clustering yields no usable repertoire: pooled clusters are 93% single-provider (site artifact, 82% noise) and a single-provider run collapses to one blob; a validated repertoire requires labelled call types (e.g., Wellard Type C, Dryad).",

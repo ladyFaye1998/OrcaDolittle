@@ -32,7 +32,7 @@ audio model \citep{hagiwara2023aves,chen2022beats} and quantify this confound di
 (multilayer-perceptron accuracy $0.974$), but under leave-one-provider-out evaluation the
 same embeddings fall to $0.231$ balanced accuracy, at the $0.250$ chance level. Recording
 provider is itself decodable at $0.948$ balanced accuracy. Yet when site is held constant,
-ecotype remains strongly decodable within each of four providers ($0.889$--$0.973$, all
+ecotype remains strongly decodable within each of five providers ($0.889$--$0.973$, all
 $p=0.005$), establishing that the embeddings capture real biological acoustic structure
 beyond the hydrophone. Recovering catalogue-validated call-type labels from the corpus's
 per-provider annotations and encoding the full catalogue ($8{,}552$ labelled detections), we
@@ -240,6 +240,7 @@ H4 & Within-site (JASCO\_VFPA, SRKW/TKW) & balanced acc. & $0.889$ ($0.500$) \\
 H4 & Within-site (JASCO\_VFPA\_ONC, SRKW/TKW) & balanced acc. & $0.973$ ($0.500$) \\
 H4 & Within-site (ONC, 3-way) & balanced acc. & $0.949$ ($0.333$) \\
 H4 & Within-site (SIO, 3-way) & balanced acc. & $0.909$ ($0.333$) \\
+H4 & Within-site (UAF\_NGOS, 3-way) & balanced acc. & $0.969$ ($0.333$) \\
 H4 & Cross-site transfer (OKW/SRKW) & balanced acc. & $0.529$ ($0.500$) \\
 Call type & Within-site (VFPA, 14 SRKW S-call types) & balanced acc. & $0.709$ ($0.071$) \\
 Call type & Within-site (DFO\_CRP, 18 NRKW N-call types) & balanced acc. & $0.968$ ($0.056$) \\
@@ -276,8 +277,9 @@ unclassifiable cross-site, and its pooled contribution is pure site signal
 is decodable from the embeddings at $0.948$ balanced accuracy (chance $0.125$), confirming a
 large confound. Critically, within-site ecotype discrimination, where the hydrophone is
 fixed, remains strong: SRKW versus TKW reaches $0.889$ (JASCO\_VFPA, $n=6{,}962$) and
-$0.973$ (JASCO\_VFPA\_ONC, $n=1{,}511$); three-way discrimination among OKW, SRKW and TKW
-reaches $0.949$ (ONC, $n=803$) and $0.909$ (SIO, $n=2{,}637$), all with permutation
+$0.973$ (JASCO\_VFPA\_ONC, $n=1{,}511$); three-way discrimination reaches
+$0.949$ among OKW, SRKW and TKW (ONC, $n=803$), $0.909$ among OKW, SRKW and TKW
+(SIO, $n=2{,}637$), and $0.969$ among OKW, SAR and TKW (UAF\_NGOS, $n=10{,}113$), all with permutation
 $p=5\times10^{-3}$. This within-site signal cannot be explained by the recording channel and
 is the paper's central positive result. Cross-site transfer, however, is near chance: a
 classifier trained on a subset of providers and tested on disjoint providers reaches only
@@ -472,7 +474,7 @@ exposing the recording-site shortcut.}
 \centering
 \includegraphics[width=\linewidth]{h4_confound_aves2_full_labeled.png}
 \caption{H4: provider is decodable at $0.948$ (left); ecotype is strongly decodable within
-each fixed site (middle, $0.889$--$0.973$); but cross-site transfer is near chance (right),
+five fixed sites (middle, $0.889$--$0.973$); but cross-site transfer is near chance (right),
 so the biological signal is real yet local.}
 \label{fig:h4}
 \end{figure}

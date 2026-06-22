@@ -37,7 +37,7 @@ recording site. Encoding 27{,}934 public DCLDE~2026 killer-whale (\emph{Orcinus 
 calls with a frozen AVES2 model \citep{palmer2025dclde,hagiwara2023aves}, we show pooled
 ecotype decoding (balanced accuracy $0.910$) collapses to chance ($0.231$) under
 leave-one-provider-out evaluation, while provider itself decodes at $0.948$; yet with site
-held constant, ecotype stays strongly decodable ($0.889$--$0.973$). Catalogue-validated
+held constant across five providers, ecotype stays strongly decodable ($0.889$--$0.973$). Catalogue-validated
 call types are recoverable within site ($0.709$ for 14 SRKW types, $0.968$ for 18 NRKW
 types) and, unlike ecotype, transfer across independent sites ($0.636$; $0.830$ on
 unambiguous types). Call streams carry non-random first-order sequential structure over
@@ -116,7 +116,7 @@ Head & Evaluation & Balanced acc.\ (chance) \\
 H1 & Pooled 5-fold CV & $0.910$ \\
 H1 & Leave-one-provider-out & $0.231$ ($0.250$) \\
 H4 & Provider decoding & $0.948$ ($0.125$) \\
-H4 & Within-site ecotype (4 providers) & $0.889$--$0.973$ \\
+H4 & Within-site ecotype (5 providers) & $0.889$--$0.973$ \\
 H4 & Cross-site ecotype transfer & $0.529$ ($0.500$) \\
 Call type & Within-VFPA, 14 SRKW types & $0.709$ ($0.071$) \\
 Call type & Within-DFO\_CRP, 18 NRKW types & $0.968$ ($0.056$) \\
@@ -139,7 +139,7 @@ $p\le 5\times10^{-3}$.}
 \paragraph{Ecotype: biology survives only with site control.} Pooled decoding reaches
 $0.910$ but collapses to $0.231$ leave-one-provider-out, and provider decodes at $0.948$:
 the pooled number is largely hydrophone recognition. With site held constant, ecotype stays
-strongly decodable across four providers ($0.889$--$0.973$, all $p=5\times10^{-3}$), but
+strongly decodable across five providers ($0.889$--$0.973$, all $p=5\times10^{-3}$), but
 cross-site transfer is near chance ($0.529$)---the biology is real yet local
 (Fig.~\ref{fig:h4}).
 
@@ -208,8 +208,8 @@ confound \citep{stowell2022,ghani2023}.
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.9\linewidth]{h4_confound_aves2_full_labeled.png}
-\caption{Provider decodes at $0.948$ (left); ecotype is strongly decodable within each fixed
-site (middle); cross-site transfer is near chance (right). The signal is real but local.}
+\caption{Provider decodes at $0.948$ (left); ecotype is strongly decodable within five fixed
+sites (middle); cross-site transfer is near chance (right). The signal is real but local.}
 \label{fig:h4}
 \end{figure}
 

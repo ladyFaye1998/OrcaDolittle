@@ -13,12 +13,12 @@ Frozen AVES2 embeddings carry **genuine killer-whale ecotype acoustic structure*
 | Pooled 5-fold CV (confounded upper bound) | balanced accuracy | 0.910 (LogReg); MLP accuracy 0.974 | Impressive but site-confounded; not the headline. |
 | Leave-One-Provider-Out (cross-site) | balanced accuracy | 0.231 (chance 0.250) | Pooled signal **collapses to chance** when the test site is unseen. |
 | Site-decoding probe | balanced accuracy | 0.948 (chance 0.125) | Embeddings encode **which hydrophone** recorded the call. |
-| Within-site ecotype (site held constant) | balanced accuracy | 0.889 / 0.973 / 0.949 / 0.909 (JASCO_VFPA, JASCO_VFPA_ONC, ONC, SIO; all p = 0.005) | **Genuine biological signal** that survives site control. |
+| Within-site ecotype (site held constant) | balanced accuracy | 0.889 / 0.973 / 0.949 / 0.909 / 0.969 (JASCO_VFPA, JASCO_VFPA_ONC, ONC, SIO, UAF_NGOS; all p = 0.005) | **Genuine biological signal** that survives site control. |
 | Cross-site transfer (OKW vs SRKW) | balanced accuracy | 0.529 (chance 0.500) | Near chance: the within-site boundary does **not** generalise across sites. |
 
 Per-class cross-site recall is SRKW 0.481, TKW 0.412, OKW 0.031, SAR 0.000. SAR is recorded at a single provider (UAF_NGOS), so cross-site SAR recall is structurally zero: pooled "SAR decodability" is pure site signal. Per-provider leave-one-provider-out balanced accuracy is highly variable (0.081-0.746 across the 8 held-out providers; mean about 0.42), which is itself the signature of a site-entangled representation rather than a stable cross-site decoder.
 
-The honest conclusion is not "AVES2 decodes orca ecotype at 0.97"; it is that the 0.97 is largely hydrophone recognition, and the real biological signal is **local**: ecotype is strongly separable within any fixed site (0.89-0.97), but a site-specific offset blocks cross-site generalisation (transfer 0.529, LOPO 0.231). The embedding captures ecotype-discriminating acoustic features and a large site-specific shift at the same time.
+The honest conclusion is not "AVES2 decodes orca ecotype at 0.97"; it is that the 0.97 is largely hydrophone recognition, and the real biological signal is **local**: ecotype is strongly separable within five fixed sites (0.89-0.97), but a site-specific offset blocks cross-site generalisation (transfer 0.529, LOPO 0.231). The embedding captures ecotype-discriminating acoustic features and a large site-specific shift at the same time.
 
 ## H2: unsupervised structure
 

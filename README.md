@@ -58,7 +58,7 @@ Latest audited DCLDE run: `20260529_072930`, frozen AVES2 embeddings, 27,934 cal
 
 <table>
 <tr>
-<td width="50%"><img src="figures/h4_confound_aves2_full_labeled.png" alt="H4 confound isolation" /><br/><sub><b>Biology vs. site (H4).</b> Provider decodes at 0.948; ecotype stays decodable within each fixed site (0.889&ndash;0.973) yet collapses cross-site (0.529) &mdash; the signal is real but local.</sub></td>
+<td width="50%"><img src="figures/h4_confound_aves2_full_labeled.png" alt="H4 confound isolation" /><br/><sub><b>Biology vs. site (H4).</b> Provider decodes at 0.948; ecotype stays decodable within five fixed sites (0.889&ndash;0.973) yet collapses cross-site (0.529) &mdash; the signal is real but local.</sub></td>
 <td width="50%"><img src="figures/calltype_model_full.png" alt="Site-controlled call-type model" /><br/><sub><b>Catalogue call types (Call-type head).</b> Within-site 0.709 (14 SRKW) / 0.968 (18 NRKW); identity transfers across independent sites (0.636; 0.830 on unambiguous types) &mdash; the cross-site control ecotype failed.</sub></td>
 </tr>
 <tr>
@@ -86,7 +86,7 @@ Latest audited DCLDE run: `20260529_072930`, frozen AVES2 embeddings, 27,934 cal
 | Head | Purpose | Current readout |
 |---|---|---|
 | H1 | Supervised ecotype probes | Pooled balanced accuracy 0.910 (MLP accuracy 0.974) collapses to 0.231 (chance 0.250) under leave-one-provider-out: the pooled number is a site-confounded upper bound. |
-| H4 | Provider/site control | Provider is decodable at balanced accuracy 0.948; within-site ecotype discrimination stays at 0.889-0.973 (p = 0.005) across four providers, isolating genuine biological signal, but cross-site ecotype transfer is near chance (0.529). |
+| H4 | Provider/site control | Provider is decodable at balanced accuracy 0.948; within-site ecotype discrimination stays at 0.889-0.973 (p = 0.005) across five providers, isolating genuine biological signal, but cross-site ecotype transfer is near chance (0.529). |
 | H8 | Label-free site-invariance transform (methods) | A StandardScaler + PCA + site-nuisance subspace projection modestly improves cross-site ecotype transfer (e.g., SRKW vs TKW 0.597 -> 0.625; leave-one-provider-out 4-way ecotype 0.402 -> 0.445 vs a 0.234 permutation null, p = 0.005) while preserving within-site ecotype (0.883 -> 0.876 after removing 8 nuisance dimensions). A methods contribution; recovery is bounded because ecotype and recording site are confounded in this corpus (SAR is single-provider) [@stowell2022; @ghani2023]. |
 | Call type | Site-controlled call-type model | With catalogue labels recovered from the DCLDE per-provider annotations (full catalogue, 8,552 detections encoded), frozen embeddings discriminate call types within a fixed site at balanced accuracy 0.709 for 14 SRKW S-call types (chance 0.071) and 0.968 for 18 NRKW N-call types (chance 0.056), both p ~= 0.005. A VFPA-trained SRKW classifier scores 0.636 on the independent SMRU site over 5 shared types (chance 0.20; 0.830 over the 4 unambiguous types): call-type identity transfers across sites, unlike ecotype (0.529). |
 | H2 | Unsupervised structure | PCA + HDBSCAN ARI 0.043 versus ecotype (p = 0.002), above the shuffled-label null but small and parameter-sensitive. |
