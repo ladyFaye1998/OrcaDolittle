@@ -408,10 +408,10 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
           <label>Spacing <input id="spacing" type="range" min="0" max="100" value="56" /><span id="spacingLabel">Natural gaps</span></label>
           <label>Water echo <input id="echoMix" type="range" min="0" max="100" value="38" /><span id="echoLabel">Soft water</span></label>
         </div>
-        <div class="presetnote">Evidence presets, not context translations</div>
+        <div class="presetnote">All dictionary anchors are available; presets are starting sets, not context translations</div>
         <div class="templates" id="templates">
           <button class="template" data-template="compact">H6 compact set</button>
-          <button class="template" data-template="expanded">Expanded K-types</button>
+          <button class="template" data-template="expanded">Full dictionary</button>
           <button class="template" data-template="response">Response subset</button>
           <button class="template" data-template="diversity">Diversity scan</button>
         </div>
@@ -658,14 +658,71 @@ document.querySelectorAll('.stat .n').forEach(el=>cio.observe(el));
 
 // ---- Talk Orca: context builder + reusable recordings + synthetic sketch ----
 let ac=null, bus=null, analyser=null, wetGain=null, delayNode=null, freqData=null, rafId=null, buffers={}, activeNodes=[], playRun=0, mode='recordings';
-const CLIPS={k1:'assets/calls/k1.wav',k3:'assets/calls/k3.wav',k5:'assets/calls/k5.wav',k7:'assets/calls/k7.wav',k12:'assets/calls/k12.wav'};
+const HYP={
+  k1:'"I am here / familiar pod here"',
+  k2:'"contact check"',
+  k3:'"food is here"',
+  k4:'"regroup / come closer"',
+  k5:'"we are moving"',
+  k6:'"hold position"',
+  k7:'"answer me / stay close"',
+  k8:'"close-contact cue"',
+  k9:'"split and rejoin"',
+  k10:'"keep direction"',
+  k11:'"scan / check surroundings"',
+  k12:'"group check-in"',
+  k13:'"excited social exchange"',
+  k14:'"distant contact"',
+  k15:'"slow down / wait"',
+  k16:'"travel pass-by cue"',
+  k17:'"attention here"',
+  k19:'"variant/offshore cue to test"',
+  k20:'"repeated check-in"',
+  k21:'"closing distance"',
+  k23:'"high-arousal contact"',
+  k24:'"unknown dictionary cue"'
+};
+const FEROP_ANCHORS=[
+  {key:'k1',label:'K1',file:'K1__bui.wav',dur:1.20,evidence:90},
+  {key:'k2',label:'K2',file:'K2__K2i.wav',dur:1.08,evidence:84},
+  {key:'k3',label:'K3',file:'K3__1.wav',dur:1.05,evidence:88},
+  {key:'k4',label:'K4',file:'K4__K4a.wav',dur:1.18,evidence:84},
+  {key:'k5',label:'K5',file:'K5__K5i.wav',dur:1.38,evidence:88},
+  {key:'k6',label:'K6',file:'K6__K6.wav',dur:1.05,evidence:82},
+  {key:'k7',label:'K7',file:'K7__K7i.wav',dur:1.15,evidence:88},
+  {key:'k8',label:'K8',file:'K8__K8i.wav',dur:1.02,evidence:84},
+  {key:'k9',label:'K9',file:'K9__K9.wav',dur:1.10,evidence:84},
+  {key:'k10',label:'K10',file:'K10__K10.wav',dur:1.10,evidence:84},
+  {key:'k11',label:'K11',file:'K11__K11.wav',dur:1.00,evidence:82},
+  {key:'k12',label:'K12',file:'K12__K12i.wav',dur:.96,evidence:86},
+  {key:'k13',label:'K13',file:'K13__K13a.wav',dur:1.20,evidence:84},
+  {key:'k14',label:'K14',file:'K14__K14ia.wav',dur:1.10,evidence:84},
+  {key:'k15',label:'K15',file:'K15__K15.wav',dur:1.05,evidence:84},
+  {key:'k16',label:'K16',file:'K16__K16i.wav',dur:1.08,evidence:84},
+  {key:'k17',label:'K17',file:'K17__K17i.wav',dur:1.00,evidence:82},
+  {key:'k19',label:'K19',file:'K19__K19a(SEK).wav',dur:1.18,evidence:84},
+  {key:'k20',label:'K20',file:'K20__K20i.wav',dur:1.06,evidence:84},
+  {key:'k21',label:'K21',file:'K21__K21ii.wav',dur:1.06,evidence:84},
+  {key:'k23',label:'K23',file:'K23__K23.wav',dur:1.05,evidence:84},
+  {key:'k24',label:'K24',file:'K24__K24a.wav',dur:1.05,evidence:84}
+];
+const ALL_REAL_KEYS=FEROP_ANCHORS.map(x=>x.key);
+const clipPath=file=>'assets/calls/ferop_catalogue/'+encodeURIComponent(file);
+const CLIPS=Object.fromEntries(FEROP_ANCHORS.map(x=>[x.key,clipPath(x.file)]));
 const SYNTH_CLIPS={k1:'assets/calls/synth_k1.wav',k3:'assets/calls/synth_k3.wav',k5:'assets/calls/synth_k5.wav',k7:'assets/calls/synth_k7.wav',k12:'assets/calls/synth_k12.wav',v_soft:'assets/calls/synth_v_soft.wav',v_reply:'assets/calls/synth_v_reply.wav',v_feed:'assets/calls/synth_v_feed.wav',v_travel:'assets/calls/synth_v_travel.wav',v_social:'assets/calls/synth_v_social.wav',v_echo:'assets/calls/synth_v_echo.wav',v_close:'assets/calls/synth_v_close.wav',v_reunion:'assets/calls/synth_v_reunion.wav',v_scan:'assets/calls/synth_v_scan.wav'};
-const CALLS={
-  k1:{call:'k1',real:'k1',name:'Kamchatkan call type K1',role:'FEROP dialect exemplar',human:'K1: public Kamchatka catalogue clip; not a translated word.',ctx:'dialect',cite:'FEROP catalogue; Filatova 2011',dur:1.20,evidence:90,validated:true},
-  k3:{call:'k3',real:'k3',name:'Kamchatkan call type K3',role:'FEROP dialect exemplar',human:'K3: public Kamchatka catalogue clip; not a translated word.',ctx:'dialect',cite:'FEROP catalogue; Filatova 2011',dur:1.05,evidence:88,validated:true},
-  k5:{call:'k5',real:'k5',name:'Kamchatkan call type K5',role:'FEROP dialect exemplar',human:'K5: public Kamchatka catalogue clip; not a translated word.',ctx:'dialect',cite:'FEROP catalogue; Filatova 2011',dur:1.38,evidence:86,validated:true},
-  k7:{call:'k7',real:'k7',name:'Kamchatkan call type K7',role:'FEROP dialect exemplar',human:'K7: public Kamchatka catalogue clip; not a translated word.',ctx:'dialect',cite:'FEROP catalogue; Filatova 2011',dur:1.15,evidence:88,validated:true},
-  k12:{call:'k12',real:'k12',name:'Kamchatkan call type K12',role:'FEROP dialect exemplar',human:'K12: public Kamchatka catalogue clip; not a translated word.',ctx:'dialect',cite:'FEROP catalogue; Filatova 2011',dur:.96,evidence:84,validated:true},
+const CALLS=Object.fromEntries(FEROP_ANCHORS.map(x=>[x.key,{
+  call:x.key,
+  real:x.key,
+  name:'Kamchatkan call type '+x.label,
+  role:'FEROP dictionary anchor',
+  human:x.label+': human shorthand '+(HYP[x.key]||'"unknown cue"')+' is a field-test hypothesis, not a translated word.',
+  ctx:'dialect',
+  cite:'FEROP catalogue; Filatova 2011',
+  dur:x.dur,
+  evidence:x.evidence,
+  validated:true
+}]));
+Object.assign(CALLS,{
   v_soft:{call:'v_soft',real:'k1',name:'Soft arc contour sketch',role:'optional contour sketch',human:'Synthetic contour only; not evidence.',ctx:'sketch',cite:'non-evidence audition aid',dur:1.10,evidence:42,validated:false},
   v_reply:{call:'v_reply',real:'k7',name:'Reply sweep contour sketch',role:'optional contour sketch',human:'Synthetic contour only; not evidence.',ctx:'sketch',cite:'non-evidence audition aid',dur:1.26,evidence:42,validated:false},
   v_feed:{call:'v_feed',real:'k3',name:'Feed chirp contour sketch',role:'optional contour sketch',human:'Synthetic contour only; not evidence.',ctx:'sketch',cite:'non-evidence audition aid',dur:1.02,evidence:42,validated:false},
@@ -675,12 +732,12 @@ const CALLS={
   v_close:{call:'v_close',real:'k7',name:'Close pulse contour sketch',role:'optional contour sketch',human:'Synthetic contour only; not evidence.',ctx:'sketch',cite:'non-evidence audition aid',dur:1.08,evidence:40,validated:false},
   v_reunion:{call:'v_reunion',real:'k12',name:'Reunion trill contour sketch',role:'optional contour sketch',human:'Synthetic contour only; not evidence.',ctx:'sketch',cite:'non-evidence audition aid',dur:1.24,evidence:40,validated:false},
   v_scan:{call:'v_scan',real:'k5',name:'Scan ripple contour sketch',role:'optional contour sketch',human:'Synthetic contour only; not evidence.',ctx:'sketch',cite:'non-evidence audition aid',dur:.96,evidence:40,validated:false}
-};
+});
 const TEMPLATES={
   compact:{label:'H6 compact set',text:'Compact FEROP dialect-response exemplar set; observed context is field metadata only.',activity:'contact',receiver:'same-pod',style:'balanced',tone:'gentle',energy:28,spacing:64,echo:42,phrase:['k1','k3','k7']},
-  expanded:{label:'Expanded K-types',text:'Expanded FEROP K-type audition set for review; no content claim.',activity:'unknown',receiver:'field-test',style:'scan',tone:'curious',energy:30,spacing:62,echo:44,phrase:['k1','k3','k5','k7','k12']},
+  expanded:{label:'Full dictionary',text:'Full FEROP dictionary audition set for review; no content claim.',activity:'unknown',receiver:'field-test',style:'scan',tone:'curious',energy:30,spacing:62,echo:44,phrase:ALL_REAL_KEYS},
   response:{label:'Response subset',text:'Small response-scoring subset for same-pod/different-pod design; do not infer call content.',activity:'contact',receiver:'same-pod',style:'reply',tone:'distant',energy:30,spacing:72,echo:44,phrase:['k1','k7']},
-  diversity:{label:'Diversity scan',text:'Catalogue-diversity listening set; compares K-call acoustics, not meanings.',activity:'unknown',receiver:'field-test',style:'scan',tone:'curious',energy:36,spacing:58,echo:36,phrase:['k3','k5','k12']}
+  diversity:{label:'Diversity scan',text:'Catalogue-diversity listening set; compares K-call acoustics, not meanings.',activity:'unknown',receiver:'field-test',style:'scan',tone:'curious',energy:36,spacing:58,echo:36,phrase:['k2','k5','k9','k12','k16','k19','k24']}
 };
 const canvas=document.getElementById('spec'), cx=canvas.getContext('2d');
 const stage=document.getElementById('stage'), statusEl=document.getElementById('status'),
@@ -730,15 +787,8 @@ function updateControlLabels(){
   echoLabel.textContent=echo<35?'Dry/near':echo<70?'Soft water':'Distant water';
 }
 function humanHypothesis(p){
-  const hints={
-    k1:'"I am here / familiar pod here"',
-    k3:'"food is here"',
-    k5:'"we are moving"',
-    k7:'"answer me / stay close"',
-    k12:'"group check-in"'
-  };
   if(!p.validated)return '"audition sketch only"';
-  return hints[p.call]||'"unknown call-type cue"';
+  return HYP[p.call]||'"unknown call-type cue"';
 }
 function renderMeters(){
   const s=scorePhrase();
@@ -1152,17 +1202,20 @@ function intentFromContext(){
   if(act==='unknown'||/check|scan|inspect|nearby|who/.test(txt))return 'scan';
   return 'balanced';
 }
-function keysForIntent(intent){
+function recommendedKeysForIntent(intent){
   const banks={
-    balanced:['k1','k3','k7'],
-    contact:['k1','k3','k7'],
-    forage:['k1','k3','k7'],
-    travel:['k1','k3','k7'],
-    reply:['k1','k3','k7'],
-    social:['k1','k3','k7'],
-    scan:['k1','k3','k5','k7','k12']
+    balanced:['k1','k3','k7','k12'],
+    contact:['k1','k2','k7','k12','k20'],
+    forage:['k3','k5','k9','k13'],
+    travel:['k5','k10','k16','k21'],
+    reply:['k1','k7','k12','k20'],
+    social:['k4','k8','k12','k13','k23'],
+    scan:['k11','k14','k17','k19','k24']
   };
-  let keys=(banks[intent]||banks.balanced).slice();
+  return (banks[intent]||banks.balanced).slice();
+}
+function keysForIntent(intent){
+  let keys=recommendedKeysForIntent(intent);
   if(mode!=='recordings'){
     const sketches={balanced:'v_soft',contact:'v_reply',forage:'v_feed',travel:'v_travel',reply:'v_echo',social:'v_social',scan:'v_scan'};
     const sketch=sketches[intent]||'v_soft';
@@ -1170,7 +1223,8 @@ function keysForIntent(intent){
   }
   if(+energyEl.value>72)keys.push(keys[keys.length-1]);
   else if(+energyEl.value<25&&keys.length>2)keys=keys.slice(0,2);
-  return keys;
+  keys=keys.concat(ALL_REAL_KEYS);
+  return keys.filter((k,i,a)=>a.indexOf(k)===i);
 }
 function renderChips(intent){
   const selected=new Set(phrase.map(p=>p.call));
@@ -1225,8 +1279,8 @@ function setTemplate(key){
 }
 function buildFromContext(){
   const intent=intentFromContext();
-  const keys=keysForIntent(intent).filter(k=>CALLS[k]&&CALLS[k].validated);
-  phrase=keys.map(k=>CALLS[k]); renderTray(); statusEl.textContent='Built dialect exemplar set; context kept as metadata';
+  const keys=recommendedKeysForIntent(intent).filter(k=>CALLS[k]&&CALLS[k].validated);
+  phrase=keys.map(k=>CALLS[k]); renderTray(); statusEl.textContent='Built dictionary-backed set; context kept as metadata';
 }
 function savePhrase(){
   try{localStorage.setItem('orcaDemoPhrase',JSON.stringify({text:humanText.value,activity:activityEl.value,receiver:receiverEl.value,style:styleEl.value,tone:toneEl.value,energy:energyEl.value,spacing:spacingEl.value,echo:echoEl.value,phrase:phrase.map(p=>p.call),mode}));}catch(e){}
@@ -1239,6 +1293,18 @@ function reusePhrase(){
     energyEl.value=saved.energy||energyEl.value; spacingEl.value=saved.spacing||spacingEl.value; echoEl.value=saved.echo||echoEl.value;
     phrase=(saved.phrase||[]).map(k=>CALLS[k]).filter(Boolean); setMode(saved.mode||mode); renderTray(); statusEl.textContent='Reused last selection';
   }catch(e){statusEl.textContent='No saved selection yet';}
+}
+function applyUrlSelection(){
+  const params=new URLSearchParams(location.search);
+  const raw=params.get('call')||params.get('calls');
+  if(!raw)return false;
+  const keys=raw.split(/[,\s]+/).map(k=>k.trim().toLowerCase()).filter(k=>CALLS[k]);
+  const unique=keys.filter((k,i,a)=>a.indexOf(k)===i);
+  if(!unique.length)return false;
+  phrase=unique.map(k=>CALLS[k]);
+  renderTray(CALLS[unique[unique.length-1]]);
+  statusEl.textContent='Loaded from dictionary: '+unique.map(k=>k.toUpperCase()).join(' / ');
+  return true;
 }
 chips.addEventListener('click',e=>{
   const b=e.target.closest('.chip');if(!b)return;
@@ -1393,7 +1459,7 @@ function speakWithoutWebAudio(){
     marks.push({i,t,call:p.call});
     if(typeof Audio!=='undefined'){
       if(mode!=='synthetic'&&CLIPS[p.real])playHtmlClip(CLIPS[p.real],mode==='hybrid' ? 0.20 : 0.82,t,run,mode==='recordings'?1:rate);
-      if(mode!=='recordings')playHtmlClip(SYNTH_CLIPS[p.call],mode==='hybrid' ? 0.78 : 0.86,t,run,rate);
+      if(mode!=='recordings'&&SYNTH_CLIPS[p.call])playHtmlClip(SYNTH_CLIPS[p.call],mode==='hybrid' ? 0.78 : 0.86,t,run,rate);
     }
     t+=(p.dur/rate)+gap;
   });
@@ -1427,7 +1493,10 @@ async function speak(){
     if(mode==='recordings'&&!Object.values(realLoaded).some(Boolean)){statusEl.textContent='Could not load the call audio';return;}
   }
   if(mode!=='recordings'){
-    for(const p of phrase){try{synthLoaded[p.call]=await loadBuf(p.call,'synth');}catch(e){synthLoaded[p.call]=null;}}
+    for(const p of phrase){
+      if(!SYNTH_CLIPS[p.call]){synthLoaded[p.call]=null;continue;}
+      try{synthLoaded[p.call]=await loadBuf(p.call,'synth');}catch(e){synthLoaded[p.call]=null;}
+    }
   }
   savePhrase();
   applyAudioControls();
@@ -1448,7 +1517,8 @@ async function speak(){
   setTimeout(()=>{if(run!==playRun)return;stage.classList.remove('talking');nowcall.textContent='';renderTimeline(-1);if(rafId)cancelAnimationFrame(rafId);statusEl.textContent='Done — edit, reuse, or play again';},total*1000+320);
 }
 document.getElementById('speak').addEventListener('click',e=>{e.preventDefault();speak();});
-setMode('recordings'); renderTray();
+setMode('recordings');
+if(!applyUrlSelection())renderTray();
 
 // ---- Explore the data ----
 const DB={
