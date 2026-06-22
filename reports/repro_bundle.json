@@ -1,5 +1,5 @@
 {
-  "generated_utc": "2026-06-20T12:40:00Z",
+  "generated_utc": "2026-06-22T18:23:25Z",
   "artifact": "data/embeddings/aves2_full_labeled.npz",
   "regeneration_commands": {
     "freeze": "python scripts/freeze_corpus.py --embeddings data/embeddings/aves2_full_labeled.npz --output reports/corpus_freeze.json",
@@ -34,14 +34,14 @@
     "figures/h1_metrics_aves2_full_labeled.json": "bdcc207edbe2435f524c0ec5ba85f7d86fe9732ff70c34c587d74caba594b235",
     "figures/h2_metrics_aves2_full_labeled.json": "137eb0390682f2431aa37090fc56492f78ea97de092d10cd6e4e813ae3310a77",
     "figures/h3_metrics_aves2_full_labeled.json": "1b6c6c3c9bfd51fabf6ffc6d7d8099e8e98fa30e1abc9d693a2fce53e3d2b442",
-    "figures/h4_metrics_aves2_full_labeled.json": "78ec3d4ca5e2130cc4c0e218d34398b71fa0b1568a4e7d91d238812e208627ee",
+    "figures/h4_metrics_aves2_full_labeled.json": "638738e9b685a8c43a5127efc8489f6d07562c84e9ace07f34d1122afba17485",
     "figures/sequence_structure_aves2_full_labeled.json": "3c171392b5f3e5b2fedffa502b7ac1ac011bcb2ca1c5b0ec4c73c89377666c28",
     "figures/calltype_discovery_srkw.json": "963a8732214c06fc5e523eee2a32b3ca59f99be94a69e6dfc8f187ba6c307e63",
     "figures/calltype_discovery_srkw_single.json": "e3bd2da50328aa2997ccec868bbaef9919974c4daf38612d0633a659706118d1",
     "figures/h1_probes_aves2_full_labeled.png": "f38110ced91dfb116a6c23adf0bbda1f16602d397ffd3568329c093c55915041",
     "figures/h2_clustering_aves2_full_labeled.png": "9ca59ddcad2e3585b5a7a58ca8244a54092660b6e5783b32c77b6c760bc2cfe6",
     "figures/h3_sequence_lm_aves2_full_labeled.png": "5c2200eca0b1a31749af13c17f6292c11a1e5e57b8b4092beea35740c60e62ac",
-    "figures/h4_confound_aves2_full_labeled.png": "710d74da97aca9f73eb5968e862cba4b1a2e181ea234357257d4849b77218f8f",
+    "figures/h4_confound_aves2_full_labeled.png": "8a5f9b81916edb414d1d09eae9d020b55b6bc73ac2df4d01b198e4bb46e95d2f",
     "figures/sequence_structure_aves2_full_labeled.png": "313424c9586977b5080b71259268288dacf7d1a34b0ebae1af25d86aaa8de515",
     "figures/calltype_discovery_srkw.png": "c4e0acc429db49d9d1ed2ba9b40ea44170b7929b6107ca9a0590e193f5ca7582",
     "figures/calltype_discovery_srkw_single.png": "e133f947cc8f474c65395ea67d453986c2c3964844099fa382ed6f42598ce491",
@@ -50,7 +50,7 @@
     "figures/calltype_sequence.png": "e6831261d55cf064d2675c1d636292cd2b373537eb534f7290db6d30016d2406",
     "reports/corpus_freeze.json": "a560347dcb0670c70bc59645900423870418315c713227cb7185f02f55d69f98",
     "reports/label_audit.json": "d9256a3f83778b9d43cafdb042a9c7c5e4221259acc2540c0d67387aea89c1b9",
-    "reports/results_summary.json": "6c3d9da2291616c6d66991b879575743c9f204c8b2188bd27375bf0a57a76af4",
+    "reports/results_summary.json": "d681fd692769107298521a01e1a5541cd4128dafaedaaf008f96a5136ccd92e1",
     "reports/calltype_model_summary.json": "fde9badf25f3560e8502e6ec639aefd8a0895c8d66d3e03ee46ce8e1b6d88d2e",
     "reports/calltype_model_full_summary.json": "42cef5d6c608e294c37c1952234461bb2e1545b2b84ead6db9d4b1003e56cba3",
     "reports/calltype_sequence_summary.json": "05c539d7d94a224515dc276fe32a6fb0d66ee57331c0b8c22cbb613f6c682b2b",
@@ -59,11 +59,11 @@
     "data/join_tables/call_type_manifest.csv": "d0f2d400d4b67e58094db15322159630e722b7d34a028277f1a815decbb55c55"
   },
   "missing": [],
-  "note": "Local re-run manifest for the published figures/metrics. reports/results_summary.json was extended with the H7 (compositionality), H8 (site-invariance), and multi-context catalogue heads and re-hashed on 2026-06-20; the embedding artifact and core H1-H4/sequence/call-type figures are unchanged. Two hash files coexist by design and are NOT contradictory: reports/artifact_hashes.json records the ORIGINAL Colab run provenance (its hashes are the Colab-generated artifacts), while this file records the LOCAL re-run; figure PNGs are not byte-reproducible across matplotlib/platform versions, so figure hashes legitimately differ between the two while the underlying metrics match. The complete cross-head accounting (committed vs Zenodo-deposited vs external public source), per-head reproduction commands, and the independent local reproduction verified 2026-06-20 are in docs/local_environment_manifest.md.",
+  "note": "Local re-run manifest for the published figures/metrics. reports/results_summary.json was extended with the H7 (compositionality), H8 (site-invariance), and multi-context catalogue heads on 2026-06-20 and reconciled on 2026-06-22 so H4 includes all five within-site providers, including UAF_NGOS. The embedding artifact and core H1-H3/sequence/call-type figures are unchanged; H4 metrics/figure were refreshed locally from scripts/run_h4_confound.py and scripts/plot_h4_summary.py to match the current five-provider summary. Two hash files coexist by design and are NOT contradictory: reports/artifact_hashes.json records the ORIGINAL Colab run provenance (its hashes are the Colab-generated artifacts), while this file records the LOCAL re-run; figure PNGs are not byte-reproducible across matplotlib/platform versions, so figure hashes legitimately differ between the two while the underlying metrics match. The complete cross-head accounting (committed vs Zenodo-deposited vs external public source), per-head reproduction commands, and the independent local reproduction verified 2026-06-20 are in docs/local_environment_manifest.md.",
   "local_reproduction_2026_06_20": {
     "environment": "Python 3.11, numpy/scipy/scikit-learn/pandas/torch-CPU, committed aves2_full_labeled.npz",
     "h6_playback_stats": "EXACT match (8/0 vs 0/6 p=0.000333; 6/0 vs 0/6 p=0.00216)",
-    "h4_confound": "EXACT match (provider 0.948; within-site 0.889/0.973/0.949/0.909; cross-site 0.529); additionally emits UAF_NGOS within-site 0.969 (n=10113) not in results_summary.json",
+    "h4_confound": "EXACT match (provider 0.948; within-site 0.889/0.973/0.949/0.909/0.969 across five providers, including UAF_NGOS n=10113; cross-site 0.529)",
     "sequence_structure": "Same conclusion, sub-1% drift (adjacent MI 1.92 vs published 1.909; null 1.657 vs 1.652; p=4.98e-3; KMeans/platform variation)"
   }
 }

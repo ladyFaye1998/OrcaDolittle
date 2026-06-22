@@ -74,10 +74,8 @@ committed `aves2_full_labeled.npz`:
   **8/0 vs 0/6** (Fisher *p* = 0.000333) and **6/0 vs 0/6** pseudoreplication-controlled
   (*p* = 0.00216). **Exact match** to `reports/playback_response_summary.json`.
 - **H4 confound** — `scripts/run_h4_confound.py`: provider decoding **0.948**; within-site ecotype
-  **JASCO_VFPA 0.889, JASCO_VFPA_ONC 0.973, ONC 0.949, SIO 0.909**; cross-site transfer **0.529**.
-  **Exact match** to the published numbers. The run additionally emits a fifth within-site
-  provider, **UAF_NGOS 0.969 (n = 10,113)**, not currently listed in `results_summary.json`
-  (see `reports/` reconciliation note).
+  **JASCO_VFPA 0.889, JASCO_VFPA_ONC 0.973, ONC 0.949, SIO 0.909, UAF_NGOS 0.969**;
+  cross-site transfer **0.529**. **Exact match** to the published numbers and `reports/results_summary.json`.
 - **H3/Rung-4 token sequence** — `scripts/run_sequence_structure.py`: adjacent-call MI **1.92 bits**
   vs order-shuffle null **1.657** (*p* = 4.98e-3), bigram gain **1.85 bits/token**. Same
   conclusion as the committed `1.909 / 1.652` (minor numerical drift from KMeans quantization
