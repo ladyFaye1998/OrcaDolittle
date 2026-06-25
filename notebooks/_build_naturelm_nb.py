@@ -55,7 +55,9 @@ NatureLM-audio, mean-pooled over non-padding frames. We do **not** use generated
 answers as labels or evidence, and we do **not** load the Llama text generator.
 
 **Runtime.** Use Colab GPU. Outputs checkpoint to Drive under
-`MyDrive/OrcaDolittle_naturelm`.
+`MyDrive/OrcaDolittle_naturelm`. The notebook refreshes the small NatureLM-audio
+source clone on each setup run, while preserving the large Hugging Face, audio,
+embedding, report, and figure caches.
 """))
 
 cells.append(code(r"""
@@ -149,27 +151,14 @@ NATURELM_COMMIT = "c708df7a4cc294ca8d4aaf0498794b5674ce20b1"
 NATURELM_DIR = DIRS["repos"] / "NatureLM-audio"
 
 def ensure_naturelm_repo(repo_dir, commit):
-    if not (repo_dir / ".git").exists():
-        if repo_dir.exists():
-            shutil.rmtree(repo_dir)
-        subprocess.check_call([
-            "git", "clone", "https://github.com/earthspecies/NatureLM-audio.git",
-            str(repo_dir)
-        ])
-    fetch = subprocess.run(
-        ["git", "-C", str(repo_dir), "fetch", "origin", commit, "--depth", "1"],
-        text=True, capture_output=True,
-    )
-    if fetch.returncode != 0:
-        print("Cached NatureLM repo could not fetch pinned commit; refreshing Drive cache.")
-        print((fetch.stderr or fetch.stdout)[-1200:])
-        if repo_dir.exists():
-            shutil.rmtree(repo_dir)
-        subprocess.check_call([
-            "git", "clone", "https://github.com/earthspecies/NatureLM-audio.git",
-            str(repo_dir)
-        ])
-        subprocess.check_call(["git", "-C", str(repo_dir), "fetch", "origin", commit, "--depth", "1"])
+    # The source repo is small. Refresh it each setup run to avoid stale/corrupt
+    # Drive-backed git state; large model/audio/embedding caches remain untouched.
+    if repo_dir.exists():
+        shutil.rmtree(repo_dir)
+    subprocess.check_call([
+        "git", "clone", "--no-tags", "https://github.com/earthspecies/NatureLM-audio.git",
+        str(repo_dir)
+    ])
     subprocess.check_call(["git", "-C", str(repo_dir), "checkout", "--detach", commit])
 
 ensure_naturelm_repo(NATURELM_DIR, NATURELM_COMMIT)
@@ -265,35 +254,12 @@ if missing:
 NATURELM_DIR = globals().get("NATURELM_DIR", DIRS["repos"] / "NatureLM-audio")
 
 def ensure_naturelm_repo(repo_dir, commit):
-    if not (repo_dir / ".git").exists():
-        if repo_dir.exists():
-            shutil.rmtree(repo_dir)
-        subprocess.check_call([
-            "git", "clone", "https://github.com/earthspecies/NatureLM-audio.git",
-            str(repo_dir)
-        ])
-    try:
-        current = subprocess.check_output(
-            ["git", "-C", str(repo_dir), "rev-parse", "HEAD"], text=True
-        ).strip()
-    except Exception:
-        current = ""
-    if current == commit:
-        return
-    fetch = subprocess.run(
-        ["git", "-C", str(repo_dir), "fetch", "origin", commit, "--depth", "1"],
-        text=True, capture_output=True,
-    )
-    if fetch.returncode != 0:
-        print("Cached NatureLM repo could not fetch pinned commit; refreshing Drive cache.")
-        print((fetch.stderr or fetch.stdout)[-1200:])
-        if repo_dir.exists():
-            shutil.rmtree(repo_dir)
-        subprocess.check_call([
-            "git", "clone", "https://github.com/earthspecies/NatureLM-audio.git",
-            str(repo_dir)
-        ])
-        subprocess.check_call(["git", "-C", str(repo_dir), "fetch", "origin", commit, "--depth", "1"])
+    if repo_dir.exists():
+        shutil.rmtree(repo_dir)
+    subprocess.check_call([
+        "git", "clone", "--no-tags", "https://github.com/earthspecies/NatureLM-audio.git",
+        str(repo_dir)
+    ])
     subprocess.check_call(["git", "-C", str(repo_dir), "checkout", "--detach", commit])
 
 ensure_naturelm_repo(NATURELM_DIR, NATURELM_COMMIT)
