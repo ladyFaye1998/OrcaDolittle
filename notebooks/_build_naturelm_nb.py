@@ -628,6 +628,8 @@ print("resolved rows:", len(man), "->", manifest_path)
 cells.append(code(r"""
 #@title 7. Encode DCLDE call-type segments with NatureLM-audio (resumable)
 import librosa
+import requests
+import time
 from tqdm.auto import tqdm
 
 CALLTYPE_EMB = DIRS["embeddings"] / "naturelm_calltype_embeddings.npz"
@@ -646,22 +648,58 @@ def download_audio_key(gcs_key):
     if not dest.exists() or dest.stat().st_size == 0:
         url = GCS_DL + urllib.parse.quote(gcs_key, safe="/")
         tmp = dest.with_suffix(dest.suffix + ".part")
-        urllib.request.urlretrieve(url, tmp)
+        if tmp.exists():
+            tmp.unlink()
+        print(f"  downloading {Path(gcs_key).name}", flush=True)
+        with requests.get(url, stream=True, timeout=(30, 180)) as r:
+            r.raise_for_status()
+            total = int(r.headers.get("content-length") or 0)
+            with open(tmp, "wb") as f, tqdm(
+                total=total,
+                unit="B",
+                unit_scale=True,
+                desc=f"download {Path(gcs_key).name[:28]}",
+                leave=False,
+            ) as bar:
+                for chunk in r.iter_content(chunk_size=1024 * 1024):
+                    if chunk:
+                        f.write(chunk)
+                        bar.update(len(chunk))
         tmp.replace(dest)
+    else:
+        print(f"  cached audio {dest.name} ({dest.stat().st_size / 1e6:.1f} MB)", flush=True)
     return dest
 
 def flush_batch(wavs, metas):
     if not wavs:
         return
+    t0 = time.time()
+    print(f"    encoding batch: {len(wavs)} clips", flush=True)
     Xb = encode_wavs_naturelm(wavs, batch_size=CALLTYPE_BATCH_SIZE)
     for emb, meta in zip(Xb, metas):
         embeddings.append(emb)
         metadata.append(meta)
+    print(f"    encoded batch in {time.time() - t0:.1f}s; total={len(embeddings)}", flush=True)
 
-for gcs_key, group in tqdm(list(man.groupby("gcs_key")), desc="source files"):
+source_groups = list(man.groupby("gcs_key"))
+print(
+    f"Encoding {len(man)} catalogue segments from {len(source_groups)} source files; "
+    f"already cached: {len(done_ids)} segments",
+    flush=True,
+)
+
+for file_i, (gcs_key, group) in enumerate(tqdm(source_groups, desc="source files"), start=1):
     group = group.sort_values("start")
-    if all(f"{r.gcs_key}|{float(r.start):.3f}|{float(r.end):.3f}|{r.call_type}" in done_ids
-           for r in group.itertuples()):
+    pending = [
+        r for r in group.itertuples()
+        if f"{r.gcs_key}|{float(r.start):.3f}|{float(r.end):.3f}|{r.call_type}" not in done_ids
+    ]
+    print(
+        f"[{file_i}/{len(source_groups)}] {Path(gcs_key).name}: "
+        f"{len(group)} segments, {len(pending)} pending",
+        flush=True,
+    )
+    if not pending:
         continue
     try:
         local = download_audio_key(gcs_key)
@@ -669,7 +707,7 @@ for gcs_key, group in tqdm(list(man.groupby("gcs_key")), desc="source files"):
         print("WARN download failed:", gcs_key, e)
         continue
     wavs, metas = [], []
-    for r in group.itertuples():
+    for seg_i, r in enumerate(tqdm(pending, desc="segments", leave=False), start=1):
         segment_id = f"{r.gcs_key}|{float(r.start):.3f}|{float(r.end):.3f}|{r.call_type}"
         if segment_id in done_ids:
             continue
@@ -709,33 +747,49 @@ print(meta_call.groupby(["provider", "call_family"]).size())
 cells.append(code(r"""
 #@title 8. Run site-controlled call-type models and save NatureLM summary
 import json
+import time
 
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import balanced_accuracy_score, confusion_matrix, f1_score
 from sklearn.model_selection import StratifiedKFold
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
+from tqdm.auto import tqdm
+
+print("Call-type embedding matrix:", X_call.shape, flush=True)
+print("Rows by provider/family:", flush=True)
+print(meta_call.groupby(["provider", "call_family"]).size(), flush=True)
 
 def clf():
     return make_pipeline(
         StandardScaler(),
-        LogisticRegression(max_iter=5000, class_weight="balanced", C=1.0),
+        LogisticRegression(max_iter=2000, class_weight="balanced", C=1.0),
     )
 
 def within_provider(provider, family, min_per_type=MIN_PER_TYPE):
+    t0 = time.time()
     sub = meta_call[(meta_call["provider"] == provider) & (meta_call["call_family"] == family)].copy()
+    print(f"\nWithin-provider check: provider={provider}, family={family}, raw_n={len(sub)}", flush=True)
     counts = sub["call_type"].value_counts()
+    print("Raw call-type counts:", counts.to_dict(), flush=True)
     keep = counts[counts >= min_per_type].index
     sub = sub[sub["call_type"].isin(keep)]
     if sub["call_type"].nunique() < 2:
+        print("  skipped: fewer than two call types after min_per_type filter", flush=True)
         return None
     idx = sub.index.to_numpy()
     Xs = X_call[idx]
     y = sub["call_type"].to_numpy()
     classes = sorted(set(y))
+    print(
+        f"  using n={len(sub)} clips, k={len(classes)} types, "
+        f"min_per_type={min_per_type}, permutations={CALLTYPE_N_PERM}",
+        flush=True,
+    )
     skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=0)
     yt, yp = [], []
-    for tr, te in skf.split(Xs, y):
+    for fold_i, (tr, te) in enumerate(skf.split(Xs, y), start=1):
+        print(f"  CV fold {fold_i}/5: train={len(tr)}, test={len(te)}", flush=True)
         model2 = clf().fit(Xs[tr], y[tr])
         yt.append(y[te])
         yp.append(model2.predict(Xs[te]))
@@ -743,17 +797,30 @@ def within_provider(provider, family, min_per_type=MIN_PER_TYPE):
     yp = np.concatenate(yp)
     bal = balanced_accuracy_score(yt, yp)
     macro = f1_score(yt, yp, average="macro")
+    print(f"  observed balanced_accuracy={bal:.3f}, macro_f1={macro:.3f}", flush=True)
     rng = np.random.default_rng(0)
     null = []
-    for _ in range(CALLTYPE_N_PERM):
+    perm_iter = tqdm(range(CALLTYPE_N_PERM), desc=f"{provider} {family} permutations")
+    for _ in perm_iter:
         yperm = rng.permutation(y)
         yt2, yp2 = [], []
         for tr, te in skf.split(Xs, yperm):
             model2 = clf().fit(Xs[tr], yperm[tr])
             yt2.append(yperm[te])
             yp2.append(model2.predict(Xs[te]))
-        null.append(balanced_accuracy_score(np.concatenate(yt2), np.concatenate(yp2)))
+        score = balanced_accuracy_score(np.concatenate(yt2), np.concatenate(yp2))
+        null.append(score)
+        perm_iter.set_postfix(last=f"{score:.3f}")
     null = np.asarray(null)
+    if len(null):
+        perm_mean = float(null.mean())
+        perm_std = float(null.std())
+        perm_p = float((np.sum(null >= bal) + 1) / (len(null) + 1))
+    else:
+        perm_mean = None
+        perm_std = None
+        perm_p = None
+    print(f"  done in {time.time() - t0:.1f}s", flush=True)
     return {
         "provider": provider,
         "family": family,
@@ -764,26 +831,35 @@ def within_provider(provider, family, min_per_type=MIN_PER_TYPE):
         "macro_f1": float(macro),
         "chance_1_over_k": float(1 / len(classes)),
         "majority_baseline": float(pd.Series(y).value_counts(normalize=True).iloc[0]),
-        "permutation_mean": float(null.mean()),
-        "permutation_std": float(null.std()),
-        "permutation_pvalue": float((np.sum(null >= bal) + 1) / (len(null) + 1)),
+        "permutation_mean": perm_mean,
+        "permutation_std": perm_std,
+        "permutation_pvalue": perm_p,
         "confusion_matrix": confusion_matrix(yt, yp, labels=classes).tolist(),
     }
 
 def cross_provider(train_pv="vfpa", test_pv="smru", min_train=MIN_PER_TYPE, min_test=MIN_TRANSFER_TEST):
+    t0 = time.time()
+    print(f"\nCross-provider transfer: train={train_pv}, test={test_pv}", flush=True)
     s = meta_call[meta_call["call_family"] == "SRKW"].copy()
     tr = s[s["provider"] == train_pv]
     te = s[s["provider"] == test_pv]
     tr_counts = tr["call_type"].value_counts()
     te_counts = te["call_type"].value_counts()
     shared = [t for t in tr_counts.index if tr_counts[t] >= min_train and te_counts.get(t, 0) >= min_test]
+    print(
+        f"  raw train={len(tr)}, raw test={len(te)}, shared eligible types={shared}",
+        flush=True,
+    )
     if len(shared) < 2:
+        print("  skipped: insufficient shared types", flush=True)
         return {"note": "insufficient shared types", "shared_types": shared}
     tr = tr[tr["call_type"].isin(shared)]
     te = te[te["call_type"].isin(shared)]
+    print(f"  fitting transfer model: n_train={len(tr)}, n_test={len(te)}, k={len(shared)}", flush=True)
     model2 = clf().fit(X_call[tr.index.to_numpy()], tr["call_type"].to_numpy())
     yt = te["call_type"].to_numpy()
     yp = model2.predict(X_call[te.index.to_numpy()])
+    print(f"  transfer done in {time.time() - t0:.1f}s", flush=True)
     return {
         "train_provider": train_pv,
         "test_provider": test_pv,
