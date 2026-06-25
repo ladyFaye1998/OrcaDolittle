@@ -154,6 +154,10 @@ print("NatureLM-audio commit:", subprocess.check_output(
     ["git", "-C", str(NATURELM_DIR), "rev-parse", "HEAD"], text=True).strip())
 
 subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", "--no-deps", "-e", str(NATURELM_DIR)])
+if str(NATURELM_DIR) not in sys.path:
+    sys.path.insert(0, str(NATURELM_DIR))
+import importlib
+importlib.invalidate_caches()
 print("NatureLM-audio installed from", NATURELM_DIR)
 """))
 
@@ -183,15 +187,87 @@ if MAX_CALLTYPE_SEGMENTS:
 cells.append(code(r"""
 #@title 4. Load NatureLM-audio audio encoder only
 import contextlib
+import importlib
+import importlib.util
 import json
+import os
 from pathlib import Path
+import subprocess
+import sys
 import numpy as np
 import torch
 import torch.nn as nn
+
+NATURELM_COMMIT = globals().get("NATURELM_COMMIT", "c708df7a4cc294ca8d4aaf0498794b5674ce20b1")
+
+# Self-recovery if Cell 2 was skipped or editable install did not register.
+if "OUTDIR" not in globals():
+    OUTDIR = Path("/content/drive/MyDrive/OrcaDolittle_naturelm")
+if "DIRS" not in globals():
+    DIRS = {
+        "audio": OUTDIR / "audio_cache",
+        "playback": OUTDIR / "playback",
+        "embeddings": OUTDIR / "embeddings",
+        "reports": OUTDIR / "reports",
+        "figures": OUTDIR / "figures",
+        "repos": OUTDIR / "_repos",
+        "hf": OUTDIR / "_hf_cache",
+    }
+for d in [OUTDIR, *DIRS.values()]:
+    d.mkdir(parents=True, exist_ok=True)
+os.environ.setdefault("HF_HOME", str(DIRS["hf"]))
+os.environ.setdefault("HF_HUB_CACHE", str(DIRS["hf"] / "hub"))
+os.environ.setdefault("TRANSFORMERS_CACHE", str(DIRS["hf"] / "transformers"))
+os.environ.setdefault("XDG_CACHE_HOME", str(OUTDIR / "_cache"))
+for key in ["HF_HOME", "HF_HUB_CACHE", "TRANSFORMERS_CACHE", "XDG_CACHE_HOME"]:
+    Path(os.environ[key]).mkdir(parents=True, exist_ok=True)
+
+NEEDED = [
+    ("huggingface_hub", "huggingface_hub"),
+    ("safetensors", "safetensors>=0.4.0"),
+    ("transformers", "transformers[sentencepiece]>=4.44.2"),
+    ("peft", "peft>=0.11.1"),
+    ("einops", "einops>=0.8.0"),
+    ("pydantic_settings", "pydantic-settings>=2.7.1"),
+    ("yaml", "pyyaml>=6.0"),
+    ("cloudpathlib", "cloudpathlib[gs]>=0.20.0"),
+    ("resampy", "resampy>=0.3.1"),
+]
+missing = [pkg for module, pkg in NEEDED if importlib.util.find_spec(module) is None]
+if missing:
+    print("Installing missing runtime packages:", missing)
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", *missing])
+
+NATURELM_DIR = globals().get("NATURELM_DIR", DIRS["repos"] / "NatureLM-audio")
+if not (NATURELM_DIR / ".git").exists():
+    subprocess.check_call([
+        "git", "clone", "https://github.com/earthspecies/NatureLM-audio.git",
+        str(NATURELM_DIR)
+    ])
+try:
+    current = subprocess.check_output(
+        ["git", "-C", str(NATURELM_DIR), "rev-parse", "HEAD"], text=True
+    ).strip()
+except Exception:
+    current = ""
+if current != NATURELM_COMMIT:
+    subprocess.check_call(["git", "-C", str(NATURELM_DIR), "fetch", "origin", NATURELM_COMMIT, "--depth", "1"])
+    subprocess.check_call(["git", "-C", str(NATURELM_DIR), "checkout", "--detach", NATURELM_COMMIT])
+if str(NATURELM_DIR) not in sys.path:
+    sys.path.insert(0, str(NATURELM_DIR))
+importlib.invalidate_caches()
+
+try:
+    from NatureLM.models.beats.BEATs import BEATs, BEATsConfig
+except ModuleNotFoundError:
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", "--no-deps", "-e", str(NATURELM_DIR)])
+    if str(NATURELM_DIR) not in sys.path:
+        sys.path.insert(0, str(NATURELM_DIR))
+    importlib.invalidate_caches()
+    from NatureLM.models.beats.BEATs import BEATs, BEATsConfig
+
 from huggingface_hub import hf_hub_download
 from safetensors.torch import load_file
-
-from NatureLM.models.beats.BEATs import BEATs, BEATsConfig
 
 DEVICE = "cuda:0" if torch.cuda.is_available() else "cpu"
 REPO_ID = "EarthSpeciesProject/NatureLM-audio"
