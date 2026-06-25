@@ -111,21 +111,25 @@ cells.append(code(r"""
 #@title 2. Authenticate if needed and install pinned NatureLM-audio code
 # This notebook loads only the audio encoder weights, not the Llama text generator.
 # A token is optional unless Hugging Face asks for authentication in your session.
+import shutil
 import subprocess
 import sys
 from getpass import getpass
 from huggingface_hub import login, whoami
 
-if not os.environ.get("HF_TOKEN"):
-    token = getpass("HF token with Llama 3.1 access (leave blank if already logged in): ")
-    if token.strip():
-        os.environ["HF_TOKEN"] = token.strip()
-        login(os.environ["HF_TOKEN"])
-
-try:
-    print("HF user:", whoami().get("name"))
-except Exception as e:
-    print("WARNING: Hugging Face auth not verified:", e)
+token = os.environ.get("HF_TOKEN", "").strip()
+if not token:
+    token = getpass("Optional Hugging Face read token (press Enter to skip): ").strip()
+if token:
+    os.environ["HF_TOKEN"] = token
+    try:
+        login(token=token, add_to_git_credential=False)
+        print("HF user:", whoami(token=token).get("name"))
+    except Exception as e:
+        print("WARNING: Hugging Face token was not accepted; continuing without auth:", e)
+        os.environ.pop("HF_TOKEN", None)
+else:
+    print("No Hugging Face token supplied; continuing with public model files.")
 
 RUNTIME_PACKAGES = [
     "transformers[sentencepiece]>=4.44.2",
@@ -143,13 +147,32 @@ subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", *RUNTIME_PA
 
 NATURELM_COMMIT = "c708df7a4cc294ca8d4aaf0498794b5674ce20b1"
 NATURELM_DIR = DIRS["repos"] / "NatureLM-audio"
-if not (NATURELM_DIR / ".git").exists():
-    subprocess.check_call([
-        "git", "clone", "https://github.com/earthspecies/NatureLM-audio.git",
-        str(NATURELM_DIR)
-    ])
-subprocess.check_call(["git", "-C", str(NATURELM_DIR), "fetch", "origin", NATURELM_COMMIT, "--depth", "1"])
-subprocess.check_call(["git", "-C", str(NATURELM_DIR), "checkout", "--detach", NATURELM_COMMIT])
+
+def ensure_naturelm_repo(repo_dir, commit):
+    if not (repo_dir / ".git").exists():
+        if repo_dir.exists():
+            shutil.rmtree(repo_dir)
+        subprocess.check_call([
+            "git", "clone", "https://github.com/earthspecies/NatureLM-audio.git",
+            str(repo_dir)
+        ])
+    fetch = subprocess.run(
+        ["git", "-C", str(repo_dir), "fetch", "origin", commit, "--depth", "1"],
+        text=True, capture_output=True,
+    )
+    if fetch.returncode != 0:
+        print("Cached NatureLM repo could not fetch pinned commit; refreshing Drive cache.")
+        print((fetch.stderr or fetch.stdout)[-1200:])
+        if repo_dir.exists():
+            shutil.rmtree(repo_dir)
+        subprocess.check_call([
+            "git", "clone", "https://github.com/earthspecies/NatureLM-audio.git",
+            str(repo_dir)
+        ])
+        subprocess.check_call(["git", "-C", str(repo_dir), "fetch", "origin", commit, "--depth", "1"])
+    subprocess.check_call(["git", "-C", str(repo_dir), "checkout", "--detach", commit])
+
+ensure_naturelm_repo(NATURELM_DIR, NATURELM_COMMIT)
 print("NatureLM-audio commit:", subprocess.check_output(
     ["git", "-C", str(NATURELM_DIR), "rev-parse", "HEAD"], text=True).strip())
 
@@ -192,6 +215,7 @@ import importlib.util
 import json
 import os
 from pathlib import Path
+import shutil
 import subprocess
 import sys
 import numpy as np
@@ -239,20 +263,40 @@ if missing:
     subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", *missing])
 
 NATURELM_DIR = globals().get("NATURELM_DIR", DIRS["repos"] / "NatureLM-audio")
-if not (NATURELM_DIR / ".git").exists():
-    subprocess.check_call([
-        "git", "clone", "https://github.com/earthspecies/NatureLM-audio.git",
-        str(NATURELM_DIR)
-    ])
-try:
-    current = subprocess.check_output(
-        ["git", "-C", str(NATURELM_DIR), "rev-parse", "HEAD"], text=True
-    ).strip()
-except Exception:
-    current = ""
-if current != NATURELM_COMMIT:
-    subprocess.check_call(["git", "-C", str(NATURELM_DIR), "fetch", "origin", NATURELM_COMMIT, "--depth", "1"])
-    subprocess.check_call(["git", "-C", str(NATURELM_DIR), "checkout", "--detach", NATURELM_COMMIT])
+
+def ensure_naturelm_repo(repo_dir, commit):
+    if not (repo_dir / ".git").exists():
+        if repo_dir.exists():
+            shutil.rmtree(repo_dir)
+        subprocess.check_call([
+            "git", "clone", "https://github.com/earthspecies/NatureLM-audio.git",
+            str(repo_dir)
+        ])
+    try:
+        current = subprocess.check_output(
+            ["git", "-C", str(repo_dir), "rev-parse", "HEAD"], text=True
+        ).strip()
+    except Exception:
+        current = ""
+    if current == commit:
+        return
+    fetch = subprocess.run(
+        ["git", "-C", str(repo_dir), "fetch", "origin", commit, "--depth", "1"],
+        text=True, capture_output=True,
+    )
+    if fetch.returncode != 0:
+        print("Cached NatureLM repo could not fetch pinned commit; refreshing Drive cache.")
+        print((fetch.stderr or fetch.stdout)[-1200:])
+        if repo_dir.exists():
+            shutil.rmtree(repo_dir)
+        subprocess.check_call([
+            "git", "clone", "https://github.com/earthspecies/NatureLM-audio.git",
+            str(repo_dir)
+        ])
+        subprocess.check_call(["git", "-C", str(repo_dir), "fetch", "origin", commit, "--depth", "1"])
+    subprocess.check_call(["git", "-C", str(repo_dir), "checkout", "--detach", commit])
+
+ensure_naturelm_repo(NATURELM_DIR, NATURELM_COMMIT)
 if str(NATURELM_DIR) not in sys.path:
     sys.path.insert(0, str(NATURELM_DIR))
 importlib.invalidate_caches()
@@ -273,8 +317,9 @@ DEVICE = "cuda:0" if torch.cuda.is_available() else "cpu"
 REPO_ID = "EarthSpeciesProject/NatureLM-audio"
 print("Loading NatureLM-audio audio encoder on", DEVICE)
 
-cfg_path = hf_hub_download(REPO_ID, "config.json", cache_dir=os.environ["HF_HOME"])
-weights_path = hf_hub_download(REPO_ID, "model.safetensors", cache_dir=os.environ["HF_HOME"])
+hf_token = os.environ.get("HF_TOKEN") or None
+cfg_path = hf_hub_download(REPO_ID, "config.json", cache_dir=os.environ["HF_HOME"], token=hf_token)
+weights_path = hf_hub_download(REPO_ID, "model.safetensors", cache_dir=os.environ["HF_HOME"], token=hf_token)
 cfg = json.loads(Path(cfg_path).read_text())
 
 beats = BEATs(cfg=BEATsConfig(cfg["beats_cfg"]))
