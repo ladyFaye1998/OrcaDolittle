@@ -134,15 +134,6 @@ else:
     print("No Hugging Face token supplied; continuing with public model files.")
 
 RUNTIME_PACKAGES = [
-    "transformers[sentencepiece]>=4.44.2",
-    "peft>=0.11.1",
-    "einops>=0.8.0",
-    "pydantic>=2.7.4",
-    "pydantic-settings>=2.7.1",
-    "pyyaml>=6.0",
-    "cloudpathlib[gs]>=0.20.0",
-    "google-cloud-storage>=2.0.0",
-    "resampy>=0.3.1",
     "safetensors>=0.4.0",
 ]
 subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", *RUNTIME_PACKAGES])
@@ -238,13 +229,6 @@ for key in ["HF_HOME", "HF_HUB_CACHE", "TRANSFORMERS_CACHE", "XDG_CACHE_HOME"]:
 NEEDED = [
     ("huggingface_hub", "huggingface_hub"),
     ("safetensors", "safetensors>=0.4.0"),
-    ("transformers", "transformers[sentencepiece]>=4.44.2"),
-    ("peft", "peft>=0.11.1"),
-    ("einops", "einops>=0.8.0"),
-    ("pydantic_settings", "pydantic-settings>=2.7.1"),
-    ("yaml", "pyyaml>=6.0"),
-    ("cloudpathlib", "cloudpathlib[gs]>=0.20.0"),
-    ("resampy", "resampy>=0.3.1"),
 ]
 missing = [pkg for module, pkg in NEEDED if importlib.util.find_spec(module) is None]
 if missing:
@@ -263,18 +247,19 @@ def ensure_naturelm_repo(repo_dir, commit):
     subprocess.check_call(["git", "-C", str(repo_dir), "checkout", "--detach", commit])
 
 ensure_naturelm_repo(NATURELM_DIR, NATURELM_COMMIT)
-if str(NATURELM_DIR) not in sys.path:
-    sys.path.insert(0, str(NATURELM_DIR))
+BEATS_IMPORT_ROOT = NATURELM_DIR / "NatureLM" / "models"
+if str(BEATS_IMPORT_ROOT) not in sys.path:
+    sys.path.insert(0, str(BEATS_IMPORT_ROOT))
 importlib.invalidate_caches()
 
 try:
-    from NatureLM.models.beats.BEATs import BEATs, BEATsConfig
+    from beats.BEATs import BEATs, BEATsConfig
 except ModuleNotFoundError:
     subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", "--no-deps", "-e", str(NATURELM_DIR)])
-    if str(NATURELM_DIR) not in sys.path:
-        sys.path.insert(0, str(NATURELM_DIR))
+    if str(BEATS_IMPORT_ROOT) not in sys.path:
+        sys.path.insert(0, str(BEATS_IMPORT_ROOT))
     importlib.invalidate_caches()
-    from NatureLM.models.beats.BEATs import BEATs, BEATsConfig
+    from beats.BEATs import BEATs, BEATsConfig
 
 from huggingface_hub import hf_hub_download
 from safetensors.torch import load_file
