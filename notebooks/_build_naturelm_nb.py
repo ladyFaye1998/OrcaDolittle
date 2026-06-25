@@ -368,8 +368,31 @@ PLAYBACK_AUDIO.mkdir(parents=True, exist_ok=True)
 PLAYBACK_MANIFEST = DIRS["playback"] / "ferop_catalogue_manifest.csv"
 PLAYBACK_EMB = DIRS["embeddings"] / "naturelm_ferop_catalogue_embeddings.npz"
 
+def download_ferop_wav(url, dest):
+    # Download one FEROP exemplar, tolerating stale case-sensitive catalogue links.
+    candidates = [url]
+    if url.lower().endswith(".wav") and not url.endswith(".wav"):
+        candidates.append(url[:-4] + ".wav")
+    headers = {"User-Agent": "Mozilla/5.0"}
+    for candidate in dict.fromkeys(candidates):
+        try:
+            r = requests.get(candidate, timeout=90, headers=headers)
+            if r.status_code == 404:
+                continue
+            r.raise_for_status()
+            if not r.content:
+                continue
+            tmp = dest.with_suffix(dest.suffix + ".part")
+            tmp.write_bytes(r.content)
+            tmp.replace(dest)
+            return candidate
+        except requests.RequestException as e:
+            last_error = e
+    print(f"WARNING: skipping missing FEROP exemplar: {url} ({last_error if 'last_error' in locals() else '404'})")
+    return None
+
 def fetch_ferop_manifest():
-    html = requests.get(CATALOG_URL, timeout=60).text
+    html = requests.get(CATALOG_URL, timeout=60, headers={"User-Agent": "Mozilla/5.0"}).text
     rows, seen = [], set()
     for m in WAV_RE.finditer(html):
         href = m.group(1)
@@ -384,14 +407,16 @@ def fetch_ferop_manifest():
         variant = Path(href).stem
         dest = PLAYBACK_AUDIO / f"{call_type}__{variant}.wav"
         if not dest.exists() or dest.stat().st_size == 0:
-            r = requests.get(url, timeout=90)
-            r.raise_for_status()
-            tmp = dest.with_suffix(dest.suffix + ".part")
-            tmp.write_bytes(r.content)
-            tmp.replace(dest)
+            ok_url = download_ferop_wav(url, dest)
+            if ok_url is None:
+                continue
+            url = ok_url
         rows.append({"call_type": call_type, "variant": variant, "url": url, "local_path": str(dest)})
+    out = pd.DataFrame(rows)
+    if out.empty:
+        raise RuntimeError("No FEROP exemplars downloaded; public catalogue links may be unavailable.")
     pd.DataFrame(rows).to_csv(PLAYBACK_MANIFEST, index=False)
-    return pd.DataFrame(rows)
+    return out
 
 def loo_1nn_purity(X, y):
     Xn = normalize(X)
@@ -408,6 +433,8 @@ if PLAYBACK_EMB.exists():
 else:
     man = fetch_ferop_manifest()
     print(f"FEROP exemplars: {len(man)} across {man['call_type'].nunique()} call types")
+    if man["call_type"].nunique() < 2:
+        raise RuntimeError("Too few FEROP call types downloaded for a separability test.")
     wavs, y = [], []
     for r in man.itertuples():
         wav, _ = librosa.load(r.local_path, sr=TARGET_SR, mono=True)
