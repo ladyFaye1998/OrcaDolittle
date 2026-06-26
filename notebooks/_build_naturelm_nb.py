@@ -2,8 +2,8 @@
 """Generate notebooks/naturelm_audio_comparison_colab.ipynb.
 
 The notebook is intentionally self-contained for Colab: it installs NatureLM-audio,
-uses the fine-tuned audio encoder inside the model, and re-runs only the two
-two primary second-encoder comparison analyses.
+uses the fine-tuned audio encoder inside the model, and runs the two primary
+second-encoder comparison analyses.
 """
 
 from __future__ import annotations
@@ -35,29 +35,35 @@ def code(src: str) -> dict:
 cells: list[dict] = []
 
 cells.append(md(r"""
-# NatureLM-audio optional comparison: two headline checks
+# 🐋 NatureLM-audio second-encoder analysis
 
-**Goal.** Test whether the two strongest AVES2 findings also hold when the audio
-representation is taken from NatureLM-audio:
+This notebook evaluates whether the primary audio-embedding findings are stable under
+a second frozen audio encoder, NatureLM-audio.
 
-1. **Catalogue call types:** site-held-constant call-type classification in SRKW and
-   NRKW, plus VFPA -> SMRU cross-site transfer for shared SRKW calls.
-2. **Playback dialect space:** FEROP Kamchatka K-type catalogue separability, the
-   embedding prerequisite for the published same-pod vs different-pod playback response.
+## Scope
 
-**Why this is optional.** NatureLM-audio is heavier than AVES2. If setup stalls, skip it;
-the primary AVES2 result remains the core analysis. This notebook is for the single
-sentence reviewers like to see:
-"the two headline effects also hold under a second bioacoustic encoder."
+The notebook runs two bounded analyses:
 
-**Representation used.** We use the fine-tuned BEATs audio encoder inside
-NatureLM-audio, mean-pooled over non-padding frames. We do **not** use generated text
-answers as labels or evidence, and we do **not** load the Llama text generator.
+1. **Catalogue call types:** site-controlled SRKW/NRKW call-type classification and
+   VFPA -> SMRU transfer for shared SRKW calls.
+2. **FEROP playback-dialect space:** separability of public Kamchatka K-type catalogue
+   exemplars in the NatureLM-audio embedding space.
 
-**Runtime.** Use Colab GPU. Outputs checkpoint to Drive under
-`MyDrive/OrcaDolittle_naturelm`. The notebook refreshes the small NatureLM-audio
-source clone on each setup run, while preserving the large Hugging Face, audio,
-embedding, report, and figure caches.
+## Boundary
+
+The outputs are evidence for representation-level structure only. They are not claims
+about semantic meaning, translation, intent, syntax, or playback causality.
+
+## Run modes
+
+Use **Runtime -> Change runtime type -> GPU**, then run the cells top to bottom.
+
+- 🏁 `FULL_ANALYSIS`: full data with permutation tests enabled.
+- ⚡ `FULL_FAST`: full data with observed-model metrics only.
+- 🧪 `SMOKE_TEST`: small setup check; not an analysis result.
+
+Outputs are cached in Google Drive at `MyDrive/OrcaDolittle_naturelm`, so disconnects
+do not erase model weights, audio, embeddings, reports, or figures.
 """))
 
 cells.append(code(r"""
@@ -65,14 +71,23 @@ cells.append(code(r"""
 !pip -q install -U huggingface_hub librosa soundfile scikit-learn pandas matplotlib tqdm requests
 
 import os
+import json
+import platform
+import sys
 from pathlib import Path
+from IPython.display import Markdown, display
 import torch
+
+def show_box(title, body):
+    display(Markdown(f"### {title}\n{body}"))
 
 print("torch", torch.__version__, "| CUDA available:", torch.cuda.is_available())
 if torch.cuda.is_available():
-    print("GPU:", torch.cuda.get_device_name(0))
+    gpu_name = torch.cuda.get_device_name(0)
+    print("GPU:", gpu_name)
+    show_box("✅ GPU detected", f"`{gpu_name}` is ready for NatureLM-audio.")
 else:
-    print("WARNING: no GPU. Set Runtime -> Change runtime type -> GPU before running NatureLM.")
+    show_box("⚠️ No GPU detected", "Set **Runtime -> Change runtime type -> GPU** before running the encoder cells.")
 
 try:
     from google.colab import drive
@@ -107,6 +122,15 @@ for key in ["HF_HOME", "HF_HUB_CACHE", "TRANSFORMERS_CACHE", "XDG_CACHE_HOME"]:
 
 print("Outputs:", OUTDIR)
 print("Persistent HF cache:", os.environ["HF_HOME"])
+ENV_INFO = {
+    "python": sys.version,
+    "platform": platform.platform(),
+    "torch": torch.__version__,
+    "cuda_available": bool(torch.cuda.is_available()),
+    "gpu": torch.cuda.get_device_name(0) if torch.cuda.is_available() else None,
+}
+(DIRS["reports"] / "naturelm_environment.json").write_text(json.dumps(ENV_INFO, indent=2))
+show_box("📁 Persistent cache ready", f"All large files will survive session resets under `{OUTDIR}`.")
 """))
 
 cells.append(code(r"""
@@ -165,26 +189,62 @@ print("NatureLM-audio installed from", NATURELM_DIR)
 """))
 
 cells.append(code(r"""
-#@title 3. Configuration
-# Set MAX_CALLTYPE_SEGMENTS to a small number only for a smoke test.
-# Leave it at 0 for a citable headline run.
-MAX_CALLTYPE_SEGMENTS = 0   #@param {type:"integer"}
-CALLTYPE_BATCH_SIZE = 2     #@param {type:"integer"}
-PLAYBACK_N_PERM = 1000      #@param {type:"integer"}
-CALLTYPE_N_PERM = 200       #@param {type:"integer"}
-MIN_PER_TYPE = 30           #@param {type:"integer"}
-MIN_TRANSFER_TEST = 10      #@param {type:"integer"}
+#@title 3. Choose the run mode
+RUN_MODE = "FULL_ANALYSIS"  #@param ["FULL_ANALYSIS", "FULL_FAST", "SMOKE_TEST"]
+CALLTYPE_BATCH_SIZE = 2  #@param {type:"integer"}
+MIN_PER_TYPE = 30        #@param {type:"integer"}
+MIN_TRANSFER_TEST = 10   #@param {type:"integer"}
+FORCE_CALLTYPE_PERMUTATIONS = False  #@param {type:"boolean"}
+REBUILD_CACHED_EMBEDDINGS = False    #@param {type:"boolean"}
+FORCE_RECOMPUTE_MODELS = False       #@param {type:"boolean"}
+
 TARGET_SR = 16000
 MIN_DURATION_S = 1.0
 
+if RUN_MODE == "SMOKE_TEST":
+    MAX_CALLTYPE_SEGMENTS = 500
+    PLAYBACK_N_PERM = 100
+    CALLTYPE_N_PERM = 0
+    MODE_NOTE = "🧪 Setup check only; output is not a full analysis result."
+elif RUN_MODE == "FULL_ANALYSIS":
+    MAX_CALLTYPE_SEGMENTS = 0
+    PLAYBACK_N_PERM = 1000
+    CALLTYPE_N_PERM = 200
+    MODE_NOTE = "🏁 Full data with permutation tests enabled; this can take hours."
+else:
+    MAX_CALLTYPE_SEGMENTS = 0
+    PLAYBACK_N_PERM = 300
+    CALLTYPE_N_PERM = 0
+    MODE_NOTE = "⚡ Full data with observed-model metrics only; call-type permutations are skipped."
+
+if FORCE_CALLTYPE_PERMUTATIONS and CALLTYPE_N_PERM == 0:
+    CALLTYPE_N_PERM = 200
+
+RUN_CALLTYPE_PERMUTATIONS = CALLTYPE_N_PERM > 0
+FULL_UNCAPPED_DATA = MAX_CALLTYPE_SEGMENTS == 0
+
+print("🐋 NatureLM run mode:", RUN_MODE)
+print(MODE_NOTE)
 print({
-    "MAX_CALLTYPE_SEGMENTS": MAX_CALLTYPE_SEGMENTS,
-    "CALLTYPE_BATCH_SIZE": CALLTYPE_BATCH_SIZE,
-    "PLAYBACK_N_PERM": PLAYBACK_N_PERM,
-    "CALLTYPE_N_PERM": CALLTYPE_N_PERM,
+    "full_uncapped_data": FULL_UNCAPPED_DATA,
+    "max_calltype_segments": MAX_CALLTYPE_SEGMENTS,
+    "calltype_batch_size": CALLTYPE_BATCH_SIZE,
+    "playback_permutations": PLAYBACK_N_PERM,
+    "calltype_permutations": CALLTYPE_N_PERM,
+    "min_per_type": MIN_PER_TYPE,
+    "min_transfer_test": MIN_TRANSFER_TEST,
+    "rebuild_cached_embeddings": REBUILD_CACHED_EMBEDDINGS,
+    "force_recompute_models": FORCE_RECOMPUTE_MODELS,
 })
-if MAX_CALLTYPE_SEGMENTS:
-    print("SMOKE MODE: do not cite call-type metrics from a capped run.")
+
+if not torch.cuda.is_available():
+    print("⚠️ WARNING: You are not on GPU. Switch Runtime -> Change runtime type -> GPU before encoder runs.")
+if not FULL_UNCAPPED_DATA:
+    print("🧪 Smoke-test mode: output is not a full analysis result.")
+elif RUN_CALLTYPE_PERMUTATIONS:
+    print("⏳ Call-type permutations are enabled.")
+else:
+    print("⚡ Call-type permutations are skipped.")
 """))
 
 cells.append(code(r"""
@@ -203,6 +263,9 @@ import torch
 import torch.nn as nn
 
 NATURELM_COMMIT = globals().get("NATURELM_COMMIT", "c708df7a4cc294ca8d4aaf0498794b5674ce20b1")
+TARGET_SR = globals().get("TARGET_SR", 16000)
+MIN_DURATION_S = globals().get("MIN_DURATION_S", 1.0)
+CALLTYPE_BATCH_SIZE = globals().get("CALLTYPE_BATCH_SIZE", 2)
 
 # Self-recovery if Cell 2 was skipped or editable install did not register.
 if "OUTDIR" not in globals():
@@ -266,7 +329,9 @@ from safetensors.torch import load_file
 
 DEVICE = "cuda:0" if torch.cuda.is_available() else "cpu"
 REPO_ID = "EarthSpeciesProject/NatureLM-audio"
-print("Loading NatureLM-audio audio encoder on", DEVICE)
+print("🐋 Loading NatureLM-audio audio encoder on", DEVICE)
+if DEVICE == "cpu":
+    print("⚠️ WARNING: CPU mode is supported for recovery, but it will be very slow. GPU is strongly recommended.")
 
 hf_token = os.environ.get("HF_TOKEN") or None
 cfg_path = hf_hub_download(REPO_ID, "config.json", cache_dir=os.environ["HF_HOME"], token=hf_token)
@@ -305,8 +370,20 @@ for p in beats.parameters():
 for p in ln_audio.parameters():
     p.requires_grad = False
 
-print("Loaded NatureLM audio encoder.")
+print("✅ Loaded NatureLM audio encoder.")
 print("BEATs prefix:", beats_prefix, "| LayerNorm prefix:", ln_prefix)
+MODEL_MANIFEST = {
+    "repo_id": REPO_ID,
+    "naturelm_source_commit": NATURELM_COMMIT,
+    "device": DEVICE,
+    "config_path": str(cfg_path),
+    "weights_path": str(weights_path),
+    "weights_bytes": int(Path(weights_path).stat().st_size),
+    "beats_prefix": beats_prefix,
+    "layernorm_prefix": ln_prefix,
+    "representation": "fine-tuned BEATs audio encoder, frozen, mean-pooled over non-padding frames",
+}
+(DIRS["reports"] / "naturelm_model_manifest.json").write_text(json.dumps(MODEL_MANIFEST, indent=2))
 
 def _pad_batch(wavs, target_sr=TARGET_SR, min_duration_s=MIN_DURATION_S):
     min_len = int(target_sr * min_duration_s)
@@ -359,6 +436,7 @@ import requests
 from sklearn.decomposition import PCA
 from sklearn.metrics import silhouette_score
 from sklearn.preprocessing import normalize
+from tqdm.auto import tqdm
 
 CATALOG_URL = "http://russianorca.com/sounds/catalog/index.htm"
 TYPE_RE = re.compile(r"(K\d+)", re.IGNORECASE)
@@ -425,25 +503,30 @@ def loo_1nn_purity(X, y):
     nn = np.argmax(S, axis=1)
     return float(np.mean(y == y[nn]))
 
+if REBUILD_CACHED_EMBEDDINGS and PLAYBACK_EMB.exists():
+    PLAYBACK_EMB.unlink()
+    print("♻️ Rebuilding cached FEROP playback embeddings.")
+
 if PLAYBACK_EMB.exists():
     d = np.load(PLAYBACK_EMB, allow_pickle=True)
     X = d["embeddings"].astype(np.float32)
     y = d["call_type"].astype(str)
-    print("Loaded cached playback embeddings:", X.shape)
+    print("✅ Loaded cached playback embeddings:", X.shape)
 else:
     man = fetch_ferop_manifest()
-    print(f"FEROP exemplars: {len(man)} across {man['call_type'].nunique()} call types")
+    print(f"📥 FEROP exemplars: {len(man)} across {man['call_type'].nunique()} call types")
     if man["call_type"].nunique() < 2:
         raise RuntimeError("Too few FEROP call types downloaded for a separability test.")
     wavs, y = [], []
-    for r in man.itertuples():
+    for r in tqdm(list(man.itertuples()), desc="load FEROP wavs"):
         wav, _ = librosa.load(r.local_path, sr=TARGET_SR, mono=True)
         wavs.append(wav)
         y.append(r.call_type)
+    print("🧠 Encoding FEROP exemplars with NatureLM-audio...")
     X = encode_wavs_naturelm(wavs, batch_size=CALLTYPE_BATCH_SIZE)
     y = np.asarray(y, dtype=object)
     np.savez_compressed(PLAYBACK_EMB, embeddings=X, call_type=y)
-    print("Saved", PLAYBACK_EMB, X.shape)
+    print("💾 Saved", PLAYBACK_EMB, X.shape)
 
 counts = pd.Series(y).value_counts()
 keep = counts[counts >= 2].index
@@ -452,8 +535,12 @@ Xk, yk = X[m], y[m]
 purity = loo_1nn_purity(Xk, yk)
 chance = float(pd.Series(yk).value_counts(normalize=True).pow(2).sum())
 rng = np.random.default_rng(0)
-null = np.array([loo_1nn_purity(Xk, rng.permutation(yk)) for _ in range(PLAYBACK_N_PERM)])
-pval = float((np.sum(null >= purity) + 1) / (len(null) + 1))
+print(f"🔁 Running FEROP label-shuffle null: {PLAYBACK_N_PERM} permutations")
+null = np.array([
+    loo_1nn_purity(Xk, rng.permutation(yk))
+    for _ in tqdm(range(PLAYBACK_N_PERM), desc="FEROP null")
+])
+pval = float((np.sum(null >= purity) + 1) / (len(null) + 1)) if len(null) else None
 sil = None
 try:
     sil = float(silhouette_score(Xk, yk, metric="cosine"))
@@ -463,14 +550,16 @@ except Exception:
 summary = {
     "analysis": "naturelm_ferop_catalogue_calltype_separability",
     "encoder": "NatureLM-audio fine-tuned BEATs audio encoder, frozen, mean-pooled",
+    "run_mode": RUN_MODE,
+    "full_uncapped_data": bool(FULL_UNCAPPED_DATA),
     "n_exemplars_total": int(len(X)),
     "n_types_total": int(len(set(y))),
     "purity_test": {
         "n_exemplars": int(len(yk)),
         "n_types": int(len(keep)),
         "loo_1nn_purity": float(purity),
-        "null_mean": float(null.mean()),
-        "null_std": float(null.std()),
+        "null_mean": float(null.mean()) if len(null) else None,
+        "null_std": float(null.std()) if len(null) else None,
         "proportional_chance": chance,
         "n_perm": int(PLAYBACK_N_PERM),
         "pvalue": pval,
@@ -485,7 +574,9 @@ fig, ax = plt.subplots(1, 2, figsize=(13, 5.2))
 for t in sorted(keep, key=lambda z: int(z[1:])):
     mm = yk == t
     ax[0].scatter(P[mm, 0], P[mm, 1], s=30, label=t)
-ax[0].set_title(f"FEROP K-types in NatureLM-audio space\nLOO purity {purity:.2f}, null {null.mean():.2f}, p={pval:.1e}")
+null_label = f"{null.mean():.2f}" if len(null) else "not run"
+p_label = f"{pval:.1e}" if pval is not None else "n/a"
+ax[0].set_title(f"FEROP K-types in NatureLM-audio space\nLOO purity {purity:.2f}, null {null_label}, p={p_label}")
 ax[0].set_xlabel("PC1")
 ax[0].set_ylabel("PC2")
 ax[0].legend(fontsize=6, ncol=2)
@@ -500,7 +591,8 @@ fig.savefig(fig_path, dpi=150, bbox_inches="tight")
 plt.close(fig)
 
 print(json.dumps(summary, indent=2))
-print("Figure:", fig_path)
+print("🖼️ Figure:", fig_path)
+print("✅ FEROP check complete: separability is measured, not overclaimed as meaning.")
 """))
 
 cells.append(md(r"""
@@ -508,14 +600,15 @@ cells.append(md(r"""
 
 This rebuilds the public DCLDE call-type manifest, streams the referenced audio files,
 encodes the labelled segments with NatureLM-audio, and repeats the site-controlled
-call-type probes. Runtime depends on Colab GPU and network speed. For a citable result,
-`MAX_CALLTYPE_SEGMENTS` must be `0`.
+call-type probes. Runtime depends on Colab GPU and network speed. For a full analysis
+run, `MAX_CALLTYPE_SEGMENTS` must be `0`.
 """))
 
 cells.append(code(r"""
 #@title 6. Build public DCLDE call-type manifest and resolve audio paths
 import io
 import json
+import re
 import urllib.parse
 import urllib.request
 from collections import Counter
@@ -573,7 +666,7 @@ def call_family(code):
 rows = []
 for pv in PROVIDERS_WITH_CALLTYPE:
     csvs = list_keys(f"{ROOT}/{pv}/annotations/", suffix=".csv")
-    print(f"{pv}: {len(csvs)} annotation CSVs")
+    print(f"🔎 {pv}: {len(csvs)} annotation CSVs")
     for name in csvs:
         df = fetch_csv(name)
         col = next((c for c in CALLTYPE_COLS if c in df.columns), None)
@@ -599,7 +692,7 @@ for pv in PROVIDERS_WITH_CALLTYPE:
             })
 
 man = pd.DataFrame(rows)
-print("manifest rows:", len(man), "| call types:", man["call_type"].nunique())
+print("📋 manifest rows:", len(man), "| call types:", man["call_type"].nunique())
 print("by provider:", man["provider"].value_counts().to_dict())
 
 basename_to_key = {}
@@ -607,7 +700,7 @@ for pv in sorted(man["provider"].unique()):
     keys = [k for k in list_keys(f"{ROOT}/{pv}/audio/") if k.lower().endswith(AUDIO_EXT)]
     for k in keys:
         basename_to_key[k.split("/")[-1]] = k
-    print(f"{pv}: {len(keys)} audio objects indexed")
+    print(f"🎧 {pv}: {len(keys)} audio objects indexed")
 
 man["basename"] = man["audio_path"].astype(str).apply(lambda p: p.replace("\\", "/").split("/")[-1])
 man["gcs_key"] = man["basename"].map(basename_to_key)
@@ -622,7 +715,8 @@ else:
 
 manifest_path = DIRS["reports"] / "naturelm_calltype_manifest_resolved.csv"
 man.to_csv(manifest_path, index=False)
-print("resolved rows:", len(man), "->", manifest_path)
+print("✅ resolved rows:", len(man), "->", manifest_path)
+print(man.groupby(["provider", "call_family"]).size())
 """))
 
 cells.append(code(r"""
@@ -634,14 +728,19 @@ from tqdm.auto import tqdm
 
 CALLTYPE_EMB = DIRS["embeddings"] / "naturelm_calltype_embeddings.npz"
 
+if REBUILD_CACHED_EMBEDDINGS and CALLTYPE_EMB.exists():
+    CALLTYPE_EMB.unlink()
+    print("♻️ Rebuilding cached DCLDE call-type embeddings.")
+
 if CALLTYPE_EMB.exists():
     d = np.load(CALLTYPE_EMB, allow_pickle=True)
     embeddings = list(d["embeddings"])
     metadata = list(d["metadata"])
     done_ids = {m["segment_id"] for m in metadata}
-    print("Resuming:", len(embeddings), "segments")
+    print("✅ Resuming cached DCLDE embeddings:", len(embeddings), "segments")
 else:
     embeddings, metadata, done_ids = [], [], set()
+    print("🆕 No DCLDE embedding cache found; starting fresh.")
 
 def download_audio_key(gcs_key):
     dest = DIRS["audio"] / Path(gcs_key).name
@@ -683,7 +782,7 @@ def flush_batch(wavs, metas):
 
 source_groups = list(man.groupby("gcs_key"))
 print(
-    f"Encoding {len(man)} catalogue segments from {len(source_groups)} source files; "
+    f"🧠 Encoding {len(man)} catalogue segments from {len(source_groups)} source files; "
     f"already cached: {len(done_ids)} segments",
     flush=True,
 )
@@ -695,7 +794,7 @@ for file_i, (gcs_key, group) in enumerate(tqdm(source_groups, desc="source files
         if f"{r.gcs_key}|{float(r.start):.3f}|{float(r.end):.3f}|{r.call_type}" not in done_ids
     ]
     print(
-        f"[{file_i}/{len(source_groups)}] {Path(gcs_key).name}: "
+        f"📄 [{file_i}/{len(source_groups)}] {Path(gcs_key).name}: "
         f"{len(group)} segments, {len(pending)} pending",
         flush=True,
     )
@@ -736,11 +835,11 @@ for file_i, (gcs_key, group) in enumerate(tqdm(source_groups, desc="source files
     np.savez_compressed(CALLTYPE_EMB,
                         embeddings=np.asarray(embeddings, np.float32),
                         metadata=np.asarray(metadata, dtype=object))
-    print("checkpoint:", len(embeddings), "segments")
+    print("💾 checkpoint:", len(embeddings), "segments")
 
 X_call = np.asarray(embeddings, np.float32)
 meta_call = pd.DataFrame(metadata)
-print("DONE:", X_call.shape)
+print("✅ DCLDE encoding done:", X_call.shape)
 print(meta_call.groupby(["provider", "call_family"]).size())
 """))
 
@@ -756,9 +855,24 @@ from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from tqdm.auto import tqdm
 
-print("Call-type embedding matrix:", X_call.shape, flush=True)
-print("Rows by provider/family:", flush=True)
-print(meta_call.groupby(["provider", "call_family"]).size(), flush=True)
+CALLTYPE_MODEL_CACHE = DIRS["reports"] / f"naturelm_calltype_model_summary_{RUN_MODE.lower()}.json"
+CALLTYPE_MODEL_CANONICAL = DIRS["reports"] / "naturelm_calltype_model_summary.json"
+
+model_settings = {
+    "run_mode": RUN_MODE,
+    "max_calltype_segments": int(MAX_CALLTYPE_SEGMENTS),
+    "full_uncapped_data": bool(FULL_UNCAPPED_DATA),
+    "min_per_type": int(MIN_PER_TYPE),
+    "min_transfer_test": int(MIN_TRANSFER_TEST),
+    "calltype_n_perm": int(CALLTYPE_N_PERM),
+    "run_calltype_permutations": bool(RUN_CALLTYPE_PERMUTATIONS),
+}
+
+def cache_matches(cached):
+    return (
+        cached.get("n_encoded_segments") == int(len(X_call))
+        and cached.get("settings", {}) == model_settings
+    )
 
 def clf():
     return make_pipeline(
@@ -766,41 +880,27 @@ def clf():
         LogisticRegression(max_iter=2000, class_weight="balanced", C=1.0),
     )
 
-def within_provider(provider, family, min_per_type=MIN_PER_TYPE):
-    t0 = time.time()
-    sub = meta_call[(meta_call["provider"] == provider) & (meta_call["call_family"] == family)].copy()
-    print(f"\nWithin-provider check: provider={provider}, family={family}, raw_n={len(sub)}", flush=True)
-    counts = sub["call_type"].value_counts()
-    print("Raw call-type counts:", counts.to_dict(), flush=True)
-    keep = counts[counts >= min_per_type].index
-    sub = sub[sub["call_type"].isin(keep)]
-    if sub["call_type"].nunique() < 2:
-        print("  skipped: fewer than two call types after min_per_type filter", flush=True)
-        return None
-    idx = sub.index.to_numpy()
-    Xs = X_call[idx]
-    y = sub["call_type"].to_numpy()
-    classes = sorted(set(y))
-    print(
-        f"  using n={len(sub)} clips, k={len(classes)} types, "
-        f"min_per_type={min_per_type}, permutations={CALLTYPE_N_PERM}",
-        flush=True,
-    )
-    skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=0)
+def run_cv_predictions(Xs, y, label):
+    class_counts = pd.Series(y).value_counts()
+    n_splits = min(5, int(class_counts.min()))
+    if n_splits < 2:
+        raise ValueError(f"{label}: fewer than two examples in at least one class after filtering")
+    skf = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=0)
     yt, yp = [], []
     for fold_i, (tr, te) in enumerate(skf.split(Xs, y), start=1):
-        print(f"  CV fold {fold_i}/5: train={len(tr)}, test={len(te)}", flush=True)
+        print(f"  CV fold {fold_i}/{n_splits}: train={len(tr)}, test={len(te)}", flush=True)
         model2 = clf().fit(Xs[tr], y[tr])
         yt.append(y[te])
         yp.append(model2.predict(Xs[te]))
-    yt = np.concatenate(yt)
-    yp = np.concatenate(yp)
-    bal = balanced_accuracy_score(yt, yp)
-    macro = f1_score(yt, yp, average="macro")
-    print(f"  observed balanced_accuracy={bal:.3f}, macro_f1={macro:.3f}", flush=True)
+    return skf, np.concatenate(yt), np.concatenate(yp)
+
+def permutation_scores(Xs, y, skf, label):
+    if not RUN_CALLTYPE_PERMUTATIONS or CALLTYPE_N_PERM <= 0:
+        print("  ⏭️ permutations skipped in this mode; observed CV metrics are still saved.", flush=True)
+        return np.asarray([], dtype=float)
     rng = np.random.default_rng(0)
     null = []
-    perm_iter = tqdm(range(CALLTYPE_N_PERM), desc=f"{provider} {family} permutations")
+    perm_iter = tqdm(range(CALLTYPE_N_PERM), desc=f"{label} permutations")
     for _ in perm_iter:
         yperm = rng.permutation(y)
         yt2, yp2 = [], []
@@ -811,7 +911,41 @@ def within_provider(provider, family, min_per_type=MIN_PER_TYPE):
         score = balanced_accuracy_score(np.concatenate(yt2), np.concatenate(yp2))
         null.append(score)
         perm_iter.set_postfix(last=f"{score:.3f}")
-    null = np.asarray(null)
+    return np.asarray(null, dtype=float)
+
+def within_provider(provider, family, min_per_type=MIN_PER_TYPE):
+    t0 = time.time()
+    sub = meta_call[(meta_call["provider"] == provider) & (meta_call["call_family"] == family)].copy()
+    label = f"{provider} {family}"
+    print(f"\n🐋 Within-provider check: provider={provider}, family={family}, raw_n={len(sub)}", flush=True)
+    counts = sub["call_type"].value_counts()
+    print("Raw call-type counts:", counts.to_dict(), flush=True)
+    keep = counts[counts >= min_per_type].index
+    sub = sub[sub["call_type"].isin(keep)]
+    if sub["call_type"].nunique() < 2:
+        print("  🚫 skipped: fewer than two call types after min_per_type filter", flush=True)
+        return {
+            "status": "skipped",
+            "provider": provider,
+            "family": family,
+            "reason": "fewer than two call types after min_per_type filter",
+            "raw_n": int(len(meta_call[(meta_call["provider"] == provider) & (meta_call["call_family"] == family)])),
+        }
+    idx = sub.index.to_numpy()
+    Xs = X_call[idx]
+    y = sub["call_type"].to_numpy()
+    classes = sorted(set(y))
+    print(
+        f"  using n={len(sub)} clips, k={len(classes)} types, "
+        f"min_per_type={min_per_type}, permutations={CALLTYPE_N_PERM if RUN_CALLTYPE_PERMUTATIONS else 0}",
+        flush=True,
+    )
+    skf, yt, yp = run_cv_predictions(Xs, y, label)
+    bal = balanced_accuracy_score(yt, yp)
+    macro = f1_score(yt, yp, average="macro")
+    chance = float(1 / len(classes))
+    print(f"  ✅ observed balanced_accuracy={bal:.3f}, macro_f1={macro:.3f}, chance={chance:.3f}", flush=True)
+    null = permutation_scores(Xs, y, skf, label)
     if len(null):
         perm_mean = float(null.mean())
         perm_std = float(null.std())
@@ -822,6 +956,7 @@ def within_provider(provider, family, min_per_type=MIN_PER_TYPE):
         perm_p = None
     print(f"  done in {time.time() - t0:.1f}s", flush=True)
     return {
+        "status": "ok",
         "provider": provider,
         "family": family,
         "n": int(len(sub)),
@@ -829,8 +964,10 @@ def within_provider(provider, family, min_per_type=MIN_PER_TYPE):
         "classes": classes,
         "balanced_accuracy": float(bal),
         "macro_f1": float(macro),
-        "chance_1_over_k": float(1 / len(classes)),
+        "chance_1_over_k": chance,
         "majority_baseline": float(pd.Series(y).value_counts(normalize=True).iloc[0]),
+        "permutations_run": bool(len(null)),
+        "n_permutations": int(len(null)),
         "permutation_mean": perm_mean,
         "permutation_std": perm_std,
         "permutation_pvalue": perm_p,
@@ -839,7 +976,7 @@ def within_provider(provider, family, min_per_type=MIN_PER_TYPE):
 
 def cross_provider(train_pv="vfpa", test_pv="smru", min_train=MIN_PER_TYPE, min_test=MIN_TRANSFER_TEST):
     t0 = time.time()
-    print(f"\nCross-provider transfer: train={train_pv}, test={test_pv}", flush=True)
+    print(f"\n🔁 Cross-provider transfer: train={train_pv}, test={test_pv}", flush=True)
     s = meta_call[meta_call["call_family"] == "SRKW"].copy()
     tr = s[s["provider"] == train_pv]
     te = s[s["provider"] == test_pv]
@@ -851,8 +988,8 @@ def cross_provider(train_pv="vfpa", test_pv="smru", min_train=MIN_PER_TYPE, min_
         flush=True,
     )
     if len(shared) < 2:
-        print("  skipped: insufficient shared types", flush=True)
-        return {"note": "insufficient shared types", "shared_types": shared}
+        print("  ⚠️ skipped: insufficient shared types", flush=True)
+        return {"status": "skipped", "note": "insufficient shared types", "shared_types": shared}
     tr = tr[tr["call_type"].isin(shared)]
     te = te[te["call_type"].isin(shared)]
     print(f"  fitting transfer model: n_train={len(tr)}, n_test={len(te)}, k={len(shared)}", flush=True)
@@ -861,6 +998,7 @@ def cross_provider(train_pv="vfpa", test_pv="smru", min_train=MIN_PER_TYPE, min_
     yp = model2.predict(X_call[te.index.to_numpy()])
     print(f"  transfer done in {time.time() - t0:.1f}s", flush=True)
     return {
+        "status": "ok",
         "train_provider": train_pv,
         "test_provider": test_pv,
         "shared_types": shared,
@@ -872,32 +1010,71 @@ def cross_provider(train_pv="vfpa", test_pv="smru", min_train=MIN_PER_TYPE, min_
         "chance_1_over_k": float(1 / len(shared)),
     }
 
-srkw_vfpa = within_provider("vfpa", "SRKW")
-nrkw_dfo = within_provider("dfo_crp", "NRKW")
-transfer = cross_provider()
+print("🧾 Call-type embedding matrix:", X_call.shape, flush=True)
+print("Rows by provider/family:", flush=True)
+print(meta_call.groupby(["provider", "call_family"]).size(), flush=True)
 
-summary = {
-    "analysis": "naturelm_site_controlled_calltype_classification",
-    "encoder": "NatureLM-audio fine-tuned BEATs audio encoder, frozen, mean-pooled",
-    "max_calltype_segments": int(MAX_CALLTYPE_SEGMENTS),
-    "citable": bool(MAX_CALLTYPE_SEGMENTS == 0),
-    "n_encoded_segments": int(len(X_call)),
-    "within_provider_vfpa_srkw": srkw_vfpa,
-    "within_provider_dfo_crp_nrkw": nrkw_dfo,
-    "cross_provider_vfpa_to_smru": transfer,
-    "boundary": "Catalogue call-type discrimination, not meaning; use only if full uncapped run completes.",
-}
-out = DIRS["reports"] / "naturelm_calltype_model_summary.json"
-out.write_text(json.dumps(summary, indent=2))
+summary = None
+if CALLTYPE_MODEL_CACHE.exists() and not FORCE_RECOMPUTE_MODELS:
+    cached = json.loads(CALLTYPE_MODEL_CACHE.read_text())
+    if cache_matches(cached):
+        summary = cached
+        print("✅ Loaded cached model summary:", CALLTYPE_MODEL_CACHE)
+    else:
+        print("♻️ Model cache exists but settings/data changed; recomputing.")
+
+if summary is None:
+    srkw_vfpa = within_provider("vfpa", "SRKW")
+    nrkw_dfo = within_provider("dfo_crp", "NRKW")
+    transfer = cross_provider()
+
+    observed_check_passed = bool(
+        FULL_UNCAPPED_DATA
+        and srkw_vfpa.get("status") == "ok"
+        and nrkw_dfo.get("status") == "ok"
+        and srkw_vfpa["balanced_accuracy"] > srkw_vfpa["chance_1_over_k"]
+        and nrkw_dfo["balanced_accuracy"] > nrkw_dfo["chance_1_over_k"]
+    )
+    permutation_tests_complete = bool(
+        observed_check_passed
+        and srkw_vfpa.get("permutation_pvalue") is not None
+        and nrkw_dfo.get("permutation_pvalue") is not None
+    )
+
+    summary = {
+        "analysis": "naturelm_site_controlled_calltype_classification",
+        "encoder": "NatureLM-audio fine-tuned BEATs audio encoder, frozen, mean-pooled",
+        "settings": model_settings,
+        "run_mode": RUN_MODE,
+        "max_calltype_segments": int(MAX_CALLTYPE_SEGMENTS),
+        "full_analysis_run": bool(MAX_CALLTYPE_SEGMENTS == 0),
+        "observed_check_passed": observed_check_passed,
+        "permutation_tests_complete": permutation_tests_complete,
+        "n_encoded_segments": int(len(X_call)),
+        "within_provider_vfpa_srkw": srkw_vfpa,
+        "within_provider_dfo_crp_nrkw": nrkw_dfo,
+        "cross_provider_vfpa_to_smru": transfer,
+        "boundary": "Catalogue call-type discrimination, not meaning; use only if full uncapped run completes.",
+    }
+    CALLTYPE_MODEL_CACHE.write_text(json.dumps(summary, indent=2))
+    CALLTYPE_MODEL_CANONICAL.write_text(json.dumps(summary, indent=2))
+    print("💾 Saved:", CALLTYPE_MODEL_CACHE)
+    print("💾 Saved canonical:", CALLTYPE_MODEL_CANONICAL)
+else:
+    srkw_vfpa = summary["within_provider_vfpa_srkw"]
+    nrkw_dfo = summary["within_provider_dfo_crp_nrkw"]
+    transfer = summary["cross_provider_vfpa_to_smru"]
+    CALLTYPE_MODEL_CANONICAL.write_text(json.dumps(summary, indent=2))
+
 print(json.dumps(summary, indent=2))
 
 labels, vals, chance = [], [], []
 for name, res in [("VFPA SRKW", srkw_vfpa), ("DFO_CRP NRKW", nrkw_dfo)]:
-    if res:
+    if res and res.get("status") == "ok":
         labels.append(f"{name}\nwithin-site")
         vals.append(res["balanced_accuracy"])
         chance.append(res["chance_1_over_k"])
-if "transfer_balanced_accuracy" in transfer:
+if transfer and "transfer_balanced_accuracy" in transfer:
     labels.append("VFPA->SMRU\ntransfer")
     vals.append(transfer["transfer_balanced_accuracy"])
     chance.append(transfer["chance_1_over_k"])
@@ -919,20 +1096,306 @@ if labels:
     fig_path = DIRS["figures"] / "naturelm_calltype_model.png"
     fig.savefig(fig_path, dpi=150, bbox_inches="tight")
     plt.close(fig)
-    print("Figure:", fig_path)
+    print("🖼️ Figure:", fig_path)
+
+if summary.get("observed_check_passed"):
+    if summary.get("permutation_tests_complete"):
+        print("✅ Call-type check passed on the full data with permutation tests complete.")
+    else:
+        print("✅ Call-type check passed on the full data with observed cross-validation metrics.")
+else:
+    print("⚠️ Call-type check did not pass the configured full-data criteria. See summary above.")
 """))
 
 cells.append(md(r"""
-## How to use the result
+## Analysis readout
 
-If both checks are positive on an uncapped run, add one bounded sentence to the paper:
+Run this cell after the FEROP and DCLDE analyses. It produces:
 
-> As an optional robustness check, the two headline effects also held under the
-> fine-tuned NatureLM-audio encoder: site-controlled catalogue call-type recovery
-> and FEROP playback-dialect separability.
+- `naturelm_analysis_readout.json`
+- `naturelm_analysis_readout.md`
+- `naturelm_analysis_artifacts_*.zip`
+- a bounded result sentence
+- an explicit analysis status
+"""))
 
-If setup fails, or if `MAX_CALLTYPE_SEGMENTS` was nonzero, do not cite the NatureLM
-numbers. Report AVES2-only as the honest limitation.
+cells.append(code(r"""
+#@title 9. Analysis readout
+import json
+from pathlib import Path
+from IPython.display import Markdown, display
+
+PLAYBACK_SUMMARY_PATH = DIRS["reports"] / "naturelm_playback_embedding_summary.json"
+CALLTYPE_SUMMARY_PATH = DIRS["reports"] / "naturelm_calltype_model_summary.json"
+ENVIRONMENT_PATH = DIRS["reports"] / "naturelm_environment.json"
+MODEL_MANIFEST_PATH = DIRS["reports"] / "naturelm_model_manifest.json"
+READOUT_JSON = DIRS["reports"] / "naturelm_analysis_readout.json"
+READOUT_MD = DIRS["reports"] / "naturelm_analysis_readout.md"
+
+def load_json(path):
+    if not path.exists():
+        return None
+    return json.loads(path.read_text())
+
+def fmt(x, digits=3):
+    if x is None:
+        return "n/a"
+    return f"{float(x):.{digits}f}"
+
+def ok_calltype(res):
+    return (
+        isinstance(res, dict)
+        and res.get("status") == "ok"
+        and res.get("balanced_accuracy") is not None
+        and res.get("chance_1_over_k") is not None
+        and res["balanced_accuracy"] > res["chance_1_over_k"]
+    )
+
+playback = load_json(PLAYBACK_SUMMARY_PATH)
+calltype = load_json(CALLTYPE_SUMMARY_PATH)
+
+if playback is None:
+    raise FileNotFoundError(f"Missing playback summary: {PLAYBACK_SUMMARY_PATH}")
+if calltype is None:
+    raise FileNotFoundError(f"Missing call-type summary: {CALLTYPE_SUMMARY_PATH}")
+
+ferop = playback["purity_test"]
+srkw = calltype["within_provider_vfpa_srkw"]
+nrkw = calltype["within_provider_dfo_crp_nrkw"]
+transfer = calltype.get("cross_provider_vfpa_to_smru", {})
+
+ferop_ok = ferop["loo_1nn_purity"] > ferop["proportional_chance"]
+srkw_ok = ok_calltype(srkw)
+nrkw_ok = ok_calltype(nrkw)
+full_data = bool(calltype.get("full_analysis_run", False)) and bool(playback.get("full_uncapped_data", True))
+observed_check_passed = bool(full_data and ferop_ok and srkw_ok and nrkw_ok)
+permutation_tests_complete = bool(
+    observed_check_passed
+    and ferop.get("pvalue") is not None
+    and srkw.get("permutation_pvalue") is not None
+    and nrkw.get("permutation_pvalue") is not None
+)
+
+if observed_check_passed:
+    analysis_status = "PASS_OBSERVED_CHECKS"
+    if permutation_tests_complete:
+        analysis_status = "PASS_WITH_PERMUTATION_TESTS"
+else:
+    analysis_status = "INCOMPLETE_OR_CONTROL_FAILED"
+
+result_sentence = (
+    "The two primary analyses were repeated "
+    "with a frozen NatureLM-audio encoder: FEROP K-type catalogue exemplars remained "
+    f"separable (leave-one-out 1-NN purity={fmt(ferop['loo_1nn_purity'])}, "
+    f"proportional chance={fmt(ferop['proportional_chance'])}), and site-controlled "
+    f"catalogue call-type recovery remained above chance for SRKW/VFPA "
+    f"(balanced accuracy={fmt(srkw.get('balanced_accuracy'))}, chance={fmt(srkw.get('chance_1_over_k'))}) "
+    f"and NRKW/DFO-CRP (balanced accuracy={fmt(nrkw.get('balanced_accuracy'))}, "
+    f"chance={fmt(nrkw.get('chance_1_over_k'))}). This is a representation robustness "
+    "check, not evidence of semantic meaning."
+)
+
+readout = {
+    "analysis_status": analysis_status,
+    "run_mode": calltype.get("run_mode", RUN_MODE),
+    "full_uncapped_data": full_data,
+    "observed_check_passed": observed_check_passed,
+    "permutation_tests_complete": permutation_tests_complete,
+    "result_sentence": result_sentence if observed_check_passed else None,
+    "checks": {
+        "ferop_playback_dialect_space": {
+            "ok": ferop_ok,
+            "loo_1nn_purity": ferop["loo_1nn_purity"],
+            "chance": ferop["proportional_chance"],
+            "pvalue": ferop.get("pvalue"),
+        },
+        "vfpa_srkw_site_controlled_calltype": {
+            "ok": srkw_ok,
+            "balanced_accuracy": srkw.get("balanced_accuracy"),
+            "chance": srkw.get("chance_1_over_k"),
+            "pvalue": srkw.get("permutation_pvalue"),
+        },
+        "dfo_crp_nrkw_site_controlled_calltype": {
+            "ok": nrkw_ok,
+            "balanced_accuracy": nrkw.get("balanced_accuracy"),
+            "chance": nrkw.get("chance_1_over_k"),
+            "pvalue": nrkw.get("permutation_pvalue"),
+        },
+        "vfpa_to_smru_transfer": transfer,
+    },
+    "claim_boundary": (
+        "Second-encoder representation robustness only. Do not claim meaning, "
+        "translation, syntax, intention, or playback causality from this notebook."
+    ),
+    "artifacts": {
+        "playback_summary": str(PLAYBACK_SUMMARY_PATH),
+        "calltype_summary": str(CALLTYPE_SUMMARY_PATH),
+        "environment": str(ENVIRONMENT_PATH),
+        "model_manifest": str(MODEL_MANIFEST_PATH),
+        "playback_figure": str(DIRS["figures"] / "naturelm_playback_embedding.png"),
+        "calltype_figure": str(DIRS["figures"] / "naturelm_calltype_model.png"),
+    },
+}
+
+READOUT_JSON.write_text(json.dumps(readout, indent=2))
+
+md = f'''
+# NatureLM-audio analysis readout
+
+**Analysis status:** `{analysis_status}`
+
+**Run mode:** `{readout['run_mode']}`
+**Full uncapped data:** `{full_data}`
+**Permutation tests complete:** `{permutation_tests_complete}`
+
+## Metrics
+
+| Check | Result | Baseline | p-value |
+|---|---:|---:|---:|
+| FEROP K-type separability | {fmt(ferop['loo_1nn_purity'])} | {fmt(ferop['proportional_chance'])} | {fmt(ferop.get('pvalue'))} |
+| VFPA/SRKW call types | {fmt(srkw.get('balanced_accuracy'))} | {fmt(srkw.get('chance_1_over_k'))} | {fmt(srkw.get('permutation_pvalue'))} |
+| DFO-CRP/NRKW call types | {fmt(nrkw.get('balanced_accuracy'))} | {fmt(nrkw.get('chance_1_over_k'))} | {fmt(nrkw.get('permutation_pvalue'))} |
+
+## Result sentence
+
+{result_sentence if observed_check_passed else 'Analysis status did not pass the configured full-data criteria.'}
+
+## Boundary
+
+Second-encoder representation robustness only. Do not claim meaning, translation,
+syntax, intention, or playback causality from this notebook.
+'''
+READOUT_MD.write_text(md.strip() + "\n")
+
+badge = "✅" if observed_check_passed else "⚠️"
+display(Markdown(f'''
+### {badge} NatureLM-audio analysis status: `{analysis_status}`
+
+**Full uncapped data:** `{full_data}`
+**Permutation tests complete:** `{permutation_tests_complete}`
+
+**Result sentence**
+
+> {result_sentence if observed_check_passed else 'Analysis status did not pass the configured full-data criteria.'}
+
+**Saved artifacts**
+
+- `{READOUT_JSON}`
+- `{READOUT_MD}`
+- `{readout['artifacts']['environment']}`
+- `{readout['artifacts']['model_manifest']}`
+- `{readout['artifacts']['playback_figure']}`
+- `{readout['artifacts']['calltype_figure']}`
+'''))
+
+print("💾 Readout JSON:", READOUT_JSON)
+print("💾 Readout Markdown:", READOUT_MD)
+"""))
+
+cells.append(md(r"""
+## Download package
+
+Run this after the analysis readout. It packages the reports and figures into one ZIP, stores the ZIP
+in Drive, and triggers a browser download from Colab.
+
+By default it does **not** include embeddings, audio, or model weights, because those
+files can be large and are already cached in Drive. Turn on the checkbox only if you
+need the embedding matrices inside the ZIP.
+"""))
+
+cells.append(code(r"""
+#@title 10. Package and download analysis artifacts
+INCLUDE_EMBEDDINGS_IN_ZIP = False  #@param {type:"boolean"}
+
+import json
+import zipfile
+from datetime import datetime, timezone
+from pathlib import Path
+from IPython.display import Markdown, display
+
+PACKAGE_DIR = DIRS["reports"] / "packages"
+PACKAGE_DIR.mkdir(parents=True, exist_ok=True)
+
+stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+zip_path = PACKAGE_DIR / f"naturelm_analysis_artifacts_{RUN_MODE.lower()}_{stamp}.zip"
+
+required_artifacts = [
+    DIRS["reports"] / "naturelm_analysis_readout.json",
+    DIRS["reports"] / "naturelm_analysis_readout.md",
+    DIRS["reports"] / "naturelm_calltype_model_summary.json",
+    DIRS["reports"] / "naturelm_playback_embedding_summary.json",
+    DIRS["reports"] / "naturelm_environment.json",
+    DIRS["reports"] / "naturelm_model_manifest.json",
+    DIRS["reports"] / "naturelm_calltype_manifest_resolved.csv",
+    DIRS["figures"] / "naturelm_calltype_model.png",
+    DIRS["figures"] / "naturelm_playback_embedding.png",
+]
+
+extra_artifacts = sorted(DIRS["reports"].glob("naturelm_calltype_model_summary_*.json"))
+if INCLUDE_EMBEDDINGS_IN_ZIP:
+    extra_artifacts += sorted(DIRS["embeddings"].glob("naturelm_*.npz"))
+
+missing_required = [p for p in required_artifacts if not p.exists()]
+if missing_required:
+    missing = "\n".join(f"- {p}" for p in missing_required)
+    raise FileNotFoundError(
+        "Run the preceding cells first. Required analysis artifacts are missing:\n" + missing
+    )
+
+all_artifacts = []
+seen = set()
+for path in required_artifacts + extra_artifacts:
+    path = Path(path)
+    if path.exists() and path not in seen:
+        all_artifacts.append(path)
+        seen.add(path)
+
+package_manifest = {
+    "created_utc": stamp,
+    "run_mode": RUN_MODE,
+    "include_embeddings": bool(INCLUDE_EMBEDDINGS_IN_ZIP),
+    "output_zip": str(zip_path),
+    "artifact_count": len(all_artifacts),
+    "artifacts": [str(p) for p in all_artifacts],
+    "note": (
+        "Package contains NatureLM-audio analysis reports and figures. Large caches "
+        "such as source audio, Hugging Face weights, and Drive-backed model cache "
+        "are intentionally excluded."
+    ),
+}
+
+def arcname(path):
+    path = Path(path)
+    if path.parent == DIRS["figures"]:
+        return f"figures/{path.name}"
+    if path.parent == DIRS["embeddings"]:
+        return f"embeddings/{path.name}"
+    return f"reports/{path.name}"
+
+with zipfile.ZipFile(zip_path, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=6) as zf:
+    zf.writestr("PACKAGE_MANIFEST.json", json.dumps(package_manifest, indent=2))
+    for path in all_artifacts:
+        zf.write(path, arcname(path))
+
+size_mb = zip_path.stat().st_size / 1e6
+display(Markdown(f'''
+### 📦 Analysis artifact package ready
+
+**ZIP:** `{zip_path}`
+**Size:** `{size_mb:.1f} MB`
+**Files:** `{len(all_artifacts)}`
+
+The ZIP is saved in Drive and Colab will now try to download it to your browser.
+'''))
+
+try:
+    from google.colab import files
+    files.download(str(zip_path))
+    print("⬇️ Browser download started:", zip_path)
+except Exception as e:
+    print("ZIP saved, but automatic browser download did not start.")
+    print("Download manually from:", zip_path)
+    print("Reason:", e)
 """))
 
 nb = {
