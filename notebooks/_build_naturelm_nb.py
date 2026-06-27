@@ -857,6 +857,9 @@ from tqdm.auto import tqdm
 
 CALLTYPE_MODEL_CACHE = DIRS["reports"] / f"naturelm_calltype_model_summary_{RUN_MODE.lower()}.json"
 CALLTYPE_MODEL_CANONICAL = DIRS["reports"] / "naturelm_calltype_model_summary.json"
+CALLTYPE_PARTIAL_CACHE = DIRS["reports"] / f"naturelm_calltype_model_checkpoint_{RUN_MODE.lower()}.json"
+PERM_CHECKPOINT_DIR = DIRS["reports"] / "calltype_permutation_checkpoints"
+PERM_CHECKPOINT_DIR.mkdir(parents=True, exist_ok=True)
 
 model_settings = {
     "run_mode": RUN_MODE,
@@ -873,6 +876,49 @@ def cache_matches(cached):
         cached.get("n_encoded_segments") == int(len(X_call))
         and cached.get("settings", {}) == model_settings
     )
+
+def write_json_atomic(path, payload):
+    tmp = path.with_suffix(path.suffix + ".part")
+    tmp.write_text(json.dumps(payload, indent=2))
+    tmp.replace(path)
+
+def safe_key(label):
+    return "".join(ch.lower() if ch.isalnum() else "_" for ch in str(label)).strip("_")
+
+partial_state = {
+    "settings": model_settings,
+    "n_encoded_segments": int(len(X_call)),
+    "results": {},
+}
+if CALLTYPE_PARTIAL_CACHE.exists() and not FORCE_RECOMPUTE_MODELS:
+    try:
+        cached_partial = json.loads(CALLTYPE_PARTIAL_CACHE.read_text())
+        if cache_matches(cached_partial):
+            partial_state = cached_partial
+            print("✅ Loaded partial model checkpoint:", CALLTYPE_PARTIAL_CACHE)
+        else:
+            print("♻️ Partial model checkpoint exists but settings/data changed; ignoring it.")
+    except Exception as e:
+        print("⚠️ Could not read partial model checkpoint; ignoring it:", e)
+
+def get_partial_result(key):
+    if FORCE_RECOMPUTE_MODELS:
+        return None
+    return partial_state.get("results", {}).get(key)
+
+def store_partial_result(key, result):
+    partial_state.setdefault("results", {})[key] = result
+    write_json_atomic(CALLTYPE_PARTIAL_CACHE, partial_state)
+    print(f"💾 checkpoint saved: {key} -> {CALLTYPE_PARTIAL_CACHE}", flush=True)
+
+def run_or_load_result(key, label, fn):
+    cached = get_partial_result(key)
+    if cached is not None:
+        print(f"✅ Loaded checkpointed result: {label}", flush=True)
+        return cached
+    result = fn()
+    store_partial_result(key, result)
+    return result
 
 def clf():
     return make_pipeline(
@@ -894,13 +940,55 @@ def run_cv_predictions(Xs, y, label):
         yp.append(model2.predict(Xs[te]))
     return skf, np.concatenate(yt), np.concatenate(yp)
 
-def permutation_scores(Xs, y, skf, label):
+def permutation_scores(Xs, y, skf, label, cache_key):
     if not RUN_CALLTYPE_PERMUTATIONS or CALLTYPE_N_PERM <= 0:
         print("  ⏭️ permutations skipped in this mode; observed CV metrics are still saved.", flush=True)
         return np.asarray([], dtype=float)
-    rng = np.random.default_rng(0)
+    key = safe_key(cache_key)
+    scores_path = PERM_CHECKPOINT_DIR / f"{key}_scores.npy"
+    meta_path = PERM_CHECKPOINT_DIR / f"{key}_meta.json"
+    perm_meta = {
+        "label": str(label),
+        "settings": model_settings,
+        "n_samples": int(len(y)),
+        "classes": sorted(map(str, set(y))),
+        "target_permutations": int(CALLTYPE_N_PERM),
+    }
     null = []
-    perm_iter = tqdm(range(CALLTYPE_N_PERM), desc=f"{label} permutations")
+    if not FORCE_RECOMPUTE_MODELS and scores_path.exists() and meta_path.exists():
+        try:
+            cached_meta = json.loads(meta_path.read_text())
+            if cached_meta == perm_meta:
+                null = list(np.load(scores_path).astype(float)[:CALLTYPE_N_PERM])
+                if len(null):
+                    print(f"  ✅ resuming permutation checkpoint: {len(null)}/{CALLTYPE_N_PERM} -> {scores_path}", flush=True)
+            else:
+                print("  ♻️ permutation checkpoint settings changed; starting this null from 0", flush=True)
+        except Exception as e:
+            print("  ⚠️ could not load permutation checkpoint; starting this null from 0:", e, flush=True)
+            null = []
+    if len(null) >= CALLTYPE_N_PERM:
+        print(f"  ✅ permutation checkpoint complete: {len(null)}/{CALLTYPE_N_PERM}", flush=True)
+        return np.asarray(null[:CALLTYPE_N_PERM], dtype=float)
+
+    def save_perm_checkpoint():
+        tmp_scores = scores_path.with_name(scores_path.name + ".part")
+        tmp_meta = meta_path.with_suffix(meta_path.suffix + ".part")
+        with open(tmp_scores, "wb") as f:
+            np.save(f, np.asarray(null, dtype=float))
+        tmp_scores.replace(scores_path)
+        tmp_meta.write_text(json.dumps(perm_meta, indent=2))
+        tmp_meta.replace(meta_path)
+
+    rng = np.random.default_rng(0)
+    for _ in range(len(null)):
+        rng.permutation(y)
+    perm_iter = tqdm(
+        range(len(null), CALLTYPE_N_PERM),
+        total=CALLTYPE_N_PERM,
+        initial=len(null),
+        desc=f"{label} permutations",
+    )
     for _ in perm_iter:
         yperm = rng.permutation(y)
         yt2, yp2 = [], []
@@ -911,6 +999,7 @@ def permutation_scores(Xs, y, skf, label):
         score = balanced_accuracy_score(np.concatenate(yt2), np.concatenate(yp2))
         null.append(score)
         perm_iter.set_postfix(last=f"{score:.3f}")
+        save_perm_checkpoint()
     return np.asarray(null, dtype=float)
 
 def within_provider(provider, family, min_per_type=MIN_PER_TYPE):
@@ -945,7 +1034,7 @@ def within_provider(provider, family, min_per_type=MIN_PER_TYPE):
     macro = f1_score(yt, yp, average="macro")
     chance = float(1 / len(classes))
     print(f"  ✅ observed balanced_accuracy={bal:.3f}, macro_f1={macro:.3f}, chance={chance:.3f}", flush=True)
-    null = permutation_scores(Xs, y, skf, label)
+    null = permutation_scores(Xs, y, skf, label, cache_key=f"within_{provider}_{family}")
     if len(null):
         perm_mean = float(null.mean())
         perm_std = float(null.std())
@@ -1024,9 +1113,21 @@ if CALLTYPE_MODEL_CACHE.exists() and not FORCE_RECOMPUTE_MODELS:
         print("♻️ Model cache exists but settings/data changed; recomputing.")
 
 if summary is None:
-    srkw_vfpa = within_provider("vfpa", "SRKW")
-    nrkw_dfo = within_provider("dfo_crp", "NRKW")
-    transfer = cross_provider()
+    srkw_vfpa = run_or_load_result(
+        "within_provider_vfpa_srkw",
+        "VFPA/SRKW within-provider model",
+        lambda: within_provider("vfpa", "SRKW"),
+    )
+    nrkw_dfo = run_or_load_result(
+        "within_provider_dfo_crp_nrkw",
+        "DFO-CRP/NRKW within-provider model",
+        lambda: within_provider("dfo_crp", "NRKW"),
+    )
+    transfer = run_or_load_result(
+        "cross_provider_vfpa_to_smru",
+        "VFPA -> SMRU transfer model",
+        lambda: cross_provider(),
+    )
 
     observed_check_passed = bool(
         FULL_UNCAPPED_DATA
@@ -1056,15 +1157,15 @@ if summary is None:
         "cross_provider_vfpa_to_smru": transfer,
         "boundary": "Catalogue call-type discrimination, not meaning; use only if full uncapped run completes.",
     }
-    CALLTYPE_MODEL_CACHE.write_text(json.dumps(summary, indent=2))
-    CALLTYPE_MODEL_CANONICAL.write_text(json.dumps(summary, indent=2))
+    write_json_atomic(CALLTYPE_MODEL_CACHE, summary)
+    write_json_atomic(CALLTYPE_MODEL_CANONICAL, summary)
     print("💾 Saved:", CALLTYPE_MODEL_CACHE)
     print("💾 Saved canonical:", CALLTYPE_MODEL_CANONICAL)
 else:
     srkw_vfpa = summary["within_provider_vfpa_srkw"]
     nrkw_dfo = summary["within_provider_dfo_crp_nrkw"]
     transfer = summary["cross_provider_vfpa_to_smru"]
-    CALLTYPE_MODEL_CANONICAL.write_text(json.dumps(summary, indent=2))
+    write_json_atomic(CALLTYPE_MODEL_CANONICAL, summary)
 
 print(json.dumps(summary, indent=2))
 
