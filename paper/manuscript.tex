@@ -24,63 +24,30 @@ call-type structure in frozen audio-model embeddings}
 \maketitle
 
 \begin{abstract}
-Foundation-model embeddings are increasingly used to decode animal vocalisations, but
-passive-acoustic archives confound the biological label of interest with the recording
-site. We encode 27{,}934 call-level killer-whale (\emph{Orcinus orca}) segments from the
-public DCLDE~2026 corpus \citep{palmer2025dclde,palmer2025dclde_data} with a frozen AVES2
-audio model \citep{hagiwara2023aves,chen2022beats} and quantify this confound directly. Pooled cross-validation decodes ecotype at $0.910$ balanced accuracy
-(multilayer-perceptron accuracy $0.974$), but under leave-one-provider-out evaluation the
-same embeddings fall to $0.231$ balanced accuracy, at the $0.250$ chance level. Recording
-provider is itself decodable at $0.948$ balanced accuracy. Yet when site is held constant,
-ecotype remains strongly decodable within each of five providers ($0.889$--$0.973$, all
-$p=0.005$), establishing that the embeddings capture real biological acoustic structure
-beyond the hydrophone. Recovering catalogue-validated call-type labels from the corpus's
-per-provider annotations and encoding the full catalogue ($8{,}552$ labelled detections), we
-then show that frozen embeddings discriminate call types within a single recording site at
-$0.709$ balanced accuracy for 14 Southern-Resident S-call types (chance $0.071$) and $0.968$
-for 18 Northern-Resident N-call types (chance $0.056$), both permutation $p\approx0.005$, and
-that this structure transfers across independent sites: a Southern-Resident classifier trained
-at one provider scores $0.636$ balanced accuracy on a second provider over five shared call
-types (chance $0.20$; $0.830$ over the four unambiguous types). Stereotyped call-type identity
-therefore generalises across hydrophones in both resident populations, the cross-site control
-the ecotype boundary failed ($0.529$), evidencing a real, site-independent acoustic category
-aligned to the expert catalogue. Quantising the
-embeddings into a balanced 40-token call vocabulary, call streams show non-random first-order
-sequential structure: adjacent-call mutual information is $1.91$ bits against an order-shuffled
-null of $1.65$ bits ($p<0.001$), remaining $1.09$ bits after removing repetition, and a
-held-out bigram model beats a unigram by $1.74$ bits/token; the same first-order structure
-holds over the \emph{validated} catalogue call types, site held constant, in both resident
-populations (N-calls $2.85$ vs a $1.71$-bit shuffle null, $p=10^{-3}$; S-calls $1.29$ vs
-$0.78$ bits). Unsupervised within-population
-clustering, by contrast, fails to recover a repertoire without labels (clusters are $93\%$
-dominated by a single recording provider), which is why catalogue supervision is required.
-Finally, on an independent archive of animal-borne DTAG recordings, communicative calls
-predict the caller's movement-defined behavioural context under leave-individual-out
-evaluation: a binary foraging/non-foraging contrast (labelled from tag depth and acceleration
-alone) is decoded at $0.770$ balanced accuracy across 22 tagged whales ($10{,}834$ calls,
-permutation $p=5\times10^{-3}$), and a three-way foraging/travelling/resting contrast at
-$0.577$ (chance $0.333$; 20 whales carrying all three contexts, $9{,}723$ calls;
-$p=5\times10^{-3}$), establishing that the calls track more than one behavioural context. The
-link is call-type-specific (data-driven call-type clusters versus context, Cram\'er's
-$V=0.40$ against a within-individual shuffle null of $0.08$, $p<10^{-3}$) and is not a
-recording artefact: call rate alone decodes the binary contrast at $0.536$, loudness alone at
-$0.577$, and discarding the most click-like clips leaves it at $0.749$, so the signal
-reflects call structure rather than how often or how loudly the animal calls or residual
-echolocation \citep{holt2024masking_data,tennessen2019,wilson2006,ford1989}. We
-Beyond first-order ordering, Southern-Resident S-call sequences carry the structure the
-comparative literature treats as a combinatorial prerequisite: against first-order Markov
-surrogates the two-back call adds $0.645$ bits ($p\approx10^{-3}$; candidate phrase
-S01$\to$S04$\to$S01, $z=7.95$), though Northern-Resident N-calls show none. At the named-unit
-level the validated call types are documented across six functionally distinct behavioural
-contexts \citep{ford1989,foote2008,riesch2008}. On the perception side, re-analysis of a
-published conspecific playback experiment shows wild killer whales respond selectively to
-broadcast calls---a vocal reply to every same-pod and no different-pod playback ($6/6$ vs
-$0/6$, Fisher $p=0.002$, naive free-ranging animals)---and frozen AVES2 recovers the dialect
-call types that drive it (leave-one-out purity $0.439$ vs a $0.05$ null)
-\citep{filatova2011playback,russianorca_catalogue}. We release all code, a hash-frozen
-artifact, and exact reproduction commands. The work is fully non-invasive and makes no claim of
-semantic meaning; its single response result re-analyses prior published playbacks and tracks
-dialect membership, not call content.
+Passive bioacoustic decoding can mistake recording site for biology. We submit a bounded,
+non-invasive killer-whale (\emph{Orcinus orca}) analysis: one primary frozen audio encoder
+(AVES2), public data, provider-aware validation, permutation/null controls, and fixed
+claim boundaries.
+
+Criterion 1, non-invasive decoding: 27{,}934 public DCLDE 2026 call segments show that
+pooled ecotype decoding is site-inflated (0.910 balanced accuracy drops to 0.231
+leave-one-provider-out; provider decodes at 0.948), but ecotype remains decodable within
+fixed sites (0.889--0.973). Catalogue call types are recoverable within site in both
+resident populations (0.709 and 0.968) and transfer across independent sites (0.636; 0.830
+on unambiguous shared types).
+
+Criterion 2, more than one context: independent DTAG recordings show communicative calls
+predict movement-defined behavioural context with the individual held out:
+foraging/non-foraging 0.770 and foraging/travelling/resting 0.577 (chance 0.333), with
+call-type$\times$context selectivity and rate/loudness/echolocation controls. Published
+ethograms map named call types across six contexts.
+
+Criterion 3, response to broadcast signal: re-analysis of a published conspecific
+playback shows wild killer whales reply to same-pod but not different-pod broadcasts (6/6
+vs 0/6, Fisher $p=0.002$), and AVES2 recovers the dialect call types driving this response.
+
+The work claims structure, context association, and a dialect-selective receiver
+response, not meaning. The remaining gap is a content-controlled field playback.
 \end{abstract}
 
 \section{Introduction}
@@ -435,6 +402,13 @@ that drives the response, corroborated across independent broadcast-response dat
 non-invasive response of naive animals to a broadcast endogenous signal---but the behavioural
 experiment is prior published work re-analysed here, and the response tracks dialect
 membership, not call content (Figure~\ref{fig:playback}).
+
+\paragraph{Second-encoder robustness.} Repeating the FEROP dialect-space and site-controlled
+call-type checks with frozen NatureLM-audio \citep{robinson2024naturelm} preserves the bounded
+result: FEROP K-type 1-NN purity is $0.366$ vs.\ $0.050$ proportional chance
+($p=0.000999$), VFPA/SRKW and DFO-CRP/NRKW within-provider call-type balanced accuracies are
+$0.709$ and $0.800$, and VFPA$\to$SMRU transfer is $0.682$ over five shared types (chance
+$0.20$). This is representation stability, not a new semantic claim.
 
 \paragraph{The biological signal is distributed and is not a probe artifact.} Attribution
 on the within-site SRKW/TKW decode (5-fold balanced accuracy $0.979$) shows the signal is

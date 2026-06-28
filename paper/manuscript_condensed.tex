@@ -31,28 +31,30 @@ call-type structure in frozen audio-model embeddings}
 \vspace{-1.5em}
 
 \begin{abstract}
-\noindent Foundation-model embeddings are increasingly used to decode animal
-vocalisations, but passive-acoustic archives confound the biological label with the
-recording site. Encoding 27{,}934 public DCLDE~2026 killer-whale (\emph{Orcinus orca})
-calls with a frozen AVES2 model \citep{palmer2025dclde,hagiwara2023aves}, we show pooled
-ecotype decoding (balanced accuracy $0.910$) collapses to chance ($0.231$) under
-leave-one-provider-out evaluation, while provider itself decodes at $0.948$; yet with site
-held constant across five providers, ecotype stays strongly decodable ($0.889$--$0.973$). Catalogue-validated
-call types are recoverable within site ($0.709$ for 14 SRKW types, $0.968$ for 18 NRKW
-types) and, unlike ecotype, transfer across independent sites ($0.636$; $0.830$ on
-unambiguous types). Call streams carry non-random first-order sequential structure over
-tokens and over validated call types. On an independent animal-borne DTAG archive,
-communicative calls predict the caller's movement-defined behavioural context with the
-individual held out, across more than one context (foraging/non-foraging $0.770$;
-foraging/travelling/resting $0.577$, chance $0.333$), with call-type$\times$context
-selectivity and rate/loudness/echolocation controls \citep{holt2024masking_data}. On the
-perception side, a re-analysis of a published conspecific playback experiment shows wild
-killer whales respond selectively to broadcast calls---vocal reply to same-pod and not
-different-pod playbacks ($6/6$ vs $0/6$, Fisher $p=0.002$), naive animals---and frozen AVES2
-recovers the dialect call types that drive it (purity $0.439$ vs a $0.05$ null)
-\citep{filatova2011playback,russianorca_catalogue}. The work is fully non-invasive and makes
-no claim of meaning; its single response result re-analyses prior published playbacks and
-tracks dialect membership, not call content.
+\noindent Passive bioacoustic decoding can mistake recording site for biology. We submit
+a bounded, non-invasive killer-whale (\emph{Orcinus orca}) analysis: one primary frozen audio
+encoder (AVES2), public data, provider-aware validation, permutation/null controls, and
+fixed claim boundaries.
+
+Criterion 1, non-invasive decoding: 27{,}934 public DCLDE 2026 call segments show that
+pooled ecotype decoding is site-inflated (0.910 balanced accuracy drops to 0.231
+leave-one-provider-out; provider decodes at 0.948), but ecotype remains decodable within
+fixed sites (0.889--0.973). Catalogue call types are recoverable within site in both
+resident populations (0.709 and 0.968) and transfer across independent sites (0.636; 0.830
+on unambiguous shared types).
+
+Criterion 2, more than one context: independent DTAG recordings show communicative calls
+predict movement-defined behavioural context with the individual held out:
+foraging/non-foraging 0.770 and foraging/travelling/resting 0.577 (chance 0.333), with
+call-type$\times$context selectivity and rate/loudness/echolocation controls. Published
+ethograms map named call types across six contexts.
+
+Criterion 3, response to broadcast signal: re-analysis of a published conspecific
+playback shows wild killer whales reply to same-pod but not different-pod broadcasts (6/6
+vs 0/6, Fisher $p=0.002$), and AVES2 recovers the dialect call types driving this response.
+
+The work claims structure, context association, and a dialect-selective receiver
+response, not meaning. The remaining gap is a content-controlled field playback.
 \end{abstract}
 
 \vspace{-0.5em}
@@ -191,6 +193,12 @@ two-voiced/identity calls), context labels from published ethograms, not embeddi
 greeting/excitement, multi-pod aggregation; specialisation index $0.62$), so the
 ``more than one context'' criterion holds well beyond movement state
 \citep{riesch2008,yurk2002}.
+
+\paragraph{Second-encoder robustness.} Repeating the FEROP dialect-space and site-controlled
+call-type checks with frozen NatureLM-audio \citep{robinson2024naturelm} preserves the bounded
+result: FEROP K-type purity $0.366$ vs $0.050$ chance ($p=0.000999$), within-provider call-type
+balanced accuracies $0.709$ (SRKW) and $0.800$ (NRKW), and VFPA$\to$SMRU transfer $0.682$ over
+five shared types. Representation stability, not semantic meaning.
 
 \paragraph{The signal is distributed and not an artifact.} On the within-site SRKW/TKW
 decode ($0.979$), no small dimension set is necessary (top-$k$ knock-out stays $0.93$--$0.97$
