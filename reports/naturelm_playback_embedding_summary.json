@@ -1,0 +1,20 @@
+{
+  "analysis": "naturelm_ferop_catalogue_calltype_separability",
+  "encoder": "NatureLM-audio fine-tuned BEATs audio encoder, frozen, mean-pooled",
+  "run_mode": "FULL_ANALYSIS",
+  "full_uncapped_data": true,
+  "n_exemplars_total": 77,
+  "n_types_total": 31,
+  "purity_test": {
+    "n_exemplars": 71,
+    "n_types": 25,
+    "loo_1nn_purity": 0.36619718309859156,
+    "null_mean": 0.03633802816901408,
+    "null_std": 0.02601481274288195,
+    "proportional_chance": 0.050188454671692126,
+    "n_perm": 1000,
+    "pvalue": 0.000999000999000999,
+    "silhouette_cosine": -0.019495174288749695
+  },
+  "boundary": "Dialect call-type separability only; not evidence of meaning."
+}

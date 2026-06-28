@@ -1,0 +1,20 @@
+{
+  "created_utc": "20260627T195511Z",
+  "run_mode": "FULL_ANALYSIS",
+  "include_embeddings": false,
+  "output_zip": "/content/drive/MyDrive/OrcaDolittle_naturelm/reports/packages/naturelm_analysis_artifacts_full_analysis_20260627T195511Z.zip",
+  "artifact_count": 10,
+  "artifacts": [
+    "/content/drive/MyDrive/OrcaDolittle_naturelm/reports/naturelm_analysis_readout.json",
+    "/content/drive/MyDrive/OrcaDolittle_naturelm/reports/naturelm_analysis_readout.md",
+    "/content/drive/MyDrive/OrcaDolittle_naturelm/reports/naturelm_calltype_model_summary.json",
+    "/content/drive/MyDrive/OrcaDolittle_naturelm/reports/naturelm_playback_embedding_summary.json",
+    "/content/drive/MyDrive/OrcaDolittle_naturelm/reports/naturelm_environment.json",
+    "/content/drive/MyDrive/OrcaDolittle_naturelm/reports/naturelm_model_manifest.json",
+    "/content/drive/MyDrive/OrcaDolittle_naturelm/reports/naturelm_calltype_manifest_resolved.csv",
+    "/content/drive/MyDrive/OrcaDolittle_naturelm/figures/naturelm_calltype_model.png",
+    "/content/drive/MyDrive/OrcaDolittle_naturelm/figures/naturelm_playback_embedding.png",
+    "/content/drive/MyDrive/OrcaDolittle_naturelm/reports/naturelm_calltype_model_summary_full_analysis.json"
+  ],
+  "note": "Package contains NatureLM-audio analysis reports and figures. Large caches such as source audio, Hugging Face weights, and Drive-backed model cache are intentionally excluded."
+}

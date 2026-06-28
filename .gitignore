@@ -74,6 +74,7 @@ logs/
 wandb/
 mlruns/
 run_logs/
+reports/packages/*.zip
 
 # --- Embeddings: keep only labeled artifacts in repo ---
 # `*_full_embeddings.npz` is a strict subset of `*_full_labeled.npz`
