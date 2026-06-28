@@ -10,16 +10,47 @@ The repository focuses on a narrow, auditable workflow: encode public acoustic s
 
 ## Reading Order
 
-1. **Scope** for what the repository covers.
-2. **Current Results** for the headline findings and figure/table summaries.
-3. **Claim Boundary** for what the work does and does not claim.
+1. **60-second evidence map** for claims, scripts, and boundaries.
+2. **Scope** for what the repository covers.
+3. **Current Results** for the headline findings and figure/table summaries.
 4. **Quickstart** for smoke tests and full analysis entry points.
 5. **Repository Map** for file locations.
+
+## 60-second evidence map
+
+**Claim boundary:** this repository supports acoustic structure, context association, and
+a dialect-selective receiver response to broadcast conspecific calls. It does **not** claim
+translation, semantic meaning, or a content-controlled response. The remaining field gap is
+a controlled conspecific playback that isolates call content.
+
+**One-command headline check:**
+
+```bash
+python scripts/run_playback_response_stats.py
+```
+
+Expected headline statistic: the published conspecific playback re-analysis returns the
+pseudoreplication-controlled same-pod vs different-pod response (`6/6` vs `0/6`, Fisher
+exact `p ~= 0.002`). Full smoke test:
+
+```bash
+python -m pytest -q
+python scripts/run_playback_response_stats.py
+```
+
+| Criterion / claim | Evidence in this repo | Reproduce / inspect | Boundary |
+|---|---|---|---|
+| Non-invasive public-data decoding | Frozen AVES2 on public DCLDE/DTAG/FEROP-derived inputs; no invasive data. | `paper/manuscript_condensed.tex`; `docs/data_availability.md`; `reports/corpus_freeze.json` | Re-analysis and modelling only; no new field experiment. |
+| Site-controlled acoustic structure | Ecotype pooled decode collapses under provider holdout, but within-site ecotype and catalogue call-type structure survive. | `scripts/run_h4_confound.py`; `scripts/run_calltype_model.py`; `reports/calltype_model_full_summary.json` | Site-independent ecotype transfer remains limited; call type is not meaning. |
+| More than one behavioural context | DTAG calls decode foraging/non-foraging and foraging/travelling/resting with individual held out; named call types map across six contexts. | `notebooks/dtag_context_decode_colab.ipynb`; `scripts/run_calltype_multicontext.py`; `reports/context3_decode_summary.json` | Production-side context association, not referential semantics. |
+| Response to broadcast signal | Published conspecific playback re-analysis: same-pod replies, different-pod silence; AVES2 recovers the dialect call types that drive it. | `scripts/run_playback_response_stats.py`; `scripts/run_playback_response.py`; `reports/playback_response_summary.json` | Prior published playback; response tracks dialect membership, not call content. |
+| Structure beyond first order | SRKW S-call sequences exceed first-order Markov surrogates; NRKW is null and reported. | `scripts/run_calltype_compositionality.py`; `reports/calltype_compositionality_summary.json` | Combinatorial prerequisite only, not semantic compositionality. |
+| Second-encoder stability | The two primary checks also pass under frozen NatureLM-audio on full data: FEROP K-type separability and site-controlled call-type recovery with transfer. | `notebooks/naturelm_audio_comparison_colab.ipynb`; `reports/naturelm_analysis_readout.json`; `reports/naturelm_calltype_model_summary.json` | Representation-level robustness only; still not meaning or content-controlled playback. |
 
 ## Scope
 
 - **Corpus:** DCLDE 2026 killer-whale annotations and audio pointers [@palmer2025dclde; @palmer2025dclde_data]. The NOAA/GCS storage path currently uses a `dclde/2027/dclde_2027_killer_whales` bucket layout; the scientific dataset is the DCLDE 2026 killer-whale corpus.
-- **Encoders:** AVES2 as the current implemented encoder [@hagiwara2023aves; @chen2022beats], with NatureLM-audio support documented for comparative runs [@robinson2024naturelm].
+- **Encoders:** AVES2 as the primary audited encoder [@hagiwara2023aves; @chen2022beats], with a Colab GPU NatureLM-audio comparison notebook for the two primary second-encoder checks [@robinson2024naturelm].
 - **Analyses:** the repository covers:
   - supervised ecotype probes;
   - provider/site confound isolation;
@@ -50,6 +81,7 @@ Latest audited DCLDE run: `20260529_072930`, frozen AVES2 embeddings, 27,934 cal
 - **Site control:** Pooled ecotype decodability massively overstates the ecotype signal because of a recording-site shortcut, and only site-controlled evaluation reveals the real biological signal [@stowell2022; @ghani2023]; stereotyped call-type identity, by contrast, is recoverable within a fixed site in both resident populations (SRKW 14-type 0.709, NRKW 18-type 0.968) and transfers across independent recording sites, the cross-site control the ecotype boundary fails [@ford1989; @filatova2015].
 - **Production context:** On an independent animal-borne DTAG archive, communicative calls further carry decodable information about the caller's movement-defined behavioural context with the individual held out: foraging vs. non-foraging at 0.770 balanced accuracy, and a three-way foraging/travelling/resting contrast at 0.577 (chance 0.333) [@holt2024masking_data; @tennessen2019; @wilson2006]. Specific call types are produced context-specifically (call-type × context Cramér's V = 0.40, within-individual null p < 0.001), and the decode reflects call structure rather than call rate (0.536) or loudness (0.577) — context-specific production across more than one behavioural context, not referential meaning.
 - **Perception-side playback:** On the **perception side**, a re-analysis of a published conspecific playback experiment shows wild killer whales produce a measurable, **dialect-selective response to broadcast calls** — they reply vocally to same-pod and not different-pod playbacks (6/6 vs 0/6, Fisher p = 0.002), naive free-ranging animals, often matching the played type — and frozen AVES2 recovers the dialect call types that drive it (leave-one-out purity 0.439 vs a 0.05 shuffle null, p = 1e-3) [@filatova2011playback; @russianorca_catalogue]. The playback experiment is prior published work re-analysed here; the response tracks *dialect membership*, not (yet) call *content*.
+- **Second-encoder check:** The two primary representation checks also pass under frozen NatureLM-audio on full uncapped data: FEROP K-type separability (1-NN purity 0.366 vs proportional chance 0.050, p = 0.000999), VFPA/SRKW site-controlled call-type recovery (balanced accuracy 0.709 vs chance 0.071, p = 0.00498), DFO-CRP/NRKW recovery (0.800 vs 0.0625, p = 0.00498), and VFPA -> SMRU transfer over five shared SRKW types (0.682 vs chance 0.20). This is a representation robustness check, not a new meaning claim.
 - **Corroboration and context breadth:** This response criterion is corroborated by independent datasets — killer whales avoid broadcast pilot-whale sound against matched controls [@selbmann2026aversive], orca-call structure drives receiver heading change [@bowers2018], and receivers match a preceding caller's type in natural exchanges [@miller2004repertoires] — and, on the production side, the recovered catalogue call types specialize across functionally distinct contexts — 72% are single-context foraging- or socializing-specialists (e.g. N4/N9 foraging vs the multi-pod two-voiced calls socializing), and the same named units are documented across **six** distinct behavioural contexts, not just movement state [@ford1989; @foote2008; @riesch2008].
 - **Structure side:** Two further analyses sharpen the structure side: SRKW S-call sequences carry **compositional structure beyond first order** — the call two steps back adds information a first-order Markov model cannot explain (second-order delta 0.645 bits, p ~= 1e-3; candidate phrase S01->S04->S01), in the spirit of sperm-whale coda analysis [@sharma2024; @berthet2025bonobo; @crockford2025] — while a label-free site-invariance transform modestly improves cross-site ecotype transfer (0.597 -> 0.625) without disturbing the within-site signal [@stowell2022; @ghani2023].
 - **Distributional semantics:** Finally, a distributional-semantics test bridges structure and behavioural context **non-circularly**: in Southern Residents, call types that keep similar sequential company also share independent, literature-grounded behavioural context (Mantel r = 0.33, p = 0.042, 8 types), with Northern Residents null (r = -0.39) — the distributional hypothesis the bonobo/chimpanzee finalists *assume*, here *tested* and reported both ways, still not a claim of meaning [@berthet2025bonobo; @crockford2025; @ford1989; @foote2008].
@@ -77,6 +109,10 @@ Latest audited DCLDE run: `20260529_072930`, frozen AVES2 embeddings, 27,934 cal
 <td width="50%"><img src="figures/calltype_distributional_semantics.png" alt="Distributional semantics: structure vs context" /><br/><sub><b>Structure &harr; context (distributional semantics).</b> SRKW call types with similar sequential company share independent ethogram context (Mantel r = 0.33, p = 0.042); NRKW null. The distributional hypothesis tested, not assumed.</sub></td>
 <td width="50%"><img src="figures/calltype_multicontext.png" alt="Six behavioural contexts" /><br/><sub><b>Six behavioural contexts (C2).</b> Validated catalogue call types span six functionally distinct contexts (specialization index 0.62) &mdash; multi-context breadth well beyond movement state.</sub></td>
 </tr>
+<tr>
+<td width="50%"><img src="figures/naturelm_calltype_model.png" alt="NatureLM-audio call-type checks" /><br/><sub><b>Second encoder: call types.</b> Frozen NatureLM-audio recovers site-controlled SRKW call types at 0.709 and NRKW call types at 0.800, both far above chance with 200-permutation nulls.</sub></td>
+<td width="50%"><img src="figures/naturelm_playback_embedding.png" alt="NatureLM-audio FEROP dialect space" /><br/><sub><b>Second encoder: FEROP dialect space.</b> NatureLM-audio separates FEROP K-type catalogue exemplars (1-NN purity 0.366 vs chance 0.050, p = 0.000999).</sub></td>
+</tr>
 </table>
 
 *Every panel regenerates from the scripts in the Quickstart below; full metrics are in `reports/` and the per-head table that follows. Reproduction status for each figure is in `docs/local_environment_manifest.md`.*
@@ -96,6 +132,7 @@ Latest audited DCLDE run: `20260529_072930`, frozen AVES2 embeddings, 27,934 cal
 | Rung 1 (unsup.) | Unsupervised call-type discovery | Within-SRKW clusters are 93% dominated by a single recording provider (82% noise): the categories are real but too fine to fall out of unsupervised clustering of site-confounded embeddings, which is why the supervised call-type model above uses catalogue labels. |
 | H5 | DTAG behavioural-context decode (multi-context) | On an independent archive of animal-borne DTAG recordings, communicative calls predict the caller's movement-only behavioural context (labelled from tag depth and acceleration alone) under leave-individual-out evaluation: foraging vs. non-foraging at 0.770 balanced accuracy across 22 whales (10,834 calls, p = 0.005), and a three-way foraging/travelling/resting contrast at 0.577 across the 20 whales carrying all three contexts (chance 0.333, p = 0.005). Specific call types are produced context-specifically (call-type × context Cramér's V = 0.40 vs within-individual null 0.08, p < 0.001; every cluster context-enriched [@ford1989; @foote2008]). Controls rule out the trivial explanations: call rate alone decodes at 0.536, loudness alone at 0.577, and dropping the 25% most click-like clips leaves 0.749 (clips are 16 kHz, so echolocation peak energy is absent) [@wilson2006]. Because the individual is held out and the label never sees the audio, this is context-specific *production* of communicative calls across more than one behavioural context — not identity/site recognition, not referential meaning, and not a receiver response. |
 | H6 | Playback receiver-response (perception side) — **response criterion met** | Re-analysis of a published conspecific playback experiment [@filatova2011playback]: wild killer whales reply vocally to same-pod calls and stay silent to different-pod calls (8/8 vs 0/6 raw; **6/6 vs 0/6 after pseudoreplication control, Fisher p = 0.002**), naive free-ranging animals, often matching the played type [@miller2004repertoires]. Frozen AVES2 recovers the Kamchatka dialect call types that drive this (leave-one-out 1-NN purity **0.439** vs a label-shuffle null of 0.050, p = 1e-3) [@russianorca_catalogue]. Corroborated across independent broadcast-response datasets [@selbmann2026aversive; @bowers2018] (see `reports/broadcast_response_criterion.json`). The behavioural experiments are prior published work; the response tracks dialect membership, not call content. |
+| NatureLM-audio check | Second-encoder stability | The frozen NatureLM-audio audio encoder reproduces the two primary representation checks on full uncapped data (`reports/naturelm_analysis_readout.json`): FEROP K-type catalogue separability is above chance (1-NN purity **0.366** vs proportional chance 0.050, p = 0.000999); site-controlled call-type recovery is above chance for VFPA/SRKW (**0.709** vs 0.071, p = 0.00498) and DFO-CRP/NRKW (**0.800** vs 0.0625, p = 0.00498); VFPA -> SMRU transfer reaches **0.682** over five shared SRKW types (chance 0.20). This checks representation stability across encoders; it is not evidence of semantic meaning. |
 | C2 catalogue context | Multi-context specialization of recovered call types | The validated Rung-1 catalogue call types specialize across functionally distinct contexts: **72% (13/18) are single-context foraging- or socializing-specialists** (foraging-specialists N4, N9; socializing-specialists the multi-pod two-voiced and pod-identity calls), specialization index 0.72, disjointness Fisher p = 0.069 [@ford1989; @foote2008]. Broadening the axis beyond foraging-vs-social, the same named units are documented across **six** functionally distinct behavioural contexts (foraging, travelling, resting, socializing, greeting/excitement, multi-pod aggregation; 16 types, specialization index 0.62) — so "more than one context" holds well beyond movement state, at the named-unit level [@ford1989; @foote2008; @riesch2008; @yurk2002]. Context labels are from published ethograms (not embeddings), so this is a non-circular contextual map complementing the H5 decode (the chi-square non-uniformity across contexts is suggestive only, p = 0.086, small n). |
 | Distributional semantics | Sequential structure ↔ behavioural context (non-circular) | Each call type's PPMI co-occurrence vector (from **sequence only**) is compared to its **independent** published-ethogram context vector by a Mantel test. **SRKW: positive** — distributionally similar S-calls share behavioural context (r = 0.33, p = 0.042, 8 types, 28 pairs); **NRKW: null** (r = -0.39, p = 0.89, 6 types). A non-circular test of the distributional hypothesis the bonobo/chimpanzee finalists assume [@berthet2025bonobo; @crockford2025]; modest and borderline (small n, type-level human-projected context labels), reported both ways; **not** referential meaning. |
 | Attribution | Representation attribution + negative controls | The within-site ecotype signal is multi-dimensional and redundantly distributed (a single AVES2 dimension is at chance; a low-rank PCA projection recovers most of it; ablating the top-k individually-important dimensions does not collapse the decode). It is not a probe artifact: structure-matched Gaussian noise (0.54) and per-dimension feature-shuffle (0.50) fall to near chance, and the decode (0.98) sits far above the label-permutation null (0.50, p ~= 0.008). |
@@ -228,6 +265,32 @@ recording-level scripts (`build_wellard_evidence_tables.py`, `run_h5_behavior_co
 `run_h6_context_structure.py`, `run_h7_candidate_motifs.py`) are retained as exploratory
 scaffolding only and are excluded from every headline claim.
 
+### NatureLM-audio comparison
+
+The second-encoder check runs in Colab via
+`notebooks/naturelm_audio_comparison_colab.ipynb`. It requires a GPU runtime and a
+Google Drive mount. The notebook loads only the NatureLM-audio BEATs encoder weights
+(not the Llama text generator), pins the upstream NatureLM-audio code revision, and
+persists the Hugging Face cache, source-audio cache, embeddings, reports, and figures
+under `MyDrive/OrcaDolittle_naturelm` so Colab disconnects can resume. The completed
+full-analysis run is committed as:
+
+- `reports/naturelm_analysis_readout.json` and `.md`;
+- `reports/naturelm_calltype_model_summary.json`;
+- `reports/naturelm_playback_embedding_summary.json`;
+- `reports/naturelm_model_manifest.json` and `reports/naturelm_environment.json`;
+- `reports/naturelm_calltype_manifest_resolved.csv`;
+- `figures/naturelm_calltype_model.png`;
+- `figures/naturelm_playback_embedding.png`.
+
+It re-runs two bounded comparison checks:
+
+- FEROP playback-dialect call-type separability;
+- site-controlled catalogue call-type classification, including VFPA -> SMRU transfer.
+
+The committed run completed with `RUN_MODE = FULL_ANALYSIS`, `MAX_CALLTYPE_SEGMENTS = 0`,
+1,000 FEROP permutations, and 200 call-type permutations per within-provider model.
+
 ## Repository Map
 
 | Path | Purpose |
@@ -243,7 +306,7 @@ scaffolding only and are excluded from every headline claim.
 | `docs/results_analysis.md` | Current run interpretation and limitations. |
 | `docs/literature_review.md` | Cited literature map. |
 | `paper/` | Full and condensed manuscripts and bibliography. |
-| `notebooks/` | Colab pipelines (full-catalogue call-type encode; DTAG context decode). |
+| `notebooks/` | Colab pipelines (full-catalogue call-type encode; DTAG context decode; NatureLM-audio comparison). |
 | `data/join_tables/` | Small metadata joins and provenance tables. |
 | `data/embeddings/` | Compact derived embedding artifacts. |
 | `reports/` | Run metadata and reproducibility summaries. |

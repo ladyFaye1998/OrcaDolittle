@@ -1,0 +1,11 @@
+{
+  "repo_id": "EarthSpeciesProject/NatureLM-audio",
+  "naturelm_source_commit": "c708df7a4cc294ca8d4aaf0498794b5674ce20b1",
+  "device": "cuda:0",
+  "config_path": "/content/drive/MyDrive/OrcaDolittle_naturelm/_hf_cache/models--EarthSpeciesProject--NatureLM-audio/snapshots/77855d9b0acd039f90798dcf0861f626bfefbd6f/config.json",
+  "weights_path": "/content/drive/MyDrive/OrcaDolittle_naturelm/_hf_cache/models--EarthSpeciesProject--NatureLM-audio/snapshots/77855d9b0acd039f90798dcf0861f626bfefbd6f/model.safetensors",
+  "weights_bytes": 1556386132,
+  "beats_prefix": "beats.",
+  "layernorm_prefix": "ln_audio.",
+  "representation": "fine-tuned BEATs audio encoder, frozen, mean-pooled over non-padding frames"
+}

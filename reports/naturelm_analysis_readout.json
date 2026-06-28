@@ -1,0 +1,55 @@
+{
+  "analysis_status": "PASS_WITH_PERMUTATION_TESTS",
+  "run_mode": "FULL_ANALYSIS",
+  "full_uncapped_data": true,
+  "observed_check_passed": true,
+  "permutation_tests_complete": true,
+  "result_sentence": "The two primary analyses were repeated with a frozen NatureLM-audio encoder: FEROP K-type catalogue exemplars remained separable (leave-one-out 1-NN purity=0.366, proportional chance=0.050), and site-controlled catalogue call-type recovery remained above chance for SRKW/VFPA (balanced accuracy=0.709, chance=0.071) and NRKW/DFO-CRP (balanced accuracy=0.800, chance=0.062). This is a representation robustness check, not evidence of semantic meaning.",
+  "checks": {
+    "ferop_playback_dialect_space": {
+      "ok": true,
+      "loo_1nn_purity": 0.36619718309859156,
+      "chance": 0.050188454671692126,
+      "pvalue": 0.000999000999000999
+    },
+    "vfpa_srkw_site_controlled_calltype": {
+      "ok": true,
+      "balanced_accuracy": 0.7093029278535363,
+      "chance": 0.07142857142857142,
+      "pvalue": 0.004975124378109453
+    },
+    "dfo_crp_nrkw_site_controlled_calltype": {
+      "ok": true,
+      "balanced_accuracy": 0.8000269915480172,
+      "chance": 0.0625,
+      "pvalue": 0.004975124378109453
+    },
+    "vfpa_to_smru_transfer": {
+      "status": "ok",
+      "train_provider": "vfpa",
+      "test_provider": "smru",
+      "shared_types": [
+        "S01",
+        "S04",
+        "S16",
+        "S10",
+        "S16/S17"
+      ],
+      "k": 5,
+      "n_train": 872,
+      "n_test": 267,
+      "transfer_balanced_accuracy": 0.681557635060287,
+      "transfer_macro_f1": 0.6506242821769138,
+      "chance_1_over_k": 0.2
+    }
+  },
+  "claim_boundary": "Second-encoder representation robustness only. Do not claim meaning, translation, syntax, intention, or playback causality from this notebook.",
+  "artifacts": {
+    "playback_summary": "/content/drive/MyDrive/OrcaDolittle_naturelm/reports/naturelm_playback_embedding_summary.json",
+    "calltype_summary": "/content/drive/MyDrive/OrcaDolittle_naturelm/reports/naturelm_calltype_model_summary.json",
+    "environment": "/content/drive/MyDrive/OrcaDolittle_naturelm/reports/naturelm_environment.json",
+    "model_manifest": "/content/drive/MyDrive/OrcaDolittle_naturelm/reports/naturelm_model_manifest.json",
+    "playback_figure": "/content/drive/MyDrive/OrcaDolittle_naturelm/figures/naturelm_playback_embedding.png",
+    "calltype_figure": "/content/drive/MyDrive/OrcaDolittle_naturelm/figures/naturelm_calltype_model.png"
+  }
+}
