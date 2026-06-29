@@ -4,7 +4,7 @@
 Hashes the frozen embedding artifact, every per-head metrics JSON and figure,
 and the report summaries, into a single manifest with the exact commands that
 regenerate each number. This is the public reproducibility bundle referenced in
-`paper/manuscript.md` (Section 6). It is separate from
+`docs/local_environment_manifest.md`. It is separate from
 `reports/artifact_hashes.json`, which records the original Colab run provenance;
 this manifest records the local re-run that produced the published figures.
 

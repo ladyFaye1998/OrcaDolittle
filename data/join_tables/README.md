@@ -22,7 +22,7 @@ This means a behavioural-context probe (the H5 family, **not** the H1 ecotype pr
 - `secondary_context`: Optional weaker association
 - `context_type`: One of `activity`, `social`, `arousal`
 - `proportion`: Quantitative proportion where available (e.g., "52.4%")
-- `citation_key`: BibTeX key from `paper/refs.bib`
+- `citation_key`: BibTeX key from `docs/refs.bib`
 - `notes`: Caveats and specifics
 
 ## Source papers
