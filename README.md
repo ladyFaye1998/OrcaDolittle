@@ -15,8 +15,6 @@ The repository is intentionally narrow and auditable: encode public acoustic seg
 | Code, figures, reports, and small derived artifacts | Committed here. |
 | Public site | [ladyfaye1998.github.io/OrcaDolittle](https://ladyfaye1998.github.io/OrcaDolittle/) |
 | Large derived artifacts | Deposited at Zenodo DOI [10.5281/zenodo.21030082](https://doi.org/10.5281/zenodo.21030082). |
-| Raw third-party audio and model weights | Not redistributed; downloaded from cited public sources. |
-| Submission manuscript sources/PDF | Kept out of this public git repository. |
 
 ## Start Here
 
