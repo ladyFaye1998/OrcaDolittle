@@ -3,7 +3,7 @@
 
 This is the step that turns a behavioural-*state* decode into evidence of *context-specific
 communication*. A state decode shows "the calls differ by context"; this tests the complementary,
-literature-standard production criterion: **specific call types are produced preferentially
+literature-standard production-side evidence: **specific call types are produced preferentially
 in specific behavioural contexts** [@ford1989; @foote2008], which is what "communication in
 more than one context" means operationally.
 
@@ -178,7 +178,7 @@ def main() -> int:
             "DCLDE catalogue types.",
             "Context is movement-only; within-individual null controls for repertoire and "
             "activity-budget differences between whales.",
-            "Production criterion (context-specific production), not receiver response.",
+            "Production-side evidence (context-specific production), not receiver response.",
         ],
     }
     REPORT.parent.mkdir(parents=True, exist_ok=True)

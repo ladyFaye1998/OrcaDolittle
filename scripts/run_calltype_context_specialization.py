@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""C2 (catalogue level): are the validated catalogue call types differentially
+"""Catalogue context specialization: are validated call types differentially
 associated with foraging vs socializing?
 
 The DTAG head (H5) shows context-specific *production* across movement-defined
@@ -14,8 +14,7 @@ field ethograms, NOT from our embeddings. This is therefore a literature-grounde
 contextual-specialization map of the recovered units, complementing - not
 duplicating - the embedding decode in H5. It tests whether resident killer
 whales use *distinct named call types* across two functionally distinct contexts
-(foraging vs social), which is the production-side reading of the
-"more than one behavioural context" criterion. It is NOT a claim of meaning.
+(foraging vs social). It is NOT a claim of meaning.
 
 Output: a per-call-type foraging/socializing classification, a specialization
 index, and a Fisher exact test that the foraging-associated and socializing-
@@ -116,7 +115,7 @@ def main() -> int:
     odds, p = fisher_exact(table, alternative="two-sided")
 
     print("\n" + "=" * 66)
-    print("C2 (CATALOGUE): FORAGING vs SOCIALIZING SPECIALIZATION")
+    print("CATALOGUE: FORAGING vs SOCIALIZING SPECIALIZATION")
     print("=" * 66)
     print(f"  populations: {', '.join(args.populations)}  (validated Rung-1 catalogue)")
     print(f"  call types with a foraging/social context: {n_types}")
@@ -147,7 +146,7 @@ def main() -> int:
 
     summary = {
         "analysis": "catalogue_calltype_foraging_vs_socializing_specialization",
-        "criterion": "C2 (more than one behavioural context), catalogue / named-unit level",
+        "analysis_scope": "catalogue / named-unit behavioural-context specialization",
         "context_label_source": "published field ethograms (NOT embeddings): "
                                 "ford1989, foote2008, riesch2008, yurk2002",
         "populations": args.populations,

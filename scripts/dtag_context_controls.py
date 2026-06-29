@@ -3,11 +3,11 @@
 
 A skeptic can offer three cheap explanations for "calls predict context" that are *not*
 context-specific communication:
-  (C1) call RATE  -- the whale simply calls more in one context, so a rate feature alone
+  call rate -- the whale simply calls more in one context, so a rate feature alone
        would decode context;
-  (C2) loudness/duration -- calls are just louder/longer in one context (an energetics
+  loudness/duration -- calls are just louder/longer in one context (an energetics
        artefact), so low-level acoustic scalars alone would decode context;
-  (C3) echolocation leakage -- residual biosonar (clicks) rather than communicative calls
+  echolocation leakage -- residual biosonar (clicks) rather than communicative calls
        carries the signal.
 
 This script answers all three on the existing data (reuses AVES2 embeddings; no re-encode):
@@ -148,7 +148,7 @@ def main() -> int:
     groups = meta["deployment"].to_numpy()
     print(f"{len(meta)} calls, {len(keep)} individuals, contexts {sorted(set(y))}")
 
-    # C1: local call-rate feature (calls within +/- RATE_WIN_S in the same deployment)
+    # Local call-rate feature (calls within +/- RATE_WIN_S in the same deployment)
     rate = np.zeros(len(meta))
     for dep, g in meta.groupby("deployment"):
         t = g["abs_t"].to_numpy()
@@ -157,7 +157,7 @@ def main() -> int:
             rate[k] = np.sum(np.abs(t - ti) <= RATE_WIN_S)
     ba_rate = logo_balacc(rate, y, groups)
 
-    # C2: low-level acoustic scalars
+    # Low-level acoustic scalars
     feats = acoustic_features(clips, list(meta["clip"]))
     F = np.array([feats.get(c, np.full(6, np.nan)) for c in meta["clip"]], float)
     ok = ~np.isnan(F).any(axis=1)
@@ -168,7 +168,7 @@ def main() -> int:
     ba_emb = logo_balacc(Xemb, y, groups)
     ba_emb_ok = logo_balacc(Xemb[ok], y[ok], groups[ok])
 
-    # C3: echolocation-leakage stress test.
+    # Echolocation-leakage stress test.
     # click-likeness = short duration + high HF fraction + high ZCR + high flatness (z-scored)
     def z(a):
         a = a.astype(float)
@@ -199,12 +199,12 @@ def main() -> int:
         "classes": sorted(set(map(str, y))),
         "decode_balanced_accuracy": {
             "aves2_embeddings": ba_emb,
-            "call_rate_only_C1": ba_rate,
-            "loudness_logrms_only_C2b": ba_loudness,
-            "lowlevel_acoustic_only_C2": ba_lowlevel,
-            "aves2_embeddings_same_rows_as_C2": ba_emb_ok,
+            "call_rate_only": ba_rate,
+            "loudness_logrms_only": ba_loudness,
+            "lowlevel_acoustic_only": ba_lowlevel,
+            "aves2_embeddings_same_rows_as_lowlevel": ba_emb_ok,
         },
-        "echolocation_leakage_C3": {
+        "echolocation_leakage": {
             "drop_fraction_most_clicklike": args.drop_frac,
             "n_dropped": int(n_drop),
             "aves2_after_dropping_clicklike": ba_drop_clicklike,
@@ -216,9 +216,9 @@ def main() -> int:
                                    "hf_fraction_ge4khz", "spectral_flatness"],
         "interpretation": [
             "If aves2_embeddings >> call_rate_only and >> lowlevel_acoustic_only, the decode "
-            "reflects call STRUCTURE, not rate or loudness (rules out C1, C2).",
+            "reflects call STRUCTURE, not rate or loudness.",
             "If aves2_after_dropping_clicklike stays high, the decode is not carried by "
-            "click-like transients (addresses C3).",
+            "click-like transients.",
         ],
     }
     REPORT.parent.mkdir(parents=True, exist_ok=True)
@@ -226,18 +226,18 @@ def main() -> int:
 
     print(f"\nbalanced accuracy by feature set:")
     print(f"  AVES2 embeddings        : {ba_emb:.3f}")
-    print(f"  call-rate only   (C1)   : {ba_rate:.3f}")
-    print(f"  loudness/log-RMS (C2b)  : {ba_loudness:.3f}")
-    print(f"  low-level acoustic (C2) : {ba_lowlevel:.3f}  (emb same rows: {ba_emb_ok:.3f})")
-    print(f"  drop {args.drop_frac:.0%} click-like (C3): {ba_drop_clicklike:.3f}"
+    print(f"  call-rate only          : {ba_rate:.3f}")
+    print(f"  loudness/log-RMS        : {ba_loudness:.3f}")
+    print(f"  low-level acoustic      : {ba_lowlevel:.3f}  (emb same rows: {ba_emb_ok:.3f})")
+    print(f"  drop {args.drop_frac:.0%} click-like: {ba_drop_clicklike:.3f}"
           + (f"  | click-like only: {ba_only_clicklike:.3f}" if ba_only_clicklike else ""))
 
     try:
         import matplotlib
         matplotlib.use("Agg")
         import matplotlib.pyplot as plt
-        names = ["AVES2\nembeddings", "call-rate\nonly (C1)", "low-level\nacoustic (C2)",
-                 f"AVES2\ndrop {args.drop_frac:.0%}\nclick-like (C3)"]
+        names = ["AVES2\nembeddings", "call-rate\nonly", "low-level\nacoustic",
+                 f"AVES2\ndrop {args.drop_frac:.0%}\nclick-like"]
         vals = [ba_emb, ba_rate, ba_lowlevel, ba_drop_clicklike]
         colors = ["#2a7fb8", "#bbbbbb", "#bbbbbb", "#2a7fb8"]
         chance = 1.0 / len(set(y))

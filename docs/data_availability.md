@@ -63,7 +63,7 @@ differently by context - and contexts beyond movement state.
 
 **Assessment for Rung 3.** Two routes exist. The **playback route** is available now: a
 published conspecific playback experiment [@filatova2011playback] supplies a measured,
-dialect-selective receiver response to broadcast calls (the perception criterion), which we
+dialect-selective receiver response to broadcast calls (the receiver-response evidence), which we
 re-analyse for the H6 result (`docs/decoding_program.md` 5g) - the behavioural experiment is
 prior work, our contribution is the reproducible statistic plus an embedding model of the
 dialect space on the public FEROP catalogue [@russianorca_catalogue]. What this route does

@@ -2,7 +2,7 @@
 """Rung 1 prototype: unsupervised call-type discovery WITHIN one ecotype.
 
 Ecotype discrimination (H1/H4) only shows that populations are acoustically
-separable. The next rung toward a production-criterion claim is showing that a
+separable. The next rung toward a production-side claim is showing that a
 single population carries a *discrete, stereotyped repertoire* -- candidate
 call types -- in the sense of the Ford/Filatova catalogues [@ford1989;
 @filatova2015]. This script discovers that structure unsupervised, but it does

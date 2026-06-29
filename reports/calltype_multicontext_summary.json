@@ -1,6 +1,6 @@
 {
   "analysis": "catalogue_calltype_multicontext_breadth",
-  "criterion": "C2 / versatility (communication in MORE THAN ONE context), catalogue / named-unit level",
+  "analysis_scope": "catalogue / named-unit behavioural-context breadth",
   "context_axis": "canonical killer-whale BEHAVIOURAL contexts (activity + social), NOT identity signalling",
   "context_label_source": "published field ethograms (NOT embeddings): ford1989, foote2008, riesch2008, yurk2002",
   "populations": [

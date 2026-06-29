@@ -3,9 +3,9 @@
   "analysis": "response_to_broadcast_conspecific_calls",
   "behavioural_source": "filatova2011playback (Marine Mammal Science 27(2):E26-E42)",
   "behavioural_source_note": "Prior published conspecific playback experiment on wild killer whales; this script recomputes the differential-response statistic from the transcribed per-trial table. The embedding/matching model is in run_playback_response.py.",
-  "criteria_addressed": {
-    "C1_endogenous_signals": true,
-    "C3_measurable_response_to_broadcast": true,
+  "evidence_scope": {
+    "endogenous_signals": true,
+    "measurable_response_to_broadcast": true,
     "no_learning_naive_wild_animals": true
   },
   "all_trials": {
@@ -60,7 +60,7 @@
   "caveats": [
     "Behavioural experiment is prior published work (Filatova et al. 2011); our contribution is the reproducible statistic + the embedding model.",
     "Small sample (14 playbacks; 6 vs 6 after pseudoreplication control) -- typical for cetacean playback but a real power limit.",
-    "Differential vocal response = the response/perception criterion (receivers act on the broadcast signal); NOT a claim of referential meaning.",
+    "Differential vocal response = the response/receiver-response evidence (receivers act on the broadcast signal); NOT a claim of referential meaning.",
     "Direction-change is reported descriptively; the paper found it n.s. (p=0.444)."
   ]
 }

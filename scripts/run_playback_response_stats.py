@@ -2,7 +2,7 @@
 """H6 (behavioural response side): differential response of wild killer whales to
 broadcast conspecific calls.
 
-This is the *response-criterion* (perception-side) result that the archival
+This is the *response-evidence* (perception-side) result that the archival
 ecotype/call-type/DTAG heads cannot supply. It is a re-analysis of a published,
 peer-reviewed conspecific playback experiment on wild killer whales
 [@filatova2011playback]: 2-min sequences of same-pod vs different-pod calls were
@@ -17,13 +17,12 @@ public FEROP call catalogue [@russianorca_catalogue] with frozen AVES2). This
 script computes only (a) -- the differential-response contingency -- so it runs
 with no audio and no encoder.
 
-Criteria addressed (the interspecies-communication criteria of Yovel & Rechavi
-[@yovel2023doctor]):
+Evidence checks:
   * endogenous signals - broadcast signals are the animals' OWN conspecific calls.
   * measurable response - a behavioural response to a broadcast signal.
   * no associative learning - wild, free-ranging animals, first exposure, no conditioning.
 
-The result is response-criterion evidence (the perception leg of Rung 2/3); it is
+The result is receiver-response evidence; it is
 NOT a claim of referential meaning. Report the result whichever way it comes out.
 
 Usage:
@@ -148,9 +147,9 @@ def main() -> int:
             "this script recomputes the differential-response statistic from the "
             "transcribed per-trial table. The embedding/matching model is in "
             "run_playback_response.py."),
-        "criteria_addressed": {
-            "C1_endogenous_signals": True,
-            "C3_measurable_response_to_broadcast": True,
+        "evidence_scope": {
+            "endogenous_signals": True,
+            "measurable_response_to_broadcast": True,
             "no_learning_naive_wild_animals": True,
         },
         "all_trials": raw,
@@ -163,7 +162,7 @@ def main() -> int:
             "our contribution is the reproducible statistic + the embedding model.",
             "Small sample (14 playbacks; 6 vs 6 after pseudoreplication control) -- "
             "typical for cetacean playback but a real power limit.",
-            "Differential vocal response = the response/perception criterion "
+            "Differential vocal response = receiver-response evidence "
             "(receivers act on the broadcast signal); NOT a claim of referential meaning.",
             "Direction-change is reported descriptively; the paper found it n.s. (p=0.444).",
         ],

@@ -14,7 +14,7 @@ This file tracks peer-reviewed playback literature that may support future respo
 
 | Source | Role | Status |
 |---|---|---|
-| [@filatova2011playback] | **Conspecific** playback to wild killer whales: same-pod vs different-pod calls; differential vocal response (8/8 vs 0/6, Fisher P=0.002), call-type matching. The primary response-criterion source. | Per-trial outcomes are published (Tables 1, 3); stimulus repertoire is the public FEROP catalogue [@russianorca_catalogue]; raw session audio is request-only (FEROP) |
+| [@filatova2011playback] | **Conspecific** playback to wild killer whales: same-pod vs different-pod calls; differential vocal response (8/8 vs 0/6, Fisher P=0.002), call-type matching. The primary response-evidence source. | Per-trial outcomes are published (Tables 1, 3); stimulus repertoire is the public FEROP catalogue [@russianorca_catalogue]; raw session audio is request-only (FEROP) |
 | [@selbmann2026aversive] | Tagged killer-whale responses to broadcast (heterospecific) pilot-whale sounds; HMM/GEE reaction scores | Open access; data + code in Supplementary Information |
 | [@bowers2018] | Killer-whale calls broadcast to two delphinids; shows orca call structure drives receiver responses | Open access; per-trial DTAG response table audit pending |
 | [@filatova2011] | Resident killer-whale call diversity / dialect context (companion to the playback paper) | Journal and DOI verified |

@@ -1,6 +1,6 @@
 {
-  "criterion": "C3 / response criterion (Yovel & Rechavi 2023, criterion 3): measurable response to a broadcast signal (non-invasive, naive animals, not only decoding)",
-  "criterion_met": true,
+  "response_evidence": "measurable response to a broadcast signal in naive animals",
+  "response_evidence_present": true,
   "basis": "Met by a published conspecific playback re-analysis (filatova2011playback: same-pod vs different-pod vocal response 6/6 vs 0/6, Fisher p=0.002, naive wild animals) plus an embedding model that recovers the dialect space driving the response (AVES2 purity 0.439 vs 0.05 null, p=1e-3), corroborated by independent broadcast-response datasets (selbmann2026aversive, bowers2018) and natural vocal matching (miller2004repertoires).",
   "n_broadcast_studies": 3,
   "n_conspecific_playback": 1,
@@ -64,7 +64,7 @@
     }
   ],
   "scope_and_caveats": [
-    "MET refers to the response criterion (a measurable response to a broadcast signal), NOT to referential meaning.",
+    "This response evidence is a measurable response to a broadcast signal, NOT evidence of referential meaning.",
     "The behavioural playback experiments are prior published work re-analysed here (Path A); our contribution is the reproducible statistic + the embedding model + the cross-dataset roll-up.",
     "The conspecific result tracks DIALECT membership (same vs different pod), not call CONTENT; a content-controlled playback would be needed for referential meaning and remains future work.",
     "Conspecific n is modest (6 vs 6 after pseudoreplication control); support comes from convergence across independent datasets and stimulus types."
