@@ -7,7 +7,7 @@
 > calls), leave-individual-out, with rate/loudness/echolocation controls. The "pending"
 > and "pilot first" language below is the original pre-run plan, retained for provenance.
 
-## 1. Goal and claim boundary
+## 1. Goal and scope boundary
 
 We aim to test, rigorously and on open data, whether **behavioural context can be
 decoded from killer-whale *communication signals*** — i.e. whether a model that

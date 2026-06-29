@@ -19,7 +19,7 @@ The repository focuses on a narrow, auditable workflow: encode public acoustic s
 
 ## 60-second evidence map
 
-**Claim boundary:** this repository supports acoustic structure, context association, and
+**Scope:** this repository supports acoustic structure, context association, and
 a dialect-selective receiver response to broadcast conspecific calls. It does **not** claim
 translation, semantic meaning, or a content-controlled response. The remaining field gap is
 a controlled conspecific playback that isolates call content.
@@ -152,7 +152,7 @@ All metrics above are computed on the public DCLDE 2026 corpus [@palmer2025dclde
 
 The full evidence ladder toward a defensible "decoding" claim, the verified public-data ceiling, and what remains gated on field playback are documented in `docs/decoding_program.md`.
 
-## Claim Boundary
+## Scope of Inference
 
 This project supports claims about:
 
@@ -199,7 +199,7 @@ The full public limitation register is
 [`docs/limitations_and_mitigations.md`](docs/limitations_and_mitigations.md). The short
 version:
 
-| Potential issue | Why it matters | Mitigation and current boundary |
+| Potential issue | Relevance | Mitigation and current boundary |
 |---|---|---|
 | Unknown sensory channels / whale "umwelt" | Orcas may use signal dimensions or multimodal cues that are not captured by archival hydrophone audio [@yovel2023doctor; @kershenbaum2024whyanimalstalk]. | The repo claims only recorded underwater acoustic structure and measured behaviour-linked response. It does not claim to capture non-acoustic cues or the full whale perceptual world. |
 | Bandwidth, equipment, and file-format heterogeneity | Killer whales hear across roughly 1-100 kHz, with high sensitivity in ultrasonic ranges; public archives differ in sampling, filters, hydrophones, gain, annotations, and conversion paths [@szymanski1999hearing; @palmer2025dclde; @johnson2003dtag]. | Provider/site is measured as a confound, not hidden; positive claims are made only within-site or under explicit cross-site transfer; DTAG conversions and derived artifacts are provenance-documented. No claim depends on absolute amplitude or full-band whale hearing. |
