@@ -53,11 +53,11 @@ Compact, **ours**, and reproducible — too large or GPU-gated for git, so they 
 planned Zenodo data record (`release_checklist.md`, `.zenodo.json`). A local staging package
 has been built but not uploaded:
 
-- Package: `orcadolittle_derived_artifacts_20260629T091550Z.zip`
-- Package SHA-256: `193b8ba4cc8d0699e34eea7e11ead9f3fe4099e0bf76d7cb2f531ae41a235e02`
-- Package contents: 112 included artifacts, 122,876,545 unpacked bytes, with internal
+- Package: `orcadolittle_derived_artifacts_clean_20260629T100942Z.zip`
+- Package SHA-256: `9f6119f618aba0b5c89988e13a93840d8c28ff7a1de544fc5dbd1cf6c971681c`
+- Package contents: 111 included artifacts, 122,872,445 unpacked bytes, with internal
   `PACKAGE_MANIFEST.json`, `PACKAGE_README.md`, and `SHA256SUMS.txt`
-- Source commit recorded in the package: `e6a39c57c67d3b55ed25c62298094721bb1057b7`
+- Source commit recorded in the package: `ebf29fc6abb408373f90639285d20244d251cd5b`
 
 | Artifact | Size | SHA-256 (first 16) | Status |
 |---|---|---|---|
@@ -102,7 +102,7 @@ sequence head reproduces the same conclusion with sub-1% numerical drift.
 | `data/external/` (DTAG `.mat`, DCLDE annotations) | 2.09 GB | Third-party data; >100 MB files; redistribution not permitted — cited by DOI instead |
 | `runs/20260529_072930/` (encode shards + merged) | 159 MB | Scratch encode output; the merged result is the committed `aves2_full_labeled.npz` |
 | `data/playback/ferop_catalogue/` (audio) | 3 MB | Third-party catalogue audio; embeddings are the derived artifact we deposit |
-| `_orca_local_only/` (video script, outreach, checklists, execution plan) | <1 MB | Private strategy/scheduling per `AGENTS.md` ("keep public docs free of private strategy") |
+| Local-only working notes and planning files | <1 MB | Not part of the public reproducibility record |
 
 This separation is intentional and documented so that the absence of these paths from git is
 **evidence of correct data hygiene**, not of incomplete work.
