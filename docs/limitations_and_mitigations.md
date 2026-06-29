@@ -7,7 +7,7 @@ every biologically relevant signal channel has been captured.
 
 ## Summary
 
-| Potential issue | Why it matters | How the project handles it | Remaining boundary |
+| Potential issue | Relevance | How the project handles it | Remaining boundary |
 |---|---|---|---|
 | Unknown sensory channels / "umwelt" | Orcas may use cues outside the acoustic channel modelled here, and humans may not perceive the same signal dimensions that matter to them [@yovel2023doctor; @kershenbaum2024whyanimalstalk]. | The claims are explicitly acoustic: frozen encoders are applied only to recorded underwater audio, and behavioural claims require measured receiver response rather than human interpretation. | This cannot exclude non-acoustic, multimodal, or unrecorded cues. A field study should combine hydrophones with visual, movement, group-ID, and response measures. |
 | Frequency-band and hearing mismatch | Killer whales hear well into ultrasonic frequencies: audiograms measured responses from 1-100 kHz, with best sensitivity around 18-42 kHz [@szymanski1999hearing]. Some public archives are sampled, filtered, or annotated in narrower bands [@palmer2025dclde]. | Headline analyses focus on pulsed calls/whistles preserved in the public recordings; echolocation/click leakage is controlled in the DTAG context analysis; site/frequency artifacts are treated as confounds, not ignored. | The work does not claim to model the full acoustic percept available to whales, especially high-frequency echolocation or recorder-filtered components. |

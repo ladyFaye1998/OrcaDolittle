@@ -72,7 +72,7 @@ Zenodo data record:
 
 > If `aves2_calltype_embeddings.npz` is later recovered, add it as a separate Zenodo file or
 > publish a v2 package; the current public result files and regeneration notebook already
-> preserve the full-catalogue call-type claim boundary.
+> preserve the full-catalogue call-type scope boundary.
 
 ## 4. Independent local reproduction (verified 2026-06-20, this machine)
 

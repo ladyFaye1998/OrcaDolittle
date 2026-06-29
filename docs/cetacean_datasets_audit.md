@@ -20,4 +20,4 @@ Broader cetacean and bioacoustic datasets inform validation design, tokenization
 
 ## Maintenance Rule
 
-This file should stay concise. Dataset-specific claims must cite `paper/refs.bib`, and any new dataset row should explain access, metadata fields, license, and why it matters for validation.
+This file should stay concise. Dataset-specific claims must cite `paper/refs.bib`, and any new dataset row should explain access, metadata fields, license, and validation role.
