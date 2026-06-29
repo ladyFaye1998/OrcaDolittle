@@ -136,9 +136,9 @@ def main() -> int:
                          "null means even ~50 perms give a stable p well under 0.05)")
     ap.add_argument("--models", default="linear,mlp",
                     help="comma-separated decode heads to run. The linear probe is the "
-                         "primary, defensible head; the MLP null is O(n_samples) per refit "
+                         "primary, testable head; the MLP null is O(n_samples) per refit "
                          "and becomes intractable at full scale (~11k calls x 22 folds), so "
-                         "'--models linear' gives the headline result without the multi-hour "
+                         "'--models linear' gives the main result without the multi-hour "
                          "MLP null.")
     args = ap.parse_args()
     model_kinds = [m.strip() for m in args.models.split(",") if m.strip()]

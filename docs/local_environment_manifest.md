@@ -1,6 +1,6 @@
 # Local environment manifest — full accounting of the work behind this repository
 
-This document makes the repository a **complete and auditable** account of the analysis.
+This document makes the repository a **complete and documented** account of the analysis.
 For every head it records what is **committed in git**, what is **derived and deposited**
 (Zenodo data DOI), and what is an **external public source** accessed during regeneration.
 

@@ -1189,7 +1189,7 @@ if labels:
     ax.set_xticklabels(labels)
     ax.set_ylim(0, 1)
     ax.set_ylabel("balanced accuracy")
-    ax.set_title("NatureLM-audio headline call-type checks")
+    ax.set_title("NatureLM-audio main call-type checks")
     for x, v in zip(xs, vals):
         ax.text(x, min(v + 0.03, 0.98), f"{v:.2f}", ha="center")
     ax.legend()

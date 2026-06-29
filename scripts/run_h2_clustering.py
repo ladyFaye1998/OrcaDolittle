@@ -9,7 +9,7 @@ then asks the two questions that matter for this confounded dataset:
 
 If (b) >> (a), the "structure" the encoder exposes is mostly which hydrophone
 recorded the call, not what the whale said. Reporting both is what makes this
-head defensible.
+head testable.
 
 Two methodological fixes over the naive version:
   - ARI/NMI are reported over ALL points (noise assigned to its own cluster),

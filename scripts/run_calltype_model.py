@@ -18,7 +18,7 @@ which lets us run the control the ecotype result failed:
     S-call types shared by both. This tests whether call-type structure
     generalises across recording sites (the ecotype boundary did not).
 
-Every headline number is checked against a majority-class baseline and a
+Every main number is checked against a majority-class baseline and a
 label-permutation null. Caveats are reported in the metrics JSON.
 
 Usage:

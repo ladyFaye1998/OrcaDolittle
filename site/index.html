@@ -536,7 +536,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
   <div class="two">
     <div class="panel reveal"><h3>What this project brings</h3><ul>
       <li>A frozen-embedding pipeline for killer-whale calls with hash-frozen artifacts and per-head metrics.</li>
-      <li>A site-controlled evaluation protocol that separates real acoustic structure from the recording-site shortcut — so any field claim rests on defensible methods.</li>
+      <li>A site-controlled evaluation protocol that separates acoustic structure from the recording-site shortcut and keeps field claims tied to measured controls.</li>
       <li>Validated catalogue call types that transfer across sites, and a behavioural-context decoder, ready to condition on your observed contexts.</li>
       <li>Code that scores playback stimulus &amp; response audio against the <em>same</em> frozen representation, drop-in.</li>
     </ul></div>
@@ -1546,7 +1546,7 @@ if(!applyUrlSelection())renderTray();
 const DB={
  ecotype:{title:'Call-level segments by ecotype — 27,934 total',note:'Pooled counts; in analysis these are evaluated with the recording site held constant.',rows:[['Southern Resident (SRKW)',14240],['Salish / archival resident (SAR)',8078],['Bigg’s / transient (TKW)',4121],['Offshore (OKW)',1495]]},
  calltype:{title:'Catalogue call types recovered (site-controlled)',note:'Ford/Filatova catalogue codes recovered from the per-provider annotations.',rows:[['NRKW N-call types @ DFO_CRP',18],['SRKW S-call types @ VFPA',14],['Shared S-types (cross-site transfer test)',5]]},
- provider:{title:'Recording providers — the site confound control',note:'Ecotype is collinear with the provider, which is why every headline number holds the site constant.',rows:[['UAF_NGOS',10113],['JASCO_VFPA',6962],['SIO',2637],['JASCO_VFPA_ONC',1511],['ONC',803]]}
+ provider:{title:'Recording providers — the site confound control',note:'Ecotype is collinear with the provider, which is why every main number holds the site constant.',rows:[['UAF_NGOS',10113],['JASCO_VFPA',6962],['SIO',2637],['JASCO_VFPA_ONC',1511],['ONC',803]]}
 };
 const dbTitle=document.getElementById('dbtitle'),dbBars=document.getElementById('dbbars'),dbNote=document.getElementById('dbnote');
 function renderDB(k){

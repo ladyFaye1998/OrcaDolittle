@@ -2,7 +2,7 @@
 
 Run `20260529_072930` encoded 27,934 DCLDE call-level segments (768-dim AVES2 embeddings, frozen) across 8 recording providers and 4 ecotypes [@palmer2025dclde; @palmer2025dclde_data; @hagiwara2023aves]. The artifact is schema-validated and hash-frozen (`reports/corpus_freeze.json`, SHA-256 `4f5a0c37...`) before any analysis. All numbers below are recomputed from that exact artifact.
 
-## Headline
+## Main
 
 Frozen AVES2 embeddings carry measurable killer-whale ecotype acoustic structure, but pooled decodability overstates it because of a recording-site shortcut. The bounded result is the site-controlled one: when recording site is held constant, ecotype remains decodable, separating biological structure from the site effect [@stowell2022; @ghani2023].
 
@@ -10,7 +10,7 @@ Frozen AVES2 embeddings carry measurable killer-whale ecotype acoustic structure
 
 | Evaluation | Metric | Value | Reading |
 |---|---|---|---|
-| Pooled 5-fold CV (confounded upper bound) | balanced accuracy | 0.910 (LogReg); MLP accuracy 0.974 | Impressive but site-confounded; not the headline. |
+| Pooled 5-fold CV (confounded upper bound) | balanced accuracy | 0.910 (LogReg); MLP accuracy 0.974 | High but site-confounded; not the primary claim. |
 | Leave-One-Provider-Out (cross-site) | balanced accuracy | 0.231 (chance 0.250) | Pooled signal **collapses to chance** when the test site is unseen. |
 | Site-decoding probe | balanced accuracy | 0.948 (chance 0.125) | Embeddings encode **which hydrophone** recorded the call. |
 | Within-site ecotype (site held constant) | balanced accuracy | 0.889 / 0.973 / 0.949 / 0.909 / 0.969 (JASCO_VFPA, JASCO_VFPA_ONC, ONC, SIO, UAF_NGOS; all p = 0.005) | Biological structure measured with site held fixed. |
@@ -22,7 +22,7 @@ The conclusion is not "AVES2 decodes orca ecotype at 0.97"; it is that the 0.97 
 
 ## H2: unsupervised structure
 
-PCA + HDBSCAN over all points gives ARI 0.043 versus ecotype (permutation p = 0.002) and ARI 0.028 versus provider. Structure is statistically above the shuffled-label null but small in absolute terms and sensitive to the reduction dimension and noise fraction (about 50% of points are unclustered at the best setting). UMAP-based reductions produce visually stronger clusters [@mcinnes2018umap; @mcinnes2017hdbscan; @sainburg2020], but UMAP is itself a non-linear embedding that can manufacture apparent structure, so the conservative PCA number is reported as the headline and the UMAP view is treated as illustration only.
+PCA + HDBSCAN over all points gives ARI 0.043 versus ecotype (permutation p = 0.002) and ARI 0.028 versus provider. Structure is statistically above the shuffled-label null but small in absolute terms and sensitive to the reduction dimension and noise fraction (about 50% of points are unclustered at the best setting). UMAP-based reductions produce visually stronger clusters [@mcinnes2018umap; @mcinnes2017hdbscan; @sainburg2020], but UMAP is itself a non-linear embedding that can manufacture apparent structure, so the conservative PCA number is reported and the UMAP view is treated as illustration only.
 
 ## Leg 3: encounter sequence structure (H3)
 
@@ -63,7 +63,7 @@ H4 showed the ecotype signal is local to recording conditions. As a methods cont
 
 ## Legacy context heads: exploratory only
 
-The earlier Wellard/Dryad Type C context heads inherit whole-encounter, often multi-label observer behaviour down to every fixed segment and duplicate one segment across contexts; they are weak recording-level associations, not segment-level behaviour [@wellard2020; @wellard2020_appendix2]. The "response proxy" is a within-encounter vocal-continuation timing statistic, not a measured response to a broadcast signal. None of these legacy heads is a headline claim; they are retained as scaffolding for a future playback collaboration only and are superseded for behavioural-context evidence by the DTAG H5 decode above.
+The earlier Wellard/Dryad Type C context heads inherit whole-encounter, often multi-label observer behaviour down to every fixed segment and duplicate one segment across contexts; they are weak recording-level associations, not segment-level behaviour [@wellard2020; @wellard2020_appendix2]. The "response proxy" is a within-encounter vocal-continuation timing statistic, not a measured response to a broadcast signal. None of these legacy heads is a main claim; they are retained for exploratory comparison only and are superseded for behavioural-context evidence by the DTAG H5 decode above.
 
 ## Bottom line
 

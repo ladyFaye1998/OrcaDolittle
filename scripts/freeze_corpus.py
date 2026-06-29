@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Schema-validate and freeze the labeled embedding corpus.
 
-Runs hard data-contract checks before any headline analysis, then records a
+Runs hard data-contract checks before any main analysis, then records a
 SHA-256 freeze manifest so every downstream result is tied to an exact artifact.
 This is the reproducibility gate referenced in `docs/methodology.md`.
 
