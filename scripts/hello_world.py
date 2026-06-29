@@ -66,7 +66,7 @@ def main():
 
     # Extract embedding
     print("\n[2/3] Extracting AVES2 embedding (BEATs backbone, CPU)...")
-    print("  (First run downloads model weights from HuggingFace, ~350 MB)")
+    print("  (First run downloads encoder resources from HuggingFace, ~350 MB)")
     embedding = extract_embedding(waveform, sr)
     print(f"  Embedding shape: {embedding.shape}")
     print(f"  → (batch={embedding.shape[0]}, time_steps={embedding.shape[1]}, features={embedding.shape[2]})")

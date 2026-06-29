@@ -6,7 +6,7 @@ within-individual decode (see `decode_context_plan.md`) from movement-derived
 labels to published gold-standard labels, or supply a second population.
 
 Status: drafted, **not yet sent**. Fill in the bracketed sender fields before
-sending. Keep all correspondence factual and cite the specific paper/deposit.
+sending. Keep all correspondence factual and cite the specific source publication/deposit.
 
 ---
 
@@ -114,8 +114,8 @@ recordings, and (b) the during/after response recordings, with the experiment
 numbering used in the paper.
 
 I would use these solely for this analysis, cite Filatova et al. (2011) as the
-experiment and data source, redistribute no raw audio, and offer acknowledgement or
-co-authorship as you prefer. I am happy to sign a data-use agreement.
+experiment and data source, follow any data-use terms, and offer acknowledgement
+or co-authorship as you prefer. I am happy to sign a data-use agreement.
 
 With thanks,
 [Name, affiliation, contact]

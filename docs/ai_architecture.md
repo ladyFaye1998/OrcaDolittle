@@ -37,9 +37,8 @@ DCLDE 2026 provides the public killer-whale acoustic substrate, including annota
 metadata and source-file provenance [@palmer2025dclde; @palmer2025dclde_data]. The
 behavioural-context head (H5) uses an independent archive of animal-borne DTAG
 recordings of Salish-Sea fish-eating killer whales [@holt2024masking_data;
-@tennessen2019; @holt2024masking]. The pipeline keeps raw audio and tag archives out
-of Git and stores compact derived artifacts with metadata sufficient to trace each row
-back to a source annotation.
+@tennessen2019; @holt2024masking]. The pipeline stores compact derived artifacts with
+metadata sufficient to trace each row back to a source annotation.
 
 ## Encoder Layer
 

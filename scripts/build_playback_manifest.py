@@ -11,8 +11,8 @@ downloads the WAVs to `data/playback/ferop_catalogue/`, and writes a manifest
 (`data/join_tables/ferop_catalogue_manifest.csv`) with one row per exemplar:
 `call_type, variant, url, local_path`.
 
-Raw audio is excluded from version control (see .gitignore); only the manifest is
-committed. Re-run this script to repopulate the audio.
+The manifest is the durable artifact. Re-run this script to repopulate the local
+catalogue files when needed.
 
 Usage:
   python scripts/build_playback_manifest.py

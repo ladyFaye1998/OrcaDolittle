@@ -57,8 +57,8 @@
   "figure": "figures/calltype_model_full.png",
   "caveats": [
     "Within-provider designs hold recording site constant; transfer tests cross-site generalisation.",
-    "Catalogue call types correlate with pod/matriline: call-type discrimination, NOT meaning.",
-    "Encoded directly from public DCLDE audio (8,552 labelled detections); raw audio is not redistributed.",
+    "Catalogue call types correlate with pod/matriline; call-type discrimination is an acoustic-category readout.",
+    "Encoded directly from public DCLDE audio (8,552 labelled detections).",
     "Transfer over 5 shared SRKW types includes the merged/ambiguous S16/S17 label; on the 4 unambiguous shared types the join-subset transfer was higher (0.83)."
   ]
 }

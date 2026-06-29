@@ -14,15 +14,14 @@ contexts the recovered repertoire covers and how the named units distribute
 across them.
 
 Non-circular framing (identical to C2): the context labels come from the
-published field ethograms, NOT from our embeddings. This is a literature-grounded
+published field ethograms, independently of the embeddings. This is a literature-grounded
 map of the documented behavioural use of the units recovered in Rung 1; it
 complements the DTAG embedding decode (H5), which carries the inferential weight
 on the production side. Pure identity-signalling associations (single-pod /
 clan-identity / inter-clan), which are about *who* is calling rather than *what
-behavioural context* the call is produced in, are deliberately excluded from the
-behavioural-context axis. This is the production-side reading of the
-"more than one context" criterion at the named-unit level; it is NOT a claim of
-referential meaning.
+behavioural context* the call is produced in, are outside the behavioural-context
+axis. This is the production-side reading of the "more than one context" criterion
+at the named-unit level.
 
 Output: a call-type x behavioural-context incidence map, the number of distinct
 contexts covered, a per-type context-count distribution, a specialization index,

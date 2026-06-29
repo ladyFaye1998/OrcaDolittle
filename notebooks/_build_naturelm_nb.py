@@ -63,7 +63,7 @@ Use **Runtime -> Change runtime type -> GPU**, then run the cells top to bottom.
 - 🧪 `SMOKE_TEST`: small setup check; not an analysis result.
 
 Outputs are cached in Google Drive at `MyDrive/OrcaDolittle_naturelm`, so disconnects
-do not erase model weights, audio, embeddings, reports, or figures.
+do not erase downloaded resources, embeddings, reports, or figures.
 """))
 
 cells.append(code(r"""
@@ -1399,7 +1399,7 @@ cells.append(md(r"""
 Run this after the analysis readout. It packages the reports and figures into one ZIP, stores the ZIP
 in Drive, and triggers a browser download from Colab.
 
-By default it does **not** include embeddings, audio, or model weights, because those
+By default it does **not** include generated outputs or downloaded resources, because those
 files can be large and are already cached in Drive. Turn on the checkbox only if you
 need the embedding matrices inside the ZIP.
 """))

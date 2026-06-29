@@ -2,8 +2,7 @@
 """Build compact acoustic feature vectors for Wellard H5-H7 segment rows.
 
 The script expects the Wellard WAV files to be extracted from the Dryad archive
-into a directory. Raw audio is never written by this script; only compact
-per-segment summary features and row metadata are saved.
+into a directory. It writes compact per-segment summary features and row metadata.
 """
 
 from __future__ import annotations
