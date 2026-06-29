@@ -17,7 +17,7 @@ The project uses public killer-whale acoustic annotations, frozen audio embeddin
 - Downloaded raw audio remains outside Git.
 - Compact derived artifacts include enough metadata to trace rows back to source annotations.
 - Figures must be regeneratable from scripts and metrics files.
-- Public factual claims cite `paper/refs.bib`.
+- Public factual claims cite `docs/refs.bib`.
 
 ## Cross-References
 

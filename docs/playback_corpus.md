@@ -32,4 +32,4 @@ Do not report a learned playback-response result from this file alone. Until per
 - Record stimulus class, listener species, sample size, response metric, and response direction.
 - Separate within-species and cross-species evidence.
 - Store extracted values in a small table with one row per trial or condition.
-- Cite source keys from `paper/refs.bib` in every row.
+- Cite source keys from `docs/refs.bib` in every row.
