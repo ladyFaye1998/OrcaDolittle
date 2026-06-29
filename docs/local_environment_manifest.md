@@ -4,11 +4,11 @@ This document makes the repository a **complete and auditable** account of the a
 even though the large raw inputs and scratch outputs are deliberately not version-controlled
 (per `AGENTS.md`: *"Do not commit raw audio, caches, model weights, or scratch runs"*, and
 GitHub's 100 MB per-file limit). For every head it records what is **committed in git**, what
-is **derived and depositable** (Zenodo data DOI), and what is an **external public source**
-that the pipeline downloads rather than redistributes.
+is **derived and depositable** (staged for a Zenodo data DOI), and what is an **external
+public source** that the pipeline downloads rather than redistributes.
 
 The guiding principle: every reported number is backed by either (a) an artifact committed
-here, (b) a compact derived artifact with a recorded SHA-256 deposited on Zenodo, or
+here, (b) a compact derived artifact with a recorded SHA-256 staged for Zenodo upload, or
 (c) a public dataset cited by DOI with the exact command that regenerates the derived form.
 
 ## 1. Reproducibility status by head
@@ -30,9 +30,10 @@ here, (b) a compact derived artifact with a recorded SHA-256 deposited on Zenodo
 | H6 FEROP dialect recovery | `reports/playback_embedding_summary.json` | FEROP embeddings (**committed**, §3) | **Yes** — embeddings now committed | `scripts/run_playback_response.py` |
 
 **Bottom line:** every head's *results* (metrics JSON + figure) are committed. Of the analysis
-heads, the majority regenerate from artifacts already in the repo; three (full-catalogue
-call-type, DTAG H5, FEROP embedding) depend on compact derived artifacts that are deposited
-separately (§3) because they are produced on Colab GPUs from large external inputs.
+heads, the majority regenerate from artifacts already in the repo. The GPU-derived artifacts
+that are too large or too cache-like for git are staged in a single local Zenodo-ready ZIP (§3);
+raw third-party audio, raw DTAG files, model weights, and private submission material are
+intentionally excluded.
 
 ## 2. External public-source datasets (cited, NOT redistributed)
 
@@ -46,24 +47,34 @@ size and provenance (they are not ours to redistribute); the repository cites ea
 | DTAG-2 archive (movement PRH) | `data/external/dtag/*.mat` (1.97 GB, 23 files, 7 > 100 MB) | Zenodo, CC-BY-4.0 [@holt2024masking_data; @tennessen2019] | H5 movement-context labels |
 | FEROP Kamchatka call catalogue | `data/playback/ferop_catalogue/` (3 MB audio) | public FEROP catalogue [@russianorca_catalogue] | H6 dialect recovery |
 
-## 3. Derived artifacts to deposit on Zenodo (data DOI)
+## 3. Derived artifacts staged for Zenodo (data DOI)
 
 Compact, **ours**, and reproducible — too large or GPU-gated for git, so they belong in the
-planned Zenodo data record (`release_checklist.md`, `.zenodo.json`). Each must carry a SHA-256
-on deposit.
+planned Zenodo data record (`release_checklist.md`, `.zenodo.json`). A local staging package
+has been built but not uploaded:
+
+- Package: `orcadolittle_derived_artifacts_20260629T091550Z.zip`
+- Package SHA-256: `193b8ba4cc8d0699e34eea7e11ead9f3fe4099e0bf76d7cb2f531ae41a235e02`
+- Package contents: 112 included artifacts, 122,876,545 unpacked bytes, with internal
+  `PACKAGE_MANIFEST.json`, `PACKAGE_README.md`, and `SHA256SUMS.txt`
+- Source commit recorded in the package: `e6a39c57c67d3b55ed25c62298094721bb1057b7`
 
 | Artifact | Size | SHA-256 (first 16) | Status |
 |---|---|---|---|
-| `aves2_full_labeled.npz` (DCLDE 27,934×768) | 76.5 MB | `4f5a0c371c476a8f` | **Committed in git** + to mirror on Zenodo |
-| Full-catalogue call-type embeddings (8,552) | (Colab) | — to hash on regen | **Regenerate via `notebooks/calltype_encode_colab.ipynb`**, then deposit |
-| DTAG call embeddings (H5) | (Colab) | — to hash on regen | **Regenerate via `notebooks/dtag_context_decode_colab.ipynb`**, then deposit |
-| FEROP catalogue embeddings | 0.2 MB | `1226776c4095a2bc` | **Committed in git** (`data/playback/ferop_catalogue_embeddings.npz`) |
+| `aves2_full_labeled.npz` (DCLDE 27,934×768) | 76.5 MB | `4f5a0c371c476a8f` | **Committed in git** and included in the staging ZIP |
+| Full-catalogue call-type result files | 0.2 MB | `42cef5d6c608e29` / `3b0cae35bd674638` | **Committed in git** (`reports/calltype_model_full_summary.json`, `figures/calltype_model_full.png`) and included in the staging ZIP |
+| Full-catalogue call-type embedding cache (8,552) | (Colab cache) | not available locally | **Not in staging ZIP**; exact file `aves2_calltype_embeddings.npz` was not found in local DriveFS. Recover it from Drive or regenerate via `notebooks/calltype_encode_colab.ipynb` if a reviewer needs the cache without rerun. |
+| DTAG call embeddings (H5) | 30.0 MB | `13a3b46c596e8fc3` | **Included in staging ZIP** as `external_derived/dtag_context/call_embeddings.npz`; raw `.mat/.dtg` stay external |
+| DTAG acoustic features + labels | 2.8 MB | `060d462178b88dd2` / `9164d1ec13e0ba56` / `ed15a4dd3f32316c` / `6c279587df90a5fa` | **Included in staging ZIP** (`clip_acoustic_features.npz`, `clips_manifest.json`, context CSVs) |
+| FEROP catalogue embeddings | 0.2 MB | `1226776c4095a2bc` | **Committed in git** (`data/playback/ferop_catalogue_embeddings.npz`) and included in the staging ZIP |
 | DTAG movement-derived labels | 0.1 MB | `84435263cb27bfb2` | **Committed in git** (`data/external/dtag/foraging_data.csv`, force-tracked; raw `.mat` stay external) |
+| NatureLM second-encoder summaries | 10.4 KB | `401d2e25306424c9` / `4850154b1042e469` | **Committed in git** and included in the staging ZIP |
 
-> **Action for full auditability:** re-run the two Colab notebooks to regenerate the
-> full-catalogue and DTAG call embeddings, deposit all derived `.npz` on Zenodo, and record
-> their SHA-256 here and in `reports/repro_bundle.json`. This closes the only reproducibility
-> gap for the criterion-bearing heads without redistributing any third-party raw data.
+> **Remaining packaging action:** upload the staging ZIP to Zenodo and copy the resulting
+> DOI into this document, `README.md`, and the submission data-availability statement. If
+> `aves2_calltype_embeddings.npz` is later recovered, add it as a separate Zenodo file or
+> publish a v2 package; the current public result files and regeneration notebook already
+> preserve the full-catalogue call-type claim boundary.
 
 ## 4. Independent local reproduction (verified 2026-06-20, this machine)
 
