@@ -13,8 +13,9 @@ The repository focuses on a narrow, auditable workflow: encode public acoustic s
 1. **60-second evidence map** for claims, scripts, and boundaries.
 2. **Scope** for what the repository covers.
 3. **Current Results** for the headline findings and figure/table summaries.
-4. **Quickstart** for smoke tests and full analysis entry points.
-5. **Repository Map** for file locations.
+4. **Known Limitations and Mitigations** for what the analysis cannot see yet.
+5. **Quickstart** for smoke tests and full analysis entry points.
+6. **Repository Map** for file locations.
 
 ## 60-second evidence map
 
@@ -22,6 +23,12 @@ The repository focuses on a narrow, auditable workflow: encode public acoustic s
 a dialect-selective receiver response to broadcast conspecific calls. It does **not** claim
 translation, semantic meaning, or a content-controlled response. The remaining field gap is
 a controlled conspecific playback that isolates call content.
+
+**Known limitations:** the analysis sees recorded underwater audio, not the whale's whole
+perceptual world. The public-facing limitation table is in
+[`docs/limitations_and_mitigations.md`](docs/limitations_and_mitigations.md); it covers
+unknown channels, bandwidth/equipment differences, legacy format conversion, identity/dialect
+confounds, prior-playback boundaries, and model-specificity checks.
 
 **One-command headline check:**
 
@@ -183,6 +190,20 @@ Use conservative wording:
 - "candidate motif" rather than "message"
 - "response proxy" for archival heads; "playback response (re-analysis)" only for H6, always noting the experiment is prior published work and the response tracks dialect, not meaning
 
+## Known Limitations and Mitigations
+
+The full public limitation register is
+[`docs/limitations_and_mitigations.md`](docs/limitations_and_mitigations.md). The short
+version:
+
+| Potential issue | Why it matters | Mitigation and current boundary |
+|---|---|---|
+| Unknown sensory channels / whale "umwelt" | Orcas may use signal dimensions or multimodal cues that are not captured by archival hydrophone audio [@yovel2023doctor; @kershenbaum2024whyanimalstalk]. | The repo claims only recorded underwater acoustic structure and measured behaviour-linked response. It does not claim to capture non-acoustic cues or the full whale perceptual world. |
+| Bandwidth, equipment, and file-format heterogeneity | Killer whales hear across roughly 1-100 kHz, with high sensitivity in ultrasonic ranges; public archives differ in sampling, filters, hydrophones, gain, annotations, and conversion paths [@szymanski1999hearing; @palmer2025dclde; @johnson2003dtag]. | Provider/site is measured as a confound, not hidden; positive claims are made only within-site or under explicit cross-site transfer; DTAG conversions and derived artifacts are provenance-documented. No claim depends on absolute amplitude or full-band whale hearing. |
+| Identity, dialect, and social-group confounds | Resident call types are socially structured, so a model can recover dialect or group membership without recovering content. | The playback result is described as dialect-selective receiver response, not meaning. The remaining irreducible test is a content-controlled conspecific playback. |
+| Prior playback evidence | The receiver-response experiment was published field work, not a new experiment run by this repository [@filatova2011playback]. | The contribution here is reproducible re-analysis and representation modelling of the dialect signal space. New permitted field playback remains future work. |
+| Model specificity | A result might be an artifact of one frozen encoder. | AVES2 is the primary audited encoder; the two primary representation checks also pass under NatureLM-audio [@hagiwara2023aves; @chen2022beats; @robinson2024naturelm]. Agreement across encoders is robustness, not semantic proof. |
+
 ## Quickstart
 
 ### Smoke test
@@ -302,6 +323,7 @@ The committed run completed with `RUN_MODE = FULL_ANALYSIS`, `MAX_CALLTYPE_SEGME
 | `docs/evidence_mapping.md` | Evidence axes, controls, and claim boundaries. |
 | `docs/decoding_program.md` | Criterion-based evidence ladder and verified public-data ceiling. |
 | `docs/data_availability.md` | Per-source data inventory for the context and responsiveness rungs. |
+| `docs/limitations_and_mitigations.md` | Public limitation register: unknown-channel, bandwidth/equipment, conversion, dialect, playback, and model-specificity boundaries. |
 | `docs/local_environment_manifest.md` | Full accounting of every artifact (committed vs Zenodo-deposited vs external public source), per-head reproduction status, and independent local reproduction. |
 | `docs/results_analysis.md` | Current run interpretation and limitations. |
 | `docs/literature_review.md` | Cited literature map. |

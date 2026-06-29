@@ -279,6 +279,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
     <a href="#talk">Talk&nbsp;Orca</a>
     <a href="dictionary.html">Dictionary</a>
     <a href="#field">Field kit</a>
+    <a href="#limits">Limits</a>
     <a href="#explore">Data</a>
     <a href="#refs">References</a>
   </div>
@@ -585,10 +586,22 @@ python scripts/run_playback_response_stats.py</code></pre>
     </ul></div>
   </div>
 </div></section>
+<section id="limits"><div class="wrap">
+  <div class="eyebrow reveal">Limitations &amp; controls</div>
+  <h2 class="reveal">What this analysis cannot see yet.</h2>
+  <p class="lead reveal">The project is intentionally acoustic and claim-bounded: it models recorded underwater audio and measured behavioural-response evidence, not the whale’s full perceptual world, not translation, and not semantic meaning. The full limitation register is in the repository.</p>
+  <div class="cards">
+    <div class="card reveal"><div class="k">Signal channel</div><h3>Recorded audio is not the whole whale percept</h3><p>Orcas may use multimodal or unrecorded cues. The analysis therefore makes acoustic claims only, and the field design pairs hydrophones with visual, group-ID, movement, and response measures.</p><div class="cite">Yovel &amp; Rechavi 2023 · Kershenbaum 2024</div></div>
+    <div class="card reveal"><div class="k">Bandwidth &amp; equipment</div><h3>Archives differ in sample rates, filters, gain, and formats</h3><p>Killer whales hear across high-frequency ranges, while public recordings come from mixed hydrophones and conversion paths. Provider is exposed as a confound; positive claims are limited to within-site tests or explicit transfer tests.</p><div class="cite">Szymanski et al. 1999 · Palmer et al. 2025 · Johnson &amp; Tyack 2003</div></div>
+    <div class="card reveal"><div class="k">Dialect vs content</div><h3>The playback result is dialect-selective, not content-controlled</h3><p>The published playback shows a receiver response to familiar dialect calls. It does not prove that whales respond to call content; that remains the permitted field playback that isolates content while holding dialect/social familiarity constant.</p><div class="cite">Filatova et al. 2011 · FEROP catalogue</div></div>
+    <div class="card reveal"><div class="k">Model robustness</div><h3>Second-encoder agreement is robustness, not meaning</h3><p>NatureLM-audio reproduces the two primary representation checks, which reduces the single-encoder objection. It still does not turn acoustic separability into semantic interpretation.</p><div class="cite">AVES2 · BEATs · NatureLM-audio</div></div>
+  </div>
+  <p class="lead reveal" style="margin-top:28px;font-size:15px">See <a href="https://github.com/ladyFaye1998/OrcaDolittle/blob/main/docs/limitations_and_mitigations.md" target="_blank" rel="noopener">limitations and mitigations</a> and <a href="https://github.com/ladyFaye1998/OrcaDolittle/blob/main/docs/data_availability.md" target="_blank" rel="noopener">data availability</a> for the source-by-source boundary.</p>
+</div></section>
 <section id="explore"><div class="wrap">
   <div class="eyebrow reveal">Explore the data</div>
-  <h2 class="reveal">It’s all public. Poke around — then go get it.</h2>
-  <p class="lead reveal">A quick look at what’s inside the corpus, right here on the page. The full recordings live in open repositories (linked below) — nothing is private or upon-request.</p>
+  <h2 class="reveal">Public inputs, documented provenance.</h2>
+  <p class="lead reveal">A quick look at what’s inside the corpus, right here on the page. Most inputs are public through the linked repositories; raw third-party archives, large native tag files, and regenerated model caches remain external, with derived artifacts and provenance documented in the repo.</p>
   <div class="reveal">
     <div class="dbtabs">
       <button class="dbtab active" data-db="ecotype">By ecotype</button>
@@ -613,6 +626,8 @@ python scripts/run_playback_response_stats.py</code></pre>
   <p class="lead reveal">Data are public: DCLDE 2026 (NOAA/NCEI), the DTAG archive (Zenodo, CC-BY), and the FEROP catalogue. Code and the full bibliography are in the repository.</p>
   <div class="refs reveal">
     <p class="r"><b>Palmer, K. J., et al.</b> (2025). A public dataset of annotated <em>Orcinus orca</em> acoustic signals for detection and ecotype classification. <em>Scientific Data</em> 12:1137.</p>
+    <p class="r"><b>Szymanski, M. D., et al.</b> (1999). Killer whale hearing: auditory brainstem response and behavioral audiograms. <em>J. Acoust. Soc. Am.</em> 106:1134–1141.</p>
+    <p class="r"><b>Johnson, M. P., Tyack, P. L.</b> (2003). A digital acoustic recording tag for measuring the response of wild marine mammals to sound. <em>IEEE J. Oceanic Engineering</em> 28:3–12.</p>
     <p class="r"><b>Hagiwara, M.</b> (2023). AVES: animal vocalization encoder based on self-supervision. <em>ICASSP 2023</em>.</p>
     <p class="r"><b>Chen, S., et al.</b> (2022). BEATs: audio pre-training with acoustic tokenizers. <em>arXiv</em>.</p>
     <p class="r"><b>Ford, J. K. B.</b> (1989). Acoustic behaviour of resident killer whales off Vancouver Island, British Columbia. <em>Canadian Journal of Zoology</em> 67:727–745.</p>
@@ -630,6 +645,7 @@ python scripts/run_playback_response_stats.py</code></pre>
     <p class="r"><b>Sharma, P., et al.</b> (2024). Contextual and combinatorial structure in sperm whale vocalisations. <em>Nature Communications</em> 15:3617.</p>
     <p class="r"><b>Stowell, D.</b> (2022). Computational bioacoustics with deep learning. <em>PeerJ</em> 10:e13152.</p>
     <p class="r"><b>Ghani, B., et al.</b> (2023). Global birdsong embeddings enable superior transfer learning. <em>Scientific Reports</em> 13:22876.</p>
+    <p class="r"><b>Yovel, Y., Rechavi, O.</b> (2023). AI and the Doctor Dolittle challenge. <em>Current Biology</em> 33:R783–R787.</p>
     <p class="r"><b>Kershenbaum, A.</b> (2024). <em>Why Animals Talk</em>. Penguin Press.</p>
     <p class="r"><b>Sayigh, L. S., et al.</b> (2025). Widespread sharing of stereotyped non-signature whistle types by wild dolphins. <em>bioRxiv</em>.</p>
     <p class="r"><b>Selbmann, A., et al.</b> (2026). Aversive behavioural responses of killer whales to sounds of long-finned pilot whales. <em>Scientific Reports</em> 16:4716.</p>
