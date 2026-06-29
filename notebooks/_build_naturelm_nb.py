@@ -1292,7 +1292,7 @@ result_sentence = (
     f"catalogue call-type recovery remained above chance for SRKW/VFPA "
     f"(balanced accuracy={fmt(srkw.get('balanced_accuracy'))}, chance={fmt(srkw.get('chance_1_over_k'))}) "
     f"and NRKW/DFO-CRP (balanced accuracy={fmt(nrkw.get('balanced_accuracy'))}, "
-    f"chance={fmt(nrkw.get('chance_1_over_k'))}). This is a representation robustness "
+    f"chance={fmt(nrkw.get('chance_1_over_k'))}). This is a cross-encoder "
     "check, not evidence of semantic meaning."
 )
 
@@ -1325,7 +1325,7 @@ readout = {
         "vfpa_to_smru_transfer": transfer,
     },
     "claim_boundary": (
-        "Second-encoder representation robustness only. Do not claim meaning, "
+        "Second-encoder representation check only. Do not claim meaning, "
         "translation, syntax, intention, or playback causality from this notebook."
     ),
     "artifacts": {
@@ -1363,7 +1363,7 @@ md = f'''
 
 ## Boundary
 
-Second-encoder representation robustness only. Do not claim meaning, translation,
+Second-encoder representation check only. Do not claim meaning, translation,
 syntax, intention, or playback causality from this notebook.
 '''
 READOUT_MD.write_text(md.strip() + "\n")

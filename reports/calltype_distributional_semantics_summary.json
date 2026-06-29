@@ -68,5 +68,5 @@
       "distribution_vs_context_positive": true
     }
   ],
-  "boundary": "Tests the distributional hypothesis (similar sequential company -> similar behavioural context) NON-CIRCULARLY: distribution from sequence only, context from independent ethograms only. A positive Mantel r is a structure<->context ASSOCIATION, NOT referential meaning. Context labels are human-projected (umwelt caveat) and coarse (type-level, not per-utterance), and the shared-type sample is small; reported honestly whichever way it comes out."
+  "boundary": "Tests the distributional hypothesis (similar sequential company -> similar behavioural context) NON-CIRCULARLY: distribution from sequence only, context from independent ethograms only. A positive Mantel r is a structure<->context ASSOCIATION, NOT referential meaning. Context labels are human-projected (umwelt caveat) and coarse (type-level, not per-utterance), and the shared-type sample is small; both positive and null results are reported."
 }

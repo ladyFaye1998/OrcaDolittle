@@ -135,8 +135,8 @@
     "label_perm_pvalue": 0.008264462809917356
   },
   "interpretation": {
-    "attribution": "The within-site ecotype signal is multi-dimensional and redundantly distributed across the AVES2 representation: a single dimension is near chance, ablating the top-k individually-important dimensions does not collapse the decode (the remaining dimensions compensate), and a low-rank PCA projection already recovers most of it. The signal is robust distributed structure, not a single-channel artifact.",
-    "controls": "Structure-matched Gaussian noise and per-dimension feature shuffle both fall to chance, and the observed decode sits far above the label-permutation null, so the probe is reading genuine joint structure in the representation, not gaming a marginal or a leak."
+    "attribution": "The within-site ecotype signal is multi-dimensional and redundantly distributed across the AVES2 representation: a single dimension is near chance, ablating the top-k individually-important dimensions does not collapse the decode (the remaining dimensions compensate), and a low-rank PCA projection already recovers most of it. The signal is distributed structure, not a single-channel artifact.",
+    "controls": "Structure-matched Gaussian noise and per-dimension feature shuffle both fall to chance, and the observed decode sits above the label-permutation null, so the probe is using joint structure in the representation rather than a marginal artifact or a leak."
   },
   "caveats": [
     "Attribution is computed on the within-provider (site-held-constant) ecotype decode, so it characterises the biological signal isolated by H4, not the site-confounded pooled number.",

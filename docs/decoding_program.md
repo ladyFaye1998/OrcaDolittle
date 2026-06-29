@@ -9,7 +9,7 @@ field collaborator.
 ## 1. What "decoding" has to mean to be defensible
 
 In the animal-communication literature a signal is treated as *functionally
-referential* only when it satisfies two independent criteria
+referential* only with two independent criteria
 [@deecke2005; @kershenbaum2024whyanimalstalk]:
 
 1. **Production criterion** - the signal is produced reliably and narrowly in a
@@ -19,7 +19,7 @@ referential* only when it satisfies two independent criteria
    absence of the original context, as if to the event it denotes. This is
    normally established with controlled playback [@deecke2005].
 
-A stronger, "language-like" claim adds a third element:
+A broader, "language-like" claim adds a third element:
 
 3. **Combinatorial / compositional structure** - discrete units combine under
    rules so that combinations carry meaning beyond their parts. This is the
@@ -27,7 +27,7 @@ A stronger, "language-like" claim adds a third element:
    [@sharma2024], bonobo calls [@berthet2025bonobo], and wild chimpanzee
    vocalisations [@crockford2025].
 
-The honest consequence: the analysis of our own archival corpora can establish the
+Consequence: the analysis of our own archival corpora can address the
 **production** prerequisites and **combinatorial structure**, but the **perception**
 criterion needs an experiment in which a signal is broadcast and the receiver's
 response is measured. We do not run new field playbacks. We do, however, address the
@@ -108,7 +108,7 @@ Hugging Face Hub API:
 - **Hugging Face Hub**: no killer-whale call-type-labelled dataset exists.
 - **Wellard et al. 2020 (Dryad)** [@wellard2020_data; @wellard2020]: a published
   **call-type catalogue** (acoustic repertoire) for Ross Sea Type C killer
-  whales - genuine call-type labels, downloadable. Scoped to one population.
+  whales - catalogue call-type labels, downloadable. Scoped to one population.
 - **DCLDE 2026 per-provider annotations** [@palmer2025dclde]: **the key finding.**
   The combined/published CSV standardises killer-whale labels to ecotype, but the
   original per-provider annotation files retain a populated `call_type` column
@@ -175,7 +175,7 @@ within the SRKW ecotype, with a provider-purity guard:
 
 Interpretation: unsupervised clustering of the current 1.7 s segment embeddings
 does not recover a discrete stereotyped repertoire, and pooled "structure" is a
-site artifact. **Rung 1 therefore genuinely requires ground-truth call-type
+site artifact. **Rung 1 therefore requires ground-truth call-type
 labels.** Those labels turned out to exist on our own corpus, in the DCLDE
 per-provider annotation files (Section 4): the labelled-data path is now open,
 not blocked. This negative result is what justified going to find them.
@@ -234,10 +234,10 @@ Interpretation: stereotyped killer-whale call types are recoverable from
 self-supervised embeddings in **both** resident populations (SRKW and NRKW), and
 - unlike the ecotype boundary, which collapsed to 0.529 across sites (H4) -
 **call-type identity transfers across independent recording sites** (0.636 over
-five types, 3.2x chance; 0.830 over the four unambiguous types). That is the
-strongest evidence in this project that the embeddings encode a real,
-site-independent acoustic category corresponding to the expert catalogue, and it
-closes the production-units leg (Rung 1). It also explains the Section 5b
+five types, 3.2x chance; 0.830 over the four unambiguous types). This supports
+the interpretation that the embeddings carry a site-transferable acoustic category
+corresponding to the expert catalogue, and it addresses the production-units leg
+(Rung 1). It also explains the Section 5b
 discovery failure: the categories are real but too fine to fall out of
 unsupervised clustering of site-confounded embeddings - supervision with
 catalogue labels is what resolves them. Residual within-site confusions are
@@ -311,7 +311,7 @@ audio, the above-chance decode cannot be produced by recognising the individual,
 recording site, or the acoustic energy used to define the label - the communicative calls
 themselves carry information about concurrent behaviour. The result now spans **more than one**
 behavioural context, is **call-type-specific**, and is not explained by how often or how loudly
-the whale calls or by biosonar. This meets the **production side** of Rung 2 (context-specific
+the whale calls or by biosonar. This addresses the **production side** of Rung 2 (context-specific
 calling across multiple contexts) - the segment-level behavioural link the archival ecotype and
 call-type analyses could not supply. It is **not** the perception side (no evidence that
 receivers act on the calls differently by context) and **not** evidence of referential meaning;
@@ -387,8 +387,8 @@ Of 18 catalogue call types with a documented foraging or social context, **72%
 (13/18) are single-context specialists**: foraging-specialists (e.g. N4, N9 - Ford's
 top foraging calls) versus socializing-specialists (e.g. the multi-pod two-voiced
 and pod-identity calls - Foote's social calls), with only 5 used in both
-(foraging x socializing Fisher p = 0.069, underpowered at n = 18). This establishes
-that resident killer whales use **distinct named call types across two functionally
+(foraging x socializing Fisher p = 0.069, underpowered at n = 18). This supports
+the claim that resident killer whales use **distinct named call types across two functionally
 distinct contexts** - the production-side reading of the "more than one context"
 criterion at the catalogue level. It is not a claim of meaning. See
 `reports/calltype_context_specialization_summary.json` and
@@ -410,7 +410,7 @@ and surrogates.
   2-back call reduces conditional entropy by delta = h2 - h3 = **0.645 bits**,
   versus a global first-order-surrogate null of 0.373 (**p ~= 1e-3**) and a tighter
   per-recording null of 0.546 (**p ~= 2e-3**). A held-out interpolated trigram
-  beats a bigram by **0.09 bits/token**. The strongest over-represented 3-call
+  beats a bigram by **0.09 bits/token**. The top over-represented 3-call
   motif is **S01->S04->S01** (observed 13 vs 1.87 expected under first order,
   z = 7.95, present in 5 recordings) - a candidate phrase.
 - **NRKW N-calls @ dfo_crp (31 types, 5,273 calls): null.** Despite very heavy
@@ -419,10 +419,9 @@ and surrogates.
   structure (Section 5e) is *not* accompanied by detectable second-order structure
   on this corpus.
 
-Interpretation: at least one resident population (SRKW) shows the stronger,
+Interpretation: at least one resident population (SRKW) shows a
 beyond-first-order combinatorial prerequisite, with recurring candidate phrases;
-the other (NRKW) does not, on the public data available. Reported honestly both
-ways. It remains a statement about call *ordering*, **not** semantic
+the other (NRKW) does not, on the public data available. It remains a statement about call *ordering*, **not** semantic
 compositionality (does A+B mean more than A,B?), which needs meaning/context labels
 (Rung 2) and perception (Rung 3). See
 `reports/calltype_compositionality_summary.json` and
@@ -588,30 +587,30 @@ rather than its *dialect membership* (the step from "responds to same-vs-differe
 pod" to referential meaning); contexts beyond movement state (e.g. alarm/mating) on
 the production side; and a mapping from named *catalogue* call types to specific
 external events. "We decoded orca language" in the two-way, semantic sense is
-therefore **not** a claim this work makes; the honest, defensible statement is that
-we have established the production units, sequential structure, multi-context
+therefore **not** a claim this work makes; the bounded statement is that
+we have evidence for the production units, sequential structure, multi-context
 context-specific production, **and** a dialect-selective receiver response to
 broadcast calls, while the content->response step remains future work.
 
-## 8. The gap to a proof of "orca language"
+## 8. The gap to demonstrated call content
 
-A proof of *language* (as opposed to *structured signalling*) requires that
+A demonstration of call content beyond structured signalling would require that
 orcas use specific sounds or sound combinations to convey specific information
 and that other orcas understand and act on it. That decomposes into five
-auditable requirements. For each we state what would prove it, what we have, and
-the single fact that closes the gap. None of the open requirements can be closed
+auditable requirements. For each we state what would test it, what we have, and
+the single fact that addresses the gap. None of the open requirements can be addressed
 by a larger model or more archival audio; they require behavioural labels and
-playback. This is the central, deliberate boundary of this project.
+playback. This is the central boundary of this project.
 
-| # | Requirement | What proves it | Status here | What closes the gap |
+| # | Requirement | What tests it | Status here | What closes the gap |
 |---|---|---|---|---|
-| G1 | **Real call units** | Validated, stereotyped call types matching expert catalogues, not just clusters [@ford1989; @filatova2015] | **Demonstrated, both resident populations.** Within-site SRKW 14-type 0.709 and NRKW 18-type 0.968; cross-site transfer 0.636 over 5 types (0.830 over 4 unambiguous), all p ~= 0.005 (Section 5d) | Closed for residents; extending to Bigg's/offshore and to finer matriline-level subtypes is incremental headroom |
-| G2 | **Meaning / context** | A call reliably maps to an external event (e.g. precedes reunion, occurs during prey pursuit, on calf separation) - the production criterion [@deecke2005] | **Demonstrated on the production side, multi-context.** DTAG H5: communicative calls decode the caller's movement-defined context with the individual held out across **more than one** context (foraging/non-foraging 0.770; three-way foraging/travelling/resting 0.577, chance 0.333), and **specific call types occur in specific contexts** (call-type × context Cramér's V = 0.40, within-individual p < 0.001); rate/loudness/echolocation controls pass (Section 5f) [@holt2024masking_data; @tennessen2019; @wilson2006; @ford1989; @foote2008]; and at the named-unit level the validated catalogue types are documented across **six** functionally distinct behavioural contexts (Section 5k, specialization index 0.62) [@riesch2008; @yurk2002]. Remaining: the perception side, and mapping *named catalogue* types to events | Receiver-response measurement (G3/G4) and per-call synchronised coding tying *named* call types to specific external events |
-| G3 | **Receiver response** | Another orca hears the signal and changes behaviour in the predicted direction - the perception criterion [@deecke2005] | **Demonstrated by re-analysis (Section 5g).** Wild killer whales respond selectively to broadcast conspecific calls (vocal reply to same-pod 6/6, different-pod 0/6, p = 0.002), naive animals, often matching the played type [@filatova2011playback; @miller2004repertoires] | Show the response tracks the call's *content*, not only its *dialect membership* |
-| G4 | **Causality** | Controlled playback: a stimulus class raises a response above a matched contrast | **Partly demonstrated.** The same-pod vs different-pod contrast is a controlled differential-response design [@filatova2011playback]; an independent open dataset shows killer whales respond to a broadcast stimulus against matched noise/upsweep controls [@selbmann2026aversive] (heterospecific stimulus) | A conspecific playback with matched acoustic controls that isolates call content; ideally run by us |
-| G5 | **Combination rules** | Sequences carry information beyond their parts: A+B differs from A, B, or B+A [@sharma2024; @berthet2025bonobo] | **Strengthened.** First-order sequential structure over *validated* call types in both populations (Section 5e), **and structure beyond first order in SRKW S-calls** (Section 5i: second-order info 0.645 bits, p ~= 1e-3 vs first-order Markov surrogates; candidate phrase S01->S04->S01, z = 7.95), though NRKW shows no detectable second-order structure; compositional *meaning* is still not testable without G1-G2 | A semantic compositionality test (does A+B *mean* more than A, B?), which needs meaning/context labels (G2) and perception (G3/G4) - not a bigger model |
+| G1 | **Real call units** | Validated, stereotyped call types matching expert catalogues, not just clusters [@ford1989; @filatova2015] | Within-site SRKW 14-type 0.709 and NRKW 18-type 0.968; cross-site transfer 0.636 over 5 types (0.830 over 4 unambiguous), all p ~= 0.005 (Section 5d) | Extending to Bigg's/offshore and to finer matriline-level subtypes |
+| G2 | **Meaning / context** | A call reliably maps to an external event (e.g. precedes reunion, occurs during prey pursuit, on calf separation) - the production criterion [@deecke2005] | Production-side evidence, multi-context. DTAG H5: communicative calls decode the caller's movement-defined context with the individual held out across **more than one** context (foraging/non-foraging 0.770; three-way foraging/travelling/resting 0.577, chance 0.333), and **specific call types occur in specific contexts** (call-type × context Cramér's V = 0.40, within-individual p < 0.001); rate/loudness/echolocation controls pass (Section 5f) [@holt2024masking_data; @tennessen2019; @wilson2006; @ford1989; @foote2008]; and at the named-unit level the validated catalogue types are documented across **six** functionally distinct behavioural contexts (Section 5k, specialization index 0.62) [@riesch2008; @yurk2002]. Remaining: the perception side, and mapping *named catalogue* types to events | Receiver-response measurement (G3/G4) and per-call synchronised coding tying *named* call types to specific external events |
+| G3 | **Receiver response** | Another orca hears the signal and changes behaviour in the predicted direction - the perception criterion [@deecke2005] | Re-analysis evidence (Section 5g): wild killer whales respond selectively to broadcast conspecific calls (vocal reply to same-pod 6/6, different-pod 0/6, p = 0.002), naive animals, often matching the played type [@filatova2011playback; @miller2004repertoires] | Show the response tracks the call's *content*, not only its *dialect membership* |
+| G4 | **Causality** | Controlled playback: a stimulus class raises a response above a matched contrast | Partial evidence. The same-pod vs different-pod contrast is a controlled differential-response design [@filatova2011playback]; an independent open dataset shows killer whales respond to a broadcast stimulus against matched noise/upsweep controls [@selbmann2026aversive] (heterospecific stimulus) | A conspecific playback with matched acoustic controls that isolates call content |
+| G5 | **Combination rules** | Sequences carry information beyond their parts: A+B differs from A, B, or B+A [@sharma2024; @berthet2025bonobo] | First-order sequential structure over *validated* call types in both populations (Section 5e), and structure beyond first order in SRKW S-calls (Section 5i: second-order info 0.645 bits, p ~= 1e-3 vs first-order Markov surrogates; candidate phrase S01->S04->S01, z = 7.95), though NRKW shows no detectable second-order structure; compositional *meaning* is still not testable without G1-G2 | A semantic compositionality test (does A+B *mean* more than A, B?), which needs meaning/context labels (G2) and perception (G3/G4) - not a bigger model |
 
-**Shortest honest summary.** We have sound structure (Rung 0, site-controlled),
+**Short summary.** We have sound structure (Rung 0, site-controlled),
 **validated call units in both resident populations that transfer across sites**
 (Rung 1, Section 5d), sequence structure (Rung 4 foot): one call tells you
 something about the likely next call, **context-specific production across more
@@ -628,13 +627,13 @@ can name candidate units and candidate phrases and now shows receivers act on th
 broadcast signal; what remains is showing they act on its meaning. This document is
 the contract for what each result is allowed to claim.
 
-## 9. Closable from public data (now closed) vs the single fieldwork-gated residual
+## 9. Public-data scope vs the fieldwork-gated residual
 
 It is worth separating the gaps into two kinds: those that **public-archival
 re-analysis can close** and those that **require new field data**. The first kind
-has been closed; the second collapses to a single item.
+is addressed here; the second remains a single fieldwork item.
 
-**Closed from public data (no new field collection):**
+**Addressed from public data (no new field collection):**
 
 1. **Real call units (G1).** Validated catalogue call types, both resident
    populations, site-controlled and cross-site-transferable (Sections 5d).
@@ -685,7 +684,7 @@ audio, is gated on the **request-only** FEROP session recordings
 (`docs/data_requests.md`), a data request rather than a model limitation; the public
 catalogue supports only the dialect-space recovery already reported.
 
-**Bottom line.** Every gap that public-data re-analysis can close is closed. The
+**Bottom line.** Public-data re-analysis addresses the archival parts of the program. The
 sole irreducible residual is a content-isolating first-party playback - field work
 that needs a collaborator, and the same step that separates structured signalling
 from demonstrated meaning. No larger model or additional archival audio closes it.

@@ -31,7 +31,7 @@ We report, raw vs site-invariant under the identical pipeline:
   - a within-site sanity check (the transform must not destroy within-site signal);
   - a label-permutation null on the best site-invariant setting.
 
-The result is reported honestly whichever way it comes out: ecotype and recording
+The result is reported whichever way it comes out: ecotype and recording
 site are genuinely confounded in this corpus (e.g. SAR is recorded at a single
 provider), so full recovery is not guaranteed. Methods only; not a claim of meaning.
 
@@ -320,7 +320,7 @@ def main() -> int:
         "figure": fig_rel,
         "boundary": ("Methods contribution: a label-free site-invariance transform for frozen "
                      "bioacoustic embeddings. Ecotype and recording site are confounded in this "
-                     "corpus (SAR is single-provider), so recovery is bounded; reported honestly. "
+                     "corpus (SAR is single-provider), so recovery is bounded. "
                      "Not a claim of meaning."),
     }
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)

@@ -19,7 +19,7 @@ which lets us run the control the ecotype result failed:
     generalises across recording sites (the ecotype boundary did not).
 
 Every headline number is checked against a majority-class baseline and a
-label-permutation null. Honest caveats are reported in the metrics JSON.
+label-permutation null. Caveats are reported in the metrics JSON.
 
 Usage:
   python scripts/run_calltype_model.py --embeddings data/embeddings/aves2_full_labeled.npz \
@@ -64,7 +64,7 @@ def _clf():
 
 
 def _mlp():
-    # Best-achievable nonlinear head, reported alongside the linear probe.
+    # Nonlinear head, reported alongside the linear probe.
     from sklearn.neural_network import MLPClassifier
     return make_pipeline(
         StandardScaler(),
@@ -131,7 +131,7 @@ def within_provider(X, lab, provider, min_per_type):
     macro_f1 = f1_score(y_true, y_pred, average="macro")
     majority = pd.Series(y).value_counts(normalize=True).iloc[0]
 
-    # Best-achievable nonlinear head (reported alongside the linear probe).
+    # Nonlinear head (reported alongside the linear probe).
     mt, mp = [], []
     for tr, te in skf.split(Xs, y):
         clf = _mlp().fit(Xs[tr], y[tr])

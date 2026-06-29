@@ -28,10 +28,10 @@ For each population subset (site held constant) it reports:
   3. Over-represented 3-gram motifs (observed count vs first-order-surrogate
      expectation, z-scored) - candidate multi-call phrases.
 
-Structure beyond first order is a STRONGER combinatorial prerequisite than the
+Structure beyond first order is a beyond-first-order combinatorial test relative to the
 first-order result; it is still NOT semantic compositionality (A+B *means* more
 than A,B), which needs meaning/context labels and is out of scope here. Reported
-honestly whichever way it comes out.
+with both positive and null outcomes reported.
 
 Usage:
   python scripts/run_calltype_compositionality.py --n-surrogate 1000
@@ -150,7 +150,7 @@ def markov_surrogate_per_recording(seqs, k, global_bi, rng):
     """Tighter null: sample each recording from ITS OWN first-order transition
     matrix (backing off to the global matrix for unseen rows), preserving its
     length and starting symbol. Exceeding this null cannot be explained by
-    recording-level heterogeneity in first-order dynamics - it requires genuine
+    recording-level heterogeneity in first-order dynamics - it requires
     within-recording second-order structure."""
     Tg = global_bi / np.clip(global_bi.sum(1, keepdims=True), 1, None)
     ug = global_bi.sum(0) + 1e-9
@@ -378,8 +378,8 @@ def main():
         "n_surrogate": args.n_surrogate,
         "subsets": results,
         "figure": fig_rel if panels else None,
-        "boundary": ("Structure beyond first order is a stronger combinatorial prerequisite "
-                     "than the first-order result, tested against first-order Markov surrogates "
+        "boundary": ("Structure beyond first order is a beyond-first-order combinatorial test, "
+                     "evaluated against first-order Markov surrogates "
                      "so it is not a re-detection of pairwise structure. It is NOT semantic "
                      "compositionality (A+B meaning more than A,B), which needs meaning/context "
                      "labels and is out of scope. Motifs are CANDIDATE phrases, not words."),

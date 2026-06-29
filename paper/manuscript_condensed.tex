@@ -20,7 +20,7 @@
 \graphicspath{{../figures/}}
 \pagestyle{plain}
 
-\title{\vspace{-2.5em}Site-controlled evaluation reveals genuine killer-whale ecotype and
+\title{\vspace{-2.5em}Site-controlled evaluation of killer-whale ecotype and
 call-type structure in frozen audio-model embeddings}
 % Correspondence email intentionally omitted from the public source.
 \author{Danielle Lesin \\ \small Georgia Institute of Technology, College of Computing}
@@ -141,7 +141,7 @@ $p\le 5\times10^{-3}$.}
 \paragraph{Ecotype: biology survives only with site control.} Pooled decoding reaches
 $0.910$ but collapses to $0.231$ leave-one-provider-out, and provider decodes at $0.948$:
 the pooled number is largely hydrophone recognition. With site held constant, ecotype stays
-strongly decodable across five providers ($0.889$--$0.973$, all $p=5\times10^{-3}$), but
+decodable across five providers ($0.889$--$0.973$, all $p=5\times10^{-3}$), but
 cross-site transfer is near chance ($0.529$)---the biology is real yet local
 (Fig.~\ref{fig:h4}).
 
@@ -162,8 +162,8 @@ structure), the call two steps back adds information a first-order model cannot 
 S-calls ($h_2-h_3=0.645$ bits; $p\approx10^{-3}$ vs global and per-recording surrogates;
 held-out trigram beats bigram by $0.09$ bits/token; top candidate phrase
 S01$\to$S04$\to$S01, $z=7.95$) but not in NRKW N-calls ($0.008$ bits, $p=1.0$, despite heavy
-bouting). The stronger combinatorial prerequisite the comparative literature tests for
-\citep{sharma2024,berthet2025bonobo,crockford2025}; reported honestly both ways and still not
+bouting). A beyond-first-order combinatorial prerequisite in the comparative framing
+\citep{sharma2024,berthet2025bonobo,crockford2025}; both populations are reported and this is still not
 semantic compositionality.
 
 \paragraph{Communicative calls track behaviour, individual held out.} Across 22 tagged
@@ -183,7 +183,7 @@ the public FEROP catalogue \citep{russianorca_catalogue} with frozen AVES2, leav
 1-NN call-type purity is $0.439$ across 19 dialect types vs a $0.050$ label-shuffle null
 ($p=10^{-3}$): the encoder represents the dialect space that drives the response. The
 behavioural experiment is prior work; the response tracks dialect membership, not call content.
-The criterion is corroborated across independent broadcast-response datasets
+The response result is supported by independent broadcast-response datasets
 \citep{selbmann2026aversive,bowers2018,miller2004repertoires}. On the production side, the
 recovered catalogue call types specialise across foraging vs socialising---$72\%$ ($13/18$
 NRKW/SRKW types) are single-context specialists (foraging: N4, N9; socialising: the multi-pod
@@ -191,20 +191,20 @@ two-voiced/identity calls), context labels from published ethograms, not embeddi
 \citep{ford1989,foote2008}; broadening the axis, the same named units are documented across
 \emph{six} distinct behavioural contexts (foraging, travelling, resting, socialising,
 greeting/excitement, multi-pod aggregation; specialisation index $0.62$), so the
-``more than one context'' criterion holds well beyond movement state
+``more than one context'' evidence extends beyond movement state
 \citep{riesch2008,yurk2002}.
 
-\paragraph{Second-encoder robustness.} Repeating the FEROP dialect-space and site-controlled
+\paragraph{Second-encoder check.} Repeating the FEROP dialect-space and site-controlled
 call-type checks with frozen NatureLM-audio \citep{robinson2024naturelm} preserves the bounded
 result: FEROP K-type purity $0.366$ vs $0.050$ chance ($p=0.000999$), within-provider call-type
 balanced accuracies $0.709$ (SRKW) and $0.800$ (NRKW), and VFPA$\to$SMRU transfer $0.682$ over
-five shared types. Representation stability, not semantic meaning.
+five shared types. Cross-encoder agreement, not semantic meaning.
 
 \paragraph{The signal is distributed and not an artifact.} On the within-site SRKW/TKW
 decode ($0.979$), no small dimension set is necessary (top-$k$ knock-out stays $0.93$--$0.97$
 through $k{=}200$; one dimension is at chance; $\sim\!100$ PCA components reach $0.91$), and
 matched-noise ($0.536$), feature-shuffle ($0.505$), and label-permutation ($0.503$,
-$p=8\times10^{-3}$) controls all sit near chance: genuine joint structure, not a gamed leak.
+$p=8\times10^{-3}$) controls all sit near chance: joint structure rather than a marginal leak.
 
 \paragraph{Label-free site-invariance.} A site-nuisance subspace projection fit \emph{without}
 the held-out site's ecotype labels improves cross-site ecotype transfer (SRKW vs TKW
@@ -216,7 +216,7 @@ confound \citep{stowell2022,ghani2023}.
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.9\linewidth]{h4_confound_aves2_full_labeled.png}
-\caption{Provider decodes at $0.948$ (left); ecotype is strongly decodable within five fixed
+\caption{Provider decodes at $0.948$ (left); ecotype is decodable within five fixed
 sites (middle); cross-site transfer is near chance (right). The signal is real but local.}
 \label{fig:h4}
 \end{figure}

@@ -213,7 +213,7 @@ def main() -> int:
             "Behavioural-context axis only: identity-signalling associations "
             "(single-pod / clan-identity / inter-clan) are excluded because they "
             "encode caller identity, not behavioural context.",
-            "Establishes context-specific PRODUCTION across more than one "
+            "Supports context-specific PRODUCTION across more than one "
             "behavioural context at the named-unit level; NOT a claim of meaning.",
             "Small n (catalogue types with a documented behavioural context); the "
             "chi-square is descriptive support, and Ford 1989 notes no call type "

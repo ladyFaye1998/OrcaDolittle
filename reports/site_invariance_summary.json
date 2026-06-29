@@ -181,5 +181,5 @@
     "pvalue": 0.004975124378109453
   },
   "figure": "figures/site_invariance.png",
-  "boundary": "Methods contribution: a label-free site-invariance transform for frozen bioacoustic embeddings. Ecotype and recording site are confounded in this corpus (SAR is single-provider), so recovery is bounded; reported honestly. Not a claim of meaning."
+  "boundary": "Methods contribution: a label-free site-invariance transform for frozen bioacoustic embeddings. Ecotype and recording site are confounded in this corpus (SAR is single-provider), so recovery is bounded. Not a claim of meaning."
 }

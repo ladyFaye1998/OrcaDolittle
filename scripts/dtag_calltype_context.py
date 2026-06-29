@@ -2,7 +2,7 @@
 """Test call-type x context selectivity: are specific call types produced in specific contexts?
 
 This is the step that turns a behavioural-*state* decode into evidence of *context-specific
-communication*. A state decode shows "the calls differ by context"; this shows the stronger,
+communication*. A state decode shows "the calls differ by context"; this tests the complementary,
 literature-standard production criterion: **specific call types are produced preferentially
 in specific behavioural contexts** [@ford1989; @foote2008], which is what "communication in
 more than one context" means operationally.

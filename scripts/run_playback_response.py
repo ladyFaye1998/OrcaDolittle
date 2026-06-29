@@ -18,11 +18,11 @@ embeddings recover call-type identity, against a label-shuffle null:
   2. silhouette of the call-type grouping;
   3. both compared to a label-permutation null.
 
-A positive result establishes that the encoder represents the exact signal space of
+A positive result supports the interpretation that the encoder represents the signal space of
 the playback stimuli -- the embedding prerequisite for a dialect-distance response
 model (which becomes fully testable once the per-trial stimulus/response session
 audio is obtained; see docs/data_requests.md). It is NOT itself a claim about
-meaning. Reported honestly whichever way it comes out.
+meaning. Report the result whichever way it comes out.
 
 Usage:
   python scripts/build_playback_manifest.py     # fetch catalogue first
