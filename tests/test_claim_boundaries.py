@@ -10,8 +10,8 @@ def read(path: str) -> str:
 
 def test_public_readme_has_neutral_claim_boundary() -> None:
     text = read("README.md")
-    assert "does **not** claim translation" in text
-    assert "response proxy" in text
+    assert "behaviour-linked acoustic analysis rather than translation" in text
+    assert "dialect membership is the tested contrast" in text
 
 
 def test_neutral_builder_exists() -> None:
