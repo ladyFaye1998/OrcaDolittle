@@ -324,7 +324,7 @@ The committed run completed with `RUN_MODE = FULL_ANALYSIS`, `MAX_CALLTYPE_SEGME
 | `docs/decoding_program.md` | Criterion-based evidence ladder and verified public-data ceiling. |
 | `docs/data_availability.md` | Per-source data inventory for the context and responsiveness rungs. |
 | `docs/limitations_and_mitigations.md` | Public limitation register: unknown-channel, bandwidth/equipment, conversion, dialect, playback, and model-specificity boundaries. |
-| `docs/local_environment_manifest.md` | Full accounting of every artifact (committed vs Zenodo-deposited vs external public source), per-head reproduction status, and independent local reproduction. |
+| `docs/local_environment_manifest.md` | Full accounting of every artifact (committed vs staged-for-Zenodo vs external public source), per-head reproduction status, and independent local reproduction. |
 | `docs/results_analysis.md` | Current run interpretation and limitations. |
 | `docs/literature_review.md` | Cited literature map. |
 | `paper/` | Full and condensed manuscripts and bibliography. |
