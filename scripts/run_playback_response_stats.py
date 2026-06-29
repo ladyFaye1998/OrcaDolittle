@@ -24,7 +24,7 @@ Criteria addressed (the interspecies-communication criteria of Yovel & Rechavi
   * no associative learning - wild, free-ranging animals, first exposure, no conditioning.
 
 The result is response-criterion evidence (the perception leg of Rung 2/3); it is
-NOT a claim of referential meaning. Reported honestly whichever way it comes out.
+NOT a claim of referential meaning. Report the result whichever way it comes out.
 
 Usage:
   python scripts/run_playback_response_stats.py

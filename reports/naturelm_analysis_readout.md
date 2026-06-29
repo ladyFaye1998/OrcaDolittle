@@ -16,9 +16,9 @@
 
 ## Result sentence
 
-The two primary analyses were repeated with a frozen NatureLM-audio encoder: FEROP K-type catalogue exemplars remained separable (leave-one-out 1-NN purity=0.366, proportional chance=0.050), and site-controlled catalogue call-type recovery remained above chance for SRKW/VFPA (balanced accuracy=0.709, chance=0.071) and NRKW/DFO-CRP (balanced accuracy=0.800, chance=0.062). This is a representation robustness check, not evidence of semantic meaning.
+The two primary analyses were repeated with a frozen NatureLM-audio encoder: FEROP K-type catalogue exemplars remained separable (leave-one-out 1-NN purity=0.366, proportional chance=0.050), and site-controlled catalogue call-type recovery remained above chance for SRKW/VFPA (balanced accuracy=0.709, chance=0.071) and NRKW/DFO-CRP (balanced accuracy=0.800, chance=0.062). This is a cross-encoder check, not evidence of semantic meaning.
 
 ## Boundary
 
-Second-encoder representation robustness only. Do not claim meaning, translation,
+Second-encoder representation check only. Do not claim meaning, translation,
 syntax, intention, or playback causality from this notebook.

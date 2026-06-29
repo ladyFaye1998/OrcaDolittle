@@ -313,7 +313,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
     <div class="card reveal"><div class="k">More than one context</div><h3>Calls predict what the whale is doing</h3><div class="num">0.770</div><p>On animal-borne tags, communicative calls decode movement-defined context (foraging vs not 0.77; three-way 0.58) with <b>every individual held out</b>, and specific call types occur in specific contexts (V=0.40). Controls rule out call rate and loudness as the explanation.</p><div class="cite">Holt, Tennessen et al. 2024 · Wilson et al. 2006</div></div>
     <div class="card reveal"><div class="k">Structure</div><h3>Sequence structure, and — in SRKW — beyond first order</h3><div class="num">+0.645 bits</div><p>Calls don’t come at random: one call predicts the next, and Southern-Resident sequences carry information a first-order model can’t explain (candidate phrase S01→S04→S01). A prerequisite for combinatorial coding — not meaning.</p><div class="cite">Sharma et al. 2024 · Berthet et al. 2025 · Girard-Buttoz et al. 2025</div></div>
     <div class="card reveal"><div class="k">A measured response</div><h3>Wild whales answer same-pod calls, ignore strangers</h3><div class="num">p = 0.002</div><p>Re-analysis of a published playback: free-ranging whales replied to same-pod broadcasts (6/6) and stayed silent to different-pod ones (0/6), naive animals — and the model recovers the dialect call types that drive it (purity 0.439 vs 0.05 null). The experiment is prior work; the response tracks <b>dialect, not content</b>.</p><div class="cite">Filatova et al. 2011 · FEROP catalogue · Miller et al. 2004</div></div>
-    <div class="card reveal"><div class="k">Second encoder</div><h3>The same representation checks hold in NatureLM-audio</h3><div class="num">0.709 / 0.800</div><p>Frozen NatureLM-audio reproduces the site-controlled SRKW and NRKW call-type checks above chance, preserves VFPA→SMRU transfer (0.682 vs 0.20 chance), and separates FEROP K-type exemplars (purity 0.366 vs 0.050 chance). Representation stability, not semantic meaning.</p><div class="cite">Robinson et al. 2024 · reports/naturelm_analysis_readout.json</div></div>
+    <div class="card reveal"><div class="k">Second encoder</div><h3>The same representation checks repeat in NatureLM-audio</h3><div class="num">0.709 / 0.800</div><p>Frozen NatureLM-audio repeats the site-controlled SRKW and NRKW call-type checks above chance, preserves VFPA→SMRU transfer (0.682 vs 0.20 chance), and separates FEROP K-type exemplars (purity 0.366 vs 0.050 chance). Cross-encoder check, not semantic meaning.</p><div class="cite">Robinson et al. 2024 · reports/naturelm_analysis_readout.json</div></div>
   </div>
 </div></section>
 <section id="gallery"><div class="wrap">
@@ -327,7 +327,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
     <div class="shot reveal"><img src="assets/figures/calltype_context.png" alt="Call-type by context"><div class="cap"><b>Context-specific production.</b> Specific call types occur in specific contexts (Cramér's V = 0.40 vs a within-individual null of 0.08).</div></div>
     <div class="shot reveal"><img src="assets/figures/calltype_compositionality.png" alt="Compositionality"><div class="cap"><b>Beyond first order (SRKW).</b> The 2-back call adds information a first-order model can't explain (Δ = 0.645 bits); NRKW is null.</div></div>
     <div class="shot reveal"><img src="assets/figures/calltype_distributional_semantics.png" alt="Distributional semantics"><div class="cap"><b>Structure ↔ context.</b> SRKW call types with similar sequential company share independent ethogram context (Mantel r = 0.33, p = 0.042); NRKW null. The distributional hypothesis tested, not assumed.</div></div>
-    <div class="shot reveal"><img src="assets/figures/attribution_controls.png" alt="Negative controls"><div class="cap"><b>Not a probe artifact.</b> The decode (0.98) sits far above matched-noise (0.54), feature-shuffle (0.50) and label-permutation (0.50) controls.</div></div>
+    <div class="shot reveal"><img src="assets/figures/attribution_controls.png" alt="Negative controls"><div class="cap"><b>Attribution controls.</b> The decode (0.98) is compared with matched-noise (0.54), feature-shuffle (0.50), and label-permutation (0.50) controls.</div></div>
     <div class="shot reveal"><img src="assets/figures/playback_response.png" alt="Playback response"><div class="cap"><b>Receiver response (re-analysis).</b> Same-pod 6/6 vs different-pod 0/6 (Fisher p = 0.002), naive animals. Prior published experiment; response tracks dialect, not content.</div></div>
     <div class="shot reveal"><img src="assets/figures/naturelm_calltype_model.png" alt="NatureLM-audio call-type checks"><div class="cap"><b>Second encoder: call types.</b> NatureLM-audio recovers SRKW call types at 0.709 and NRKW call types at 0.800 under full-data, permutation-controlled checks.</div></div>
     <div class="shot reveal"><img src="assets/figures/naturelm_playback_embedding.png" alt="NatureLM-audio FEROP dialect space"><div class="cap"><b>Second encoder: FEROP space.</b> NatureLM-audio separates FEROP K-type catalogue exemplars (1-NN purity 0.366 vs 0.050 chance, p = 0.000999).</div></div>
@@ -567,22 +567,22 @@ python scripts/run_playback_response_stats.py</code></pre>
   </div>
 </div></section>
 <section id="claim"><div class="wrap">
-  <div class="eyebrow reveal">Claim boundary</div>
-  <h2 class="reveal">What has been shown — and what the field test can decide.</h2>
+  <div class="eyebrow reveal">Scope</div>
+  <h2 class="reveal">Current evidence and what the field test can decide.</h2>
   <div class="claimgrid">
-    <div class="do reveal"><h3>✓ What the analysis shows today</h3><ul>
+    <div class="do reveal"><h3>Current evidence</h3><ul>
       <li>Killer-whale call structure is decodable from frozen embeddings <b>once the recording site is controlled</b>.</li>
       <li>Validated catalogue call types are recoverable and <b>transfer across recording sites</b>.</li>
       <li>Calls carry information about <b>more than one behavioural context</b>, with the individual held out.</li>
       <li>Call sequences are non-random — and in Southern Residents show structure <b>beyond first order</b>.</li>
-      <li>Wild whales already give a <b>measurable, dialect-selective response</b> to broadcast conspecific calls (re-analysis of a published playback).</li>
+      <li>A published playback re-analysis shows a <b>measurable, dialect-selective response</b> to broadcast conspecific calls.</li>
     </ul></div>
-    <div class="do reveal" style="border-color:rgba(76,201,255,.3);background:rgba(76,201,255,.05)"><h3 style="color:var(--cyan)">→ What it’s built to be tested for, in the field</h3><ul>
+    <div class="do reveal" style="border-color:rgba(76,201,255,.3);background:rgba(76,201,255,.05)"><h3 style="color:var(--cyan)">Field-test questions</h3><ul>
       <li>That broadcasting these call types elicits <b>context-appropriate responses</b> in wild orcas.</li>
       <li>That a receiver responds to a call’s <b>content</b>, not only to whose voice (dialect) it is.</li>
       <li>That the decoder <b>generalises to your study population</b> and recording conditions.</li>
-      <li>That, step by step, this becomes genuine <b>two-way, interactive communication</b>.</li>
-      <li><em>These are predictions the tool makes testable — designed to be understood, not yet confirmed in the field.</em></li>
+      <li>Whether the system can support a controlled <b>interactive exchange</b>.</li>
+      <li><em>These are testable predictions, not yet confirmed by a content-controlled field trial.</em></li>
     </ul></div>
   </div>
 </div></section>
@@ -594,7 +594,7 @@ python scripts/run_playback_response_stats.py</code></pre>
     <div class="card reveal"><div class="k">Signal channel</div><h3>Recorded audio is not the whole whale percept</h3><p>Orcas may use multimodal or unrecorded cues. The analysis therefore makes acoustic claims only, and the field design pairs hydrophones with visual, group-ID, movement, and response measures.</p><div class="cite">Yovel &amp; Rechavi 2023 · Kershenbaum 2024</div></div>
     <div class="card reveal"><div class="k">Bandwidth &amp; equipment</div><h3>Archives differ in sample rates, filters, gain, and formats</h3><p>Killer whales hear across high-frequency ranges, while public recordings come from mixed hydrophones and conversion paths. Provider is exposed as a confound; positive claims are limited to within-site tests or explicit transfer tests.</p><div class="cite">Szymanski et al. 1999 · Palmer et al. 2025 · Johnson &amp; Tyack 2003</div></div>
     <div class="card reveal"><div class="k">Dialect vs content</div><h3>The playback result is dialect-selective, not content-controlled</h3><p>The published playback shows a receiver response to familiar dialect calls. It does not prove that whales respond to call content; that remains the permitted field playback that isolates content while holding dialect/social familiarity constant.</p><div class="cite">Filatova et al. 2011 · FEROP catalogue</div></div>
-    <div class="card reveal"><div class="k">Model robustness</div><h3>Second-encoder agreement is robustness, not meaning</h3><p>NatureLM-audio reproduces the two primary representation checks, which reduces the single-encoder objection. It still does not turn acoustic separability into semantic interpretation.</p><div class="cite">AVES2 · BEATs · NatureLM-audio</div></div>
+    <div class="card reveal"><div class="k">Model specificity</div><h3>Second-encoder agreement is not meaning</h3><p>NatureLM-audio repeats the two primary representation checks, which addresses part of the single-encoder concern. It still does not turn acoustic separability into semantic interpretation.</p><div class="cite">AVES2 · BEATs · NatureLM-audio</div></div>
   </div>
   <p class="lead reveal" style="margin-top:28px;font-size:15px">See <a href="https://github.com/ladyFaye1998/OrcaDolittle/blob/main/docs/limitations_and_mitigations.md" target="_blank" rel="noopener">limitations and mitigations</a> and <a href="https://github.com/ladyFaye1998/OrcaDolittle/blob/main/docs/data_availability.md" target="_blank" rel="noopener">data availability</a> for the source-by-source boundary.</p>
 </div></section>
@@ -817,7 +817,7 @@ function renderMeters(){
   meters.innerHTML=[
     ['Protocol fit',s.fit+'%','Selected anchors and controls match the playback-response design; not semantic certainty.'],
     ['Anchor trace',s.evidence+'%','Real FEROP K-call anchors and playback/context evidence stay attached to the selection.'],
-    ['Field readiness',s.field+'%','Claim boundary, controls, and playback purpose stay visible to a reviewer.']
+    ['Field-test scope',s.field+'%','Controls and playback purpose stay visible to a reviewer.']
   ].map(m=>'<div class="meter"><div class="mt">'+m[0]+'</div><div class="mn">'+m[1]+'</div><div class="md">'+m[2]+'</div></div>').join('');
 }
 function renderTimeline(active){
@@ -1180,7 +1180,7 @@ function updateLab(){
     ['6/6 vs 0/6','Playback response','Same-pod vs different-pod re-analysis; dialect, not content.'],
     ['0.439','FEROP embedding','AVES2 recovers Kamchatka dialect call-type space above shuffle null.'],
     [validated+'/'+phrase.length,'Validated anchors','Real FEROP K-call units inside this selection.'],
-    ['Scoped','Claim boundary','Content-specific response and synthetic speech validity remain future field-test questions.']
+    ['Scoped','Field-test scope','Content-specific response and synthetic speech validity remain future field-test questions.']
   ].map(e=>'<div class="ev"><div class="en">'+e[0]+'</div><div class="et">'+e[1]+'</div><div class="ed">'+e[2]+'</div></div>').join('');
   if(opsList)opsList.innerHTML=operatorSteps().map((s,i)=>'<div class="opstep"><span>'+String(i+1)+'</span><div><b>'+esc(s.title)+'</b><em>'+esc(s.text)+'</em></div></div>').join('');
   const gates=fieldGates(), readiness=fieldReadiness();

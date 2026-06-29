@@ -194,5 +194,5 @@
     }
   ],
   "figure": "figures/calltype_compositionality.png",
-  "boundary": "Structure beyond first order is a stronger combinatorial prerequisite than the first-order result, tested against first-order Markov surrogates so it is not a re-detection of pairwise structure. It is NOT semantic compositionality (A+B meaning more than A,B), which needs meaning/context labels and is out of scope. Motifs are CANDIDATE phrases, not words."
+  "boundary": "Structure beyond first order is a beyond-first-order combinatorial test, evaluated against first-order Markov surrogates so it is not a re-detection of pairwise structure. It is NOT semantic compositionality (A+B meaning more than A,B), which needs meaning/context labels and is out of scope. Motifs are CANDIDATE phrases, not words."
 }

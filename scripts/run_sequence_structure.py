@@ -21,7 +21,7 @@ This script:
 A positive result (MI above the shuffled null, bigram beating unigram out of
 sample) is evidence of rule-like sequential structure -- a prerequisite for any
 combinatorial / "language-like" claim, NOT evidence of meaning. It is reported
-honestly whichever way it comes out.
+with both positive and null outcomes reported.
 
 Usage:
   python scripts/run_sequence_structure.py --embeddings data/embeddings/aves2_full_labeled.npz \

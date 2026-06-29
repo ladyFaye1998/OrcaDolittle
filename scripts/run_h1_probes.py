@@ -9,11 +9,11 @@ pooled accuracy by recognising the hydrophone, not the whale. This is the
 well-documented site/device shortcut in passive-acoustic deep learning, and the
 standard remedy is leave-one-site-out evaluation [@stowell2022; @ghani2023].
 
-This script reports three things, in increasing order of evidential strength:
+This script reports three evaluation views:
 
 1. Pooled stratified 5-fold CV (LogReg + MLP). This is the *site-confounded
    upper bound*. Reported, but explicitly not the headline.
-2. Leave-One-Provider-Out (LOPO) grouped CV. The headline honest-generalisation
+2. Leave-One-Provider-Out (LOPO) grouped CV. The site-held-out generalisation
    number: every test provider is unseen during training. Per-class held-out
    recall is reported so structurally site-locked classes (one provider only)
    are visible rather than hidden.
@@ -117,7 +117,7 @@ def pooled_cv(embeddings, y, class_names):
 
 
 def leave_one_provider_out(embeddings, y, groups, class_names):
-    """Headline honest generalisation: each provider unseen during training."""
+    """Site-held-out generalisation: each provider unseen during training."""
     logo = LeaveOneGroupOut()
     n_groups = len(np.unique(groups))
     print(f"\n--- [HEADLINE] Leave-One-Provider-Out CV ({n_groups} providers) ---")
@@ -132,7 +132,7 @@ def leave_one_provider_out(embeddings, y, groups, class_names):
 
     # Per-class held-out recall. Classes that live in a single provider become
     # unclassifiable when that provider is the test fold -> recall collapses,
-    # which is the honest signature of the site confound.
+    # which is the site-confound signature.
     print("\n  Per-class held-out recall (cross-site):")
     per_class = {}
     cm = confusion_matrix(y, y_pred, labels=range(len(class_names)))
@@ -213,7 +213,7 @@ def make_figure(class_names, pooled, lopo, perm_score, perm_scores, pvalue,
     FIGURES_DIR.mkdir(parents=True, exist_ok=True)
     fig, axes = plt.subplots(1, 3, figsize=(19, 5.2))
 
-    # Panel 1: LOPO held-out confusion matrix (honest, cross-site).
+    # Panel 1: LOPO held-out confusion matrix (cross-site).
     cm = confusion_matrix(_y_global, lopo["y_pred_heldout"],
                           labels=range(len(class_names)), normalize="true")
     im = axes[0].imshow(cm, cmap="Blues", vmin=0, vmax=1)
@@ -231,7 +231,7 @@ def make_figure(class_names, pooled, lopo, perm_score, perm_scores, pvalue,
     plt.colorbar(im, ax=axes[0], fraction=0.046)
 
     # Panel 2: pooled vs LOPO balanced accuracy, with chance.
-    labels = ["Pooled CV\n(confounded\nupper bound)", "Leave-One-\nProvider-Out\n(honest)"]
+    labels = ["Pooled CV\n(confounded\nupper bound)", "Leave-One-\nProvider-Out"]
     vals = [pooled["lr_balanced_accuracy"], lopo["overall_balanced_accuracy"]]
     bars = axes[1].bar(labels, vals, color=["#bbbbbb", "#1565C0"])
     axes[1].axhline(lopo["chance"], color="red", ls="--",
@@ -299,7 +299,7 @@ def run_probes(embeddings, labels, groups, encoder_name, n_perm=N_PERM,
         fig_path = make_figure(class_names, pooled, lopo, perm_score, perm_scores,
                                pvalue, encoder_name)
 
-    # Verdict is driven by the HONEST (LOPO) number, not the confounded pooled one.
+    # Summary is driven by the LOPO number, not the confounded pooled one.
     print(f"\n{'='*64}\nH1 SUMMARY\n{'='*64}")
     print(f"  Pooled CV balanced acc (confounded upper bound): "
           f"{pooled['lr_balanced_accuracy']:.3f}")
@@ -308,8 +308,8 @@ def run_probes(embeddings, labels, groups, encoder_name, n_perm=N_PERM,
         print(f"  Cross-site (LOPO) balanced acc (HEADLINE): {gen:.3f}")
         print(f"  Cross-site macro-F1: {lopo['overall_macro_f1']:.3f}  "
               f"(chance {lopo['chance']:.3f})")
-        verdict = ("STRONG cross-site signal" if gen > 2 * lopo["chance"]
-                   else "WEAK / site-confounded" if gen > 1.2 * lopo["chance"]
+        verdict = ("above 2x chance under LOPO" if gen > 2 * lopo["chance"]
+                   else "modestly above chance / site-confounded" if gen > 1.2 * lopo["chance"]
                    else "NO cross-site signal (confounded)")
         print(f"  Verdict: {verdict}")
     print(f"  Pooled permutation p-value: {pvalue:.2e}")

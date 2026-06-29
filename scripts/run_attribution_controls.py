@@ -21,10 +21,10 @@ This head answers two questions a methodologically demanding reviewer asks of an
         (b) per-dimension feature shuffle (keeps every marginal, destroys the
             joint covariance the classifier relies on);
         (c) label permutation (the standard shuffled-label null).
-      A real signal survives the first two being destroyed and sits far above the
+      A signal should survive the first two being destroyed and exceed the
       label-permutation null. [@ghani2023]
 
-The target is the cleanest *biological* signal in the corpus: ecotype
+The target is the site-held-constant ecotype signal in the corpus:
 discrimination WITHIN a single recording provider (site held constant), so an
 above-chance decode cannot be hydrophone recognition (see H4). Default target is
 SRKW vs TKW within JASCO_VFPA.
@@ -227,7 +227,7 @@ def make_figure(attr, pca, neg, meta, fig_path):
     ax[0].set_xlabel("number of dimensions ablated (k)")
     ax[0].set_ylabel("balanced accuracy")
     ax[0].set_ylim(0.4, 1.0)
-    ax[0].set_title("Dimension knock-out: top-k vs random-k\n(robust to ablation = redundant signal)",
+    ax[0].set_title("Dimension knock-out: top-k vs random-k\n(ablation response = redundancy check)",
                     fontsize=10)
     ax[0].legend(fontsize=8)
 
@@ -335,12 +335,12 @@ def main() -> int:
                            "dimension is near chance, ablating the top-k individually-important "
                            "dimensions does not collapse the decode (the remaining dimensions "
                            "compensate), and a low-rank PCA projection already recovers most of "
-                           "it. The signal is robust distributed structure, not a single-channel "
+                            "it. The signal is distributed structure, not a single-channel "
                            "artifact.",
             "controls": "Structure-matched Gaussian noise and per-dimension feature shuffle "
-                        "both fall to chance, and the observed decode sits far above the "
-                        "label-permutation null, so the probe is reading genuine joint "
-                        "structure in the representation, not gaming a marginal or a leak.",
+                        "both fall to chance, and the observed decode sits above the "
+                        "label-permutation null, so the probe is using joint "
+                        "structure in the representation rather than a marginal artifact or a leak.",
         },
         "caveats": [
             "Attribution is computed on the within-provider (site-held-constant) ecotype "

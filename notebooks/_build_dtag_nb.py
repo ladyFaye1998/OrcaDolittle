@@ -42,7 +42,7 @@ Johnson, the DTAG author) — no Wine, no Windows, no manual step. Pure-Octave d
 slow, so Cell 4 decodes a capped number of files per deployment and **checkpoints every
 WAV to Drive**, so a crash resumes rather than restarts.
 
-**Honest scope.** Tests whether context is *decodable* from communication above a
+**Scope.** Tests whether context is *decodable* from communication above a
 leave-individual-out null. Association, not "meaning"; non-invasive re-analysis of archived
 tag data. References keyed in `paper/refs.bib`.
 
@@ -577,8 +577,8 @@ movement and validated so that **individual identity cannot explain the result**
 deployment runs end-to-end, add more to `DEPLOYMENTS` (Cell 2) and raise
 `MAX_DTG_PER_DEP`. Every stage is checkpointed, so it resumes rather than restarts.
 
-**Honest caveats** are written into the JSON: detector click-leakage, the contiguous-audio
-timing assumption, and that this is *association*, not proof of meaning. Upgrade paths:
+**Caveats** are written into the JSON: detector click-leakage, the contiguous-audio
+timing assumption, and that this is *association*, not evidence of meaning. Follow-up paths:
 ORCA-SPOT call detection, `.xml`-based exact timing, and the gold-standard per-dive HMM
 states via the data request in `docs/data_requests.md`.
 """))

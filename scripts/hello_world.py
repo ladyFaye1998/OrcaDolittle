@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Hello-world: extract AVES2 embeddings from a killer whale audio clip.
 
-This is the Stage 1 proof-of-concept. If this works, the entire pipeline is viable:
+This is the Stage 1 smoke test. If this runs, the core pipeline entry points are reachable:
   audio clip -> frozen encoder -> embedding vector -> downstream heads
 
 Uses AVES2 (BEATs backbone) via the avex library. Runs on CPU.

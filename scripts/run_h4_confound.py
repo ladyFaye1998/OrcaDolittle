@@ -325,7 +325,7 @@ def main():
     print(f"\n{'='*70}\nH4 SUMMARY\n{'='*70}")
     print(f"  Site decodable at balanced acc {site['provider_balanced_accuracy']:.3f} "
           f"(chance {site['chance']:.3f}) -> confound is real and large")
-    print(f"  Providers with genuine within-site ecotype signal: "
+    print(f"  Providers with within-site ecotype signal above chance: "
           f"{bio_providers if bio_providers else 'NONE'}")
     if transfer.get("per_test_provider"):
         print(f"  Cross-site transfer {transfer['pair']}: "

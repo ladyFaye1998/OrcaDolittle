@@ -4,7 +4,7 @@
 The Rung-4 Markov test in `run_sequence_structure.py` measures sequential
 dependence over an unsupervised k-means call vocabulary, which the manuscript
 must caveat ("tokens are not validated biological call types"). This script
-removes that caveat: it runs the identical first-order test over the **expert
+addresses that caveat by running the identical first-order test over the **expert
 catalogue call types** recovered from the DCLDE per-provider annotations
 [@ford1989; @filatova2015], using the call-type manifest
 (`data/join_tables/call_type_manifest.csv`).
@@ -24,7 +24,7 @@ For each population subset (site held constant), it:
 
 A positive result is evidence of rule-like sequential structure over *validated*
 call units -- the production-side prerequisite for combinatorial coding, NOT
-evidence of meaning. Reported honestly whichever way it comes out.
+evidence of meaning. Report the result whichever way it comes out.
 
 Usage:
   python scripts/run_calltype_sequence.py \

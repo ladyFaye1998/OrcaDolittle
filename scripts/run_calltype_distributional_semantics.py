@@ -297,7 +297,7 @@ def main():
                      "from independent ethograms only. A positive Mantel r is a structure<->context "
                      "ASSOCIATION, NOT referential meaning. Context labels are human-projected (umwelt "
                      "caveat) and coarse (type-level, not per-utterance), and the shared-type sample is "
-                     "small; reported honestly whichever way it comes out."),
+                     "small; both positive and null results are reported."),
     }
     (REPORTS_DIR / "calltype_distributional_semantics_summary.json").write_text(
         json.dumps(summary, indent=2), encoding="utf-8")

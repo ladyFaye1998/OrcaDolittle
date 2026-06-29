@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Derive a *three-state* movement-only behavioural context for each call.
 
-This upgrades the binary foraging/non-foraging label (scripts/dtag_context_labels.py)
+This extends the binary foraging/non-foraging label (scripts/dtag_context_labels.py)
 to a multi-context label so the decode can speak to "communication in more than one
 context" rather than a single foraging contrast. As before, every label is defined
 from the **movement / kinematic channel only** (dive depth, jerk-derived prey-capture,

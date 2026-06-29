@@ -12,7 +12,7 @@ call types we recover in Rung 1, using the published ethological associations in
 Important framing (non-circular): the context labels here come from the published
 field ethograms, NOT from our embeddings. This is therefore a literature-grounded
 contextual-specialization map of the recovered units, complementing - not
-duplicating - the embedding decode in H5. It establishes that resident killer
+duplicating - the embedding decode in H5. It tests whether resident killer
 whales use *distinct named call types* across two functionally distinct contexts
 (foraging vs social), which is the production-side reading of the
 "more than one behavioural context" criterion. It is NOT a claim of meaning.
@@ -167,7 +167,7 @@ def main() -> int:
             "Context labels come from published ethograms, not from our embeddings "
             "(non-circular); this maps the documented contextual use of the recovered "
             "catalogue units, complementing the H5 embedding decode.",
-            "Establishes context-specific PRODUCTION across two functionally distinct "
+            "Supports context-specific PRODUCTION across two functionally distinct "
             "contexts (foraging vs social); NOT a claim of referential meaning.",
             "Ford 1989: 'no call type was correlated exclusively with any behaviour' - "
             "this is differential specialization, not deterministic mapping.",

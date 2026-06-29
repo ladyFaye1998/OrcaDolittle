@@ -35,7 +35,7 @@ confounded and cannot support the claim:
   came from (its background noise, which individuals are present, the hydrophone)
   and reading off that recording's fixed label. The 2025 author concedes that
   per-segment behaviour "cannot be assessed" [@sandholm2025frontiers].
-- An honest **leave-encounter-out** test across nine encounters with six
+- A **leave-encounter-out** test across nine encounters with six
   label-combinations has essentially no statistical power.
 
 **Lesson for a clean design:** the behaviour label must vary *within* a held
@@ -133,7 +133,7 @@ The label side therefore has adequate within-individual structure. The open
 question is **communicative-call yield per dive**, which the audio pilot (§7)
 must establish before claiming power.
 
-## 7. Honest risks and limitations
+## 7. Risks and limitations
 
 - **Call yield:** pulsed communicative calls during tagged dives may be sparse
   (the DTAG literature emphasises echolocation during foraging

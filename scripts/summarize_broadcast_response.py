@@ -10,7 +10,7 @@ auditable determination of whether the criterion is met, with the scope spelled 
 
 The criterion is treated as MET when there is at least one **conspecific** playback
 showing a measurable response in **naive** animals, corroborated by independent
-broadcast-response datasets. It does NOT assert referential meaning: the strongest
+broadcast-response datasets. It does NOT assert referential meaning: the main
 (conspecific) result tracks dialect membership, not call content.
 
 Usage:
@@ -46,7 +46,7 @@ def main() -> int:
               f"value={r['value_source']}")
     print(f"\n  playback (broadcast) studies: {len(playback)}  "
           f"(conspecific: {len(conspecific_playback)}; naive: {len(naive_playback)})")
-    print(f"  CRITERION MET: {criterion_met}")
+    print(f"  RESPONSE SIDE ADDRESSED: {criterion_met}")
 
     summary = {
         "criterion": "C3 / response criterion (Yovel & Rechavi 2023, criterion 3): measurable response to a broadcast signal (non-invasive, naive animals, not only decoding)",
@@ -71,7 +71,7 @@ def main() -> int:
             "The conspecific result tracks DIALECT membership (same vs different pod), not "
             "call CONTENT; a content-controlled playback would be needed for referential "
             "meaning and remains future work.",
-            "Conspecific n is modest (6 vs 6 after pseudoreplication control); robustness "
+            "Conspecific n is modest (6 vs 6 after pseudoreplication control); support "
             "comes from convergence across independent datasets and stimulus types.",
         ],
     }

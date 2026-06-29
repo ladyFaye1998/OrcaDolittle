@@ -41,7 +41,7 @@
   "figure": "figures/calltype_context_specialization.png",
   "caveats": [
     "Context labels come from published ethograms, not from our embeddings (non-circular); this maps the documented contextual use of the recovered catalogue units, complementing the H5 embedding decode.",
-    "Establishes context-specific PRODUCTION across two functionally distinct contexts (foraging vs social); NOT a claim of referential meaning.",
+    "Supports context-specific PRODUCTION across two functionally distinct contexts (foraging vs social); NOT a claim of referential meaning.",
     "Ford 1989: 'no call type was correlated exclusively with any behaviour' - this is differential specialization, not deterministic mapping."
   ]
 }
