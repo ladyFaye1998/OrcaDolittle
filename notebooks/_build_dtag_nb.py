@@ -44,7 +44,7 @@ WAV to Drive**, so a crash resumes rather than restarts.
 
 **Scope.** Tests whether context is *decodable* from communication above a
 leave-individual-out null. Association, not "meaning"; non-invasive re-analysis of archived
-tag data. References keyed in `paper/refs.bib`.
+tag data. References keyed in `docs/refs.bib`.
 
 > ⚙️ Set **Runtime → Change runtime type → GPU** before running (AVES2 encoding).
 """))
