@@ -4,11 +4,11 @@ This document makes the repository a **complete and auditable** account of the a
 even though the large raw inputs and scratch outputs are deliberately not version-controlled
 (per `AGENTS.md`: *"Do not commit raw audio, caches, model weights, or scratch runs"*, and
 GitHub's 100 MB per-file limit). For every head it records what is **committed in git**, what
-is **derived and depositable** (staged for a Zenodo data DOI), and what is an **external
+is **derived and deposited** (Zenodo data DOI), and what is an **external
 public source** that the pipeline downloads rather than redistributes.
 
 The guiding principle: every reported number is backed by either (a) an artifact committed
-here, (b) a compact derived artifact with a recorded SHA-256 staged for Zenodo upload, or
+here, (b) a compact derived artifact with a recorded SHA-256 deposited on Zenodo, or
 (c) a public dataset cited by DOI with the exact command that regenerates the derived form.
 
 ## 1. Reproducibility status by head
@@ -31,8 +31,8 @@ here, (b) a compact derived artifact with a recorded SHA-256 staged for Zenodo u
 
 **Bottom line:** every head's *results* (metrics JSON + figure) are committed. Of the analysis
 heads, the majority regenerate from artifacts already in the repo. The GPU-derived artifacts
-that are too large or too cache-like for git are staged in a single local Zenodo-ready ZIP (§3);
-raw third-party audio, raw DTAG files, model weights, and private submission material are
+that are too large or too cache-like for git are deposited in a single Zenodo package (§3);
+raw third-party audio, raw DTAG files, model weights, and non-public working material are
 intentionally excluded.
 
 ## 2. External public-source datasets (cited, NOT redistributed)
@@ -47,13 +47,13 @@ size and provenance (they are not ours to redistribute); the repository cites ea
 | DTAG-2 archive (movement PRH) | `data/external/dtag/*.mat` (1.97 GB, 23 files, 7 > 100 MB) | Zenodo, CC-BY-4.0 [@holt2024masking_data; @tennessen2019] | H5 movement-context labels |
 | FEROP Kamchatka call catalogue | `data/playback/ferop_catalogue/` (3 MB audio) | public FEROP catalogue [@russianorca_catalogue] | H6 dialect recovery |
 
-## 3. Derived artifacts staged for Zenodo (data DOI)
+## 3. Derived artifacts deposited on Zenodo (data DOI)
 
 Compact, **ours**, and reproducible — too large or GPU-gated for git, so they belong in the
-planned Zenodo data record (`release_checklist.md`, `.zenodo.json`). A local staging package
-has been built but not uploaded:
+Zenodo data record:
 
 - Package: `orcadolittle_derived_artifacts_clean_20260629T100942Z.zip`
+- DOI: [10.5281/zenodo.21030082](https://doi.org/10.5281/zenodo.21030082)
 - Package SHA-256: `9f6119f618aba0b5c89988e13a93840d8c28ff7a1de544fc5dbd1cf6c971681c`
 - Package contents: 111 included artifacts, 122,872,445 unpacked bytes, with internal
   `PACKAGE_MANIFEST.json`, `PACKAGE_README.md`, and `SHA256SUMS.txt`
@@ -70,9 +70,7 @@ has been built but not uploaded:
 | DTAG movement-derived labels | 0.1 MB | `84435263cb27bfb2` | **Committed in git** (`data/external/dtag/foraging_data.csv`, force-tracked; raw `.mat` stay external) |
 | NatureLM second-encoder summaries | 10.4 KB | `401d2e25306424c9` / `4850154b1042e469` | **Committed in git** and included in the staging ZIP |
 
-> **Remaining packaging action:** upload the staging ZIP to Zenodo and copy the resulting
-> DOI into this document, `README.md`, and the submission data-availability statement. If
-> `aves2_calltype_embeddings.npz` is later recovered, add it as a separate Zenodo file or
+> If `aves2_calltype_embeddings.npz` is later recovered, add it as a separate Zenodo file or
 > publish a v2 package; the current public result files and regeneration notebook already
 > preserve the full-catalogue call-type claim boundary.
 

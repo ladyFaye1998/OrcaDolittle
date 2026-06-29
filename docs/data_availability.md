@@ -22,6 +22,12 @@ sound_id_species, kw_ecotype, clan, subclan, pod, call_type, comments`)
 comes not from DCLDE but from the DTAG archive below, where behaviour is recorded on the
 animal.
 
+The derived artifacts, metrics, figures, provenance tables, and reproduction notebooks are
+published as the Zenodo data package
+[10.5281/zenodo.21030082](https://doi.org/10.5281/zenodo.21030082). Raw third-party audio,
+raw DTAG archives, model weights, runtime caches, and non-public working files are not
+redistributed.
+
 ## Rung 2 - behavioural context: candidate sources
 
 | Source | What it contains | Downloadable? | Granularity | Strongest claim it supports |

@@ -1,7 +1,7 @@
 cff-version: 1.2.0
 message: >
-  If you use this repository, cite the repository release (Zenodo DOI below, once
-  minted) and the underlying datasets, methods, and papers listed in paper/refs.bib.
+  If you use this repository, cite the Zenodo derived-artifact data record and the
+  underlying datasets, methods, and papers listed in paper/refs.bib.
 title: "Orca Bioacoustic Embeddings"
 abstract: >
   Reproducible research code for analysing killer-whale (Orcinus orca) vocalisations
@@ -28,5 +28,5 @@ keywords:
 license: MIT
 repository-code: "https://github.com/ladyFaye1998/OrcaDolittle"
 version: "0.1.0"
-# date-released: YYYY-MM-DD  # set when the release tag is cut
-# doi: 10.5281/zenodo.XXXXXXX  # set after the Zenodo deposit is minted
+date-released: 2026-06-29
+doi: 10.5281/zenodo.21030082
