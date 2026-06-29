@@ -54,6 +54,9 @@ python scripts/run_playback_response_stats.py
 | Structure beyond first order | SRKW S-call sequences exceed first-order Markov surrogates; NRKW is null and reported. | `scripts/run_calltype_compositionality.py`; `reports/calltype_compositionality_summary.json` | Combinatorial prerequisite only, not semantic compositionality. |
 | Second-encoder stability | The two primary checks also pass under frozen NatureLM-audio [@robinson2024naturelm] on full data: FEROP K-type separability and site-controlled call-type recovery with transfer. | `notebooks/naturelm_audio_comparison_colab.ipynb`; `reports/naturelm_analysis_readout.json`; `reports/naturelm_calltype_model_summary.json` | Representation-level robustness only; still not meaning or content-controlled playback. |
 
+**Derived artifact DOI:** the Zenodo data package for the committed derived artifacts is
+[10.5281/zenodo.21030082](https://doi.org/10.5281/zenodo.21030082).
+
 ## Scope
 
 - **Corpus:** DCLDE 2026 killer-whale annotations and audio pointers [@palmer2025dclde; @palmer2025dclde_data]. The NOAA/GCS storage path currently uses a `dclde/2027/dclde_2027_killer_whales` bucket layout; the scientific dataset is the DCLDE 2026 killer-whale corpus.
@@ -324,7 +327,7 @@ The committed run completed with `RUN_MODE = FULL_ANALYSIS`, `MAX_CALLTYPE_SEGME
 | `docs/decoding_program.md` | Criterion-based evidence ladder and verified public-data ceiling. |
 | `docs/data_availability.md` | Per-source data inventory for the context and responsiveness rungs. |
 | `docs/limitations_and_mitigations.md` | Public limitation register: unknown-channel, bandwidth/equipment, conversion, dialect, playback, and model-specificity boundaries. |
-| `docs/local_environment_manifest.md` | Full accounting of every artifact (committed vs staged-for-Zenodo vs external public source), per-head reproduction status, and independent local reproduction. |
+| `docs/local_environment_manifest.md` | Full accounting of every artifact (committed vs Zenodo-deposited vs external public source), per-head reproduction status, and independent local reproduction. |
 | `docs/results_analysis.md` | Current run interpretation and limitations. |
 | `docs/literature_review.md` | Cited literature map. |
 | `paper/` | Full and condensed manuscripts and bibliography. |

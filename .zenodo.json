@@ -1,8 +1,8 @@
 {
-  "title": "Orca Bioacoustic Embeddings: site-controlled killer-whale call analysis with frozen audio-model embeddings",
-  "upload_type": "software",
-  "description": "Reproducible research code for analysing killer-whale (Orcinus orca) vocalisations with frozen audio foundation-model embeddings (AVES2) on the public DCLDE 2026 corpus, with provider/site confound controls, catalogue call-type classification and cross-site transfer, first-order call-sequence structure, an animal-borne DTAG behavioural-context decode, and a representation-attribution and negative-control battery. Includes a hash-frozen embedding artifact, per-head metrics and figures, and citation-backed documentation. The work is fully non-invasive and makes no claim of semantic meaning; its single response result re-analyses a published conspecific playback experiment and tracks dialect membership rather than call content.",
-  "license": "MIT",
+  "title": "OrcaDolittle derived analysis artifacts",
+  "upload_type": "dataset",
+  "description": "Derived artifacts, metrics, figures, provenance tables, and reproduction notebooks for OrcaDolittle, a frozen-encoder analysis of public killer-whale acoustic data. The package supports acoustic-structure, behavioural-context association/production, and dialect-selective receiver-response analyses. It does not claim translation, semantic meaning, or content-controlled playback. Raw third-party audio, raw DTAG files, model weights, runtime caches, and non-public working files are intentionally excluded.",
+  "license": "cc-by-4.0",
   "access_right": "open",
   "keywords": [
     "bioacoustics",
@@ -23,6 +23,18 @@
     }
   ],
   "related_identifiers": [
+    {
+      "relation": "isIdenticalTo",
+      "identifier": "10.5281/zenodo.21030082",
+      "scheme": "doi",
+      "resource_type": "dataset"
+    },
+    {
+      "relation": "isDocumentedBy",
+      "identifier": "https://github.com/ladyFaye1998/OrcaDolittle",
+      "scheme": "url",
+      "resource_type": "software"
+    },
     {
       "relation": "isDerivedFrom",
       "identifier": "10.5281/zenodo.13308835",
