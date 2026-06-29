@@ -44,7 +44,7 @@ the production-side result possible under leave-individual-out validation
 (`docs/decoding_program.md` 5f) [@holt2024masking_data; @tennessen2019]. The NOAA tables
 remain credible but (a) reproduce Holt et al. and (b) cannot attach to AVES2 vectors;
 the Wellard encounter-level corpus (9 encounters) is underpowered for a segment-level
-result and is retained only as exploratory scaffolding. What is **not** reachable from
+result and is retained only for exploratory comparison. What is **not** reachable from
 any of these is the *perception* side of Rung 2 - that a receiver treats the call
 differently by context - and contexts beyond movement state.
 
@@ -83,7 +83,7 @@ and Raincoast [@esp2025raincoast], or a new content-controlled playback.
    broadcast calls (H6). What remains open is the **content vs dialect** distinction and a
    *natural* receiver-response, which depend on an ESP/Raincoast-class synchronised
    multimodal dataset or a content-controlled playback [@esp2025raincoast].
-3. The defensible statement is therefore: validated production units, first-order
+3. The testable statement is therefore: validated production units, first-order
    sequential structure (tokens and validated call types), context-specific *production*
    across more than one movement-defined context, **and a dialect-selective receiver
    response to broadcast conspecific calls** are established; what is not yet shown is that

@@ -4,9 +4,9 @@
 
 # OrcaDolittle: Killer-Whale Bioacoustic Embeddings
 
-Research-grade code for killer-whale (*Orcinus orca*) bioacoustic analysis with frozen audio foundation-model embeddings, public DCLDE/DTAG/FEROP-derived inputs, reproducible statistical controls, and citation-backed documentation.
+Code and documentation for killer-whale (*Orcinus orca*) bioacoustic analyses using frozen audio embeddings, public DCLDE/DTAG/FEROP-derived inputs, statistical controls, and cited source data.
 
-The repository is intentionally narrow and auditable: encode public acoustic segments, attach provenance and metadata, run downstream analyses, and report only effects that survive explicit null baselines. Source claims are keyed to `docs/refs.bib`.
+The workflow encodes public acoustic segments, attaches provenance and metadata, runs downstream analyses, and compares reported effects with explicit null baselines. Source claims are keyed to `docs/refs.bib`.
 
 ## Repository Status
 
@@ -20,7 +20,7 @@ The repository is intentionally narrow and auditable: encode public acoustic seg
 
 1. **60-second evidence map** for claims, scripts, and scope.
 2. **Scope** for what the repository covers and excludes.
-3. **Current Results** for headline findings and figure/table summaries.
+3. **Current Results** for main findings and figure/table summaries.
 4. **Known Limitations and Mitigations** for what the analysis cannot see yet.
 5. **Quickstart** for smoke tests and full analysis entry points.
 6. **Repository Map** for file locations.
@@ -38,13 +38,13 @@ perceptual world. The public-facing limitation table is in
 unknown channels, bandwidth/equipment differences, legacy format conversion, identity/dialect
 confounds, prior-playback scope, and model-specificity checks.
 
-**One-command headline check:**
+**One-command playback check:**
 
 ```bash
 python scripts/run_playback_response_stats.py
 ```
 
-Expected headline statistic: the published conspecific playback re-analysis returns the
+Expected statistic: the published conspecific playback re-analysis returns the
 pseudoreplication-controlled same-pod vs different-pod response (`6/6` vs `0/6`, Fisher
 exact `p ~= 0.002`). Full smoke test:
 
@@ -68,7 +68,7 @@ deposited at Zenodo DOI [10.5281/zenodo.21030082](https://doi.org/10.5281/zenodo
 ## Scope
 
 - **Corpus:** DCLDE 2026 killer-whale annotations and audio pointers [@palmer2025dclde; @palmer2025dclde_data].
-- **Encoders:** AVES2 as the primary audited encoder [@hagiwara2023aves; @chen2022beats], with a Colab GPU NatureLM-audio comparison notebook for the two primary second-encoder checks [@robinson2024naturelm].
+- **Encoders:** AVES2 as the primary encoder [@hagiwara2023aves; @chen2022beats], with a Colab GPU NatureLM-audio comparison notebook for the two primary second-encoder checks [@robinson2024naturelm].
 - **Analyses:** the repository covers:
   - supervised ecotype probes;
   - provider/site confound isolation;
@@ -79,22 +79,22 @@ deposited at Zenodo DOI [10.5281/zenodo.21030082](https://doi.org/10.5281/zenodo
   - a re-analysis of a published conspecific **playback** experiment showing a dialect-selective **receiver response** to broadcast calls, corroborated across independent broadcast-response datasets [@filatova2011playback; @selbmann2026aversive; @bowers2018];
   - a catalogue foraging-vs-socializing context-specialization map [@ford1989; @foote2008];
   - representation attribution with a negative-control battery.
-  - Legacy Wellard/Dryad Type C recording-context heads are retained as exploratory scaffolding only [@wellard2020; @wellard2020_data; @wellard2020_appendix2].
+  - Legacy Wellard/Dryad Type C recording-context heads are retained for comparison only [@wellard2020; @wellard2020_data; @wellard2020_appendix2].
 - **Validation:** held-out splits, permutation nulls, provider-aware controls, artifact hashes, and explicit caveats.
-- **Methodological contribution:** the novelty is the *protocol*, not the network. One frozen encoder is held fixed while the analysis adds:
+- **Method notes:** one frozen encoder is held fixed while the analysis adds:
   - a confound-controlled evaluation (leave-one-provider-out site isolation + cross-site transfer);
   - a causal-attribution and negative-control battery (knock-out + matched-noise/feature-shuffle/label-permutation nulls);
   - an embedding analysis linking the dialect space to a published playback response.
 
-  Every result is attributable to the representation under a single auditable protocol rather than to benchmark-chasing.
+  Each result is tied to the same frozen-representation protocol.
 
 ## Current Results
 
-Latest audited DCLDE run: `20260529_072930`, frozen AVES2 embeddings, 27,934 call-level DCLDE segments across 8 providers and 4 ecotypes, schema-validated and hash-frozen (`reports/corpus_freeze.json`). Detailed interpretation is in `docs/results_analysis.md`.
+Latest DCLDE run: `20260529_072930`, frozen AVES2 embeddings, 27,934 call-level DCLDE segments across 8 providers and 4 ecotypes, schema-validated and hash-frozen (`reports/corpus_freeze.json`). Detailed interpretation is in `docs/results_analysis.md`.
 
 ### Visual evidence map
 
-**Headline:** Frozen audio embeddings carry measurable killer-whale acoustic structure,
+**Summary:** Frozen audio embeddings carry measurable killer-whale acoustic structure,
 context associations, and playback-response structure under explicit controls.
 
 <table>
@@ -180,11 +180,12 @@ status for every figure is in `docs/local_environment_manifest.md`.*
 | C2 catalogue context | Multi-context specialization of recovered call types | The validated Rung-1 catalogue call types specialize across functionally distinct contexts: **72% (13/18) are single-context foraging- or socializing-specialists** (foraging-specialists N4, N9; socializing-specialists the multi-pod two-voiced and pod-identity calls), specialization index 0.72, disjointness Fisher p = 0.069 [@ford1989; @foote2008]. Broadening the axis beyond foraging-vs-social, the same named units are documented across **six** functionally distinct behavioural contexts (foraging, travelling, resting, socializing, greeting/excitement, multi-pod aggregation; 16 types, specialization index 0.62) — so "more than one context" holds well beyond movement state, at the named-unit level [@ford1989; @foote2008; @riesch2008; @yurk2002]. Context labels are from published ethograms (not embeddings), so this is a non-circular contextual map complementing the H5 decode (the chi-square non-uniformity across contexts is suggestive only, p = 0.086, small n). |
 | Distributional semantics | Sequential structure ↔ behavioural context (non-circular) | Each call type's PPMI co-occurrence vector (from **sequence only**) is compared to its **independent** published-ethogram context vector by a Mantel test. **SRKW: positive** — distributionally similar S-calls share behavioural context (r = 0.33, p = 0.042, 8 types, 28 pairs); **NRKW: null** (r = -0.39, p = 0.89, 6 types). A non-circular test of the distributional hypothesis the bonobo/chimpanzee finalists assume [@berthet2025bonobo; @crockford2025]; modest and borderline (small n, type-level human-projected context labels), reported both ways. |
 | Attribution | Representation attribution + negative controls | The within-site ecotype signal is multi-dimensional and redundantly distributed (a single AVES2 dimension is at chance; a low-rank PCA projection recovers most of it; ablating the top-k individually-important dimensions does not collapse the decode). It is not a probe artifact: structure-matched Gaussian noise (0.54) and per-dimension feature-shuffle (0.50) fall to near chance, while the decode is 0.98 against a label-permutation null of 0.50 (p ~= 0.008). |
-| Legacy context heads | Exploratory only | The earlier Wellard recording-level context heads and a within-encounter timing proxy are weak recording-level associations, not segment-level behaviour and not response evidence; retained but excluded from every headline claim (see `docs/evidence_mapping.md`). |
+| Legacy context heads | Exploratory only | The earlier Wellard recording-level context heads and a within-encounter timing proxy are weak recording-level associations, not segment-level behaviour and not response evidence; retained for comparison only (see `docs/evidence_mapping.md`). |
 
 All metrics above are computed on the public DCLDE 2026 corpus [@palmer2025dclde; @palmer2025dclde_data] with frozen AVES2 embeddings [@hagiwara2023aves; @chen2022beats]; the call-type labels are Ford/Filatova catalogue codes [@ford1989; @filatova2015] and the H5 row uses the independent DTAG archive [@holt2024masking_data; @tennessen2019].
 
-The full evidence ladder toward a defensible "decoding" claim, the verified public-data ceiling, and what remains gated on field playback are documented in `docs/decoding_program.md`.
+The evidence ladder for the bounded "decoding" claim, the verified public-data ceiling,
+and what remains gated on field playback are documented in `docs/decoding_program.md`.
 
 ## Scope of Inference
 
@@ -242,7 +243,7 @@ version:
 | Bandwidth, equipment, and file-format heterogeneity | Killer whales hear across roughly 1-100 kHz, with high sensitivity in ultrasonic ranges; public archives differ in sampling, filters, hydrophones, gain, annotations, and conversion paths [@szymanski1999hearing; @palmer2025dclde; @johnson2003dtag]. | Provider/site is measured explicitly; readouts are within-site or explicit cross-site transfer where specified. DTAG conversions and derived artifacts are provenance-documented. |
 | Identity, dialect, and social-group confounds | Resident call types are socially structured, so a model can recover dialect or group membership without recovering content. | The playback result is framed as a dialect-selective receiver response. A content-controlled conspecific playback remains the critical field test. |
 | Prior playback evidence | The receiver-response experiment was published field work reused here [@filatova2011playback]. | The contribution here is reproducible re-analysis and representation modelling of the dialect signal space. New permitted field playback remains future work. |
-| Model specificity | A result might be an artifact of one frozen encoder. | AVES2 is the primary audited encoder; the two primary representation checks also pass under NatureLM-audio [@hagiwara2023aves; @chen2022beats; @robinson2024naturelm]. Agreement across encoders addresses model specificity. |
+| Model specificity | A result might be an artifact of one frozen encoder. | AVES2 is the primary encoder; the two primary representation checks also pass under NatureLM-audio [@hagiwara2023aves; @chen2022beats; @robinson2024naturelm]. Agreement across encoders addresses model specificity. |
 
 ## Quickstart
 
@@ -324,7 +325,7 @@ permutation null (`scripts/dtag_context_labels.py`, `dtag_context_decode.py`,
 `scripts/dtag_local_extract.py` is the local decoder fallback). The earlier Wellard
 recording-level scripts (`build_wellard_evidence_tables.py`, `run_h5_behavior_context.py`,
 `run_h6_context_structure.py`, `run_h7_candidate_motifs.py`) are retained as exploratory
-scaffolding only and are excluded from every headline claim.
+comparison only and are not used for the main claims.
 
 ### NatureLM-audio comparison
 

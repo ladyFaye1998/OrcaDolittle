@@ -100,8 +100,8 @@ kaggle.json
 huggingface_token
 .hf_token
 
-# --- Papers (copyrighted, download locally) ---
-papers/*.pdf
+# --- Local reference cache ---
+papers/
 
 
 # --- Temp / Working files ---

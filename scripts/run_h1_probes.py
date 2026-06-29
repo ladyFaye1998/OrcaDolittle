@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """H1: Confound-aware supervised probes on embeddings -> ecotype classification.
 
-This is the scientifically defensible version of H1. A naive pooled
+This is the scientifically testable version of H1. A naive pooled
 cross-validation on this dataset is severely confounded: the ecotype label is
 nearly collinear with the recording provider/site (e.g. every SAR call in the
 DCLDE archive comes from a single provider). A model can therefore reach high
@@ -12,7 +12,7 @@ standard remedy is leave-one-site-out evaluation [@stowell2022; @ghani2023].
 This script reports three evaluation views:
 
 1. Pooled stratified 5-fold CV (LogReg + MLP). This is the *site-confounded
-   upper bound*. Reported, but explicitly not the headline.
+   upper bound*. Reported, but explicitly not the primary claim.
 2. Leave-One-Provider-Out (LOPO) grouped CV. The site-held-out generalisation
    number: every test provider is unseen during training. Per-class held-out
    recall is reported so structurally site-locked classes (one provider only)
@@ -87,7 +87,7 @@ def _logreg() -> LogisticRegression:
 
 
 def pooled_cv(embeddings, y, class_names):
-    """Pooled stratified 5-fold CV. Site-confounded upper bound, not headline."""
+    """Pooled stratified 5-fold CV. Site-confounded upper bound, not the primary claim."""
     cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=SEED)
 
     print("\n--- [UPPER BOUND, site-confounded] Pooled 5-fold CV ---")
@@ -120,7 +120,7 @@ def leave_one_provider_out(embeddings, y, groups, class_names):
     """Site-held-out generalisation: each provider unseen during training."""
     logo = LeaveOneGroupOut()
     n_groups = len(np.unique(groups))
-    print(f"\n--- [HEADLINE] Leave-One-Provider-Out CV ({n_groups} providers) ---")
+    print(f"\n--- [PRIMARY] Leave-One-Provider-Out CV ({n_groups} providers) ---")
 
     # Held-out predictions for every sample (its provider was never in train).
     y_pred = cross_val_predict(_logreg(), embeddings, y, groups=groups, cv=logo)
@@ -286,7 +286,7 @@ def run_probes(embeddings, labels, groups, encoder_name, n_perm=N_PERM,
     pooled = pooled_cv(embeddings, y, class_names)
 
     if groups is None or len(np.unique(groups)) < 2:
-        print("\n  WARNING: no usable provider groups; skipping LOPO (headline).")
+        print("\n  WARNING: no usable provider groups; skipping LOPO (primary claim).")
         lopo = None
     else:
         lopo = leave_one_provider_out(embeddings, y, groups, class_names)
@@ -305,7 +305,7 @@ def run_probes(embeddings, labels, groups, encoder_name, n_perm=N_PERM,
           f"{pooled['lr_balanced_accuracy']:.3f}")
     if lopo is not None:
         gen = lopo["overall_balanced_accuracy"]
-        print(f"  Cross-site (LOPO) balanced acc (HEADLINE): {gen:.3f}")
+        print(f"  Cross-site (LOPO) balanced acc (PRIMARY): {gen:.3f}")
         print(f"  Cross-site macro-F1: {lopo['overall_macro_f1']:.3f}  "
               f"(chance {lopo['chance']:.3f})")
         verdict = ("above 2x chance under LOPO" if gen > 2 * lopo["chance"]

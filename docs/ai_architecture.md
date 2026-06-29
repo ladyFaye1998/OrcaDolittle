@@ -46,7 +46,7 @@ AVES2 is the implemented encoder path and produces 768-dimensional frame-level
 embeddings that are mean-pooled to one vector per segment [@hagiwara2023aves;
 @chen2022beats]. NatureLM-audio is documented as a comparative encoder path for future
 full-scale runs [@robinson2024naturelm]. Encoders remain frozen so downstream results
-can be audited independently of large-model training.
+can be checked independently of large-model training.
 
 ## Downstream Heads
 
@@ -78,7 +78,7 @@ can be audited independently of large-model training.
 
 The project supports claims about: acoustic embedding structure; site-controlled
 ecotype decodability with the recording-site confound explicitly quantified (pooled
-decodability collapses cross-site; within-site discrimination is the headline
+decodability collapses cross-site; within-site discrimination is the main
 biological signal); catalogue call-type decodability that, unlike ecotype, transfers
 across independent recording sites; non-random first-order call-sequence structure over
 both quantised tokens and validated catalogue call types; and **context-specific
@@ -93,9 +93,9 @@ perception side of context-specificity (that receivers act on calls differently 
 context), or any measured response to a broadcast signal; those require field playbacks
 an archival corpus cannot supply [@deecke2005; @sayigh2025nsw]. The earlier
 recording-level Wellard context heads and the within-encounter timing proxy are weak
-recording-level associations retained only as exploratory scaffolding and are excluded
-from every headline claim, and are superseded for behavioural-context evidence by the
-DTAG H5 head [@wellard2020; @wellard2020_appendix2].
+recording-level associations retained only for exploratory comparison. They are excluded
+from every main claim and superseded for behavioural-context evidence by the DTAG H5
+head [@wellard2020; @wellard2020_appendix2].
 
 ## Cross-References
 

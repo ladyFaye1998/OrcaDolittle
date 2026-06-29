@@ -1,4 +1,4 @@
-# A Defensible Program for "Decoding" Killer Whale Communication
+# A Testable Program for "Decoding" Killer Whale Communication
 
 This document defines what a rigorous, criterion-based claim about killer-whale
 communication would require, maps the current pipeline onto that ladder, and
@@ -6,7 +6,7 @@ records the verified ceiling of publicly downloadable data. It is the planning
 reference for deciding what is worth building next and what must wait for a
 field collaborator.
 
-## 1. What "decoding" has to mean to be defensible
+## 1. What "decoding" has to mean to be testable
 
 In the animal-communication literature a signal is treated as *functionally
 referential* only with two independent criteria
@@ -61,7 +61,7 @@ playback experiment (Section 5g) and corroborated across independent broadcast-
 response datasets: receivers respond selectively to a broadcast endogenous signal.
 What is *not* established is that the receiver's response is governed by the call's
 *content* rather than its dialect membership - the gate to a full "decoded meaning"
-headline - which remains future work.
+claim - which remains future work.
 
 ## 3. Verdicts on the three proposed shortcuts
 
@@ -78,17 +78,17 @@ not the data.**
 This maps onto Rung 2 (context-specificity) and is legitimate **only as a
 clearly-labelled pilot**. Hand-labelled web video carries unknown provenance,
 uncalibrated and often non-synchronous audio, channel compression, and observer
-bias. It cannot support a headline claim. If used at all, it must be framed as
+bias. It cannot support a main claim. If used at all, it must be framed as
 an exploratory, caveated pilot, and is strictly weaker than using corpora that
 already pair audio with documented context. **Allowed as a pilot with explicit
-caveats; never as headline evidence.**
+caveats; never as main evidence.**
 
 **"Decode orca language in a legit way."**
 Achievable as a **bounded, criterion-named** claim: *we demonstrate the
 production-side prerequisites of functional reference in killer whales - a
 discrete call-type repertoire (Rung 1) and, in pilot form, context-specificity
 (Rung 2) - together with above-chance combinatorial structure in call
-sequences (Rung 4).* That is true, defensible, and publishable. The unbounded
+sequences (Rung 4).* That is true, testable, and publishable. The unbounded
 claim ("we translated orca / two-way communication") is not supportable without
 Rung 3 and must not be made.
 
@@ -597,7 +597,7 @@ broadcast calls, while the content->response step remains future work.
 A demonstration of call content beyond structured signalling would require that
 orcas use specific sounds or sound combinations to convey specific information
 and that other orcas understand and act on it. That decomposes into five
-auditable requirements. For each we state what would test it, what we have, and
+documented requirements. For each we state what would test it, what we have, and
 the single fact that addresses the gap. None of the open requirements can be addressed
 by a larger model or more archival audio; they require behavioural labels and
 playback. This is the central boundary of this project.

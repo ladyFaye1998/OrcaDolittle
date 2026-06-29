@@ -24,7 +24,7 @@ This file tracks peer-reviewed playback literature that may support future respo
 
 ## Current Boundary
 
-Do not report a learned playback-response result from this file alone. Until per-trial values are extracted and audited, these papers support literature context and future extraction planning only.
+Do not report a learned playback-response result from this file alone. Until per-trial values are extracted and checked, these papers support literature context and future extraction planning only.
 
 ## Extraction Checklist
 

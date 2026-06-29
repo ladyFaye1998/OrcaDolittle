@@ -15,7 +15,7 @@ sees only the whales' pulsed/communicative calls can predict the behavioural
 context the animal is in, above chance, under cross-validation that controls for
 identity and recording conditions.
 
-The defensible claim ceiling is: *"behavioural context is recoverable from the
+The testable claim ceiling is: *"behavioural context is recoverable from the
 communication signal above chance, with the recording-identity confound held
 constant."* This is **decoding of context**, not decoding of *meaning*: we do not
 claim a given call "means" a behaviour [@yovel2023doctor].

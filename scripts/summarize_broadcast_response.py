@@ -6,7 +6,7 @@ measurable behavioural response of naive animals to a broadcast signal (not only
 decoding). This script rolls up the
 real, published broadcast/response evidence catalogued in
 `data/join_tables/broadcast_response_evidence.csv` and makes an explicit,
-auditable determination of whether the criterion is met, with the scope spelled out.
+documented determination of whether the criterion is met, with the scope spelled out.
 
 The criterion is treated as MET when there is at least one **conspecific** playback
 showing a measurable response in **naive** animals, corroborated by independent

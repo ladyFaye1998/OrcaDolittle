@@ -21,7 +21,7 @@ This script answers all three on the existing data (reuses AVES2 embeddings; no 
 
 Inputs:
   --emb NPZ      call_embeddings.npz
-  --labels CSV   context_labeled_calls.csv (binary) by default -- defends the headline result
+  --labels CSV   context_labeled_calls.csv (binary) by default -- defends the main result
   --clips DIR    folder with the wav clips (for low-level acoustic features)
 Outputs:
   <clips>/clip_acoustic_features.npz     per-clip scalar features (cache)
@@ -140,7 +140,7 @@ def main() -> int:
         meta = meta.drop(columns=[col])
     meta = meta.merge(lab[["clip", col]], on="clip", how="inner")
 
-    # restrict to individuals with both/all contexts (same rule as the headline decode)
+    # restrict to individuals with both/all contexts (same rule as the main decode)
     keep = [dep for dep, g in meta.groupby("deployment") if g[col].nunique() >= 2]
     meta = meta[meta["deployment"].isin(keep)].reset_index(drop=True)
     Xemb = E[meta["index"].to_numpy()]
@@ -164,7 +164,7 @@ def main() -> int:
     ba_lowlevel = logo_balacc(F[ok], y[ok], groups[ok])
     ba_loudness = logo_balacc(F[ok][:, [1]], y[ok], groups[ok])  # log-RMS only (loudness)
 
-    # embeddings (headline) on the same rows for a fair comparison
+    # embeddings (main) on the same rows for a fair comparison
     ba_emb = logo_balacc(Xemb, y, groups)
     ba_emb_ok = logo_balacc(Xemb[ok], y[ok], groups[ok])
 

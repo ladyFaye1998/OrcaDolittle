@@ -2,7 +2,7 @@
 
 This document maps each analysis head to the claim it can support and the control required before that claim is public-facing.
 
-### Headline heads (defensible, public-facing)
+### Main heads (testable, public-facing)
 
 | Head | Supported Claim | Required Control | Boundary |
 |---|---|---|---|
@@ -20,11 +20,11 @@ This document maps each analysis head to the claim it can support and the contro
 | Distributional semantics | A call type's sequential distribution carries information about its behavioural context: in SRKW, distributional similarity (PPMI from sequence) correlates with independent published-ethogram context similarity (Mantel r = 0.33, p = 0.042, 8 types); NRKW null (r = -0.39). | PPMI co-occurrence vectors from validated call-type sequences (site held constant); context vectors from published ethograms only (`call_type_to_context.csv`); Mantel test with a label-permutation null (`run_calltype_distributional_semantics.py`) [@berthet2025bonobo; @crockford2025; @ford1989; @foote2008]. | A non-circular test of the distributional hypothesis the finalist primate studies assume (distribution from sequence, context from independent ethograms); a structure↔context ASSOCIATION, NOT referential meaning; context labels are coarse, type-level and human-projected (umwelt caveat); small n and a borderline p (one of two populations), reported both ways [@kershenbaum2024whyanimalstalk]. |
 | H8 (site-invariance) | A label-free site-nuisance projection partially recovers site-invariant ecotype structure: leave-one-provider-out 4-way ecotype 0.402 → 0.445 (vs a 0.234 null, p = 0.005) and cross-site SRKW-vs-TKW 0.597 → 0.625, while within-site ecotype is preserved (0.883 → 0.876). | StandardScaler + PCA + site-nuisance subspace projection fit on training providers only; test-provider ecotype labels never used; permutation null (`run_site_invariance.py`). | Methods contribution, not a biological claim; ecotype and recording site are confounded in this corpus (SAR single-provider) so recovery is bounded; not meaning [@stowell2022; @ghani2023]. |
 
-### Exploratory heads (NOT public-facing; scaffolding only)
+### Exploratory comparison heads
 
 | Head | Status | Boundary |
 |---|---|---|
-| Legacy Wellard context heads | Wellard Type C recording-level context, inherited whole-encounter to fixed segments and duplicated across contexts. | Weak recording-level association, not segment-level behaviour; excluded from every headline claim and superseded for behavioural-context evidence by the DTAG H5 head above [@wellard2020; @wellard2020_appendix2]. |
+| Legacy Wellard context heads | Wellard Type C recording-level context, inherited whole-encounter to fixed segments and duplicated across contexts. | Weak recording-level association, not segment-level behaviour; excluded from every main claim and superseded for behavioural-context evidence by the DTAG H5 head above [@wellard2020; @wellard2020_appendix2]. |
 | Legacy timing proxy | Within-encounter vocal-continuation timing proxy. | A temporal statistic over already-recorded calls; not a response to a broadcast signal and not a playback experiment. |
 
 ## Claim Language

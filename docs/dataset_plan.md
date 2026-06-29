@@ -1,6 +1,6 @@
 # Dataset Plan
 
-This project uses DCLDE 2026 as the primary killer-whale acoustic substrate and keeps all source-data access reproducible, public, and auditable [@palmer2025dclde; @palmer2025dclde_data].
+This project uses DCLDE 2026 as the primary killer-whale acoustic substrate and keeps all source-data access reproducible, public, and documented [@palmer2025dclde; @palmer2025dclde_data].
 
 ## Primary Dataset
 
@@ -14,7 +14,7 @@ This project uses DCLDE 2026 as the primary killer-whale acoustic substrate and 
 
 ## Behavioural-context dataset (H5, DTAG)
 
-The headline behavioural-context evidence (H5) uses an independent archive of
+The main behavioural-context evidence (H5) uses an independent archive of
 animal-borne DTAG-2 recordings of fish-eating killer whales in the Salish Sea: tag audio
 plus calibrated 50 Hz depth/acceleration and per-dive kinematics, openly deposited under
 CC-BY-4.0 [@holt2024masking_data; @tennessen2019; @holt2024masking]. Because behaviour is
@@ -22,9 +22,9 @@ recorded on the animal, context varies within a fixed individual, which is what 
 the leave-individual-out, movement-only-labelled decode.
 
 The earlier Wellard/Dryad Ross Sea Type C recordings [@wellard2020; @wellard2020_data;
-@wellard2020_appendix2] (encounter-level F/S/T/M behaviour) are retained only as
-exploratory scaffolding: a weak recording-level association inherited to fixed segments,
-underpowered at 9 encounters, and superseded by the DTAG H5 head. It must not be
+@wellard2020_appendix2] (encounter-level F/S/T/M behaviour) are retained only for
+exploratory comparison: a weak recording-level association inherited to fixed segments,
+underpowered at 9 encounters, and superseded by the DTAG H5 head. It should not be
 described as segment-level behaviour, semantic translation, or playback-response evidence.
 
 ## Provenance Requirements
@@ -43,7 +43,7 @@ The call-type-to-context table is a literature-backed statistical join, not a de
 - Required columns exist before encoding starts.
 - Segment duration and sample-rate assumptions are checked before encoder inference.
 - Class and provider distributions are logged before model fitting.
-- Group-aware split feasibility is checked before headline metrics are reported.
+- Group-aware split feasibility is checked before main metrics are reported.
 
 ## Open Work
 
@@ -51,4 +51,4 @@ The call-type-to-context table is a literature-backed statistical join, not a de
 2. `data/join_tables/call_type_to_context.csv` extraction is **complete** from current sources (see its README); expand only if new source-backed rows appear.
 3. Add provider-aware metrics outputs to every downstream head.
 4. Record artifact hashes for each regenerated embedding matrix.
-5. Keep the **legacy Wellard context-head** output wording limited to candidate context associations; these are exploratory scaffolding, superseded for behavioural-context evidence by the DTAG H5 decode and the H6 playback re-analysis.
+5. Keep the **legacy Wellard context-head** output wording limited to candidate context associations; these are exploratory comparisons superseded for behavioural-context evidence by the DTAG H5 decode and the H6 playback re-analysis.
