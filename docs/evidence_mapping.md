@@ -46,5 +46,5 @@ Use conservative language:
 - Orca behavioural and call-context literature: [@ford1989; @foote2008; @filatova2015; @riesch2008; @yurk2002]
 - DTAG behavioural-context source (H5): [@holt2024masking_data; @tennessen2019; @holt2024masking]
 - ODBA activity proxy for the travelling/resting split (H5): [@wilson2006]
-- Call-type-by-behavioural-context association (H5 production criterion): [@ford1989; @foote2008]
+- Call-type-by-behavioural-context association (H5 production-side evidence): [@ford1989; @foote2008]
 - Wellard/Dryad Type C context source (legacy): [@wellard2020; @wellard2020_data; @wellard2020_appendix2]

@@ -1205,7 +1205,7 @@ if summary.get("observed_check_passed"):
     else:
         print("✅ Call-type check passed on the full data with observed cross-validation metrics.")
 else:
-    print("⚠️ Call-type check did not pass the configured full-data criteria. See summary above.")
+    print("⚠️ Call-type check did not pass the configured full-data checks. See summary above.")
 """))
 
 cells.append(md(r"""
@@ -1359,7 +1359,7 @@ md = f'''
 
 ## Result sentence
 
-{result_sentence if observed_check_passed else 'Analysis status did not pass the configured full-data criteria.'}
+{result_sentence if observed_check_passed else 'Analysis status did not pass the configured full-data checks.'}
 
 ## Boundary
 
@@ -1377,7 +1377,7 @@ display(Markdown(f'''
 
 **Result sentence**
 
-> {result_sentence if observed_check_passed else 'Analysis status did not pass the configured full-data criteria.'}
+> {result_sentence if observed_check_passed else 'Analysis status did not pass the configured full-data checks.'}
 
 **Saved artifacts**
 

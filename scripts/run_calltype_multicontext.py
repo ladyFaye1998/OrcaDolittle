@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""C2-multi (catalogue level): do the validated catalogue call types span MORE
-THAN ONE behavioural context, and how broadly?
+"""Catalogue context breadth: do validated call types span more than one
+behavioural context, and how broadly?
 
 `run_calltype_context_specialization.py` collapsed the contrast to the single
 foraging-vs-socializing axis. Context-specific communication is conventionally
@@ -13,15 +13,14 @@ excitement (pod meetings), multi-pod aggregation, and beach-rubbing
 contexts the recovered repertoire covers and how the named units distribute
 across them.
 
-Non-circular framing (identical to C2): the context labels come from the
+Non-circular framing: the context labels come from the
 published field ethograms, independently of the embeddings. This is a literature-grounded
 map of the documented behavioural use of the units recovered in Rung 1; it
 complements the DTAG embedding decode (H5), which carries the inferential weight
 on the production side. Pure identity-signalling associations (single-pod /
 clan-identity / inter-clan), which are about *who* is calling rather than *what
 behavioural context* the call is produced in, are outside the behavioural-context
-axis. This is the production-side reading of the "more than one context" criterion
-at the named-unit level.
+axis. This is a production-side context map at the named-unit level.
 
 Output: a call-type x behavioural-context incidence map, the number of distinct
 contexts covered, a per-type context-count distribution, a specialization index,
@@ -142,7 +141,7 @@ def main() -> int:
     chi2, chi2_p = chisquare(obs, exp)
 
     print("\n" + "=" * 70)
-    print("C2-MULTI (CATALOGUE): BEHAVIOURAL-CONTEXT BREADTH OF VALIDATED UNITS")
+    print("CATALOGUE: BEHAVIOURAL-CONTEXT BREADTH OF VALIDATED UNITS")
     print("=" * 70)
     print(f"  populations            : {', '.join(args.populations)} (validated Rung-1 catalogue)")
     print(f"  call types with a context: {n_types}")
@@ -186,8 +185,7 @@ def main() -> int:
     }
     summary = {
         "analysis": "catalogue_calltype_multicontext_breadth",
-        "criterion": "C2 / versatility (communication in MORE THAN ONE context), "
-                     "catalogue / named-unit level",
+        "analysis_scope": "catalogue / named-unit behavioural-context breadth",
         "context_axis": "canonical killer-whale BEHAVIOURAL contexts "
                         "(activity + social), NOT identity signalling",
         "context_label_source": "published field ethograms (NOT embeddings): "

@@ -18,7 +18,7 @@ identity and recording conditions.
 The testable claim ceiling is: *"behavioural context is recoverable from the
 communication signal above chance, with the recording-identity confound held
 constant."* This is **decoding of context**, not decoding of *meaning*: we do not
-claim a given call "means" a behaviour [@yovel2023doctor].
+claim a given call "means" a behaviour.
 
 ## 2. Why the existing open "decode-orca-behaviour" results do not hold
 
@@ -109,7 +109,7 @@ Salish Sea 2009–2014 [@tennessen2019; @holt2024masking].
    latter two split at each individual's median Overall Dynamic Body Acceleration
    (ODBA) from the calibrated accelerometer, movement-only [@wilson2006]
    (`scripts/dtag_context_multilabel.py`, `scripts/dtag_context_multidecode.py`);
-   (b) test the **production criterion** that *specific call types occur in specific
+   (b) test the **production-side evidence** that *specific call types occur in specific
    contexts* by clustering the calls and testing the call-type × context association
    against a *within-individual* shuffle null [@ford1989; @foote2008]
    (`scripts/dtag_calltype_context.py`); and (c) run controls that re-decode context

@@ -1,6 +1,6 @@
 {
   "analysis": "catalogue_calltype_foraging_vs_socializing_specialization",
-  "criterion": "C2 (more than one behavioural context), catalogue / named-unit level",
+  "analysis_scope": "catalogue / named-unit behavioural-context specialization",
   "context_label_source": "published field ethograms (NOT embeddings): ford1989, foote2008, riesch2008, yurk2002",
   "populations": [
     "NRKW",

@@ -2,7 +2,7 @@
 
 This audit records dataset context for reproducible bioacoustic modelling. The active repository scope is killer-whale analysis on DCLDE 2026; broader cetacean datasets are retained only as methodological context.
 
-## Selection Criteria
+## Selection Filters
 
 - Public or clearly documented access path
 - Acoustic annotations with usable metadata

@@ -1,17 +1,14 @@
 #!/usr/bin/env python3
-"""C3 criterion roll-up: is a measurable response to a broadcast signal demonstrated?
+"""Broadcast-response evidence roll-up.
 
-The response criterion (Yovel & Rechavi 2023, criterion 3) is: a non-invasive,
-measurable behavioural response of naive animals to a broadcast signal (not only
-decoding). This script rolls up the
-real, published broadcast/response evidence catalogued in
-`data/join_tables/broadcast_response_evidence.csv` and makes an explicit,
-documented determination of whether the criterion is met, with the scope spelled out.
+This script rolls up the real, published broadcast/response evidence catalogued in
+`data/join_tables/broadcast_response_evidence.csv` and records whether the evidence
+contains a measurable behavioural response of naive animals to a broadcast signal.
 
-The criterion is treated as MET when there is at least one **conspecific** playback
-showing a measurable response in **naive** animals, corroborated by independent
-broadcast-response datasets. It does NOT assert referential meaning: the main
-(conspecific) result tracks dialect membership, not call content.
+The response side is treated as present when there is at least one **conspecific**
+playback showing a measurable response in **naive** animals, corroborated by
+independent broadcast-response datasets. It does NOT assert referential meaning:
+the main conspecific result tracks dialect membership, not call content.
 
 Usage:
   python scripts/summarize_broadcast_response.py
@@ -35,10 +32,10 @@ def main() -> int:
     conspecific_playback = playback[playback["stimulus_type"].str.contains("same vs different|conspecific", case=False)]
     naive_playback = playback[playback["naive_animals"].str.strip().str.lower() == "yes"]
 
-    criterion_met = (len(conspecific_playback) >= 1) and (len(naive_playback) >= 1)
+    response_evidence_present = (len(conspecific_playback) >= 1) and (len(naive_playback) >= 1)
 
     print("\n" + "=" * 66)
-    print("C3 CRITERION ROLL-UP: MEASURABLE RESPONSE TO A BROADCAST SIGNAL")
+    print("BROADCAST-RESPONSE EVIDENCE ROLL-UP: MEASURABLE RESPONSE TO A BROADCAST SIGNAL")
     print("=" * 66)
     for _, r in df.iterrows():
         print(f"  - {r['study']:<14} [{r['design']}] {r['responder_species']}: "
@@ -46,11 +43,11 @@ def main() -> int:
               f"value={r['value_source']}")
     print(f"\n  playback (broadcast) studies: {len(playback)}  "
           f"(conspecific: {len(conspecific_playback)}; naive: {len(naive_playback)})")
-    print(f"  RESPONSE SIDE ADDRESSED: {criterion_met}")
+    print(f"  RESPONSE SIDE ADDRESSED: {response_evidence_present}")
 
     summary = {
-        "criterion": "C3 / response criterion (Yovel & Rechavi 2023, criterion 3): measurable response to a broadcast signal (non-invasive, naive animals, not only decoding)",
-        "criterion_met": bool(criterion_met),
+        "response_evidence": "measurable response to a broadcast signal in naive animals",
+        "response_evidence_present": bool(response_evidence_present),
         "basis": (
             "Met by a published conspecific playback re-analysis (filatova2011playback: "
             "same-pod vs different-pod vocal response 6/6 vs 0/6, Fisher p=0.002, naive "
@@ -63,7 +60,7 @@ def main() -> int:
         "n_naive_playback": int(len(naive_playback)),
         "evidence": df.to_dict(orient="records"),
         "scope_and_caveats": [
-            "MET refers to the response criterion (a measurable response to a broadcast "
+            "MET refers to the response evidence (a measurable response to a broadcast "
             "signal), NOT to referential meaning.",
             "The behavioural playback experiments are prior published work re-analysed "
             "here (Path A); our contribution is the reproducible statistic + the embedding "
@@ -76,9 +73,9 @@ def main() -> int:
         ],
     }
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)
-    (REPORTS_DIR / "broadcast_response_criterion.json").write_text(
+    (REPORTS_DIR / "broadcast_response_evidence.json").write_text(
         json.dumps(summary, indent=2), encoding="utf-8")
-    print("  Metrics JSON: reports/broadcast_response_criterion.json")
+    print("  Metrics JSON: reports/broadcast_response_evidence.json")
     print("=" * 66)
     return 0
 
