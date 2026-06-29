@@ -54,10 +54,9 @@ Zenodo data record:
 
 - Package: `orcadolittle_derived_artifacts_clean_20260629T100942Z.zip`
 - DOI: [10.5281/zenodo.21030082](https://doi.org/10.5281/zenodo.21030082)
-- Package SHA-256: `9f6119f618aba0b5c89988e13a93840d8c28ff7a1de544fc5dbd1cf6c971681c`
-- Package contents: 111 included artifacts, 122,872,445 unpacked bytes, with internal
-  `PACKAGE_MANIFEST.json`, `PACKAGE_README.md`, and `SHA256SUMS.txt`
-- Source commit recorded in the package: `ebf29fc6abb408373f90639285d20244d251cd5b`
+- Package contents and source commit are recorded inside the ZIP in
+  `PACKAGE_MANIFEST.json`, `PACKAGE_README.md`, and `SHA256SUMS.txt`. The outer ZIP
+  SHA-256 is recorded in the private submission package note after each rebuild.
 
 | Artifact | Size | SHA-256 (first 16) | Status |
 |---|---|---|---|
