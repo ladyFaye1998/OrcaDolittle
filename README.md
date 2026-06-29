@@ -125,8 +125,7 @@ Latest audited DCLDE run: `20260529_072930`, frozen AVES2 embeddings, 27,934 cal
 </tr>
 </table>
 
-<details>
-<summary>Open narrative summary with citations and exact statistics</summary>
+#### Narrative summary
 
 - **Site control:** Pooled ecotype decodability overstates the ecotype signal because of a recording-site shortcut, and site-controlled evaluation separates within-site biological structure from the site effect [@stowell2022; @ghani2023]; stereotyped call-type identity, by contrast, is recoverable within a fixed site in both resident populations (SRKW 14-type 0.709, NRKW 18-type 0.968) and transfers across independent recording sites, the cross-site control the ecotype boundary fails [@ford1989; @filatova2015].
 - **Production context:** On an independent animal-borne DTAG archive, communicative calls further carry decodable information about the caller's movement-defined behavioural context with the individual held out: foraging vs. non-foraging at 0.770 balanced accuracy, and a three-way foraging/travelling/resting contrast at 0.577 (chance 0.333) [@holt2024masking_data; @tennessen2019; @wilson2006]. Specific call types are produced context-specifically (call-type × context Cramér's V = 0.40, within-individual null p < 0.001), and the decode reflects call structure rather than call rate (0.536) or loudness (0.577) — context-specific production across more than one behavioural context, not referential meaning.
@@ -135,8 +134,6 @@ Latest audited DCLDE run: `20260529_072930`, frozen AVES2 embeddings, 27,934 cal
 - **Additional response and context evidence:** The response result is supported by independent datasets — killer whales avoid broadcast pilot-whale sound against matched controls [@selbmann2026aversive], orca-call structure drives receiver heading change [@bowers2018], and receivers match a preceding caller's type in natural exchanges [@miller2004repertoires] — and, on the production side, the recovered catalogue call types specialize across functionally distinct contexts: 72% are single-context foraging- or socializing-specialists (e.g. N4/N9 foraging vs the multi-pod two-voiced calls socializing), and the same named units are documented across **six** distinct behavioural contexts, not just movement state [@ford1989; @foote2008; @riesch2008].
 - **Structure side:** Two further analyses add structure-side detail: SRKW S-call sequences carry **compositional structure beyond first order** — the call two steps back adds information a first-order Markov model cannot explain (second-order delta 0.645 bits, p ~= 1e-3; candidate phrase S01->S04->S01), in the spirit of sperm-whale coda analysis [@sharma2024; @berthet2025bonobo; @crockford2025] — while a label-free site-invariance transform modestly improves cross-site ecotype transfer (0.597 -> 0.625) without disturbing the within-site signal [@stowell2022; @ghani2023].
 - **Distributional semantics:** Finally, a distributional-semantics test compares sequence structure with behavioural context **non-circularly**: in Southern Residents, call types that keep similar sequential company also share independent, literature-grounded behavioural context (Mantel r = 0.33, p = 0.042, 8 types), with Northern Residents null (r = -0.39). This is a modest type-level test, reported both ways, still not a claim of meaning [@berthet2025bonobo; @crockford2025; @ford1989; @foote2008].
-
-</details>
 
 ### Figure gallery
 
