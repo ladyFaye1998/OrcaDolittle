@@ -24,9 +24,8 @@ animal.
 
 The derived artifacts, metrics, figures, provenance tables, and reproduction notebooks are
 published as the Zenodo data package
-[10.5281/zenodo.21030082](https://doi.org/10.5281/zenodo.21030082). Raw third-party audio,
-raw DTAG archives, model weights, runtime caches, and non-public working files are not
-redistributed.
+[10.5281/zenodo.21030082](https://doi.org/10.5281/zenodo.21030082). Source datasets are
+accessed from their cited public repositories.
 
 ## Rung 2 - behavioural context: candidate sources
 

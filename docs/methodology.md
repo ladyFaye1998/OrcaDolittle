@@ -14,7 +14,7 @@ The project uses public killer-whale acoustic annotations, frozen audio embeddin
 ## Reproducibility Requirements
 
 - All scripts accept deterministic seeds where stochasticity is present.
-- Downloaded raw audio remains outside Git.
+- Source audio is accessed from cited public archives during regeneration.
 - Compact derived artifacts include enough metadata to trace rows back to source annotations.
 - Figures must be regeneratable from scripts and metrics files.
 - Public factual claims cite `docs/refs.bib`.
@@ -23,5 +23,5 @@ The project uses public killer-whale acoustic annotations, frozen audio embeddin
 
 - `docs/ai_architecture.md`: detailed stack and controls.
 - `docs/dataset_plan.md`: data provenance and quality plan.
-- `docs/evidence_mapping.md`: evidence map and claim boundaries.
+- `docs/evidence_mapping.md`: evidence map and claim scope.
 - `docs/results_analysis.md`: current run interpretation.

@@ -10,7 +10,7 @@ This project uses DCLDE 2026 as the primary killer-whale acoustic substrate and 
 | Corpus | DCLDE 2026 killer-whale dataset |
 | Access | Public NOAA/NCEI and GCS mirrors |
 | Metadata | Annotation rows with ecotype, provider, annotation level, time bounds, and source-file pointers |
-| Git policy | Raw audio stays out of Git; compact derived artifacts may be committed when small and reproducible |
+| Artifact policy | Source audio is accessed from public archives; compact derived artifacts may be committed when small and reproducible |
 
 ## Behavioural-context dataset (H5, DTAG)
 
@@ -19,7 +19,7 @@ animal-borne DTAG-2 recordings of fish-eating killer whales in the Salish Sea: t
 plus calibrated 50 Hz depth/acceleration and per-dive kinematics, openly deposited under
 CC-BY-4.0 [@holt2024masking_data; @tennessen2019; @holt2024masking]. Because behaviour is
 recorded on the animal, context varies within a fixed individual, which is what enables
-the leave-individual-out, movement-only-labelled decode. Raw tag archives stay out of Git.
+the leave-individual-out, movement-only-labelled decode.
 
 The earlier Wellard/Dryad Ross Sea Type C recordings [@wellard2020; @wellard2020_data;
 @wellard2020_appendix2] (encounter-level F/S/T/M behaviour) are retained only as
