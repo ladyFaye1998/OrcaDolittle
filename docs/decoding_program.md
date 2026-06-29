@@ -34,7 +34,7 @@ response is measured. We do not run new field playbacks. We do, however, address
 perception criterion by **re-analysis of an already-published conspecific playback
 experiment** on wild killer whales [@filatova2011playback] (Section 5g): the
 behavioural experiment is prior work, and our contribution is the reproducible
-statistic plus an embedding model of the dialect space that drives the response. A
+statistic plus an embedding model of the associated dialect space. A
 full "we decoded orca language" claim in the two-way semantic sense would still
 require demonstrating that the *content* of a call (not just its dialect membership)
 governs the receiver's response; that remains future work. Everything below is
@@ -47,7 +47,7 @@ organised around that boundary.
 | 0 | Killer-whale acoustic categories (ecotype) are recoverable from learned embeddings, controlling for recording site | none (structure only) | **Done** - H1/H4, site-controlled [@palmer2025dclde; @hagiwara2023aves] |
 | 1 | A discrete, stereotyped **call-type repertoire** exists and is recoverable, site-independently | production (units) | **Done (positive), both resident populations** - Section 5d: within-site SRKW 14-type 0.709 and NRKW 18-type 0.968, plus cross-site transfer [@ford1989; @filatova2015; @wellard2020] |
 | 2 | Calls are **non-randomly tied to behavioural context** | production (context-specificity) | **Met (production side), multi-context + call-type-specific** - DTAG H5: communicative calls decode movement-defined context with the individual held out (foraging/non-foraging 0.770; three-way foraging/travelling/resting 0.577, chance 0.333), and **specific call types occur in specific contexts** (call-type × context Cramér's V = 0.40, within-individual null p < 0.001); rate/loudness/echolocation controls rule out the trivial explanations (Section 5f). Remaining: the perception side (Rung 3) and contexts beyond movement state (e.g. alarm/mating) [@holt2024masking_data; @tennessen2019; @wilson2006; @ford1989; @foote2008] |
-| 3 | Receivers **respond** to a broadcast conspecific call, selectively by dialect | perception | **Met by re-analysis (Section 5g)** - wild killer whales reply vocally to same-pod playbacks and stay silent to different-pod playbacks (6/6 vs 0/6 after pseudoreplication control, Fisher p = 0.002), naive free-ranging animals, often matching the played type [@filatova2011playback; @miller2004repertoires]; frozen AVES2 recovers the dialect call types that drive it (purity 0.439 vs 0.05 null, p = 1e-3); corroborated across independent broadcast-response datasets [@selbmann2026aversive; @bowers2018]. The behavioural experiments are prior published work re-analysed here; the response tracks dialect, not content [@deecke2005] |
+| 3 | Receivers **respond** to a broadcast conspecific call, selectively by dialect | perception | **Met by re-analysis (Section 5g)** - wild killer whales reply vocally to same-pod playbacks and stay silent to different-pod playbacks (6/6 vs 0/6 after pseudoreplication control, Fisher p = 0.002), naive free-ranging animals, often matching the played type [@filatova2011playback; @miller2004repertoires]; frozen AVES2 recovers the dialect call-type space underlying the response contrast (purity 0.439 vs 0.05 null, p = 1e-3); corroborated across independent broadcast-response datasets [@selbmann2026aversive; @bowers2018]. The behavioural experiments are prior published work re-analysed here; the response tracks dialect, not content [@deecke2005] |
 | 4 | Units show **non-random sequential structure**, and in SRKW **structure beyond first order** (combinatorial prerequisite) | sequential / combinatorial structure | **Done (positive), over validated units** - Section 5c (k-means tokens), 5e (catalogue call types, both populations, site-controlled), and 5i (**beyond first order in SRKW S-calls**, second-order info 0.645 bits, p ~= 1e-3 vs first-order Markov surrogates; null in NRKW) [@kershenbaum2024whyanimalstalk; @sharma2024; @berthet2025bonobo; @crockford2025] |
 
 We are credibly at Rung 0, at Rung 1 for both resident populations (validated
@@ -222,7 +222,7 @@ local artifact [@ford1989; @filatova2015; @hagiwara2023aves]:
   reproduces this exactly.)
 - **Within-provider, DFO_CRP, 18 NRKW N-call types, n = 5,009.** Linear-probe
   balanced accuracy **0.968** (macro-F1 0.966; chance 0.056, majority 0.390; MLP
-  0.963), permutation **p ~= 0.005** - near-perfect 18-way call-type
+  0.963), permutation **p ~= 0.005** - 18-way call-type
   discrimination within a fixed hydrophone.
 - **Cross-provider transfer, train VFPA -> test SMRU, 5 shared SRKW S-call types
   (`S01`, `S04`, `S16`, `S10`, `S16/S17`), n_test = 267.** Balanced accuracy
@@ -333,7 +333,7 @@ discrete calls were broadcast to free-ranging Kamchatkan resident killer whales
 behavioural experiment is prior published work; our contribution is the reproducible
 statistic (`scripts/run_playback_response_stats.py`, from the transcribed per-trial
 table `data/join_tables/filatova2011_playback_trials.csv`) and an embedding model of
-the signal space that drives the response (`scripts/run_playback_response.py`).
+the associated signal space (`scripts/run_playback_response.py`).
 
 - **Selective behavioural response (the perception criterion).** Whales replied
   vocally to **every** same-pod playback and to **none** of the different-pod
@@ -343,7 +343,7 @@ the signal space that drives the response (`scripts/run_playback_response.py`).
   documented in [@miller2004repertoires]. The animals were free-ranging and silent
   for >=30 min before each trial, so the response is to a first-exposure broadcast,
   **not** an associatively conditioned cue (the no-learning sub-criterion).
-- **The encoder represents the dialect space that drives it.** Encoding the public
+- **The encoder represents the associated dialect space.** Encoding the public
   FEROP call catalogue [@russianorca_catalogue] with the same frozen AVES2 model
   [@hagiwara2023aves], leave-one-out 1-NN call-type purity is **0.439** across 19
   Kamchatka call types (57 exemplars), against a label-shuffle null of **0.050 +/-
@@ -577,8 +577,8 @@ controls excluding the trivial explanations.
 **Also supported (perception side, by re-analysis):** wild killer whales produce a
 measurable, **dialect-selective response to broadcast conspecific calls** - they
 reply to same-pod and not different-pod playbacks (6/6 vs 0/6, p = 0.002), naive
-animals, often matching the played type - and frozen AVES2 recovers the dialect call
-types that drive this (purity 0.439 vs 0.05 null, p = 1e-3) (Rung 3, Section 5g)
+animals, often matching the played type - and frozen AVES2 recovers the dialect call-type
+space underlying this contrast (purity 0.439 vs 0.05 null, p = 1e-3) (Rung 3, Section 5g)
 [@filatova2011playback; @russianorca_catalogue]. The playback experiment is prior
 published work re-analysed here.
 
