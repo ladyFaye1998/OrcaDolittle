@@ -2,17 +2,27 @@
   <img src="assets/banner.png" alt="Killer-whale acoustic embeddings and reproducible bioacoustic analysis" width="100%" />
 </p>
 
-# Orca Bioacoustic Embeddings
+# OrcaDolittle: Killer-Whale Bioacoustic Embeddings
 
-Research-grade code for killer-whale (*Orcinus orca*) bioacoustic analysis with frozen audio foundation-model embeddings, public DCLDE annotations, reproducible statistical controls, and citation-backed documentation.
+Research-grade code for killer-whale (*Orcinus orca*) bioacoustic analysis with frozen audio foundation-model embeddings, public DCLDE/DTAG/FEROP-derived inputs, reproducible statistical controls, and citation-backed documentation.
 
-The repository focuses on a narrow, auditable workflow: encode public acoustic segments, attach provenance and metadata, run downstream analyses, and report only effects that survive explicit null baselines. Source claims are keyed to `docs/refs.bib`.
+The repository is intentionally narrow and auditable: encode public acoustic segments, attach provenance and metadata, run downstream analyses, and report only effects that survive explicit null baselines. Source claims are keyed to `docs/refs.bib`.
 
-## Reading Order
+## Repository Status
+
+| Surface | Public status |
+|---|---|
+| Code, figures, reports, and small derived artifacts | Committed here. |
+| Public site | [ladyfaye1998.github.io/OrcaDolittle](https://ladyfaye1998.github.io/OrcaDolittle/) |
+| Large derived artifacts | Deposited at Zenodo DOI [10.5281/zenodo.21030082](https://doi.org/10.5281/zenodo.21030082). |
+| Raw third-party audio and model weights | Not redistributed; downloaded from cited public sources. |
+| Submission manuscript sources/PDF | Kept out of this public git repository. |
+
+## Start Here
 
 1. **60-second evidence map** for claims, scripts, and boundaries.
-2. **Scope** for what the repository covers.
-3. **Current Results** for the headline findings and figure/table summaries.
+2. **Scope** for what the repository covers and excludes.
+3. **Current Results** for headline findings and figure/table summaries.
 4. **Known Limitations and Mitigations** for what the analysis cannot see yet.
 5. **Quickstart** for smoke tests and full analysis entry points.
 6. **Repository Map** for file locations.
@@ -54,12 +64,12 @@ python scripts/run_playback_response_stats.py
 | Structure beyond first order | SRKW S-call sequences exceed first-order Markov surrogates; NRKW is null and reported. | `scripts/run_calltype_compositionality.py`; `reports/calltype_compositionality_summary.json` | Combinatorial prerequisite only, not semantic compositionality. |
 | Second-encoder check | The two primary checks also pass under frozen NatureLM-audio [@robinson2024naturelm] on full data: FEROP K-type separability and site-controlled call-type recovery with transfer. | `notebooks/naturelm_audio_comparison_colab.ipynb`; `reports/naturelm_analysis_readout.json`; `reports/naturelm_calltype_model_summary.json` | Cross-encoder check only; still not meaning or content-controlled playback. |
 
-**Derived artifact DOI:** the Zenodo data package for the committed derived artifacts is
-[10.5281/zenodo.21030082](https://doi.org/10.5281/zenodo.21030082).
+**Large derived artifacts:** GPU-derived or cache-like files that do not belong in git are
+deposited at Zenodo DOI [10.5281/zenodo.21030082](https://doi.org/10.5281/zenodo.21030082).
 
 ## Scope
 
-- **Corpus:** DCLDE 2026 killer-whale annotations and audio pointers [@palmer2025dclde; @palmer2025dclde_data]. The NOAA/GCS storage path currently uses a `dclde/2027/dclde_2027_killer_whales` bucket layout; the scientific dataset is the DCLDE 2026 killer-whale corpus.
+- **Corpus:** DCLDE 2026 killer-whale annotations and audio pointers [@palmer2025dclde; @palmer2025dclde_data].
 - **Encoders:** AVES2 as the primary audited encoder [@hagiwara2023aves; @chen2022beats], with a Colab GPU NatureLM-audio comparison notebook for the two primary second-encoder checks [@robinson2024naturelm].
 - **Analyses:** the repository covers:
   - supervised ecotype probes;
@@ -88,6 +98,36 @@ Latest audited DCLDE run: `20260529_072930`, frozen AVES2 embeddings, 27,934 cal
 
 **Headline:** AVES2 embeddings carry measurable killer-whale ecotype and call-type structure.
 
+<table>
+<tr>
+<td width="34%"><img src="figures/h4_confound_aves2_full_labeled.png" alt="Provider/site confound isolation" /></td>
+<td><b>Site effects are measured, not hidden.</b><br/>Pooled ecotype decoding overstates the signal; provider is highly decodable, within-site ecotype structure survives, and cross-site ecotype transfer is near chance.<br/><sub>Boundary: local acoustic structure, not site-independent ecotype recognition.</sub></td>
+</tr>
+<tr>
+<td width="34%"><img src="figures/calltype_model_full.png" alt="Site-controlled call-type classification" /></td>
+<td><b>Catalogue call types are recoverable within site and transfer across independent sites.</b><br/>SRKW and NRKW call-type identities are recovered above chance, and the shared SRKW types transfer from VFPA to SMRU.<br/><sub>Boundary: call type is not meaning.</sub></td>
+</tr>
+<tr>
+<td width="34%"><img src="figures/context_decode.png" alt="DTAG behavioural-context decode" /></td>
+<td><b>Calls carry production-side behavioural-context signal.</b><br/>DTAG calls decode foraging/non-foraging and a three-way foraging/travelling/resting contrast with the individual held out.<br/><sub>Boundary: production context association, not referential semantics.</sub></td>
+</tr>
+<tr>
+<td width="34%"><img src="figures/playback_response.png" alt="Playback receiver response" /></td>
+<td><b>Published playback shows a dialect-selective receiver response.</b><br/>Re-analysis returns same-pod replies and different-pod silence under pseudoreplication control (`6/6` vs `0/6`, Fisher `p ~= 0.002`).<br/><sub>Boundary: prior field playback; response tracks dialect membership, not call content.</sub></td>
+</tr>
+<tr>
+<td width="34%"><img src="figures/calltype_compositionality.png" alt="Compositional structure beyond first order" /></td>
+<td><b>Southern-Resident call sequences exceed first-order structure.</b><br/>The call two steps back adds information beyond first-order Markov surrogates; Northern Residents are null and reported.<br/><sub>Boundary: combinatorial prerequisite, not semantic compositionality.</sub></td>
+</tr>
+<tr>
+<td width="34%"><img src="figures/naturelm_calltype_model.png" alt="NatureLM-audio second-encoder call-type checks" /></td>
+<td><b>The primary representation checks are not AVES2-only.</b><br/>Frozen NatureLM-audio repeats the FEROP dialect-space and site-controlled call-type checks on full data.<br/><sub>Boundary: model-specificity check, not a new meaning claim.</sub></td>
+</tr>
+</table>
+
+<details>
+<summary>Open narrative summary with citations and exact statistics</summary>
+
 - **Site control:** Pooled ecotype decodability overstates the ecotype signal because of a recording-site shortcut, and site-controlled evaluation separates within-site biological structure from the site effect [@stowell2022; @ghani2023]; stereotyped call-type identity, by contrast, is recoverable within a fixed site in both resident populations (SRKW 14-type 0.709, NRKW 18-type 0.968) and transfers across independent recording sites, the cross-site control the ecotype boundary fails [@ford1989; @filatova2015].
 - **Production context:** On an independent animal-borne DTAG archive, communicative calls further carry decodable information about the caller's movement-defined behavioural context with the individual held out: foraging vs. non-foraging at 0.770 balanced accuracy, and a three-way foraging/travelling/resting contrast at 0.577 (chance 0.333) [@holt2024masking_data; @tennessen2019; @wilson2006]. Specific call types are produced context-specifically (call-type × context Cramér's V = 0.40, within-individual null p < 0.001), and the decode reflects call structure rather than call rate (0.536) or loudness (0.577) — context-specific production across more than one behavioural context, not referential meaning.
 - **Perception-side playback:** On the **perception side**, a re-analysis of a published conspecific playback experiment shows wild killer whales produce a measurable, **dialect-selective response to broadcast calls** — they reply vocally to same-pod and not different-pod playbacks (6/6 vs 0/6, Fisher p = 0.002), naive free-ranging animals, often matching the played type — and frozen AVES2 recovers the dialect call-type space underlying the response contrast (leave-one-out purity 0.439 vs a 0.05 shuffle null, p = 1e-3) [@filatova2011playback; @russianorca_catalogue]. The playback experiment is prior published work re-analysed here; the response tracks *dialect membership*, not (yet) call *content*.
@@ -96,7 +136,9 @@ Latest audited DCLDE run: `20260529_072930`, frozen AVES2 embeddings, 27,934 cal
 - **Structure side:** Two further analyses add structure-side detail: SRKW S-call sequences carry **compositional structure beyond first order** — the call two steps back adds information a first-order Markov model cannot explain (second-order delta 0.645 bits, p ~= 1e-3; candidate phrase S01->S04->S01), in the spirit of sperm-whale coda analysis [@sharma2024; @berthet2025bonobo; @crockford2025] — while a label-free site-invariance transform modestly improves cross-site ecotype transfer (0.597 -> 0.625) without disturbing the within-site signal [@stowell2022; @ghani2023].
 - **Distributional semantics:** Finally, a distributional-semantics test compares sequence structure with behavioural context **non-circularly**: in Southern Residents, call types that keep similar sequential company also share independent, literature-grounded behavioural context (Mantel r = 0.33, p = 0.042, 8 types), with Northern Residents null (r = -0.39). This is a modest type-level test, reported both ways, still not a claim of meaning [@berthet2025bonobo; @crockford2025; @ford1989; @foote2008].
 
-### Results at a glance
+</details>
+
+### Figure gallery
 
 <table>
 <tr>
