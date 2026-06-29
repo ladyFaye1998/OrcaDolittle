@@ -104,4 +104,4 @@ DTAG H5 head [@wellard2020; @wellard2020_appendix2].
 - `docs/evidence_mapping.md`: claim boundaries and validation controls.
 - `docs/results_analysis.md`: current run interpretation.
 - `docs/decoding_program.md`: the criterion-based evidence ladder and the public-data ceiling.
-- `paper/refs.bib`: bibliography source of truth.
+- `docs/refs.bib`: bibliography source of truth.

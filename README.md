@@ -6,7 +6,7 @@
 
 Research-grade code for killer-whale (*Orcinus orca*) bioacoustic analysis with frozen audio foundation-model embeddings, public DCLDE annotations, reproducible statistical controls, and citation-backed documentation.
 
-The repository focuses on a narrow, auditable workflow: encode public acoustic segments, attach provenance and metadata, run downstream analyses, and report only effects that survive explicit null baselines. Source claims are keyed to `paper/refs.bib`.
+The repository focuses on a narrow, auditable workflow: encode public acoustic segments, attach provenance and metadata, run downstream analyses, and report only effects that survive explicit null baselines. Source claims are keyed to `docs/refs.bib`.
 
 ## Reading Order
 
@@ -47,7 +47,7 @@ python scripts/run_playback_response_stats.py
 
 | Criterion / claim | Evidence in this repo | Reproduce / inspect | Boundary |
 |---|---|---|---|
-| Non-invasive public-data decoding | Frozen AVES2 on public DCLDE/DTAG/FEROP-derived inputs; no invasive data. | `paper/manuscript_condensed.tex`; `docs/data_availability.md`; `reports/corpus_freeze.json` | Re-analysis and modelling only; no new field experiment. |
+| Non-invasive public-data decoding | Frozen AVES2 on public DCLDE/DTAG/FEROP-derived inputs; no invasive data. | `docs/data_availability.md`; `docs/decoding_program.md`; `reports/corpus_freeze.json` | Re-analysis and modelling only; no new field experiment. |
 | Site-controlled acoustic structure | Ecotype pooled decode collapses under provider holdout, but within-site ecotype and catalogue call-type structure survive. | `scripts/run_h4_confound.py`; `scripts/run_calltype_model.py`; `reports/calltype_model_full_summary.json` | Site-independent ecotype transfer remains limited; call type is not meaning. |
 | More than one behavioural context | DTAG calls decode foraging/non-foraging and foraging/travelling/resting with individual held out; named call types map across six contexts. | `notebooks/dtag_context_decode_colab.ipynb`; `scripts/run_calltype_multicontext.py`; `reports/context3_decode_summary.json` | Production-side context association, not referential semantics. |
 | Response to broadcast signal | Published conspecific playback re-analysis: same-pod replies, different-pod silence; AVES2 recovers the dialect call-type space underlying the response contrast. | `scripts/run_playback_response_stats.py`; `scripts/run_playback_response.py`; `reports/playback_response_summary.json` | Prior published playback; response tracks dialect membership, not call content. |
@@ -330,7 +330,7 @@ The committed run completed with `RUN_MODE = FULL_ANALYSIS`, `MAX_CALLTYPE_SEGME
 | `docs/local_environment_manifest.md` | Full accounting of every artifact (committed vs Zenodo-deposited vs external public source), per-head reproduction status, and independent local reproduction. |
 | `docs/results_analysis.md` | Current run interpretation and limitations. |
 | `docs/literature_review.md` | Cited literature map. |
-| `paper/` | Full and condensed manuscripts and bibliography. |
+| `docs/refs.bib` | Bibliography source used by the repository. |
 | `notebooks/` | Colab pipelines (full-catalogue call-type encode; DTAG context decode; NatureLM-audio comparison). |
 | `data/join_tables/` | Small metadata joins and provenance tables. |
 | `data/embeddings/` | Compact derived embedding artifacts. |

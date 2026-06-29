@@ -1,7 +1,7 @@
 cff-version: 1.2.0
 message: >
   If you use this repository, cite the Zenodo derived-artifact data record and the
-  underlying datasets, methods, and papers listed in paper/refs.bib.
+  underlying datasets, methods, and papers listed in docs/refs.bib.
 title: "Orca Bioacoustic Embeddings"
 abstract: >
   Reproducible research code for analysing killer-whale (Orcinus orca) vocalisations

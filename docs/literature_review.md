@@ -1,6 +1,6 @@
 # Literature Review
 
-This file is a compact map of the sources used by the repository. Full BibTeX entries live in `paper/refs.bib`.
+This file is a compact map of the sources used by the repository. Full BibTeX entries live in `docs/refs.bib`.
 
 ## Data And Provenance
 
