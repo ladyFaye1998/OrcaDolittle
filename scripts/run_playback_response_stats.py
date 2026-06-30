@@ -162,14 +162,16 @@ def main() -> int:
             "our contribution is the reproducible statistic + the embedding model.",
             "Small sample (14 playbacks; 6 vs 6 after pseudoreplication control) -- "
             "typical for cetacean playback but a real power limit.",
-            "Differential vocal response = receiver-response evidence "
+            "Differential vocal response = the response/receiver-response evidence "
             "(receivers act on the broadcast signal); NOT a claim of referential meaning.",
             "Direction-change is reported descriptively; the paper found it n.s. (p=0.444).",
         ],
     }
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)
     out = REPORTS_DIR / "playback_response_summary.json"
-    out.write_text(json.dumps(summary, indent=2), encoding="utf-8")
+    payload = json.dumps(summary, indent=2) + "\n"
+    if not out.exists() or out.read_text(encoding="utf-8") != payload:
+        out.write_text(payload, encoding="utf-8", newline="\n")
     print(f"  Metrics JSON: reports/playback_response_summary.json")
     print("=" * 66)
     return 0

@@ -42,5 +42,5 @@
       "resource_type": "dataset"
     }
   ],
-  "notes": "DCLDE 2026 killer-whale annotations are distributed by NOAA/NCEI with a public Google Cloud Storage mirror; DTAG behavioural-context recordings are openly deposited (CC-BY-4.0). Raw audio and tag archives are not redistributed here and are downloaded from their public sources by the pipeline scripts."
+  "notes": "DCLDE 2026 killer-whale annotations are distributed by NOAA/NCEI with a public Google Cloud Storage mirror; DTAG behavioural-context recordings are openly deposited (CC-BY-4.0). Raw audio and tag archives are not redistributed here and are downloaded from their public sources by the pipeline scripts. The current submission uses the frozen package under concept DOI 10.5281/zenodo.21030081; later Git commits clarify documentation and presentation without changing deposited large-artifact hashes or reported metrics."
 }

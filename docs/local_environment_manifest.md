@@ -43,8 +43,8 @@ These are accessed by the pipeline from their public homes. The repository cites
 
 ## 3. Derived artifacts deposited on Zenodo (data DOI)
 
-Derived analysis artifacts are published under the Zenodo concept DOI, which resolves to
-the latest version of the data record:
+Derived analysis artifacts are published as a frozen package under the Zenodo concept DOI
+used by this submission:
 
 - Package: `orcadolittle_derived_artifacts_clean_20260630T103554Z.zip`
 - Concept DOI: [10.5281/zenodo.21030081](https://doi.org/10.5281/zenodo.21030081)
@@ -52,9 +52,10 @@ the latest version of the data record:
   `PACKAGE_MANIFEST.json`, `PACKAGE_README.md`, and `SHA256SUMS.txt`.
 
 Provenance note: the published package manifest records source commit
-`94f790f76d68fdd334769daa5eb1bd5fea2fc399`. Later public-repository commits are
-DOI/link housekeeping only; they do not change the analysis artifacts, metrics, or figures
-inside the deposited package.
+`94f790f76d68fdd334769daa5eb1bd5fea2fc399`. Later public-repository commits clarify
+DOI links, README/site wording, provenance notes, and presentation/report text. They do
+not change the deposited large-artifact hashes, the numeric metrics used for the
+submission claims, or the generated result figures.
 
 | Artifact | Size | SHA-256 (first 16) | Status |
 |---|---|---|---|
@@ -67,9 +68,10 @@ inside the deposited package.
 | DTAG movement-derived labels | 0.1 MB | `84435263cb27bfb2` | **Committed in git** (`data/external/dtag/foraging_data.csv`) |
 | NatureLM second-encoder summaries | 10.4 KB | `401d2e25306424c9` / `4850154b1042e469` | **Committed in git** and included in the Zenodo package |
 
-> If `aves2_calltype_embeddings.npz` is later recovered, add it as a separate Zenodo file or
-> publish a v2 package; the current public result files and regeneration notebook already
-> preserve the full-catalogue call-type scope boundary.
+> The missing `aves2_calltype_embeddings.npz` cache is not required for the current
+> submission package. If a reviewer needs it, regenerate it with
+> `notebooks/calltype_encode_colab.ipynb`; the public result files and regeneration
+> notebook already preserve the full-catalogue call-type scope boundary.
 
 ## 4. Independent local reproduction (verified 2026-06-20, this machine)
 

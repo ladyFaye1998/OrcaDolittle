@@ -14,7 +14,7 @@ The workflow encodes public acoustic segments, attaches provenance and metadata,
 |---|---|
 | Code, figures, reports, and small derived artifacts | Committed here. |
 | Public site | [ladyfaye1998.github.io/OrcaDolittle](https://ladyfaye1998.github.io/OrcaDolittle/) |
-| Large derived artifacts | Deposited at Zenodo concept DOI [10.5281/zenodo.21030081](https://doi.org/10.5281/zenodo.21030081), which resolves to the latest artifact version. |
+| Large derived artifacts | Frozen package archived at Zenodo concept DOI [10.5281/zenodo.21030081](https://doi.org/10.5281/zenodo.21030081); current Git documents the same submitted artifacts without requiring another Zenodo version. |
 
 ## Start Here
 
@@ -23,7 +23,8 @@ The workflow encodes public acoustic segments, attaches provenance and metadata,
 3. **Current Results** for main findings and figure/table summaries.
 4. **Known Limitations and Mitigations** for what the analysis cannot see yet.
 5. **Quickstart** for smoke tests and full analysis entry points.
-6. **Repository Map** for file locations.
+6. **Zenodo/Git Provenance** for why the frozen Zenodo package and current Git state are aligned.
+7. **Repository Map** for file locations.
 
 ## 60-second evidence map
 
@@ -63,7 +64,21 @@ python scripts/run_playback_response_stats.py
 | Second-encoder check | The two primary checks also pass under frozen NatureLM-audio [@robinson2024naturelm] on full data: FEROP K-type separability and site-controlled call-type recovery with transfer. | `notebooks/naturelm_audio_comparison_colab.ipynb`; `reports/naturelm_analysis_readout.json`; `reports/naturelm_calltype_model_summary.json` | Cross-encoder model-specificity check. |
 
 **Large derived artifacts:** GPU-derived or cache-like files that do not belong in git are
-deposited at Zenodo concept DOI [10.5281/zenodo.21030081](https://doi.org/10.5281/zenodo.21030081).
+deposited as a frozen package at Zenodo concept DOI
+[10.5281/zenodo.21030081](https://doi.org/10.5281/zenodo.21030081). The package
+manifest records source commit `94f790f76d68fdd334769daa5eb1bd5fea2fc399`; later
+Git commits clarify DOI links, README/site wording, provenance, and presentation without
+changing the deposited large-artifact hashes, reported metrics, or result figures. See
+[`docs/artifact_provenance.md`](docs/artifact_provenance.md).
+
+## Zenodo/Git Provenance
+
+The Zenodo package is frozen for this submission. Current Git `main` is the live code,
+README, documentation, site, tests, figures, and small-artifact surface; Zenodo holds the
+large derived artifacts and checksums that do not belong in Git. The two public objects
+are aligned by the invariant documented in
+[`docs/artifact_provenance.md`](docs/artifact_provenance.md): post-package Git commits do
+not change the deposited large-artifact hashes, reported metrics, or result figures.
 
 ## Scope
 
