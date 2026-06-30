@@ -43,12 +43,18 @@ These are accessed by the pipeline from their public homes. The repository cites
 
 ## 3. Derived artifacts deposited on Zenodo (data DOI)
 
-Derived analysis artifacts are published in the Zenodo data record:
+Derived analysis artifacts are published under the Zenodo concept DOI, which resolves to
+the latest version of the data record:
 
 - Package: `orcadolittle_derived_artifacts_clean_20260630T103554Z.zip`
-- DOI: [10.5281/zenodo.21065627](https://doi.org/10.5281/zenodo.21065627)
+- Concept DOI: [10.5281/zenodo.21030081](https://doi.org/10.5281/zenodo.21030081)
 - Package contents are recorded inside the ZIP in
   `PACKAGE_MANIFEST.json`, `PACKAGE_README.md`, and `SHA256SUMS.txt`.
+
+Provenance note: the published package manifest records source commit
+`94f790f76d68fdd334769daa5eb1bd5fea2fc399`. Later public-repository commits are
+DOI/link housekeeping only; they do not change the analysis artifacts, metrics, or figures
+inside the deposited package.
 
 | Artifact | Size | SHA-256 (first 16) | Status |
 |---|---|---|---|
