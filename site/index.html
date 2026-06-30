@@ -297,11 +297,11 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
   </div>
 </div></header>
 <div class="stats">
-  <div class="stat"><div class="n" data-to="27934">0</div><div class="l">public call-level segments encoded</div></div>
-  <div class="stat"><div class="n" data-to="0.968" data-dec="3">0</div><div class="l">within-site call-type accuracy (18 NRKW types)</div></div>
-  <div class="stat"><div class="n" data-to="0.770" data-dec="3">0</div><div class="l">behaviour decoded from calls (individual held out)</div></div>
-  <div class="stat"><div class="n" data-pre="p=" data-to="0.002" data-dec="3">0</div><div class="l">whales reply to same-pod, not different-pod playback</div></div>
-  <div class="stat"><div class="n" data-to="0.83" data-dec="2">0</div><div class="l">call-type identity transferred to an unseen recording site</div></div>
+  <div class="stat"><div class="n" data-to="27934">27,934</div><div class="l">public call-level segments encoded</div></div>
+  <div class="stat"><div class="n" data-to="0.968" data-dec="3">0.968</div><div class="l">within-site call-type accuracy (18 NRKW types)</div></div>
+  <div class="stat"><div class="n" data-to="0.770" data-dec="3">0.770</div><div class="l">behaviour decoded from calls (individual held out)</div></div>
+  <div class="stat"><div class="n" data-pre="p=" data-to="0.002" data-dec="3">p=0.002</div><div class="l">whales reply to same-pod, not different-pod playback</div></div>
+  <div class="stat"><div class="n" data-to="0.83" data-dec="2">0.83</div><div class="l">call-type identity transferred to an unseen recording site</div></div>
 </div>
 <section id="work"><div class="wrap">
   <div class="eyebrow reveal">What was tested</div>
@@ -602,7 +602,7 @@ python scripts/run_playback_response_stats.py</code></pre>
 <section id="explore"><div class="wrap">
   <div class="eyebrow reveal">Explore the data</div>
   <h2 class="reveal">Public inputs, documented provenance.</h2>
-  <p class="lead reveal">A quick look at what’s inside the corpus, right here on the page. Most inputs are public through the linked repositories; raw third-party archives, large native tag files, and model caches remain external, with derived artifacts deposited on Zenodo and provenance documented in the repo.</p>
+  <p class="lead reveal">A quick look at what’s inside the corpus, right here on the page. Most inputs are public through the linked repositories; raw third-party archives, large native tag files, and model caches remain external, with a frozen derived-artifact package on Zenodo and Git provenance documented in the repo.</p>
   <div class="reveal">
     <div class="dbtabs">
       <button class="dbtab active" data-db="ecotype">By ecotype</button>
@@ -618,7 +618,8 @@ python scripts/run_playback_response_stats.py</code></pre>
     <a class="dblink reveal" href="https://doi.org/10.5281/zenodo.13308835" target="_blank" rel="noopener"><div class="t">DTAG behavioural archive</div><div class="d">Animal-borne tag movement + audio (Holt, Tennessen et al.). Zenodo, CC-BY.</div><span class="go">Zenodo DOI ↗</span></a>
     <a class="dblink reveal" href="https://doi.org/10.1111/j.1748-7692.2010.00433.x" target="_blank" rel="noopener"><div class="t">FEROP playback + K-call catalogue</div><div class="d">The Kamchatka calls in this demo, and the conspecific playback re-analysed here (Filatova et al. 2011).</div><span class="go">Source paper ↗</span></a>
     <a class="dblink reveal" href="https://www.orcasound.net" target="_blank" rel="noopener"><div class="t">Orcasound open hydrophones</div><div class="d">Live + archived Salish Sea recordings — open community data.</div><span class="go">Open data ↗</span></a>
-    <a class="dblink reveal" href="https://doi.org/10.5281/zenodo.21030081" target="_blank" rel="noopener"><div class="t">Derived artifact package</div><div class="d">Frozen embeddings, DTAG derived context artifacts, metrics, figures, and provenance tables.</div><span class="go">Zenodo DOI ↗</span></a>
+    <a class="dblink reveal" href="https://doi.org/10.5281/zenodo.21030081" target="_blank" rel="noopener"><div class="t">Frozen derived artifact package</div><div class="d">Large derived artifacts and checksums under the stable concept DOI; current Git documents the same submitted results.</div><span class="go">Zenodo DOI ↗</span></a>
+    <a class="dblink reveal" href="https://github.com/ladyFaye1998/OrcaDolittle/blob/main/docs/artifact_provenance.md" target="_blank" rel="noopener"><div class="t">Zenodo/Git provenance</div><div class="d">Why the frozen Zenodo package and current Git repository are aligned for this submission.</div><span class="go">Read note ↗</span></a>
     <a class="dblink reveal" href="https://github.com/ladyFaye1998/OrcaDolittle" target="_blank" rel="noopener"><div class="t">Code repository</div><div class="d">Reproduction scripts, notebooks, documentation, and claim-boundary notes — MIT licensed.</div><span class="go">GitHub ↗</span></a>
   </div>
 </div></section>
@@ -667,16 +668,15 @@ python scripts/run_playback_response_stats.py</code></pre>
 const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:0.12});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-// animated counters
-function animateCounter(el){
-  const to=parseFloat(el.dataset.to), dec=parseInt(el.dataset.dec||'0'), pre=el.dataset.pre||'';
-  const dur=1100, t0=performance.now();
-  const fmt=(v)=>pre+(dec>0?v.toFixed(dec):Math.round(v).toLocaleString());
-  function step(t){const k=Math.min(1,(t-t0)/dur);const e=1-Math.pow(1-k,3);el.textContent=fmt(to*e);if(k<1)requestAnimationFrame(step);else el.textContent=fmt(to);}
-  requestAnimationFrame(step);
+// stable counters
+function formatCounter(el, value){
+  const dec=parseInt(el.dataset.dec||'0'), pre=el.dataset.pre||'';
+  return pre+(dec>0?value.toFixed(dec):Math.round(value).toLocaleString());
 }
-const cio=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){animateCounter(e.target);cio.unobserve(e.target);}});},{threshold:0.6});
-document.querySelectorAll('.stat .n').forEach(el=>cio.observe(el));
+function setCounter(el){
+  el.textContent=formatCounter(el, parseFloat(el.dataset.to));
+}
+document.querySelectorAll('.stat .n').forEach(setCounter);
 
 // ---- Talk Orca: context builder + reusable recordings + synthetic sketch ----
 let ac=null, bus=null, analyser=null, wetGain=null, delayNode=null, freqData=null, rafId=null, buffers={}, activeNodes=[], playRun=0, mode='recordings';

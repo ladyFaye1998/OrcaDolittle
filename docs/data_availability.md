@@ -23,9 +23,11 @@ comes not from DCLDE but from the DTAG archive below, where behaviour is recorde
 animal.
 
 The derived artifacts, metrics, figures, provenance tables, and reproduction notebooks are
-published as the Zenodo data package
-[10.5281/zenodo.21030081](https://doi.org/10.5281/zenodo.21030081). Source datasets are
-accessed from their cited public repositories.
+published as a frozen Zenodo data package under concept DOI
+[10.5281/zenodo.21030081](https://doi.org/10.5281/zenodo.21030081). The public Git
+repository carries the current documentation and small committed artifacts; no additional
+Zenodo version is required unless future work changes large derived artifacts or reported
+results. Source datasets are accessed from their cited public repositories.
 
 ## Rung 2 - behavioural context: candidate sources
 
