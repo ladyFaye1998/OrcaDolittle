@@ -14,7 +14,7 @@ The workflow encodes public acoustic segments, attaches provenance and metadata,
 |---|---|
 | Code, figures, reports, and small derived artifacts | Committed here. |
 | Public site | [ladyfaye1998.github.io/OrcaDolittle](https://ladyfaye1998.github.io/OrcaDolittle/) |
-| Large derived artifacts | Deposited at Zenodo DOI [10.5281/zenodo.21030082](https://doi.org/10.5281/zenodo.21030082). |
+| Large derived artifacts | Deposited at Zenodo DOI [10.5281/zenodo.21065627](https://doi.org/10.5281/zenodo.21065627). |
 
 ## Start Here
 
@@ -63,7 +63,7 @@ python scripts/run_playback_response_stats.py
 | Second-encoder check | The two primary checks also pass under frozen NatureLM-audio [@robinson2024naturelm] on full data: FEROP K-type separability and site-controlled call-type recovery with transfer. | `notebooks/naturelm_audio_comparison_colab.ipynb`; `reports/naturelm_analysis_readout.json`; `reports/naturelm_calltype_model_summary.json` | Cross-encoder model-specificity check. |
 
 **Large derived artifacts:** GPU-derived or cache-like files that do not belong in git are
-deposited at Zenodo DOI [10.5281/zenodo.21030082](https://doi.org/10.5281/zenodo.21030082).
+deposited at Zenodo DOI [10.5281/zenodo.21065627](https://doi.org/10.5281/zenodo.21065627).
 
 ## Scope
 

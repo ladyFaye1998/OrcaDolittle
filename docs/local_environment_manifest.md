@@ -45,8 +45,8 @@ These are accessed by the pipeline from their public homes. The repository cites
 
 Derived analysis artifacts are published in the Zenodo data record:
 
-- Package: `orcadolittle_derived_artifacts_clean_20260629T100942Z.zip`
-- DOI: [10.5281/zenodo.21030082](https://doi.org/10.5281/zenodo.21030082)
+- Package: `orcadolittle_derived_artifacts_clean_20260630T103554Z.zip`
+- DOI: [10.5281/zenodo.21065627](https://doi.org/10.5281/zenodo.21065627)
 - Package contents are recorded inside the ZIP in
   `PACKAGE_MANIFEST.json`, `PACKAGE_README.md`, and `SHA256SUMS.txt`.
 

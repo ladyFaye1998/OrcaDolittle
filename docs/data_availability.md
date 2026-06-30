@@ -24,7 +24,7 @@ animal.
 
 The derived artifacts, metrics, figures, provenance tables, and reproduction notebooks are
 published as the Zenodo data package
-[10.5281/zenodo.21030082](https://doi.org/10.5281/zenodo.21030082). Source datasets are
+[10.5281/zenodo.21065627](https://doi.org/10.5281/zenodo.21065627). Source datasets are
 accessed from their cited public repositories.
 
 ## Rung 2 - behavioural context: candidate sources
