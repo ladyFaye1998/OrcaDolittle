@@ -77,7 +77,8 @@ Re-run from a clean Python 3.11 environment (numpy/scipy/scikit-learn/pandas/tor
 committed `aves2_full_labeled.npz`:
 
 - **H6 playback statistic** — `scripts/run_playback_response_stats.py`: same-pod vs different-pod
-  **8/0 vs 0/6** (Fisher *p* = 0.000333) and **6/0 vs 0/6** pseudoreplication-controlled
+  **8/8 same-pod replies vs 0/6 different-pod replies** (Fisher *p* = 0.000333) and
+  **6/6 vs 0/6** pseudoreplication-controlled
   (*p* = 0.00216). **Exact match** to `reports/playback_response_summary.json`.
 - **H4 confound** — `scripts/run_h4_confound.py`: provider decoding **0.948**; within-site ecotype
   **JASCO_VFPA 0.889, JASCO_VFPA_ONC 0.973, ONC 0.949, SIO 0.909, UAF_NGOS 0.969**;
