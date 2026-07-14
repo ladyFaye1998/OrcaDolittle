@@ -1,6 +1,12 @@
+import sys
+from pathlib import Path
+
 import numpy as np
 
-from scripts.run_provider_aware_benchmark import count_matrix, simulate
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
+from scripts.run_provider_aware_benchmark import count_matrix, simulate  # noqa: E402
 
 
 def test_structural_regime_has_one_single_provider_class() -> None:

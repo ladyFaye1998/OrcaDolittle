@@ -1,15 +1,17 @@
 import csv
 import io
 import json
+import sys
 import wave
 import zipfile
 from pathlib import Path
 
 import numpy as np
 
-from scripts import build_field_playback_package as builder
-
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
+from scripts import build_field_playback_package as builder  # noqa: E402
 
 
 def write_test_wav(path: Path, frequency_hz: float, phase: float = 0.0) -> None:
