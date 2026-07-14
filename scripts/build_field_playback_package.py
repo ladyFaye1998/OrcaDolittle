@@ -68,6 +68,20 @@ MANIFEST_FIELDS = [
     "dc_offset",
     "clipped_samples",
 ]
+CATALOGUE_AUDIT_FIELDS = [
+    "path",
+    "sha256",
+    "sample_rate_hz",
+    "channels",
+    "bit_depth",
+    "duration_s",
+    "peak_dbfs",
+    "rms_dbfs",
+    "dc_offset",
+    "clipped_samples",
+    "field_eligible",
+    "reasons",
+]
 
 
 @dataclass(frozen=True)
@@ -1073,8 +1087,11 @@ def write_package(
         )
         if PROTOCOL.exists():
             shutil.copy2(PROTOCOL, package / "SCIENTIFIC_PROTOCOL.md")
-        if catalogue:
-            write_csv(package / "catalogue_audio_audit.csv", catalogue)
+        write_csv(
+            package / "catalogue_audio_audit.csv",
+            catalogue,
+            CATALOGUE_AUDIT_FIELDS,
+        )
 
         copied_stimuli: list[dict[str, Any]] = []
         for item in stimuli:

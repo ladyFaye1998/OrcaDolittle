@@ -141,6 +141,7 @@ def approve_matched_controls(config: dict, rows: list[dict], tmp_path: Path) -> 
 def test_review_package_is_explicitly_non_broadcast(tmp_path: Path) -> None:
     config_path = ROOT / "field_playback" / "field_config.example.json"
     config = json.loads(config_path.read_text(encoding="utf-8"))
+    config["catalogue_audit_dir"] = "../data/playback/definitely_missing_ci_catalogue"
     issues = builder.validate_top_level(config)
     stimuli, stimulus_issues = builder.validate_stimuli(config, config_path)
     output = tmp_path / "review.zip"
@@ -157,6 +158,8 @@ def test_review_package_is_explicitly_non_broadcast(tmp_path: Path) -> None:
         names = set(archive.namelist())
         assert "DO_NOT_BROADCAST.txt" in names
         assert "catalogue_audio_audit.csv" in names
+        audit_header = archive.read("catalogue_audio_audit.csv").decode("utf-8").splitlines()[0]
+        assert audit_header.startswith("path,sha256,sample_rate_hz")
         assert not any(name.startswith("audio/") for name in names)
         report = json.loads(archive.read("validation_report.json"))
         assert report["status"] == "REVIEW_ONLY"
