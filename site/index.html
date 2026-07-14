@@ -270,8 +270,8 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
 .dblink .d{font-size:12.5px;color:var(--faint);margin-top:5px}
 .dblink .go{color:var(--cyan);font-size:12px;margin-top:8px;display:inline-block}
 </style>
-<link rel="stylesheet" href="assets/site-nav.css" />
-<script defer src="assets/site-nav.js"></script>
+<link rel="stylesheet" href="assets/site-nav.css?v=2" />
+<script defer src="assets/site-nav.js?v=2"></script>
 </head>
 <body>
 <nav class="site-nav" data-site-nav aria-label="Primary"><div class="site-nav__inner wrap">
@@ -1268,7 +1268,7 @@ async function previewUploadedClip(){
     uploadNote.textContent='Could not decode this clip in-browser. Keep it for the reproducible pipeline; supported browser formats vary by system.';
   }
 }
-function renderTray(last){
+function renderTray(last,skipLab=false){
   renderChips();
   if(!phrase.length){
     tray.innerHTML='<span class="trayhint">Tap anchors above or press Build audition set…</span>';
@@ -1278,13 +1278,15 @@ function renderTray(last){
     analogy.innerHTML='<span class="alab">Catalogue status:</span> '+esc(phrase.map(p=>p.call.toUpperCase()+': '+humanHypothesis(p)).join('; '))+'. <br><span class="alab">Research boundary:</span> '+esc(phrase.map(p=>p.call.toUpperCase()+': '+p.role).join('; '))+'. These anchors are not a translation of the observer note and are not field-release stimuli.';
   }
   phraseLabel.textContent=phrase.length?phrase.map(p=>p.call.toUpperCase()).join(' · '):'No anchors';
-  updateControlLabels(); renderTimeline(-1); renderMeters(); renderReadout(last); renderModelChat(); updateLab();
+  updateControlLabels(); renderTimeline(-1); renderMeters(); renderReadout(last); renderModelChat();
+  if(!skipLab)updateLab();
 }
-function setMode(next){
+function setMode(next,skipLab=false){
   mode=next;
   document.querySelectorAll('.modebtn').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));
   modeLabel.innerHTML='<b>'+({recordings:'Real FEROP clips',synthetic:'Contour sketch',hybrid:'Clips + contour'}[mode])+'</b>';
-  renderChips(); renderMeters(); renderReadout(); renderModelChat(); updateLab();
+  renderChips(); renderMeters(); renderReadout(); renderModelChat();
+  if(!skipLab)updateLab();
 }
 function setTemplate(key){
   const t=TEMPLATES[key]; if(!t)return;
@@ -1310,7 +1312,7 @@ function reusePhrase(){
     phrase=(saved.phrase||[]).map(k=>CALLS[k]).filter(Boolean); setMode(saved.mode||mode); renderTray(); statusEl.textContent='Reused last selection';
   }catch(e){statusEl.textContent='No saved selection yet';}
 }
-function applyUrlSelection(){
+function applyUrlSelection(skipLab=false){
   const params=new URLSearchParams(location.search);
   const raw=params.get('call')||params.get('calls');
   if(!raw)return false;
@@ -1318,7 +1320,7 @@ function applyUrlSelection(){
   const unique=keys.filter((k,i,a)=>a.indexOf(k)===i);
   if(!unique.length)return false;
   phrase=unique.map(k=>CALLS[k]);
-  renderTray(CALLS[unique[unique.length-1]]);
+  renderTray(CALLS[unique[unique.length-1]],skipLab);
   statusEl.textContent='Loaded from dictionary: '+unique.map(k=>k.toUpperCase()).join(' / ');
   return true;
 }
@@ -1533,8 +1535,11 @@ async function speak(){
   setTimeout(()=>{if(run!==playRun)return;stage.classList.remove('talking');nowcall.textContent='';renderTimeline(-1);if(rafId)cancelAnimationFrame(rafId);statusEl.textContent='Done — edit, reuse, or play again';},total*1000+320);
 }
 document.getElementById('speak').addEventListener('click',e=>{e.preventDefault();speak();});
-setMode('recordings');
-if(!applyUrlSelection())renderTray();
+setMode('recordings',true);
+if(!applyUrlSelection(true))renderTray(undefined,true);
+const initializeLab=()=>updateLab();
+if('requestIdleCallback' in window)requestIdleCallback(initializeLab,{timeout:1200});
+else setTimeout(initializeLab,0);
 
 // ---- Explore the data ----
 const DB={
