@@ -53,6 +53,7 @@ h3{font-size:19px}
 .panel.active{display:block}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(285px,1fr));gap:14px}
 .card{border:1px solid var(--line);background:linear-gradient(180deg,var(--panel),var(--bg2));border-radius:var(--radius);padding:24px;min-width:0;transition:.2s}
+.panel .card{content-visibility:auto;contain-intrinsic-size:420px}
 .card:hover{border-color:var(--line2);transform:translateY(-2px)}
 .card p{margin:0 0 10px;color:var(--dim);font-size:14.5px}
 .meta{display:flex;gap:7px;flex-wrap:wrap;margin:9px 0}
@@ -80,20 +81,24 @@ footer{border-top:1px solid rgba(53,81,107,.55);margin-top:42px;color:var(--fain
 @media(max-width:860px){.stats{grid-template-columns:repeat(2,1fr)}.labelrow,.termrow{grid-template-columns:1fr}}
 @media(max-width:560px){.stats{grid-template-columns:1fr}.hero{min-height:76vh;padding-top:48px}.toolbar input{min-width:100%}}
 </style>
+<link rel="stylesheet" href="assets/site-nav.css" />
+<script defer src="assets/site-nav.js"></script>
 </head>
 <body>
-<nav><div class="wrap">
+<nav class="site-nav" data-site-nav aria-label="Primary"><div class="site-nav__inner wrap">
   <a class="brand" href="index.html"><span class="dot"></span> OrcaDolittle</a>
-  <div class="navlinks">
-    <a href="index.html#work">Science</a>
-    <a href="index.html#gallery">Results</a>
-    <a href="index.html#talk">Talk&nbsp;Orca</a>
-    <a class="active" aria-current="page" href="dictionary.html">Dictionary</a>
-    <a href="index.html#field">Field kit</a>
-    <a href="index.html#explore">Data</a>
-    <a href="index.html#refs">References</a>
+  <div class="navlinks" id="primary-nav">
+    <a data-section="work" href="index.html#work">Science</a>
+    <a data-section="gallery" href="index.html#gallery">Results</a>
+    <a data-section="talk" href="index.html#talk">Talk&nbsp;Orca</a>
+    <a data-page="dictionary" href="dictionary.html">Dictionary</a>
+    <a data-section="field" href="index.html#field">Field kit</a>
+    <a data-section="limits" href="index.html#limits">Limits</a>
+    <a data-section="explore" href="index.html#explore">Data</a>
+    <a data-section="refs" href="index.html#refs">References</a>
   </div>
-  <a class="btn primary" href="index.html#talk">Open tool</a>
+  <a class="btn primary nav-cta" href="index.html#talk">Open tool</a>
+  <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Toggle navigation">Menu</button>
 </div></nav>
 
 <header class="hero"><video class="bgvid" autoplay muted loop playsinline poster="assets/hero_orca_16x9_reference.png"><source src="assets/hero_orca_veo_multi_loop.mp4" type="video/mp4" /></video><div class="bg"></div><div class="wrap">
@@ -251,9 +256,24 @@ function byType(){
   FEROP.forEach(x=>{if(!map.has(x.type))map.set(x.type,[]);map.get(x.type).push(x);});
   return [...map.entries()].sort((a,b)=>natural(a[0],b[0]));
 }
+const FEROP_GROUPS=byType();
+const audioObserver='IntersectionObserver' in window?new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(!entry.isIntersecting)return;
+    const audio=entry.target;
+    if(audio.dataset.src&&!audio.src)audio.src=audio.dataset.src;
+    audioObserver.unobserve(audio);
+  });
+},{rootMargin:'600px 0px'}):null;
+function observeAudio(root){
+  root.querySelectorAll('audio[data-src]').forEach(audio=>{
+    if(audioObserver)audioObserver.observe(audio);
+    else audio.src=audio.dataset.src;
+  });
+}
 function renderTypeBar(){
   const bar=document.getElementById('typeBar');
-  bar.innerHTML='<button class="typepill active" type="button" data-type="">All</button>'+byType().map(([type,rows])=>'<button class="typepill" type="button" data-type="'+esc(type)+'">'+esc(type)+' <span>'+rows.length+'</span></button>').join('');
+  bar.innerHTML='<button class="typepill active" type="button" data-type="">All</button>'+FEROP_GROUPS.map(([type,rows])=>'<button class="typepill" type="button" data-type="'+esc(type)+'">'+esc(type)+' <span>'+rows.length+'</span></button>').join('');
   bar.addEventListener('click',e=>{
     const b=e.target.closest('.typepill'); if(!b)return;
     document.querySelectorAll('.typepill').forEach(x=>x.classList.toggle('active',x===b));
@@ -267,32 +287,46 @@ function humanLine(type){
 }
 function renderFerop(){
   const q=document.getElementById('feropSearch').value.trim().toLowerCase();
-  const groups=byType().map(([type,rows])=>[type,rows.filter(r=>(type+' '+r.variant+' '+r.file).toLowerCase().includes(q))]).filter(([type,rows])=>rows.length&&(type.toLowerCase().includes(q)||rows.length));
+  const groups=FEROP_GROUPS.map(([type,rows])=>[type,rows.filter(r=>(type+' '+r.variant+' '+r.file).toLowerCase().includes(q))]).filter(([,rows])=>rows.length);
   const grid=document.getElementById('feropGrid');
   const total=groups.reduce((a,g)=>a+g[1].length,0);
   document.getElementById('feropCount').textContent=total+' clips shown across '+groups.length+' call types';
   grid.innerHTML=groups.map(([type,rows])=>{
     const talk='<a class="btn primary" href="index.html?call='+encodeURIComponent(type)+'#talk">Use '+esc(type)+' in Talk Orca</a>';
-    const samples=rows.map(r=>'<div class="sample"><div class="shead"><span>'+esc(r.variant)+'</span><span>FEROP catalogue</span></div><audio controls preload="none" src="'+esc('assets/calls/ferop_catalogue/'+encodeURIComponent(r.file))+'"></audio></div>').join('');
+    const samples=rows.map(r=>'<div class="sample"><div class="shead"><span>'+esc(r.variant)+'</span><span>FEROP catalogue</span></div><audio controls preload="none" data-src="'+esc('assets/calls/ferop_catalogue/'+encodeURIComponent(r.file))+'"></audio></div>').join('');
     return '<article class="card"><h3>'+esc(type)+'</h3><p>FEROP Kamchatka catalogue call type. Meaning is not known; this entry provides real examples for listening, comparison, and playback planning.</p>'+humanLine(type)+'<div class="meta"><span>'+rows.length+' real examples</span><span>FEROP</span><span>meaning unknown</span></div><div class="samples">'+samples+'</div><div style="margin-top:11px">'+talk+'</div></article>';
   }).join('');
+  observeAudio(grid);
 }
 function renderLabels(){
   document.getElementById('labelTable').innerHTML=MODEL_LABELS.map(([type,count,fam])=>'<div class="labelrow"><b>'+esc(type)+'</b><span>'+count+' detections</span><span>'+esc(fam)+' label. Classification target, not translated content.</span></div>').join('');
 }
 function renderSynthetic(){
-  document.getElementById('syntheticGrid').innerHTML=SYNTH.map(([name,src,text])=>'<article class="card"><h3>'+esc(name)+'</h3><p>'+esc(text)+'</p><div class="meta"><span>synthetic</span><span>not evidence</span></div><div class="sample"><div class="shead"><span>sample</span><span>audition only</span></div><audio controls preload="none" src="'+esc(src)+'"></audio></div></article>').join('');
+  const grid=document.getElementById('syntheticGrid');
+  grid.innerHTML=SYNTH.map(([name,src,text])=>'<article class="card"><h3>'+esc(name)+'</h3><p>'+esc(text)+'</p><div class="meta"><span>synthetic</span><span>not evidence</span></div><div class="sample"><div class="shead"><span>sample</span><span>audition only</span></div><audio controls preload="none" data-src="'+esc(src)+'"></audio></div></article>').join('');
+  observeAudio(grid);
 }
-document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{
-  const key=b.dataset.tab;
-  document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===b));
+const renderedPanels=new Set(['ferop']);
+function activateTab(key,updateHash=true){
+  const button=document.querySelector('.tab[data-tab="'+CSS.escape(key)+'"]');
+  if(!button)return;
+  if(key==='labels'&&!renderedPanels.has(key))renderLabels();
+  if(key==='synthetic'&&!renderedPanels.has(key))renderSynthetic();
+  renderedPanels.add(key);
+  document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===button));
   document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.dataset.panel===key));
-  history.replaceState(null,'','#'+key);
-}));
-document.getElementById('feropSearch').addEventListener('input',renderFerop);
-renderTypeBar(); renderFerop(); renderLabels(); renderSynthetic();
+  button.classList.add('active');
+  if(updateHash)history.replaceState(null,'','#'+key);
+}
+document.querySelectorAll('.tab').forEach(button=>button.addEventListener('click',()=>activateTab(button.dataset.tab)));
+let searchFrame=0;
+document.getElementById('feropSearch').addEventListener('input',()=>{
+  cancelAnimationFrame(searchFrame);
+  searchFrame=requestAnimationFrame(renderFerop);
+});
+renderTypeBar(); renderFerop();
 const initial=location.hash.slice(1);
-if(initial){const tab=document.querySelector('.tab[data-tab="'+CSS.escape(initial)+'"]'); if(tab)tab.click();}
+if(initial)activateTab(initial,false);
 </script>
 </body>
 </html>
