@@ -1,0 +1,90 @@
+{
+  "mode": "review",
+  "catalogue_audit_dir": "../data/playback/ferop_catalogue",
+  "project": {
+    "project_id": "OD-CONTENT-PLAYBACK",
+    "principal_investigator": "",
+    "institution": "",
+    "field_partner": "",
+    "target_population": "",
+    "study_area": "",
+    "field_season": ""
+  },
+  "design": {
+    "design_type": "content_controlled",
+    "conditions": [
+      "CONTENT_A",
+      "CONTENT_B",
+      "MATCHED_NOISE",
+      "SILENCE"
+    ],
+    "experimental_unit": "identified_social_group_encounter",
+    "experimental_units_per_condition": 6,
+    "minimum_independent_stimuli_per_condition": 3,
+    "primary_outcome": "change in vocal reply rate from baseline to the preregistered response window",
+    "sample_size_justification": "Replace with a prospective power analysis based on pilot variance and the smallest biologically important effect.",
+    "analysis_model": "Preregistered mixed model with condition as a fixed effect and receiver group and stimulus exemplar as crossed effects.",
+    "randomization_seed": "OD-FIELD-LOCK-01",
+    "observer_blinded": true,
+    "observer_blinding_implementation": "",
+    "generate_matched_noise_controls": true
+  },
+  "audio_requirements": {
+    "minimum_sample_rate_hz": 48000,
+    "minimum_duration_s": 2.0,
+    "maximum_duration_s": 1200.0,
+    "minimum_rms_dbfs": -60.0,
+    "maximum_absolute_dc_offset": 0.01,
+    "maximum_pair_duration_ratio": 1.5,
+    "maximum_pair_rms_difference_db": 6.0
+  },
+  "approvals": {
+    "jurisdiction": "",
+    "marine_mammal_authorization_id": "",
+    "authorization_valid_through": "",
+    "animal_ethics_id": "",
+    "stimulus_rights_approval_id": "",
+    "species_at_risk_authorization_id": "",
+    "verified_by": ""
+  },
+  "calibration": {
+    "playback_recorder_model": "",
+    "amplifier_model": "",
+    "transducer_model": "",
+    "transducer_depth_m": "",
+    "monitor_hydrophone_model": "",
+    "monitor_hydrophone_certificate": "",
+    "calibration_date": "",
+    "calibration_distance_m": "",
+    "permit_approved_source_level_db_re_1upa_at_1m": "",
+    "nominal_source_level_db_re_1upa_at_1m": "",
+    "source_level_tolerance_db": "",
+    "fixed_player_gain_setting": "",
+    "received_level_monitoring_method": "",
+    "transducer_frequency_response_check": "",
+    "calibration_recording_sha256": "",
+    "per_file_source_level_db_re_1upa_at_1m": {}
+  },
+  "safety": {
+    "baseline_minutes": 10,
+    "response_minutes": 10,
+    "washout_minutes": 60,
+    "max_exposures_per_group_per_24h": 1,
+    "stop_rule_authority": "",
+    "stop_rules": [
+      "Abort before transmission if a calf, compromised animal, feeding event, vessel conflict, or non-target protected species creates a permit-defined exclusion.",
+      "Stop immediately at the first permit-defined moderate or severe avoidance or distress response.",
+      "Stop if monitored received level or playback-chain output exceeds the approved limit or calibration tolerance.",
+      "Stop if visual, acoustic, tracking, or communication coverage is lost.",
+      "Do not resume a stopped exposure during the same encounter unless the permit and principal investigator explicitly allow it."
+    ]
+  },
+  "release": {
+    "pi_signoff": "",
+    "acoustic_lead_signoff": "",
+    "animal_welfare_signoff": "",
+    "matched_control_review_reference": "",
+    "approved_matched_control_sha256": {}
+  },
+  "stimuli": []
+}

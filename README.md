@@ -22,16 +22,18 @@ The workflow encodes public acoustic segments, attaches provenance and metadata,
 2. **Scope** for what the repository covers and excludes.
 3. **Current Results** for main findings and figure/table summaries.
 4. **Known Limitations and Mitigations** for what the analysis cannot see yet.
-5. **Quickstart** for smoke tests and full analysis entry points.
-6. **Zenodo/Git Provenance** for why the frozen Zenodo package and current Git state are aligned.
-7. **Repository Map** for file locations.
+5. **Controlled Playback Package** for the review-gated field workflow.
+6. **Quickstart** for smoke tests and full analysis entry points.
+7. **Zenodo/Git Provenance** for why the frozen Zenodo package and current Git state are aligned.
+8. **Repository Map** for file locations.
 
 ## 60-second evidence map
 
 **Scope:** this repository supports acoustic structure, context association, and
 a dialect-selective receiver response to broadcast conspecific calls. The scope is
 behaviour-linked acoustic analysis rather than translation; a content-isolating playback
-remains the key field test.
+remains the key field test. The controlled-playback package prepares that experiment but
+does not claim it has already been run.
 
 **Known limitations:** the analysis sees recorded underwater audio, not the whale's whole
 perceptual world. The public-facing limitation table is in
@@ -44,6 +46,25 @@ confounds, prior-playback scope, and model-specificity checks.
 ```bash
 python scripts/run_playback_response_stats.py
 ```
+
+**Controlled playback package:** [`field_playback/`](field_playback/) contains the
+scientific protocol, review configuration, non-broadcast catalogue audit, and the
+hard-gated builder. A field-configured archive can include WAVs only after its
+configuration records target-population provenance, independent stimuli, permits,
+animal-welfare review, exact-file acoustic calibration, observer masking, stop rules,
+and named signoffs. The software checks completeness and internal consistency; it
+cannot authenticate permits, approve exposure, or replace the field principal
+investigator and governing authorities.
+
+```bash
+python scripts/build_field_playback_package.py \
+  --config field_playback/field_config.example.json \
+  --output field_playback/orca_playback_review_package.zip
+```
+
+With the committed example configuration, the generated archive is marked
+`REVIEW ONLY` and contains no broadcast audio. Generated ZIP files are intentionally
+excluded from Git because they may contain restricted field metadata.
 
 Expected statistic: the published conspecific playback re-analysis returns the
 pseudoreplication-controlled same-pod vs different-pod response (`6/6` vs `0/6`, Fisher
@@ -58,6 +79,7 @@ python scripts/run_playback_response_stats.py
 |---|---|---|---|
 | Non-invasive public-data decoding | Frozen AVES2 on public DCLDE/DTAG/FEROP-derived inputs; no invasive data. | `docs/data_availability.md`; `docs/decoding_program.md`; `reports/corpus_freeze.json` | Re-analysis and modelling only; no new field experiment. |
 | Site-controlled acoustic structure | Ecotype pooled decode collapses under provider holdout, but within-site ecotype and catalogue call-type structure survive. | `scripts/run_h4_confound.py`; `scripts/run_calltype_model.py`; `reports/calltype_model_full_summary.json` | Site-independent ecotype transfer remains limited; call-type recovery is acoustic-category evidence. |
+| Provider-aware robustness | Synthetic benchmarks compare random CV, provider holdout, within-provider evaluation, nuisance projection, and staged feature/label/provider-ID errors [@roberts2017; @pedregosa2011]. | `scripts/run_provider_aware_benchmark.py`; `scripts/run_workflow_error_propagation.py`; matching reports and figures | Diagnostic benchmark, not evidence that an absent biological class can be recovered across structurally non-overlapping providers. |
 | More than one behavioural context | DTAG calls decode foraging/non-foraging and foraging/travelling/resting with individual held out; named call types map across six contexts. | `notebooks/dtag_context_decode_colab.ipynb`; `scripts/run_calltype_multicontext.py`; `reports/context3_decode_summary.json` | Production-side context association. |
 | Response to broadcast signal | Published conspecific playback re-analysis: same-pod replies, different-pod silence; AVES2 recovers the dialect call-type space underlying the response contrast. | `scripts/run_playback_response_stats.py`; `scripts/run_playback_response.py`; `reports/playback_response_summary.json` | Prior published playback; dialect membership is the tested contrast. |
 | Structure beyond first order | SRKW S-call sequences exceed first-order Markov surrogates; NRKW is null and reported. | `scripts/run_calltype_compositionality.py`; `reports/calltype_compositionality_summary.json` | Sequence-structure evidence over validated call types. |
@@ -374,6 +396,7 @@ The committed run completed with `RUN_MODE = FULL_ANALYSIS`, `MAX_CALLTYPE_SEGME
 |---|---|
 | `pyproject.toml` | Python package metadata and dependencies. |
 | `scripts/` | Download, encoding, labelling, and analysis entry points. |
+| `field_playback/` | Review-gated controlled-playback protocol and configuration; not broadcast authorization. |
 | `docs/ai_architecture.md` | Architecture and statistical validation specification. |
 | `docs/dataset_plan.md` | Dataset provenance, access, and quality plan. |
 | `docs/evidence_mapping.md` | Evidence axes, controls, and claim scope. |

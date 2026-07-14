@@ -75,6 +75,10 @@ wandb/
 mlruns/
 run_logs/
 reports/packages/*.zip
+field_playback/*.zip
+
+# Journal submission packages contain private working material and generated files.
+publications/
 
 # --- Embeddings: keep only labeled artifacts in repo ---
 # `*_full_embeddings.npz` is a strict subset of `*_full_labeled.npz`

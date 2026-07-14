@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>OrcaDolittle — site-controlled killer-whale call decoding</title>
-<meta name="description" content="A reproducible, non-invasive pipeline that decodes killer-whale call structure and behavioural context from public recordings — built for permitted in-situ playback studies." />
+<meta name="description" content="A reproducible, non-invasive pipeline that decodes killer-whale call structure and behavioural context from public recordings and supports controlled field-playback planning." />
 <meta property="og:title" content="OrcaDolittle — site-controlled killer-whale call decoding" />
 <meta property="og:description" content="Site-controlled, reproducible orca bioacoustics. Explore the results, try Talk Orca, and evaluate the field playback protocol that comes next." />
 <meta property="og:image" content="assets/hero_orca.png" />
@@ -287,7 +287,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
   <a class="btn primary" href="#talk">Open tool</a>
 </div></nav>
 <header class="hero"><video class="bgvid" autoplay muted loop playsinline poster="assets/hero_orca_16x9_reference.png"><source src="assets/hero_orca_veo_multi_loop.mp4" type="video/mp4" /></video><div class="bg"></div><div class="wrap">
-  <span class="badge">● Non-invasive · public data · fully reproducible · field-ready</span>
+  <span class="badge">● Non-invasive · public data · fully reproducible · field-test planning</span>
   <h1>Site-controlled <span class="grad">killer-whale call decoding</span>.</h1>
   <p class="sub">A reproducible, fully non-invasive pipeline for killer-whale (<em>Orcinus orca</em>) call structure, behavioural context, and playback-response analysis from public recordings.</p>
   <div class="cta">
@@ -337,13 +337,13 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
 <section id="talk"><div class="wrap">
   <div class="eyebrow reveal">Talk Orca · full model console</div>
   <h2 class="reveal">Run the full <span class="grad">evidence stack</span>.</h2>
-  <p class="lead reveal">Use the model-facing console the way you would use a full model: select or upload a candidate signal, inspect call-type/dialect structure, production-context evidence, playback-response design, and a field-ready readout from the same claim-bounded stack.</p>
+  <p class="lead reveal">Use the model-facing console to select or upload a candidate signal, inspect call-type/dialect structure, production-context evidence, playback-response design, and a field-planning readout from the same claim-bounded stack.</p>
   <div class="disclaimer reveal">
     <span>⚠</span>
-    <div><b>Model scope.</b> Real FEROP K-call clips anchor the audition set from the published dialect-response re-analysis. DTAG/context findings inform the field protocol, and synthetic contours are listening sketches. The console reports structure, context association, and response design without turning the observer note into whale speech. <a href="#field">Take the tool into the field →</a></div>
+    <div><b>Model scope.</b> Real FEROP K-call clips anchor the audition set from the published dialect-response re-analysis. DTAG/context findings inform the field protocol, and synthetic contours are listening sketches. The console reports structure, context association, and response design without turning the observer note into whale speech. <a href="#field">Build the controlled protocol →</a></div>
   </div>
   <div class="basis reveal">
-    <div><b>Validated substrate</b> Real FEROP K-call recordings are reused as named stimulus anchors, not invented labels.</div>
+    <div><b>Catalogue substrate</b> Real FEROP K-call recordings are reused as named audition references, not invented labels or field-release stimuli.</div>
     <div><b>Model output</b> Frozen embeddings support classification, separability, and context-associated probes; not semantic translation.</div>
     <div><b>Audition layer</b> Synthetic contours are optional listening sketches; real FEROP clips remain the evidence anchors.</div>
   </div>
@@ -429,7 +429,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
       </div>
       <div class="tray" id="tray"><span class="trayhint">Tap anchors above to build an audition set…</span></div>
       <div class="phrasebar">
-        <button class="btn" id="build">Build stimulus set</button>
+        <button class="btn" id="build">Build audition set</button>
         <button class="btn primary" id="speak" type="button">Play selection</button>
         <button class="btn" id="reuse">Reuse last</button>
         <button class="btn" id="clear">Clear</button>
@@ -456,23 +456,23 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
   <div class="labdeck reveal" id="fieldLab">
     <div class="labhead">
       <div>
-        <h3>Expedition Playback Kit</h3>
-        <p>Configure a permitted broadcast plan, produce a randomized run sheet, and export the files a lab or field team needs: protocol, stimulus manifest, run sheet, and blinded scoring sheet.</p>
+        <h3>Expedition Playback Protocol Kit</h3>
+        <p>Configure a controlled study, produce a randomized encounter allocation, and export a protocol, catalogue audit, manifest, operator sheet, and genuinely blinded scoring sheet. The website does not create field-release audio.</p>
       </div>
       <div class="labactions">
-        <a class="btn primary" id="draftPlan" href="#protocolPlan">Build field kit</a>
+        <a class="btn primary" id="draftPlan" href="#protocolPlan">Build review kit</a>
         <button class="btn" id="copyPlan" type="button">Copy protocol</button>
-        <button class="btn" id="copyRunSheet" type="button">Copy run sheet</button>
-        <button class="btn" id="downloadPlan" type="button">Field kit JSON</button>
-        <button class="btn" id="downloadRunSheet" type="button">Run sheet CSV</button>
+        <button class="btn" id="copyRunSheet" type="button">Copy allocation</button>
+        <button class="btn" id="downloadPlan" type="button">Review kit JSON</button>
+        <button class="btn" id="downloadRunSheet" type="button">Allocation CSV</button>
         <button class="btn" id="downloadScoringSheet" type="button">Scoring CSV</button>
         <button class="btn" id="downloadManifest" type="button">Manifest CSV</button>
-        <span class="labstatus" id="labStatus">Kit updates as you edit; exports are ready for lab review and permitted field operations.</span>
+        <span class="labstatus" id="labStatus">Review exports update as you edit. Field audio requires the offline provenance, permit, welfare, and calibration gate.</span>
       </div>
     </div>
     <div class="labgrid">
       <div class="labcard">
-        <h4>Stimulus set</h4>
+        <h4>Planned conditions</h4>
         <div id="stimulusSet"></div>
       </div>
       <div class="labcard">
@@ -486,11 +486,11 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
       <div class="labcard">
         <h4>Protocol builder</h4>
         <div class="protocolControls">
-          <label>Trials per condition <input id="trialCount" type="number" min="3" max="24" value="6" /></label>
-          <label>Washout minutes <input id="washoutMin" type="number" min="5" max="90" value="20" /></label>
-          <label>Baseline window <select id="baselineWindow"><option value="5">5 min pre</option><option value="10">10 min pre</option><option value="15">15 min pre</option></select></label>
-          <label>Response window <select id="responseWindow"><option value="2">2 min post</option><option value="5" selected>5 min post</option><option value="10">10 min post</option></select></label>
-          <label>Session label <input id="sessionLabel" maxlength="36" value="season-01-group-A" /></label>
+          <label>Experimental units per condition <input id="trialCount" type="number" min="3" max="24" value="6" /></label>
+          <label>Washout minutes <input id="washoutMin" type="number" min="5" max="180" value="60" /></label>
+          <label>Baseline window <select id="baselineWindow"><option value="5">5 min pre</option><option value="10" selected>10 min pre</option><option value="15">15 min pre</option></select></label>
+          <label>Response window <select id="responseWindow"><option value="2">2 min post</option><option value="5">5 min post</option><option value="10" selected>10 min post</option></select></label>
+          <label>Study label <input id="sessionLabel" maxlength="36" value="study-01-allocation" /></label>
           <label>Random seed <input id="randomSeed" maxlength="24" value="OD-FIELD-01" /></label>
         </div>
         <div class="checks">
@@ -502,12 +502,12 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
         <div class="planbox" id="protocolPlan" tabindex="-1" aria-live="polite"></div>
       </div>
       <div class="labcard">
-        <h4>Randomized run sheet</h4>
+        <h4>Randomized encounter allocation</h4>
         <div class="runmeta" id="runMeta"></div>
         <div class="runsheet" id="runSheet"></div>
       </div>
       <div class="labcard">
-        <h4>Expedition checklist</h4>
+        <h4>Deployment gate audit</h4>
         <div class="gates" id="gateList"></div>
       </div>
       <div class="labcard">
@@ -517,13 +517,13 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
           <button class="btn" id="scoreUpload">Preview clip</button>
         </div>
         <div class="uploadviz" id="uploadViz"><canvas id="uploadCanvas" width="520" height="84"></canvas></div>
-        <div class="uploadnote" id="uploadNote">Optional browser-only preview for a candidate field clip. It can summarize file metadata here; model scoring still belongs in the reproducible pipeline.</div>
+        <div class="uploadnote" id="uploadNote">Optional browser-only preview for a collaborator-supplied sequence. It can summarize file metadata here; eligibility and acoustic QC belong in the offline validator.</div>
       </div>
       <div class="labcard exportcard">
         <h4>Export</h4>
-        <p class="minihelp">Field kit JSON includes protocol, treatment table, randomized run sheet, manifest, scoring schema, and checklist. CSV buttons create the lab-friendly worksheets.</p>
+        <p class="minihelp">Review-kit JSON includes the protocol, condition table, encounter allocation, manifest, blind scoring schema, and release checklist. It contains no field-release audio.</p>
         <details class="exportdetails">
-          <summary>Preview field kit JSON</summary>
+          <summary>Preview review-kit JSON</summary>
           <div class="planbox" id="exportPreview"></div>
         </details>
       </div>
@@ -533,18 +533,18 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
 <section id="field"><div class="wrap">
   <div class="eyebrow reveal">For field scientists</div>
   <h2 class="reveal">The experiment an archive <span class="grad">cannot</span> run.</h2>
-  <p class="lead reveal">Archival recordings can characterise call structure and its confounds. What an archive cannot do — even in principle — is measure how a whale <b>responds to a signal deliberately broadcast to it</b>. That needs a controlled in-situ playback with a permitted field collaborator. The analysis half is already built.</p>
+  <p class="lead reveal">Archival recordings can characterise call structure and its confounds. What an archive cannot do — even in principle — is measure how a whale <b>responds to a signal deliberately broadcast to it</b>. That needs a controlled in-situ playback with a permitted field collaborator. The analysis and review tooling are built; target-specific stimuli, calibration, authorization, and field execution are not.</p>
   <div class="two">
     <div class="panel reveal"><h3>What this project brings</h3><ul>
       <li>A frozen-embedding pipeline for killer-whale calls with hash-frozen artifacts and per-head metrics.</li>
       <li>A site-controlled evaluation protocol that separates acoustic structure from the recording-site shortcut and keeps field claims tied to measured controls.</li>
-      <li>Validated catalogue call types that transfer across sites, and a behavioural-context decoder, ready to condition on your observed contexts.</li>
-      <li>Code that scores playback stimulus &amp; response audio against the <em>same</em> frozen representation, drop-in.</li>
+      <li>Validated catalogue call-type evidence that transfers across sites, plus a behavioural-context decoder with explicitly bounded training populations.</li>
+      <li>Reusable manifests and analysis code for collaborator-supplied audio, subject to population-specific validation.</li>
     </ul></div>
     <div class="panel reveal"><h3>What a field partner brings</h3><ul>
       <li>Permitted, non-invasive in-situ playback with a study population that has individual/group ID.</li>
       <li>Per-trial response measurement (movement, vocal, behavioural) with pre-exposure and matched controls.</li>
-      <li>The one design that closes the loop: a <b>content-controlled, conspecific playback</b> — same dialect, different call type — to test whether whales respond to a call’s <em>content</em>, not just whose voice it is.</li>
+      <li>The design that closes the loop: a <b>content-controlled, conspecific playback</b> using independently context-labelled natural sequences while holding pod/caller identity and playback handling as constant as possible.</li>
       <li>Observer-grounded, segment-level behavioural context.</li>
     </ul></div>
   </div>
@@ -555,7 +555,9 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
 cd OrcaDolittle
 python -m pip install -e ".[dev,analysis]"
 python -m pytest -q
-python scripts/run_playback_response_stats.py</code></pre>
+python scripts/run_playback_response_stats.py
+python scripts/build_field_playback_package.py --config field_playback/field_config.example.json --output field_playback/orca_playback_review_package.zip</code></pre>
+      <p style="color:var(--dim);font-size:13.5px;margin:12px 0 0">The example build is review-only and contains no broadcast audio. See the <a href="https://github.com/ladyFaye1998/OrcaDolittle/tree/main/field_playback" target="_blank" rel="noopener">controlled-playback protocol and release boundary</a>.</p>
     </div>
     <div class="panel reveal" style="display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:14px">
       <h3 style="margin:0">Reach out</h3>
@@ -579,7 +581,7 @@ python scripts/run_playback_response_stats.py</code></pre>
       <li>A published playback re-analysis shows a <b>measurable, dialect-selective response</b> to broadcast conspecific calls.</li>
     </ul></div>
     <div class="do reveal" style="border-color:rgba(76,201,255,.3);background:rgba(76,201,255,.05)"><h3 style="color:var(--cyan)">Field-test questions</h3><ul>
-      <li>That broadcasting these call types elicits <b>context-appropriate responses</b> in wild orcas.</li>
+      <li>Whether approved, content-controlled natural sequences elicit <b>differential responses</b> in the target population.</li>
       <li>That a receiver responds to a call’s <b>content</b>, not only to whose voice (dialect) it is.</li>
       <li>That the decoder <b>generalises to your study population</b> and recording conditions.</li>
       <li>Whether the system can support a controlled <b>interactive exchange</b>.</li>
@@ -680,30 +682,6 @@ document.querySelectorAll('.stat .n').forEach(setCounter);
 
 // ---- Talk Orca: context builder + reusable recordings + synthetic sketch ----
 let ac=null, bus=null, analyser=null, wetGain=null, delayNode=null, freqData=null, rafId=null, buffers={}, activeNodes=[], playRun=0, mode='recordings';
-const HYP={
-  k1:'"I am here / familiar pod here"',
-  k2:'"contact check"',
-  k3:'"food is here"',
-  k4:'"regroup / come closer"',
-  k5:'"we are moving"',
-  k6:'"hold position"',
-  k7:'"answer me / stay close"',
-  k8:'"close-contact cue"',
-  k9:'"split and rejoin"',
-  k10:'"keep direction"',
-  k11:'"scan / check surroundings"',
-  k12:'"group check-in"',
-  k13:'"excited social exchange"',
-  k14:'"distant contact"',
-  k15:'"slow down / wait"',
-  k16:'"travel pass-by cue"',
-  k17:'"attention here"',
-  k19:'"variant/offshore cue to test"',
-  k20:'"repeated check-in"',
-  k21:'"closing distance"',
-  k23:'"high-arousal contact"',
-  k24:'"unknown dictionary cue"'
-};
 const FEROP_ANCHORS=[
   {key:'k1',label:'K1',file:'K1__bui.wav',dur:1.20,evidence:90},
   {key:'k2',label:'K2',file:'K2__K2i.wav',dur:1.08,evidence:84},
@@ -737,7 +715,7 @@ const CALLS=Object.fromEntries(FEROP_ANCHORS.map(x=>[x.key,{
   real:x.key,
   name:'Kamchatkan call type '+x.label,
   role:'FEROP dictionary anchor',
-  human:x.label+': human shorthand '+(HYP[x.key]||'"unknown cue"')+' is a field-test hypothesis, not a translated word.',
+  human:x.label+': neutral FEROP catalogue identifier; no receiver-interpreted content is assigned.',
   ctx:'dialect',
   cite:'FEROP catalogue; Filatova 2011',
   dur:x.dur,
@@ -809,8 +787,7 @@ function updateControlLabels(){
   echoLabel.textContent=echo<35?'Dry/near':echo<70?'Soft water':'Distant water';
 }
 function humanHypothesis(p){
-  if(!p.validated)return '"audition sketch only"';
-  return HYP[p.call]||'"unknown call-type cue"';
+  return p.validated?'neutral catalogue identifier':'audition sketch only';
 }
 function renderMeters(){
   const s=scorePhrase();
@@ -832,8 +809,8 @@ function renderReadout(last){
   const picked=last?'<span class="lab">'+esc(last.name)+' added.</span> ':'';
   const synthetic=phrase.filter(p=>!p.validated).length;
   const synthNote=synthetic?' '+synthetic+' optional contour sketch'+(synthetic===1?' is':'es are')+' present; replace before any field stimulus.':'';
-  const modeNote=mode==='recordings'?' Real FEROP clips play unmodified in this mode; audition tone and echo do not alter the evidence anchors.':' Current playback mode includes a contour sketch layer; use real FEROP clips for field review.';
-  readout.innerHTML=picked+'<b>Observer note:</b> '+esc(line)+'<br><b>Observed context:</b> '+esc(ctx)+' field metadata only; it does not pick call meaning.<br><b>Candidate stimulus anchors:</b> '+esc(seq)+'<br><b>Audition controls:</b> '+esc(style)+' · '+esc(tone)+' · '+energyLabel.textContent+' · '+spacingLabel.textContent+' · '+echoLabel.textContent+'.<br><b>Research basis:</b> real clips are FEROP K-call examples from the dialect-response frame. DTAG/context evidence is production-side and from a different dataset, so changing observed context changes the protocol text and scoring frame, not validated call content.'+esc(synthNote+modeNote);
+  const modeNote=mode==='recordings'?' Real FEROP samples are unchanged in this browser audition, but browser gain and hardware output are not calibrated underwater playback.':' Current playback mode includes a contour sketch layer; keep it out of every field stimulus.';
+  readout.innerHTML=picked+'<b>Observer note:</b> '+esc(line)+'<br><b>Observed context:</b> '+esc(ctx)+' field metadata only; it does not pick call meaning.<br><b>Catalogue audition anchors:</b> '+esc(seq)+'<br><b>Audition controls:</b> '+esc(style)+' · '+esc(tone)+' · '+energyLabel.textContent+' · '+spacingLabel.textContent+' · '+echoLabel.textContent+'.<br><b>Research basis:</b> real clips are FEROP K-call examples from the dialect-response frame. DTAG/context evidence is production-side and from a different dataset, so changing observed context changes the protocol text and scoring frame, not receiver-interpreted call content.'+esc(synthNote+modeNote);
 }
 function renderModelChat(){
   if(!chatLog)return;
@@ -844,7 +821,7 @@ function renderModelChat(){
   const style=styleEl.options[styleEl.selectedIndex].text;
   const synthetic=phrase.filter(p=>!p.validated).length;
   const anchorCount=phrase.filter(p=>p.validated).length+'/'+Math.max(phrase.length,1);
-  const modeText=mode==='recordings'?'unmodified FEROP recordings':'audition mode with contour sketch layer';
+  const modeText=mode==='recordings'?'real FEROP catalogue audition clips':'audition mode with contour sketch layer';
   const responseFrame=receiverEl.value==='same-pod'
     ? 'same-pod condition matches the published dialect-response positive frame'
     : receiverEl.value==='field-test'
@@ -852,7 +829,7 @@ function renderModelChat(){
       : 'receiver frame is treated as design metadata until a controlled playback is run';
   chatLog.innerHTML=[
     ['user','Input to console','Observer note: '+lineForChat()+'<br>Selected anchors: '+esc(seq)+'<br>Observed context: '+esc(ctx)+'; receiver frame: '+esc(receiver)+'.'],
-    ['model','Call-type / dialect head','Frozen embeddings recover catalogue call-type structure and FEROP dialect space. Current set uses '+esc(anchorCount)+' validated recording anchors ('+esc(real)+').'],
+    ['model','Call-type / dialect head','Frozen embeddings recover catalogue call-type structure and FEROP dialect space. Current set uses '+esc(anchorCount)+' real catalogue audition anchors ('+esc(real)+').'],
     ['model','Production-context head','The DTAG result supports movement-context association from calls (0.770 binary; 0.577 three-way, individual held out). Here, "'+esc(ctx)+'" is used as field metadata and protocol conditioning.'],
     ['model','Playback-response head','Prior conspecific playback re-analysis gives a dialect-selective response pattern (6/6 same-pod replies vs 0/6 different-pod). For this selection, '+esc(responseFrame)+'.'],
     ['model','Audition / stimulus output','Playback mode: '+esc(modeText)+'. '+esc(synthetic?synthetic+' contour sketch token'+(synthetic===1?' is':'s are')+' present; keep those out of field stimuli.':'The current selection is all real FEROP clips.')+' Protocol lens: '+esc(style)+'.'],
@@ -863,15 +840,14 @@ function lineForChat(){
   return esc(humanText.value.trim()||'Observer note for the field protocol.');
 }
 function treatmentRows(){
-  const seq=phrase.map(p=>p.call.toUpperCase()).join(' -> ')||'No stimulus anchors';
-  const anchors=[...new Set(phrase.map(p=>p.real).filter(Boolean))].map(k=>k.toUpperCase()).join(' / ')||'Select validated anchors';
+  const anchors=[...new Set(phrase.map(p=>p.real).filter(Boolean))].map(k=>k.toUpperCase()).join(' / ')||'none selected';
   const rows=[
-    ['TARGET',seq,'Candidate stimulus set for review; use real FEROP anchors only until collaborators approve final stimuli.','test'],
-    ['SAME-POD','FEROP K-call anchors: '+anchors,'Positive conspecific-family condition from the dialect-response evidence frame.','control'],
+    ['CONTENT_A','Approved natural sequence pool A','Same target pod and caller as CONTENT_B, independently annotated context A, from distinct recording sessions. Catalogue references for screening only: '+anchors+'.','test'],
+    ['CONTENT_B','Approved natural sequence pool B','Content-controlled comparator: same target pod/caller, matched quality and duration, independently annotated context B.','test'],
     ['SILENCE','No playback baseline','Pre/post comparison for spontaneous vocal and movement rates.','baseline']
   ];
-  if(diffPod.checked)rows.splice(2,0,['DIFF-POD','Different-pod K-call sequence','Dialect-membership control matching the Filatova response contrast.','control']);
-  if(matchedNoise.checked)rows.splice(rows.length-1,0,['MATCHED','Matched envelope / noise control','Tests response to acoustic energy without call-type structure.','negative']);
+  if(diffPod.checked)rows.splice(2,0,['DIFF_POD','Approved different-pod natural sequence pool','Dialect-membership control from the same target population, matched for recording quality and duration.','control']);
+  if(matchedNoise.checked)rows.splice(rows.length-1,0,['MATCHED_NOISE','Phase-randomized matched controls','Preserves duration, spectrum, and short-time RMS envelope while disrupting call structure.','negative']);
   return rows;
 }
 function hashSeed(str){
@@ -884,12 +860,13 @@ function seededRandom(seed){
   return function(){s=(Math.imul(1664525,s)+1013904223)>>>0;return s/4294967296;};
 }
 function runSheetRows(){
-  const rows=[], treatments=treatmentRows(), trials=clamp(parseInt(trialCount.value||'6',10),3,24);
+  const rows=[], treatments=treatmentRows(), units=clamp(parseInt(trialCount.value||'6',10),3,24);
   treatments.forEach(t=>{
-    for(let i=0;i<trials;i++)rows.push({
+    for(let i=0;i<units;i++)rows.push({
       treatment:t[0],
-      stimulus:t[1],
+      stimulus_pool:t[1],
       replicate:i+1,
+      experimental_unit_id:'',
       baseline:+baselineWindow.value,
       response:+responseWindow.value,
       washout:+washoutMin.value
@@ -897,27 +874,38 @@ function runSheetRows(){
   });
   const seed=hashSeed((sessionLabel.value||'session')+'|'+(randomSeed.value||'seed')+'|'+phrase.map(p=>p.call).join(','));
   const rand=seededRandom(seed);
-  for(let i=rows.length-1;i>0;i--){const j=Math.floor(rand()*(i+1));[rows[i],rows[j]]=[rows[j],rows[i]];}
-  return rows.map((r,i)=>Object.assign({trial:i+1,trial_id:(sessionLabel.value||'session').replace(/[^a-z0-9-]+/gi,'-')+'-'+String(i+1).padStart(2,'0')},r));
+  for(let attempt=0;attempt<500;attempt++){
+    for(let i=rows.length-1;i>0;i--){const j=Math.floor(rand()*(i+1));[rows[i],rows[j]]=[rows[j],rows[i]];}
+    if(!rows.some((r,i)=>i>0&&r.treatment===rows[i-1].treatment))break;
+  }
+  const session=(sessionLabel.value||'study').replace(/[^a-z0-9-]+/gi,'-');
+  return rows.map((r,i)=>Object.assign({
+    trial:i+1,
+    trial_id:session+'-'+String(i+1).padStart(2,'0'),
+    blind_code:'B-'+hashSeed(seed+'|'+r.treatment+'|'+r.replicate).toString(16).padStart(8,'0').toUpperCase()
+  },r));
 }
 function fieldGates(){
   const synthetic=phrase.filter(p=>!p.validated).length;
   return [
-    {ok:false,title:'Local signoff',text:'Kit is exportable for collaborator review; field teams add permit, stand-off, and calibrated source-level signoff before broadcast.'},
-    {ok:synthetic===0,title:'Stimulus manifest',text:synthetic?synthetic+' contour audition token'+(synthetic===1?'':'s')+' in the selection; replace or explicitly approve before field use.':'All selected anchors are validated FEROP recordings.'},
-    {ok:mode==='recordings',title:'Broadcast mode',text:mode==='recordings'?'Real FEROP clip playback selected for the kit.':'Current mode includes contour sketches; switch to Real FEROP clips for field broadcast.'},
-    {ok:diffPod.checked&&matchedNoise.checked,title:'Controls included',text:(diffPod.checked?'Dialect control included':'Add a dialect control')+'; '+(matchedNoise.checked?'matched-noise included':'add matched-noise control')+'.'},
-    {ok:blindObservers.checked,title:'Blinded scoring sheet',text:blindObservers.checked?'Observer-blinded scoring sheet generated.':'Enable observer-blinded scoring before running trials.'},
+    {ok:false,title:'Target-population sequences',text:'Add complete natural sequences with pod, caller, session, context, location, rights, and at least 48 kHz source files in the offline package.'},
+    {ok:false,title:'Permit and animal welfare',text:'Record jurisdiction-specific authorization IDs, approved take limits, welfare review, and field PI release.'},
+    {ok:false,title:'Playback-chain calibration',text:'Calibrate the exact player, amplifier, transducer, deployment geometry, monitor hydrophone, and locked gain setting.'},
+    {ok:false,title:'Stimulus independence',text:'Provide at least three independent source exemplars per non-silence condition and model exemplar/session effects.'},
+    {ok:synthetic===0&&mode==='recordings',title:'Catalogue scope',text:synthetic?'Contour sketches are selected and must be removed.':'FEROP clips are restricted to browser audition and catalogue reference; they are not field-release audio.'},
+    {ok:diffPod.checked&&matchedNoise.checked,title:'Controls included',text:(diffPod.checked?'Different-pod control planned':'Add a different-pod control')+'; '+(matchedNoise.checked?'matched-noise planned':'add matched-noise controls')+'.'},
+    {ok:blindObservers.checked,title:'Blinded scoring',text:blindObservers.checked?'Observer sheet contains blind codes only; condition mapping stays in a restricted key.':'Enable observer blinding before allocation.'},
     {ok:stopRules.checked,title:'Stop rules',text:stopRules.checked?'Disturbance stop rules included in protocol.':'Enable disturbance stop rules before export.'}
   ];
 }
 function operatorSteps(){
   return [
-    {title:'Select evidence anchors',text:'Use FEROP presets or upload a candidate clip for offline pipeline review.'},
-    {title:'Lock field settings',text:'Set session, windows, washout, controls, and seed before the crew receives the kit.'},
-    {title:'Export worksheets',text:'Send protocol, run sheet, scoring sheet, and manifest to the PI and operators.'},
-    {title:'Broadcast permitted clips',text:'Use real recordings only after local approvals and source-level calibration.'},
-    {title:'Score blind response',text:'Observers fill the scoring CSV against the randomized run sheet and stop rules.'}
+    {title:'Screen catalogue references',text:'Use the FEROP browser clips to inspect call types only; do not treat them as released stimuli.'},
+    {title:'Obtain target sequences',text:'Acquire complete natural, rights-cleared sequences with pod, caller, session, context, and location provenance.'},
+    {title:'Run offline validation',text:'Build the package with scripts/build_field_playback_package.py; field mode refuses release when any gate fails.'},
+    {title:'Lock allocation and keys',text:'Give operators the condition sheet and observers the blind-code sheet; restrict the unblinding key.'},
+    {title:'Broadcast under authorization',text:'Use only package WAVs through the calibrated, gain-locked chain and monitor exposure continuously.'},
+    {title:'Score and stop blind',text:'Observers record preregistered outcomes by blind code and apply permit-approved stop rules immediately.'}
   ];
 }
 function fieldReadiness(){
@@ -926,13 +914,13 @@ function fieldReadiness(){
     ready,
     total:gates.length,
     remaining,
-    label:remaining.length
-      ? ready+'/'+gates.length+' kit checks ready; local signoff stays with the field team: '+remaining.join(', ')+'.'
-      : 'All kit checks ready for permitted field execution.'
+    label:ready+'/'+gates.length+' protocol-review checks satisfied; field release remains locked to the offline validation package.'+(remaining.length?' Missing: '+remaining.join(', ')+'.':'')
   };
 }
 function manifestRows(){
   const seen=new Set(), rows=[];
+  rows.push({anchor_id:'FIELD-CONTENT-A',call_type:'CONTENT_A',role:'target-population natural sequence pool',audio_file:'pending offline validated package',source:'field partner archive',validated_recording:'pending',field_use:'blocked until every release gate passes',citation:'controlled playback protocol',notes:'Same pod/caller pairing with CONTENT_B; distinct recording sessions; independently annotated context A.'});
+  rows.push({anchor_id:'FIELD-CONTENT-B',call_type:'CONTENT_B',role:'content-controlled natural sequence pool',audio_file:'pending offline validated package',source:'field partner archive',validated_recording:'pending',field_use:'blocked until every release gate passes',citation:'controlled playback protocol',notes:'Same pod/caller pairing with CONTENT_A; distinct recording sessions; independently annotated context B.'});
   phrase.forEach((p,i)=>{
     const key=p.call+'|'+(p.real||'');
     if(seen.has(key))return;
@@ -943,14 +931,14 @@ function manifestRows(){
       role:p.role,
       audio_file:p.validated?CLIPS[p.real]:SYNTH_CLIPS[p.call],
       source:p.validated?'FEROP catalogue / Filatova 2011':'browser contour sketch',
-      validated_recording:p.validated?'yes':'no',
-      field_use:(p.validated&&mode==='recordings')?'candidate playback anchor after permit and calibration':'review or audition only',
+      validated_recording:p.validated?'catalogue recording':'no',
+      field_use:'audition/reference only; target-specific provenance and calibration gates are not met',
       citation:p.cite,
       notes:p.human
     });
   });
-  if(diffPod.checked)rows.push({anchor_id:'CTRL-DIFF-POD',call_type:'DIFF-POD',role:'dialect-membership control',audio_file:'collaborator-supplied validated call',source:'local collaborator archive or approved catalogue',validated_recording:'pending',field_use:'control after collaborator signoff',citation:'Filatova 2011 response contrast frame',notes:'Match source level, duration, and playback handling to target treatment.'});
-  if(matchedNoise.checked)rows.push({anchor_id:'CTRL-MATCHED',call_type:'MATCHED',role:'matched envelope / noise control',audio_file:'generated from approved anchor envelope',source:'analysis pipeline export',validated_recording:'not applicable',field_use:'negative acoustic-energy control',citation:'OrcaDolittle protocol',notes:'Preserve duration and amplitude envelope without call-type structure.'});
+  if(diffPod.checked)rows.push({anchor_id:'CTRL-DIFF-POD',call_type:'DIFF_POD',role:'dialect-membership control',audio_file:'pending offline validated package',source:'field partner archive',validated_recording:'pending',field_use:'blocked until every release gate passes',citation:'Filatova 2011 response contrast frame',notes:'Target-population different-pod exemplars matched for source level, duration, and recording quality.'});
+  if(matchedNoise.checked)rows.push({anchor_id:'CTRL-MATCHED',call_type:'MATCHED_NOISE',role:'phase-randomized matched control',audio_file:'generated only by offline package builder',source:'approved natural stimulus pool',validated_recording:'derived control',field_use:'blocked until acoustic review and package release',citation:'controlled playback protocol',notes:'Preserve duration, spectrum, and short-time RMS envelope while disrupting call structure.'});
   rows.push({anchor_id:'CTRL-SILENCE',call_type:'SILENCE',role:'no-playback baseline',audio_file:'none',source:'field protocol',validated_recording:'not applicable',field_use:'baseline',citation:'OrcaDolittle protocol',notes:'Record baseline and response windows with no broadcast.'});
   return rows;
 }
@@ -958,9 +946,11 @@ function runSheetColumns(){
   return [
     {key:'trial_id',label:'trial_id'},
     {key:'trial',label:'trial_number'},
-    {key:'treatment',label:'treatment'},
-    {key:'stimulus',label:'stimulus'},
+    {key:'treatment',label:'condition'},
+    {key:'stimulus_pool',label:'stimulus_pool'},
     {key:'replicate',label:'replicate'},
+    {key:'experimental_unit_id',label:'experimental_unit_id'},
+    {key:'blind_code',label:'blind_code'},
     {key:'baseline',label:'baseline_minutes'},
     {key:'response',label:'response_minutes'},
     {key:'washout',label:'washout_minutes'}
@@ -969,8 +959,8 @@ function runSheetColumns(){
 function scoringColumns(){
   return [
     {key:'trial_id',label:'trial_id'},
-    {key:'treatment',label:'treatment'},
-    {key:'stimulus',label:'stimulus'},
+    {key:'blind_code',label:'blind_code'},
+    {key:'experimental_unit_id',label:'experimental_unit_id'},
     {key:'observer_id',label:'observer_id'},
     {key:'planned_start_utc',label:'planned_start_utc'},
     {key:'actual_start_utc',label:'actual_start_utc'},
@@ -1004,8 +994,8 @@ function manifestColumns(){
 function scoringRows(){
   return runSheetRows().map(r=>({
     trial_id:r.trial_id,
-    treatment:r.treatment,
-    stimulus:r.stimulus,
+    blind_code:r.blind_code,
+    experimental_unit_id:r.experimental_unit_id,
     observer_id:'',
     planned_start_utc:'',
     actual_start_utc:'',
@@ -1037,7 +1027,7 @@ function planPayload(){
   const seq=phrase.map(p=>p.call);
   const gates=fieldGates();
   return {
-    objective:'Research-bound field playback kit for permitted lab or expedition use',
+    objective:'Review-gated controlled playback design; field audio is released only by the offline validator',
     session:sessionLabel.value,
     context:activityEl.value,
     receiver:receiverEl.value,
@@ -1055,7 +1045,7 @@ function planPayload(){
     },
     treatments:treatmentRows().map(r=>r[0]),
     design:{
-      trials_per_condition:+trialCount.value,
+      experimental_units_per_condition:+trialCount.value,
       baseline_minutes:+baselineWindow.value,
       response_minutes:+responseWindow.value,
       washout_minutes:+washoutMin.value,
@@ -1065,7 +1055,7 @@ function planPayload(){
     },
     run_sheet:runSheetRows(),
     field_gates:gates,
-    claim_boundary:'Tests receiver response to broadcast stimulus anchors; the observer note is not translated into call content.'
+    claim_boundary:'The browser exports a design and catalogue audit, not field-release audio. Receiver response claims require authorized, calibrated encounters with independent natural stimuli.'
   };
 }
 function fieldPlanText(){
@@ -1073,40 +1063,41 @@ function fieldPlanText(){
   const treatments=treatmentRows().map(r=>'  - '+r[0]+': '+r[1]).join('\n');
   const metrics=[
     'vocal reply latency/count in response window',
-    'call-type matching against played anchors',
+    'call-type or sequence matching against the played natural stimulus',
     'heading/speed change from track or tag data',
     'group cohesion / spread',
     'behaviour-state annotation from blinded observer'
   ].join('\n  - ');
   const gates=[
-    'permit and local ethics approval before broadcast',
-    'source level calibrated below disturbance threshold',
-    'abort on avoidance, prolonged silence, calf-risk context, or vessel conflict',
-    'randomized condition order with washout',
-    'analysis pre-registered against matched controls'
+    'rights-cleared target-population natural sequences with complete provenance',
+    'jurisdiction-specific permit and animal-welfare approval before broadcast',
+    'exact playback chain calibrated and gain locked; no universal behavioural safety threshold is assumed',
+    'permit-approved exclusion and stop rules for avoidance, silence, calf-risk context, and vessel conflict',
+    'encounter-level allocation with independent exemplars, washout, and blinded observers',
+    'outcomes, exclusions, and mixed-effects analysis preregistered before unblinding'
   ].join('\n  - ');
-  return 'ORCADOLITTLE EXPEDITION PLAYBACK KIT\n'
-    +'Question: do receivers respond differently to this candidate stimulus set than to dialect, noise, and silence controls?\n'
-    +'Session: '+(p.session||'session')+' | Context: '+p.context+' | Receiver: '+p.receiver+' | Mode: '+p.controls.mode+' | Anchors: '+p.phrase.map(x=>x.toUpperCase()).join(' -> ')+'\n\n'
-    +'Model claim: call-type/dialect structure, production-side context association, and dialect-response design are supported; content-specific response remains the next field-test question.\n\n'
-    +'Treatments:\n'+treatments+'\n\n'
-    +'Design: '+p.design.trials_per_condition+' trials/condition; '+p.design.baseline_minutes+' min baseline; '+p.design.response_minutes+' min response window; '+p.design.washout_minutes+' min washout.\n\n'
-    +'Field kit exports: protocol text, randomized run sheet CSV, blinded scoring CSV, stimulus manifest CSV, and full JSON package.\n'
-    +'Randomized run sheet: '+p.run_sheet.length+' trials generated from seed "'+(p.design.randomization_seed||'seed')+'"; export files include every trial ID, treatment, baseline, response, and washout value.\n\n'
+  return 'ORCADOLITTLE CONTROLLED PLAYBACK REVIEW KIT\n'
+    +'Question: under an authorized controlled-playback design, do receivers respond differently to independently annotated natural sequence pools CONTENT_A and CONTENT_B, relative to acoustic and no-playback controls?\n'
+    +'Study: '+(p.session||'study')+' | Observed context: '+p.context+' | Receiver frame: '+p.receiver+' | Browser mode: '+p.controls.mode+' | Catalogue references: '+p.phrase.map(x=>x.toUpperCase()).join(' -> ')+'\n\n'
+    +'Evidence boundary: call-type/dialect structure, production-side context association, and a prior dialect-response contrast are supported. The selected K calls are audition references only, and no receiver-interpreted meaning is assigned.\n\n'
+    +'Conditions:\n'+treatments+'\n\n'
+    +'Design: '+p.design.experimental_units_per_condition+' experimental units/condition; '+p.design.baseline_minutes+' min baseline; '+p.design.response_minutes+' min response window; '+p.design.washout_minutes+' min minimum washout. Repeated clips are not biological replicates.\n\n'
+    +'Review exports: protocol text, randomized encounter allocation CSV, condition-free observer scoring CSV, stimulus manifest CSV, and full JSON package. Field WAVs require the offline validator.\n'
+    +'Randomized encounter allocation: '+p.run_sheet.length+' allocations generated from seed "'+(p.design.randomization_seed||'seed')+'"; the operator file carries conditions while the observer file carries blind codes only.\n\n'
     +'Response metrics:\n  - '+metrics+'\n\n'
-    +'Expedition checklist:\n  - '+gates+'\n\n'
+    +'Field release checklist:\n  - '+gates+'\n\n'
     +'Boundary: '+p.claim_boundary;
 }
 function fieldKitPayload(){
   const core=planPayload(), readiness=fieldReadiness();
   return Object.assign({},core,{
-    field_kit_version:'2026-06-21',
+    field_kit_version:'2026-07-14-review-gated',
     readiness,
     operator_steps:operatorSteps(),
     stimulus_manifest:manifestRows(),
     scoring_sheet:scoringRows(),
     csv_exports:{
-      run_sheet_filename:'orcadolittle_run_sheet.csv',
+      run_sheet_filename:'orcadolittle_encounter_allocation.csv',
       run_sheet_columns:runSheetColumns().map(c=>c.label),
       scoring_filename:'orcadolittle_scoring_sheet.csv',
       scoring_columns:scoringColumns().map(c=>c.label),
@@ -1179,15 +1170,15 @@ function updateLab(){
     ['0.770/0.577','DTAG context','Production-side movement context from calls, individual held out.'],
     ['6/6 vs 0/6','Playback response','Same-pod vs different-pod re-analysis; dialect, not content.'],
     ['0.439','FEROP embedding','AVES2 recovers Kamchatka dialect call-type space above shuffle null.'],
-    [validated+'/'+phrase.length,'Validated anchors','Real FEROP K-call units inside this selection.'],
+    [validated+'/'+phrase.length,'Catalogue anchors','Real FEROP K-call units available for audition and reference only.'],
     ['Scoped','Field-test scope','Content-specific response and synthetic speech validity remain future field-test questions.']
   ].map(e=>'<div class="ev"><div class="en">'+e[0]+'</div><div class="et">'+e[1]+'</div><div class="ed">'+e[2]+'</div></div>').join('');
   if(opsList)opsList.innerHTML=operatorSteps().map((s,i)=>'<div class="opstep"><span>'+String(i+1)+'</span><div><b>'+esc(s.title)+'</b><em>'+esc(s.text)+'</em></div></div>').join('');
   const gates=fieldGates(), readiness=fieldReadiness();
   gateList.innerHTML=gates.map(g=>'<div class="gate '+(g.ok?'':'warn')+'"><span class="dotok"></span><div><b>'+esc(g.title)+':</b> '+esc(g.text)+'</div></div>').join('');
   const rows=runSheetRows(), preview=rows.slice(0,36);
-  runMeta.innerHTML='<span>'+rows.length+' trials</span><span>'+treatmentRows().length+' conditions</span><span>'+trialCount.value+' reps/condition</span><span>seed '+esc(randomSeed.value||'seed')+'</span>';
-  runSheet.innerHTML=preview.map(r=>'<div class="trialrow"><div class="trialid">'+esc(r.trial_id)+'</div><div class="trialtreatment">'+esc(r.treatment)+'</div><div class="trialflags">'+esc(r.baseline)+'m baseline · '+esc(r.response)+'m response · '+esc(r.washout)+'m washout<br>'+esc(r.stimulus)+'</div></div>').join('')+(rows.length>preview.length?'<div class="trialrow"><div class="trialid">+</div><div class="trialtreatment">MORE</div><div class="trialflags">'+(rows.length-preview.length)+' additional trials included in kit exports.</div></div>':'');
+  runMeta.innerHTML='<span>'+rows.length+' encounter allocations</span><span>'+treatmentRows().length+' conditions</span><span>'+trialCount.value+' units/condition</span><span>seed '+esc(randomSeed.value||'seed')+'</span>';
+  runSheet.innerHTML=preview.map(r=>'<div class="trialrow"><div class="trialid">'+esc(r.trial_id)+'</div><div class="trialtreatment">'+esc(r.treatment)+'</div><div class="trialflags">'+esc(r.baseline)+'m baseline · '+esc(r.response)+'m response · '+esc(r.washout)+'m washout<br>'+esc(r.stimulus_pool)+' · '+esc(r.blind_code)+'</div></div>').join('')+(rows.length>preview.length?'<div class="trialrow"><div class="trialid">+</div><div class="trialtreatment">MORE</div><div class="trialflags">'+(rows.length-preview.length)+' additional encounter allocations included in exports.</div></div>':'');
   protocolPlan.textContent=fieldPlanText();
   exportPreview.textContent=JSON.stringify(fieldKitPayload(),null,2);
   if(labStatus)labStatus.textContent=readiness.label+' Exports update automatically.';
@@ -1277,11 +1268,11 @@ async function previewUploadedClip(){
 function renderTray(last){
   renderChips();
   if(!phrase.length){
-    tray.innerHTML='<span class="trayhint">Tap anchors above or press Build stimulus set…</span>';
+    tray.innerHTML='<span class="trayhint">Tap anchors above or press Build audition set…</span>';
     analogy.innerHTML='';
   }else{
     tray.innerHTML=phrase.map((p,i)=>'<button class="token" type="button" data-idx="'+i+'" data-call="'+esc(p.call)+'" data-real="'+esc(p.real||'')+'" title="Remove '+p.call.toUpperCase()+'">'+p.call.toUpperCase()+'<span class="x">x</span></button>').join('');
-    analogy.innerHTML='<span class="alab">Human shorthand for the test (hypothesis, not translation):</span> '+esc(phrase.map(p=>p.call.toUpperCase()+': '+humanHypothesis(p)).join('; '))+'. <br><span class="alab">Research boundary:</span> '+esc(phrase.map(p=>p.call.toUpperCase()+': '+p.role).join('; '))+'. These anchors are not a translation of the observer note.';
+    analogy.innerHTML='<span class="alab">Catalogue status:</span> '+esc(phrase.map(p=>p.call.toUpperCase()+': '+humanHypothesis(p)).join('; '))+'. <br><span class="alab">Research boundary:</span> '+esc(phrase.map(p=>p.call.toUpperCase()+': '+p.role).join('; '))+'. These anchors are not a translation of the observer note and are not field-release stimuli.';
   }
   phraseLabel.textContent=phrase.length?phrase.map(p=>p.call.toUpperCase()).join(' · '):'No anchors';
   updateControlLabels(); renderTimeline(-1); renderMeters(); renderReadout(last); renderModelChat(); updateLab();
@@ -1349,7 +1340,7 @@ document.getElementById('clear').addEventListener('click',()=>{phrase=[];renderT
   el.addEventListener(ev,updateLab);
 });
 const draftPlanBtn=document.getElementById('draftPlan'), copyPlanBtn=document.getElementById('copyPlan'), copyRunSheetBtn=document.getElementById('copyRunSheet');
-draftPlanBtn.addEventListener('click',()=>setTimeout(()=>showPlanFeedback('Field kit built below'),0));
+draftPlanBtn.addEventListener('click',()=>setTimeout(()=>showPlanFeedback('Review kit built below'),0));
 copyPlanBtn.addEventListener('click',async()=>{
   updateLab();
   try{await copyTextWithFallback(protocolPlan.textContent);showPlanFeedback('Protocol copied');copyPlanBtn.textContent='Copied';setTimeout(()=>{copyPlanBtn.textContent='Copy protocol';},1200);}
@@ -1357,18 +1348,18 @@ copyPlanBtn.addEventListener('click',async()=>{
 });
 copyRunSheetBtn.addEventListener('click',async()=>{
   updateLab();
-  try{await copyTextWithFallback(runSheetCsv());showPlanFeedback('Run sheet CSV copied');copyRunSheetBtn.textContent='Copied';setTimeout(()=>{copyRunSheetBtn.textContent='Copy run sheet';},1200);}
-  catch(e){showCopyFallback('Clipboard blocked - run sheet selected below',runSheetCsv());}
+  try{await copyTextWithFallback(runSheetCsv());showPlanFeedback('Encounter allocation CSV copied');copyRunSheetBtn.textContent='Copied';setTimeout(()=>{copyRunSheetBtn.textContent='Copy allocation';},1200);}
+  catch(e){showCopyFallback('Clipboard blocked - encounter allocation selected below',runSheetCsv());}
 });
 document.getElementById('downloadPlan').addEventListener('click',()=>{
   updateLab();
-  downloadText('orcadolittle_field_kit.json',JSON.stringify(fieldKitPayload(),null,2),'application/json;charset=utf-8');
-  statusEl.textContent='Downloaded field-kit JSON';
+  downloadText('orcadolittle_playback_review_kit.json',JSON.stringify(fieldKitPayload(),null,2),'application/json;charset=utf-8');
+  statusEl.textContent='Downloaded review-kit JSON';
 });
 document.getElementById('downloadRunSheet').addEventListener('click',()=>{
   updateLab();
-  downloadText('orcadolittle_run_sheet.csv',runSheetCsv(),'text/csv;charset=utf-8');
-  statusEl.textContent='Downloaded run sheet CSV';
+  downloadText('orcadolittle_encounter_allocation.csv',runSheetCsv(),'text/csv;charset=utf-8');
+  statusEl.textContent='Downloaded encounter allocation CSV';
 });
 document.getElementById('downloadScoringSheet').addEventListener('click',()=>{
   updateLab();
